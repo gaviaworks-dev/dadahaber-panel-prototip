@@ -1,0 +1,4 @@
+TipTap 2.27.3 (MIT) ve bağımlılıkları ProseMirror (MIT) — tek dosya paket.
+Kaynak: npm (@tiptap/core, @tiptap/starter-kit, @tiptap/extension-link, -underline, -placeholder, -character-count).
+Paket: esbuild --bundle --minify --format=iife; window.TipTap = { Editor, StarterKit, Link, Underline, Placeholder, CharacterCount }.
+Lisans: MIT (TipTap © überdosis GbR; ProseMirror © Marijn Haverbeke ve katkıcılar). Seçim: Beyar, 24.11.2026 (zengin metin editörü = TipTap).
