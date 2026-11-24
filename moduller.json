@@ -167,17 +167,18 @@
       "id": "ozel-dikeyler", "ad": "Özel Widgetlar", "cekirdek": false, "acik": true,
       "grup": "dikey", "sira": 1, "klasor": "moduller/ozel-dikeyler/",
       "roller": ["super", "gyy", "editor", "kat-ed", "analist"], "bagimli": ["entegrasyonlar"],
-      "bilesenler": ["veri-tablosu", "satir-eylemleri", "cop-sekmesi", "takvim", "tarih-saat", "aranabilir-liste"],
+      "bilesenler": ["veri-tablosu", "satir-eylemleri", "toplu-islem", "cop-sekmesi", "bos-durum", "aranabilir-liste", "cip-girisi", "tarih-saat", "takvim", "renk-secici", "gorsel-alani", "kirpma", "sekmeli-duzenleme", "dil-secici", "seo-sekmesi", "zengin-metin", "dosya-yukleme", "ai-uret", "cekmece", "onay", "onay-zinciri", "kisa-bildirim", "uyari-bandi", "durum-rozeti", "kart", "saglik-kutusu", "birimli-sayi", "satir-listesi", "silinemez", "sayfa-durumu", "zorunlu-alan", "avatar"],
       "gorsel_alanlari": {
         "arma": { "_kaynak": "varsayım (lead): kulüp arması (puan durumu satırı, takım sayfası)", "web": { "kart": { "oran": "1:1", "px": [48, 48] }, "detay": { "oran": "1:1", "px": [160, 160] } }, "mobil": { "kart": { "oran": "1:1", "px": [40, 40] } }, "mobil_webden_kirpilir": true }
       },
+      "ayarlar": { "zorunlu": { "kulup": {"taslak": ["ad"], "yayin": ["ad", "kod", "lig"], "sistem": ["renk", "slug", "seo"]}, "takvim": {"taslak": ["baslik"], "yayin": ["baslik", "tur", "tarih", "kategori"], "sistem": []}, "ilan": {"taslak": ["baslik"], "yayin": ["baslik", "tur", "kurum", "bitis", "metin"], "sistem": ["yayin", "slug", "seo"]}, "duzeltme": {"taslak": [], "yayin": ["gerekce"], "sistem": ["zaman", "yazar"]} } },
       "sayfalar": [
-        { "id": "spor",      "baslik": "Spor",          "ikon": "fa-futbol",        "dosya": "moduller/ozel-dikeyler/spor.html",      "hazir": false, "menude": true, "roller": ["super", "gyy", "kat-ed"] },
-        { "id": "takvimler", "baslik": "Takvimler",     "ikon": "fa-calendar-days", "dosya": "moduller/ozel-dikeyler/takvimler.html", "hazir": false, "menude": true, "roller": ["super", "gyy", "editor"] },
-        { "id": "veri",      "baslik": "Veri Bantları", "ikon": "fa-chart-line",    "dosya": "moduller/ozel-dikeyler/veri.html",      "hazir": false, "menude": true, "roller": ["super", "gyy"] },
-        { "id": "ilanlar",   "baslik": "Resmî İlanlar", "ikon": "fa-bullhorn",      "dosya": "moduller/ozel-dikeyler/ilanlar.html",   "hazir": false, "menude": true, "roller": ["super", "gyy"] },
-        { "id": "kulup", "baslik": "Kulüp düzenle", "ikon": "fa-shield-halved", "dosya": "moduller/ozel-dikeyler/kulup.html", "hazir": false, "menude": false, "roller": ["super", "gyy", "kat-ed"] },
-        { "id": "ilan", "baslik": "İlan düzenle", "ikon": "fa-bullhorn", "dosya": "moduller/ozel-dikeyler/ilan.html", "hazir": false, "menude": false, "roller": ["super", "gyy"] }
+        { "id": "spor",      "baslik": "Spor",          "ikon": "fa-futbol",        "dosya": "moduller/ozel-dikeyler/spor.html",      "hazir": true, "menude": true, "roller": ["super", "gyy", "kat-ed"] },
+        { "id": "takvimler", "baslik": "Takvimler",     "ikon": "fa-calendar-days", "dosya": "moduller/ozel-dikeyler/takvimler.html", "hazir": true, "menude": true, "roller": ["super", "gyy", "editor"] },
+        { "id": "veri",      "baslik": "Veri Bantları", "ikon": "fa-chart-line",    "dosya": "moduller/ozel-dikeyler/veri.html",      "hazir": true, "menude": true, "roller": ["super", "gyy"] },
+        { "id": "ilanlar",   "baslik": "Resmî İlanlar", "ikon": "fa-bullhorn",      "dosya": "moduller/ozel-dikeyler/ilanlar.html",   "hazir": true, "menude": true, "roller": ["super", "gyy"] },
+        { "id": "kulup", "baslik": "Kulüp düzenle", "ikon": "fa-shield-halved", "dosya": "moduller/ozel-dikeyler/kulup.html", "hazir": true, "menude": false, "roller": ["super", "gyy", "kat-ed"] },
+        { "id": "ilan", "baslik": "İlan düzenle", "ikon": "fa-bullhorn", "dosya": "moduller/ozel-dikeyler/ilan.html", "hazir": true, "menude": false, "roller": ["super", "gyy"] }
       ]
     },
     { "id": "anket",         "ad": "Anketler",      "cekirdek": false, "acik": false, "grup": "dikey", "sira": 8,  "klasor": "moduller/anket/",         "roller": ["super", "gyy", "editor"], "bagimli": [], "sayfalar": [ { "id": "liste", "baslik": "Anketler",      "ikon": "fa-square-poll-vertical", "dosya": "moduller/anket/index.html",         "hazir": false, "menude": true } ] },
@@ -220,17 +221,17 @@
       "id": "etkilesim", "ad": "Etkileşim", "cekirdek": false, "acik": true,
       "grup": "etkilesim", "sira": 1, "klasor": "moduller/etkilesim/",
       "roller": ["super", "gyy", "editor", "sosyal", "analist"], "bagimli": ["haberler"],
-      "bilesenler": ["veri-tablosu", "satir-eylemleri", "toplu-islem", "cop-sekmesi", "zengin-metin", "tarih-saat", "bildirim-onizleme"],
+      "bilesenler": ["veri-tablosu", "satir-eylemleri", "toplu-islem", "cop-sekmesi", "aranabilir-liste", "cip-girisi", "tarih-saat", "sekmeli-duzenleme", "dil-secici", "zengin-metin", "ai-uret", "sirali-havuz", "eposta-onizleme", "eposta", "bildirim-onizleme", "gorsel-alani", "kirpma", "medya-secici", "medya-etiketleme", "grafik", "kpi", "kart", "avatar", "durum-rozeti", "bos-durum", "cekmece", "pencere", "onay", "onay-zinciri", "eposta-kodu", "kisa-bildirim", "uyari-bandi", "zorunlu-alan", "silinemez", "tasiyarak-silme-tetik", "entegrasyon-karti"],
       "ayarlar": { "zorunlu": { "yanit": {"taslak": [], "yayin": ["yanit"], "sistem": []}, "bulten": {"taslak": ["konu"], "yayin": ["tur", "konu", "haberler"], "sistem": ["zaman"]}, "bulten-turu": {"taslak": [], "yayin": ["ad", "gun", "saat"], "sistem": []}, "test": {"taslak": [], "yayin": ["eposta"], "sistem": []}, "push": {"taslak": ["baslik"], "yayin": ["baslik", "metin", "kanal"], "sistem": ["zaman", "gorsel", "haber"]}, "reklam": {"taslak": ["ad"], "yayin": ["ad", "alan", "kod", "gorsel", "baslangic", "cihaz"], "sistem": []} } },
       "sayfalar": [
-        { "id": "yorumlar",  "baslik": "Yorumlar",               "ikon": "fa-comments",           "dosya": "moduller/etkilesim/yorumlar.html",  "hazir": false, "menude": true, "rozet": "yorum_bekleyen", "roller": ["super", "gyy", "editor"] },
-        { "id": "bulten",    "baslik": "Bülten",                 "ikon": "fa-envelope-open-text", "dosya": "moduller/etkilesim/bulten.html",    "hazir": false, "menude": true, "roller": ["super", "gyy", "sosyal"] },
-        { "id": "push",      "baslik": "Push Bildirimleri",      "ikon": "fa-bell",               "dosya": "moduller/etkilesim/push.html",      "hazir": false, "menude": true, "roller": ["super", "gyy", "sosyal"] },
-        { "id": "reklam",    "baslik": "Reklam Alanları",        "ikon": "fa-rectangle-ad",       "dosya": "moduller/etkilesim/reklam.html",    "hazir": false, "menude": true, "roller": ["super", "gyy"] },
-        { "id": "geri",      "baslik": "Okur Geri Bildirimleri", "ikon": "fa-inbox",              "dosya": "moduller/etkilesim/geri.html",      "hazir": false, "menude": true, "roller": ["super", "gyy", "editor"] },
-        { "id": "bulten-duzenle", "baslik": "Bülten düzenle", "ikon": "fa-envelope-open-text", "dosya": "moduller/etkilesim/bulten-duzenle.html", "hazir": false, "menude": false, "roller": ["super", "gyy", "sosyal"] },
-        { "id": "push-duzenle", "baslik": "Push bildirimi düzenle", "ikon": "fa-bell", "dosya": "moduller/etkilesim/push-duzenle.html", "hazir": false, "menude": false, "roller": ["super", "gyy", "sosyal"] },
-        { "id": "reklam-duzenle", "baslik": "Reklam alanı düzenle", "ikon": "fa-rectangle-ad", "dosya": "moduller/etkilesim/reklam-duzenle.html", "hazir": false, "menude": false, "roller": ["super", "gyy"] }
+        { "id": "yorumlar",  "baslik": "Yorumlar",               "ikon": "fa-comments",           "dosya": "moduller/etkilesim/yorumlar.html",  "hazir": true, "menude": true, "rozet": "yorum_bekleyen", "roller": ["super", "gyy", "editor"] },
+        { "id": "bulten",    "baslik": "Bülten",                 "ikon": "fa-envelope-open-text", "dosya": "moduller/etkilesim/bulten.html",    "hazir": true, "menude": true, "roller": ["super", "gyy", "sosyal"] },
+        { "id": "push",      "baslik": "Push Bildirimleri",      "ikon": "fa-bell",               "dosya": "moduller/etkilesim/push.html",      "hazir": true, "menude": true, "roller": ["super", "gyy", "sosyal"] },
+        { "id": "reklam",    "baslik": "Reklam Alanları",        "ikon": "fa-rectangle-ad",       "dosya": "moduller/etkilesim/reklam.html",    "hazir": true, "menude": true, "roller": ["super", "gyy"] },
+        { "id": "geri",      "baslik": "Okur Geri Bildirimleri", "ikon": "fa-inbox",              "dosya": "moduller/etkilesim/geri.html",      "hazir": true, "menude": true, "roller": ["super", "gyy", "editor"] },
+        { "id": "bulten-duzenle", "baslik": "Bülten düzenle", "ikon": "fa-envelope-open-text", "dosya": "moduller/etkilesim/bulten-duzenle.html", "hazir": true, "menude": false, "roller": ["super", "gyy", "sosyal"] },
+        { "id": "push-duzenle", "baslik": "Push bildirimi düzenle", "ikon": "fa-bell", "dosya": "moduller/etkilesim/push-duzenle.html", "hazir": true, "menude": false, "roller": ["super", "gyy", "sosyal"] },
+        { "id": "reklam-duzenle", "baslik": "Reklam alanı düzenle", "ikon": "fa-rectangle-ad", "dosya": "moduller/etkilesim/reklam-duzenle.html", "hazir": true, "menude": false, "roller": ["super", "gyy"] }
       ]
     },
     { "id": "kullanicilar",   "ad": "Kullanıcılar",    "cekirdek": true, "acik": true, "grup": "sistem", "sira": 1, "klasor": "cekirdek/kullanicilar/",   "roller": ["super", "gyy"], "bagimli": [], "bilesenler": ["veri-tablosu", "satir-eylemleri", "toplu-islem", "cop-sekmesi", "bos-durum", "aranabilir-liste", "cip-girisi", "sekmeli-duzenleme", "onay-zinciri", "eposta-kodu", "kisa-bildirim", "uyari-bandi", "durum-rozeti", "kart", "kisa-liste", "avatar", "eposta", "telefon", "zengin-metin", "zorunlu-alan", "silinemez"], "ayarlar": { "zorunlu": { "okur-durum": {"taslak": [], "yayin": ["gerekce"], "sistem": []}, "okur": {"taslak": ["ad"], "yayin": ["ad"], "sistem": []}, "uye-durum": {"taslak": [], "yayin": ["gerekce"], "sistem": []}, "uye": {"taslak": ["ad"], "yayin": ["ad", "eposta"], "sistem": []}, "davet": {"taslak": [], "yayin": ["ad", "eposta", "rol"], "sistem": []} } }, "sayfalar": [
@@ -245,7 +246,7 @@
         { "id": "rol", "baslik": "Rol düzenle", "ikon": "fa-user-shield", "dosya": "cekirdek/kimlik-yetki/rol.html", "hazir": true, "menude": false },
         { "id": "izin-gruplari", "baslik": "İzin grupları", "ikon": "fa-layer-group", "dosya": "cekirdek/kimlik-yetki/izin-gruplari.html", "hazir": true, "menude": false },
         { "id": "izin-grubu", "baslik": "İzin grubu düzenle", "ikon": "fa-layer-group", "dosya": "cekirdek/kimlik-yetki/izin-grubu.html", "hazir": true, "menude": false },
-        { "id": "oturumlar", "baslik": "Aktif oturumlar", "ikon": "fa-laptop", "dosya": "cekirdek/kimlik-yetki/oturumlar.html", "hazir": true, "menude": false, "roller": ["super", "gyy", "editor", "kat-ed", "sosyal", "analist"] },
+        { "id": "oturumlar", "baslik": "Aktif oturumlar", "ikon": "fa-laptop", "dosya": "cekirdek/kimlik-yetki/oturumlar.html", "hazir": true, "menude": false, "roller": ["super", "gyy", "editor", "kat-ed", "sosyal", "analist"] }, { "id": "bildirimler", "baslik": "Bildirimler", "ikon": "fa-bell", "dosya": "cekirdek/kimlik-yetki/bildirimler.html", "hazir": true, "menude": false, "roller": ["super", "gyy", "editor", "kat-ed", "sosyal", "analist"] },
         { "id": "guvenlik", "baslik": "Güvenlik politikası", "ikon": "fa-shield-halved", "dosya": "cekirdek/kimlik-yetki/guvenlik.html", "hazir": true, "menude": false },
         { "id": "profil", "baslik": "Profilim", "ikon": "fa-user", "dosya": "cekirdek/kimlik-yetki/profil.html", "hazir": true, "menude": false, "roller": ["super", "gyy", "editor", "kat-ed", "sosyal", "analist"] },
         { "id": "giris", "baslik": "Giriş", "ikon": "fa-right-to-bracket", "dosya": "cekirdek/kimlik-yetki/giris.html", "hazir": true, "menude": false, "roller": ["super", "gyy", "editor", "kat-ed", "sosyal", "analist"] },

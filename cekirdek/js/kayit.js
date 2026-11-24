@@ -898,7 +898,7 @@ window.PANEL = {
    "baslik": "Spor",
    "ikon": "fa-futbol",
    "modul_ad": "Özel Widgetlar",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -910,7 +910,7 @@ window.PANEL = {
    "baslik": "Takvimler",
    "ikon": "fa-calendar-days",
    "modul_ad": "Özel Widgetlar",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -922,7 +922,7 @@ window.PANEL = {
    "baslik": "Veri Bantları",
    "ikon": "fa-chart-line",
    "modul_ad": "Özel Widgetlar",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -933,7 +933,7 @@ window.PANEL = {
    "baslik": "Resmî İlanlar",
    "ikon": "fa-bullhorn",
    "modul_ad": "Özel Widgetlar",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -944,7 +944,7 @@ window.PANEL = {
    "baslik": "Kulüp düzenle",
    "ikon": "fa-shield-halved",
    "modul_ad": "Özel Widgetlar",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -956,7 +956,7 @@ window.PANEL = {
    "baslik": "İlan düzenle",
    "ikon": "fa-bullhorn",
    "modul_ad": "Özel Widgetlar",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -1053,7 +1053,7 @@ window.PANEL = {
    "baslik": "Yorumlar",
    "ikon": "fa-comments",
    "modul_ad": "Etkileşim",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -1065,7 +1065,7 @@ window.PANEL = {
    "baslik": "Bülten",
    "ikon": "fa-envelope-open-text",
    "modul_ad": "Etkileşim",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -1077,7 +1077,7 @@ window.PANEL = {
    "baslik": "Push Bildirimleri",
    "ikon": "fa-bell",
    "modul_ad": "Etkileşim",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -1089,7 +1089,7 @@ window.PANEL = {
    "baslik": "Reklam Alanları",
    "ikon": "fa-rectangle-ad",
    "modul_ad": "Etkileşim",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -1100,7 +1100,7 @@ window.PANEL = {
    "baslik": "Okur Geri Bildirimleri",
    "ikon": "fa-inbox",
    "modul_ad": "Etkileşim",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -1112,7 +1112,7 @@ window.PANEL = {
    "baslik": "Bülten düzenle",
    "ikon": "fa-envelope-open-text",
    "modul_ad": "Etkileşim",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -1124,7 +1124,7 @@ window.PANEL = {
    "baslik": "Push bildirimi düzenle",
    "ikon": "fa-bell",
    "modul_ad": "Etkileşim",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -1136,7 +1136,7 @@ window.PANEL = {
    "baslik": "Reklam alanı düzenle",
    "ikon": "fa-rectangle-ad",
    "modul_ad": "Etkileşim",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -1245,6 +1245,21 @@ window.PANEL = {
   "kimlik-yetki.oturumlar": {
    "baslik": "Aktif oturumlar",
    "ikon": "fa-laptop",
+   "modul_ad": "Kimlik ve Yetki",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed",
+    "sosyal",
+    "analist"
+   ]
+  },
+  "kimlik-yetki.bildirimler": {
+   "baslik": "Bildirimler",
+   "ikon": "fa-bell",
    "modul_ad": "Kimlik ve Yetki",
    "hazir": true,
    "acik": true,
@@ -2497,6 +2512,60 @@ window.PANEL = {
    "yayin": [
     "ad",
     "kategori"
+   ]
+  },
+  "ozel-dikeyler.kulup": {
+   "taslak": [
+    "ad"
+   ],
+   "yayin": [
+    "ad",
+    "kod",
+    "lig"
+   ],
+   "sistem": [
+    "renk",
+    "slug",
+    "seo"
+   ]
+  },
+  "ozel-dikeyler.takvim": {
+   "taslak": [
+    "baslik"
+   ],
+   "yayin": [
+    "baslik",
+    "tur",
+    "tarih",
+    "kategori"
+   ],
+   "sistem": []
+  },
+  "ozel-dikeyler.ilan": {
+   "taslak": [
+    "baslik"
+   ],
+   "yayin": [
+    "baslik",
+    "tur",
+    "kurum",
+    "bitis",
+    "metin"
+   ],
+   "sistem": [
+    "yayin",
+    "slug",
+    "seo"
+   ]
+  },
+  "ozel-dikeyler.duzeltme": {
+   "taslak": [],
+   "yayin": [
+    "gerekce"
+   ],
+   "sistem": [
+    "zaman",
+    "yazar"
    ]
   },
   "sosyal-medya.gonderi": {
