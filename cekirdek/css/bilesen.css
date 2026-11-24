@@ -1441,7 +1441,8 @@ body.kb-giris-sayfa{min-height:100vh;margin:0;display:grid;grid-template-columns
 [data-liste][data-gorunum="izgara"] .rcp-cell{flex-direction:column;align-items:stretch;gap:8px}
 [data-liste][data-gorunum="izgara"] .rcp-thumb{width:100%;height:auto;aspect-ratio:4/3;border:none;border-radius:0;border-bottom:1px solid var(--line)}
 [data-liste][data-gorunum="izgara"] .rcp-id{padding:0 10px}
-[data-liste][data-gorunum="izgara"] td.kb-sec-hucre{position:absolute;top:6px;left:6px;z-index:1;padding:4px;border-radius:6px;background:var(--paper)}
+[data-liste][data-gorunum="izgara"] td.kb-sec-hucre{position:absolute;top:8px;left:8px;z-index:1;display:flex;align-items:center;justify-content:center;width:28px;height:28px;padding:0;box-sizing:border-box;border-radius:6px;background:var(--paper);box-shadow:0 1px 3px rgba(0,0,0,.18)}
+[data-liste][data-gorunum="izgara"] td.kb-sec-hucre .kb-onay-kutu{margin:0}
 [data-liste][data-gorunum="izgara"] tbody td:last-child{margin-top:auto;padding:6px 8px 8px}
 [data-liste][data-gorunum="izgara"] tr.kb-bos-satir{grid-column:1/-1;display:block}
 .kb-gorunum-sec{display:inline-flex;gap:6px}
