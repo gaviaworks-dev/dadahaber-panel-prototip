@@ -99,9 +99,12 @@
           { "id": "T4", "ad": "Düşük Öncelik",      "kanallar": ["sosyal"] }
         ],
         "_kanal_notu": "T1–T4'ün başlangıç kanalları öneridir (Yasin Bey'in örneği: düşük öncelikli dijital mecralar yalnızca sosyal); yönetici değiştirir.",
-        "okuma_zorunlulugu": { "_y3": "Yasin Bey 24.11.2026", "acik": true, "roller": ["editor", "kat-ed"] },
+        "okuma_zorunlulugu": { "_y3": "Yasin Bey 24.11.2026; YS5-YS7 Beyar", "acik": true, "roller": ["editor", "kat-ed"], "muaf": ["super", "gyy"], "okunacak": "detay-sekmesi", "sigan_icerik_saniye": 3, "otomatik_yayin_istisna": true },
         "kaynak_tipleri": ["rss", "scraper", "haber-sitesi", "sosyal-hesap"],
-        "medya_izni_kapaliysa": "gorsel-eksik",
+        "gorsel_durumu": { "_ys1": "Beyar 24.11.2026; K7'deki kaynak başına medya izninin yerine", "durumlar": [ { "id": "temiz", "ad": "Temiz", "otomatik_yayin": true }, { "id": "kirpildi", "ad": "AI kırparak temizledi", "otomatik_yayin": true }, { "id": "eksik", "ad": "Görsel eksik", "otomatik_yayin": false } ] },
+        "kanal_kaynagi": "1-kaynagin-grubu",
+        "kanal_degistirebilen_roller": ["super", "gyy"],
+        "yalniz_sosyal_gonderi": "baglantisiz",
         "gosterilen_kaynak_sayisi": 3,
         "otomatik_yayin": { "acik": false, "esik": 85, "kosullar": [] }
       },
@@ -184,7 +187,7 @@
     },
     { "id": "kullanicilar",   "ad": "Kullanıcılar",    "cekirdek": true, "acik": true, "grup": "sistem", "sira": 1, "klasor": "cekirdek/kullanicilar/",   "roller": ["super", "gyy"], "bagimli": [], "sayfalar": [ { "id": "liste", "baslik": "Kullanıcılar",    "ikon": "fa-users",          "dosya": "cekirdek/kullanicilar/index.html",   "hazir": false, "menude": true } ] },
     { "id": "kimlik-yetki",   "ad": "Kimlik ve Yetki", "cekirdek": true, "acik": true, "grup": "sistem", "sira": 2, "klasor": "cekirdek/kimlik-yetki/",   "roller": ["super", "gyy"], "bagimli": [], "sayfalar": [ { "id": "roller", "baslik": "Roller ve Yetki", "ikon": "fa-user-shield",    "dosya": "cekirdek/kimlik-yetki/index.html",   "hazir": false, "menude": true } ] },
-    { "id": "site-ayarlari",  "ad": "Site Ayarları",   "cekirdek": true, "acik": true, "grup": "sistem", "sira": 3, "klasor": "cekirdek/site-ayarlari/",  "roller": ["super", "gyy"], "bagimli": [], "sayfalar": [ { "id": "ayarlar", "baslik": "Site Ayarları",  "ikon": "fa-sliders",        "dosya": "cekirdek/site-ayarlari/index.html",  "hazir": false, "menude": true } ] },
+    { "id": "site-ayarlari",  "ad": "Site Ayarları",   "cekirdek": true, "acik": true, "grup": "sistem", "sira": 3, "klasor": "cekirdek/site-ayarlari/",  "roller": ["super", "gyy"], "bagimli": [], "sayfalar": [ { "id": "ayarlar", "baslik": "Site Ayarları",  "ikon": "fa-sliders",        "dosya": "cekirdek/site-ayarlari/index.html",  "hazir": true, "menude": true } ] },
     { "id": "entegrasyonlar", "ad": "Entegrasyonlar",  "cekirdek": true, "acik": true, "grup": "sistem", "sira": 4, "klasor": "cekirdek/entegrasyonlar/", "roller": ["super"],        "bagimli": [], "sayfalar": [ { "id": "liste", "baslik": "Entegrasyonlar",  "ikon": "fa-plug",           "dosya": "cekirdek/entegrasyonlar/index.html", "hazir": false, "menude": true } ] },
     { "id": "yasal-metinler", "ad": "Yasal Metinler",  "cekirdek": true, "acik": true, "grup": "sistem", "sira": 5, "klasor": "cekirdek/yasal-metinler/", "roller": ["super", "gyy"], "bagimli": [], "sayfalar": [ { "id": "liste", "baslik": "Yasal Metinler",  "ikon": "fa-file-contract",  "dosya": "cekirdek/yasal-metinler/index.html", "hazir": false, "menude": true } ] },
     { "id": "sayfalar",       "ad": "Sayfalar",        "cekirdek": true, "acik": true, "grup": "sistem", "sira": 6, "klasor": "cekirdek/sayfalar/",       "roller": ["super", "gyy"], "bagimli": [], "sayfalar": [ { "id": "liste", "baslik": "Sayfalar",        "ikon": "fa-file-lines",     "dosya": "cekirdek/sayfalar/index.html",       "hazir": false, "menude": true } ] },

@@ -27,6 +27,7 @@ ATLANAN = {"docs", "tasks", "assets", "secenekler", ".git", "araclar", "veri"}
 kayit = json.loads((KOK / "moduller.json").read_text(encoding="utf-8"))
 veri = json.loads((KOK / "veri" / "panel.json").read_text(encoding="utf-8"))
 moduller = {m["id"]: m for m in kayit["moduller"]}
+KATALOG = {b["id"]: b for b in json.loads((KOK / "cekirdek" / "bilesenler.json").read_text(encoding="utf-8"))["bilesenler"]}
 acik = {k for k, m in moduller.items() if m.get("acik")}
 YAKINDA = kayit["yakinda_sayfasi"]
 
@@ -212,11 +213,34 @@ def hedefleri_yaz(t, sayfa_yolu):
         return etiket[:-1] + f' href="{esc(href)}">'
     t = re.sub(r'<a\b[^>]*\sdata-hedef="[^"]+"[^>]*>', bas, t)
     def kutu(m):
+        # Kapalı modülün kutusu "hidden data-modul-kapali" alır. Açıkken yalnızca bu betiğin koyduğu gizlilik kaldırılır;
+        # öğenin kendi varsayılan gizliliğine (sekme paneli, açılır kutu) dokunulmaz.
         etiket = m.group(0)
         mid = re.search(r'data-modul="([^"]+)"', etiket).group(1)
-        etiket = re.sub(r'\shidden(="[^"]*")?', "", etiket)
-        return etiket if mid in acik else etiket[:-1] + " hidden>"
+        if " data-modul-kapali" in etiket:
+            etiket = re.sub(r'\sdata-modul-kapali', "", etiket)
+            etiket = re.sub(r'\shidden(="[^"]*")?', "", etiket)
+        if mid in acik:
+            return etiket
+        return etiket[:-1] + " hidden data-modul-kapali>"
     return re.sub(r'<\w+\b[^>]*\sdata-modul="[^"]+"[^>]*>', kutu, t)
+
+def katalog_html():
+    """UI kitteki bileşen kataloğu: her bileşen, durumu ve onu kullanan açık modüller."""
+    kullanan = {}
+    for mid, m in moduller.items():
+        for b in m.get("bilesenler") or []:
+            kullanan.setdefault(b, []).append(m["ad"] + ("" if m.get("acik") else " (kapalı)"))
+    satir = []
+    for b in KATALOG.values():
+        d = '<span class="pstat ok">Hazır</span>' if b["durum"] == "hazir" else '<span class="pstat wait">Yayılımda</span>'
+        bag = f'<a class="kb-bag" href="#kit-{esc(b["ui_kit"])}">bölüm</a>' if b["ui_kit"] else "—"
+        satir.append(f'<tr><td><b>{esc(b["ad"])}</b><span class="kit-id">{esc(b["id"])}</span></td><td><code>{esc(b["kanca"])}</code></td>'
+                     f'<td class="kb-gizle-m">{esc(b["dosya"])}</td><td>{d}</td><td class="kb-gizle-t">{esc(", ".join(kullanan.get(b["id"], [])) or "—")}</td><td class="kb-gizle-m">{esc(b["not"]) or "—"}</td><td>{bag}</td></tr>')
+    hazir = sum(1 for b in KATALOG.values() if b["durum"] == "hazir")
+    return (f'<p class="kit-not">{len(KATALOG)} bileşen · {hazir} hazır · {len(KATALOG) - hazir} yayılımda, onu kullanan modülden önce çekirdeğe eklenecek. Kaynak: <code>cekirdek/bilesenler.json</code>; <code>moduller.json</code>\'daki her bileşen adı bu listeye göre denetlenir.</p>'
+            '<div class="ptable-wrap"><table class="ptable kit-tablo"><thead><tr><th>Bileşen</th><th>Sınıf / çağrı</th><th class="kb-gizle-m">Dosya</th><th>Durum</th><th class="kb-gizle-t">Kullanan modüller</th><th class="kb-gizle-m">Not</th><th></th></tr></thead><tbody>'
+            + "".join(satir) + '</tbody></table></div>')
 
 def isaret_yaz(t, ad, icerik):
     desen = re.compile(rf"(<!--P:{ad}-->).*?(<!--/P:{ad}-->)", re.S)
@@ -243,6 +267,7 @@ for p, rel in sayfalar():
     yeni, m1 = isaret_yaz(t, "menu", menu_html(rel))
     yeni, m2 = isaret_yaz(yeni, "ust", ust_html(rel))
     yeni, _ = isaret_yaz(yeni, "bas", bas_html(rel))
+    yeni, _ = isaret_yaz(yeni, "katalog", katalog_html())
     if not (m1 or m2):
         continue
     yeni = hedefleri_yaz(yeni, rel)
@@ -262,11 +287,25 @@ for p, rel in sayfalar():
         p.write_text(yeni, encoding="utf-8")
         yazilan += 1
 
+uyarilar = []
+for mid, m in moduller.items():
+    for b in m.get("bilesenler") or []:
+        if b not in KATALOG:
+            sorunlar.append(f"kayıt: {mid} katalogda olmayan bileşeni kullanıyor → {b}")
+        elif KATALOG[b]["durum"] != "hazir" and m.get("acik"):
+            uyarilar.append(f"{mid}: '{b}' bileşeni henüz yok ({KATALOG[b]['not']})")
+for mid in sorted(acik):
+    for b in moduller[mid].get("bagimli", []):
+        if b not in acik:
+            sorunlar.append(f"kayıt: açık modül kapalı modüle bağımlı → {mid} → {b}")
 for anahtar, s in SAYFALAR.items():
     if s["hazir"] and not (KOK / s["dosya"]).exists():
         sorunlar.append(f"kayıt: hazır sayılan sayfanın dosyası yok → {anahtar} ({s['dosya']})")
 
 print(f"{'Denetim' if KONTROL else 'Yazıldı'}: {yazilan} sayfa · açık modül {len(acik)}/{len(moduller)}")
+if "--uyari" in sys.argv:
+    for u in uyarilar:
+        print("YAYILIMDAN ÖNCE:", u)
 for s in sorunlar:
     print("SORUN:", s)
 sys.exit(1 if sorunlar else 0)
