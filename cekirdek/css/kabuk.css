@@ -82,8 +82,8 @@ button,input,select,textarea{font:inherit;color:inherit}
   display:flex;align-items:center;border-bottom:1px solid var(--menu-hair);
 }
 .kb-logo-bag{display:flex;align-items:center}
-.kb-logo{display:block;width:150px;height:31px;background-repeat:no-repeat;background-position:left center;background-size:contain}
-.kb-logo-isaret{display:none;width:36px;height:36px;background-repeat:no-repeat;background-position:center;background-size:contain}
+.kb-logo{display:block;height:32px;width:calc(32px * var(--logo-oran,4.8));background-repeat:no-repeat;background-position:left center;background-size:contain}
+.kb-logo-isaret{display:none;width:48px;height:36px;background-repeat:no-repeat;background-position:center;background-size:contain}
 .sa-mnav{flex:1;overflow-y:auto;padding:14px 14px 18px;display:flex;flex-direction:column;gap:3px;scrollbar-width:thin;scrollbar-color:var(--menu-hair) transparent}
 
 /* grup başlığı = katla/aç düğmesi */
@@ -328,6 +328,9 @@ html.kb-yukleniyor *,html.kb-yukleniyor *::before,html.kb-yukleniyor *::after{tr
 .pnl-page-head h1{font-size:24px}
 .pnl-page-head .ph-sub{margin-top:5px;font-size:13.5px;color:var(--muted)}
 .pnl-page-head .ph-actions{display:flex;gap:10px;flex:none}
+@media(max-width:640px){.pnl-page-head .ph-actions{flex-wrap:wrap;flex:initial}}
+/* kapalı açılır menüler (opaklık 0) sayfayı yana kaydırmasın; clip yapışkan öğeleri bozmaz */
+.pnl-main{overflow-x:clip;position:relative}
 
 /* kart */
 .pnl-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--sh-sm);min-width:0}

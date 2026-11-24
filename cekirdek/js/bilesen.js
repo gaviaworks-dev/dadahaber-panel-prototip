@@ -115,12 +115,37 @@
       if(sa){
         e.preventDefault(); e.stopPropagation();
         var bildir = sa.dataset.bildirSonra;
-        window.kbAc(sa.getAttribute('data-sablon-ac'), t, function(k){ degerleriYaz(sa, k); if(sa.dataset.baslikYaz) k.querySelector('h2').textContent = sa.dataset.baslikYaz; });
+        window.kbAc(sa.getAttribute('data-sablon-ac'), t, function(k){ degerleriYaz(sa, k); if(sa.dataset.baslikYaz) k.querySelector('h2').textContent = sa.dataset.baslikYaz; k.querySelectorAll('[data-yeni-kayitta-gizle]').forEach(function(x){ x.hidden = !sa.dataset.degerAd; }); });
         if(bildir) window.kbBildir(bildir);
       }
     });
   });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ if(ov.classList.contains('open')) onayKapat(); else window.kbKapat(); } });
+
+  /* kategori ağacı (kb-agac): sil düğmesi. Kayıt varsa taşıyarak silme, yoksa ikinci onay; ikisinde de çöp ve geri al (B1). */
+  function agacSil(b, agac){
+    var ad = b.dataset.ad, ust = b.dataset.ust, haber = +b.dataset.haber || 0, alt = +b.dataset.alt || 0;
+    var dugum = ust ? b.closest('li') : b.closest('details');
+    function sil(hedef){
+      if(dugum) dugum.hidden = true;
+      window.kbBildir('“' + (ust ? ust + ' › ' : '') + ad + '” çöpe taşındı' + (hedef ? '; ' + haber.toLocaleString('tr') + ' haber “' + hedef + '” konusuna taşındı' : ''), function(){ if(dugum) dugum.hidden = false; });
+    }
+    if(!haber){ window.kbOnay({ tehlike:true, baslik:'“' + ad + '” silinsin mi?', metin:'Bu konuda haber yok. Çöpe gider, oradan geri alınabilir; işlem denetim izine yazılır.', evet:'Çöpe taşı', evetIs: function(){ sil(null); } }); return; }
+    var hedefler = [];
+    (agac || document).querySelectorAll('details').forEach(function(d){
+      var ana = (d.querySelector('summary [data-kat-sil]') || {}).dataset; if(!ana || (!ust && ana.ad === ad)) return;
+      d.querySelectorAll('li [data-kat-sil]').forEach(function(x){ if(!(ust && x.dataset.ad === ad && x.dataset.ust === ust)) hedefler.push(ana.ad + ' › ' + x.dataset.ad); });
+    });
+    window.kbTasiSil({ ad: (ust ? ust + ' › ' : '') + ad, haber: haber, alt: alt, hedefler: hedefler, evetIs: sil });
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-kat-sil]'); if(b){ e.preventDefault(); e.stopPropagation(); agacSil(b, b.closest('.kb-agac')); return; }
+    var f = e.target.closest('[data-kat-sil-form]');
+    if(f){ e.preventDefault(); var k = f.closest('.kb-cekmece,.kb-pencere'), adEl = k && k.querySelector('[data-alan="ad"]'), ad = adEl ? adEl.value.trim() : '';
+      var sab = document.querySelector('template#hbKategoriler'), kok = sab ? sab.content : document, x = kok.querySelector('[data-kat-sil][data-ad="' + ad.replace(/"/g, '\\"') + '"]');
+      if(!x){ window.kbBildir('Kaydedilmemiş kategori; silinecek bir şey yok'); return; }
+      window.kbKapat(); agacSil(x, kok); }
+  }, true);
 
   /* küçük tanımlar: [data-tanim="sablonId"] düğmesi sözleşmeye göre çekmece ya da pencere açar;
      sözleşme "sayfa" ise düğmenin href'ine gidilir */
@@ -211,6 +236,8 @@
   window.kbSecimKur();
 
   /* ---------------- veri tablosu ---------------- */
+  var YER_AD = { manset:'manşet', gunun5:'Günün 5\'i', bulten:'Akşam Bülteni' };
+  function yerAdlari(r){ return (r.dataset.yerler || '').split(/\s+/).filter(Boolean).map(function(y){ return YER_AD[y] || y; }); }
   document.querySelectorAll('[data-liste]').forEach(function(L){
     var govde = L.querySelector('tbody[data-satirlar]');
     var satirlar = Array.prototype.slice.call(govde.querySelectorAll('tr[data-satir]'));
@@ -312,8 +339,8 @@
       var sil = r.querySelector('[data-sil]');
       if(sil) sil.addEventListener('click', function(){
         if(r.dataset.durum === 'cop'){ var k2 = dm && dm.querySelector('[data-kalici-sil]'); if(k2){ dm._satir = r; k2.click(); } return; }
-        var b = r.dataset.baslik;
-        window.kbOnay({ tehlike:true, baslik:'Haber çöpe taşınsın mı?', metin:'“' + b + '” sitede yayından kalkar ve Çöp sekmesine taşınır; oradan geri alınabilir.', evet:'Çöpe taşı',
+        var b = r.dataset.baslik, yer = yerAdlari(r);
+        window.kbOnay({ tehlike:true, baslik:'Haber çöpe taşınsın mı?', metin:'“' + b + '” sitede yayından kalkar ve Çöp sekmesine taşınır; oradan geri alınabilir.' + (yer.length ? ' Bu haber ' + yer.length + ' yerde kullanılıyor (' + yer.join(', ') + '); oradan da çıkar, geri alınca döner.' : ''), evet:'Çöpe taşı',
           evetIs: function(){ var eski = r.dataset.durum; r.dataset.onceki = eski; r.dataset.durum = 'cop'; sayaclar(); uygula(); window.kbBildir('Haber çöpe taşındı', function(){ r.dataset.durum = eski; sayaclar(); uygula(); }); } });
       });
     });
@@ -334,6 +361,10 @@
           dm._satir = row;
           dm.querySelectorAll('[data-durum-icin]').forEach(function(x){ x.hidden = x.getAttribute('data-durum-icin').split(' ').indexOf(dr) === -1; });
           dm.querySelectorAll('[data-roller]').forEach(function(x){ if(!x.hidden) x.hidden = x.getAttribute('data-roller').split(' ').indexOf(rol) === -1; });
+          dm.querySelectorAll('[data-modul-kapali]').forEach(function(x){ x.hidden = true; });
+          var yl = row ? (row.dataset.yerler || '').split(/\s+/) : [];
+          dm.querySelectorAll('[data-yer]').forEach(function(x){ var var_ = yl.indexOf(x.dataset.yer) > -1, ad = x.dataset.yerAd; x.classList.toggle('is-cikar', var_);
+            x.querySelector('span').textContent = var_ ? ad + (ad === 'Manşet' ? 'ten' : ad === 'Akşam Bülteni' ? 'nden' : 'nden') + ' çıkar' : ad + (ad === 'Manşet' ? 'e' : ad === 'Akşam Bülteni' ? 'ne' : 'ne') + ' ekle'; });
           /* konum açılmadan önce, kalemler süzüldükten sonra hesaplanır: altta yer yoksa doğrudan üstte açılır (zıplama yok) */
           var h = dm.offsetHeight, alt = r.bottom + 6;
           dm.style.left = 'auto'; dm.style.right = (window.innerWidth - r.right) + 'px';
@@ -345,6 +376,12 @@
       document.addEventListener('click', function(e){ if(!e.target.closest('.kb-diger-menu') && dmBtn){ dm.classList.remove('open'); dmBtn.setAttribute('aria-expanded', 'false'); dmBtn = null; } });
       dm.querySelectorAll('[data-bildir]').forEach(function(x){ x.addEventListener('click', function(){ dm.classList.remove('open'); window.kbBildir(x.dataset.bildir); }); });
       var dmKapat = function(){ dm.classList.remove('open'); if(dmBtn){ dmBtn.setAttribute('aria-expanded', 'false'); dmBtn = null; } };
+      dm.querySelectorAll('[data-yer]').forEach(function(x){ x.addEventListener('click', function(){
+        var r = dm._satir; dmKapat(); if(!r) return;
+        var yl = (r.dataset.yerler || '').split(/\s+/).filter(Boolean), y = x.dataset.yer, var_ = yl.indexOf(y) > -1, eski = r.dataset.yerler || '';
+        r.dataset.yerler = (var_ ? yl.filter(function(z){ return z !== y; }) : yl.concat(y)).join(' ');
+        window.kbBildir(var_ ? 'Haber ' + YER_AD[y] + ' listesinden çıkarıldı' : 'Haber ' + YER_AD[y] + ' listesine eklendi', function(){ r.dataset.yerler = eski; });
+      }); });
       var kopyala = dm.querySelector('[data-kopyala]');
       if(kopyala) kopyala.addEventListener('click', function(){
         var a = dm._satir && dm._satir.querySelector('a.ia-btn[target]'); var u = a ? a.href : location.href;
@@ -360,7 +397,10 @@
       if(kalici) kalici.addEventListener('click', function(){
         var r = dm._satir; dmKapat(); if(!r) return;
         window.kbOnay({ tehlike:true, ikon:'fa-trash-can', baslik:'Haber kalıcı olarak silinsin mi?', metin:'“' + r.dataset.baslik + '” geri alınamayacak biçimde silinir. Bu işlem e-posta koduyla doğrulanır ve denetim izine yazılır.', evet:'Kalıcı olarak sil',
-          evetIs: function(){ satirlar = satirlar.filter(function(x){ return x !== r; }); r.remove(); sayaclar(); uygula(); window.kbBildir('Haber kalıcı olarak silindi'); } });
+          evetIs: function(){
+            var sil = function(){ satirlar = satirlar.filter(function(x){ return x !== r; }); r.remove(); sayaclar(); uygula(); window.kbBildir('Haber kalıcı olarak silindi; denetim izine yazıldı'); };
+            if(window.kbKod) window.kbKod({ baslik:'Kalıcı silmeyi doğrulayın', metin:'“' + r.dataset.baslik + '” geri alınamayacak biçimde silinecek.', evet:'Doğrula ve sil', evetIs: sil }); else sil();
+          } });
       });
       window.addEventListener('scroll', function(){ if(dmBtn){ dm.classList.remove('open'); dmBtn.setAttribute('aria-expanded', 'false'); dmBtn = null; } }, true);
     }

@@ -12,6 +12,10 @@
   function oranSayi(s){ if(s === 'serbest') return null; var m = String(s).split(':'); return +m[0] / +(m[1] || 1); }
 
   /* kayıttan varsayılan oran listesi: modülün görsel alanı + sosyal medya oranları */
+  /* alan kendi oranlarını taşıyabilir: data-kirp-oranlar="id=Ad=16:10=400×250;…" */
+  function alanOranlari(s){
+    return s.split(';').map(function(x){ var p = x.split('='), px = (p[3] || '').split('×').map(Number); return { id: p[0], grup: 'Bu alan', ad: p[1], oran: p[2], px: px[1] ? px : null }; });
+  }
   function varsayilanOranlar(alanAnahtar){
     var parca = (alanAnahtar || 'haberler.kapak').split('.'), alan = ((P.gorsel_alanlari || {})[parca[0]] || {})[parca[1]] || {};
     var liste = [];
@@ -49,7 +53,7 @@
       + '  <div class="kp-sag">'
       + '    <div class="kp-bolum-tt">Oranlar<button type="button" class="kb-bag" data-kp-hepsi>Hepsini odağa hizala</button></div>'
       + '    <div class="kp-oranlar" data-kp-oranlar role="listbox" aria-label="Oranlar"></div>'
-      + '    <div class="kp-bolum-tt">Canlı önizleme</div>'
+      + '    <div class="kp-bolum-tt" data-kp-onizle-tt>Canlı önizleme</div>'
       + '    <div class="kp-onizle">'
       + '      <figure class="kpo-site"><div class="kpo-gorsel" data-kp-onizle="web.kart"></div><figcaption><span class="kpo-kat">Gündem</span><b data-kp-baslik></b></figcaption><small>Sitede kart</small></figure>'
       + '      <figure class="kpo-mobil"><div class="kpo-tel"><div class="kpo-gorsel" data-kp-onizle="mobil.kart"></div><b data-kp-baslik></b><span></span><span></span></div><small>Mobil kart</small></figure>'
@@ -65,6 +69,7 @@
     ov.addEventListener('click', function(e){
       if(e.target === ov || e.target.closest('[data-kp-kapat]')){ kapat(); return; }
       var k = e.target.closest('[data-kp-kip]'); if(k){ kipSec(k.dataset.kpKip); return; }
+      if(e.target.closest('[data-kp-diger]')){ durum.digerAcik = !durum.digerAcik; if(!durum.digerAcik && !/^(web|mobil)\./.test(durum.aktif) && durum.oranlar[0]) durum.aktif = durum.oranlar.filter(function(x){ return x.grup === 'Web' || x.grup === 'Mobil' || x.grup === 'Bu alan'; }).concat(durum.oranlar)[0].id; ciz(); return; }
       var o = e.target.closest('[data-kp-oran]'); if(o){ durum.aktif = o.dataset.kpOran; ciz(); return; }
       if(e.target.closest('[data-kp-sifirla]')){ delete durum.duz[durum.aktif]; delete durum.kirpmasiz[durum.aktif]; ciz(); window.kbBildir('Oran odak noktasına göre yeniden hizalandı'); return; }
       if(e.target.closest('[data-kp-hepsi]')){ durum.duz = {}; ciz(); window.kbBildir('Bütün oranlar odak noktasına hizalandı'); return; }
@@ -172,16 +177,27 @@
     ov.querySelector('[data-kp-yakin-deger]').textContent = '%' + Math.round(c.z * 100);
     ov.querySelector('[data-kp-kirpmasiz]').checked = !!km;
 
-    /* oran listesi: her satırda küçük canlı önizleme ve durum */
-    var grup = '', h = '';
-    durum.oranlar.forEach(function(x){
-      if(x.grup !== grup){ grup = x.grup; h += '<div class="kp-grup">' + grup + '</div>'; }
+    /* oran listesi (M5): o alan için gereken oranlar (web, mobil, alanın kendi oranları) açıkta;
+       bildirim ve sosyal medya oranları "Diğer oranlar" altında kapalı, otomatik hizalandıkları tek satırla yazılır. */
+    var ANA = { 'Web':1, 'Mobil':1, 'Bu alan':1 };
+    function satir(x){
       var dz = durum.duz[x.id], kmz = durum.kirpmasiz[x.id];
-      h += '<button type="button" role="option" aria-selected="' + (x.id === durum.aktif) + '" class="kp-oran' + (x.id === durum.aktif ? ' is-on' : '') + '" data-kp-oran="' + x.id + '">'
+      return '<button type="button" role="option" aria-selected="' + (x.id === durum.aktif) + '" class="kp-oran' + (x.id === durum.aktif ? ' is-on' : '') + '" data-kp-oran="' + x.id + '">'
         + '<span class="kp-mini" style="aspect-ratio:' + (x.r || W / H) + '" data-kp-mini="' + x.id + '"></span>'
         + '<span class="kp-oran-yazi"><b>' + x.ad + '</b><small>' + (x.oran === 'serbest' ? 'Serbest' : x.oran) + (x.px ? ' · ' + x.px[0] + '×' + x.px[1] : '') + '</small></span>'
         + '<span class="kp-durum ' + (kmz ? 'is-kirpmasiz' : dz ? 'is-duz' : '') + '">' + (kmz ? 'Kırpmasız' : dz ? 'Düzeltildi' : 'Otomatik') + '</span></button>';
-    });
+    }
+    var anaL = durum.oranlar.filter(function(x){ return ANA[x.grup]; }), digL = durum.oranlar.filter(function(x){ return !ANA[x.grup]; });
+    if(!anaL.length){ anaL = digL; digL = []; }
+    if(digL.some(function(x){ return x.id === durum.aktif; })) durum.digerAcik = true;
+    var h = '', grup = '';
+    anaL.forEach(function(x){ if(x.grup !== grup){ grup = x.grup; h += '<div class="kp-grup">' + grup + '</div>'; } h += satir(x); });
+    if(digL.length){
+      var dzS = digL.filter(function(x){ return durum.duz[x.id] || durum.kirpmasiz[x.id]; }).length;
+      h += '<div class="kp-diger' + (durum.digerAcik ? ' is-acik' : '') + '"><button type="button" class="kp-diger-bas" data-kp-diger aria-expanded="' + !!durum.digerAcik + '"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i><span><b>Diğer oranlar (' + digL.length + ')</b><small>Bildirim ve sosyal medya · ' + (dzS ? (digL.length - dzS) + ' otomatik, ' + dzS + ' düzeltildi' : 'odak noktasına göre otomatik hizalandı') + '</small></span></button>';
+      if(durum.digerAcik){ grup = ''; digL.forEach(function(x){ if(x.grup !== grup){ grup = x.grup; h += '<div class="kp-grup">' + grup + '</div>'; } h += satir(x); }); }
+      h += '</div>';
+    }
     ov.querySelector('[data-kp-oranlar]').innerHTML = h;
     ov.querySelectorAll('[data-kp-mini]').forEach(function(el){ boya(el, el.dataset.kpMini); });
 
@@ -189,13 +205,14 @@
     var sosyal = /^sosyal\./.test(durum.aktif) ? durum.aktif : (durum.oranlar.filter(function(x){ return /^sosyal\./.test(x.id); })[0] || {}).id;
     ov.querySelectorAll('[data-kp-onizle]').forEach(function(el){
       var id = el.dataset.kpOnizle === 'sosyal' ? sosyal : el.dataset.kpOnizle, x = durum.oranlar.filter(function(o){ return o.id === id; })[0];
-      el.closest('figure').hidden = !x; if(!x) return;
+      el.closest('figure').hidden = !x || (el.dataset.kpOnizle === 'sosyal' && !durum.digerAcik); if(el.closest('figure').hidden) return;
       el.style.aspectRatio = x.r || (kirpim(id).g * W) / (kirpim(id).y2 * H);
       boya(el, id);
       el.closest('figure').classList.toggle('is-aktif', id === durum.aktif);
     });
     var sx = durum.oranlar.filter(function(o){ return o.id === sosyal; })[0];
     ov.querySelector('[data-kp-sosyal-etk]').textContent = sx ? 'Sosyal kart · ' + (sx.oran === 'serbest' ? 'serbest' : sx.oran) : '';
+    var onz = ov.querySelector('.kp-onizle'); onz.hidden = !onz.querySelector('figure:not([hidden])'); ov.querySelector('[data-kp-onizle-tt]').hidden = onz.hidden;
     var duzSay = Object.keys(durum.duz).length, kmSay = Object.keys(durum.kirpmasiz).length;
     ov.querySelector('[data-kp-ozet]').textContent = 'Odak %' + Math.round(durum.odak.x * 100) + ' · %' + Math.round(durum.odak.y * 100) + ' · ' + (durum.oranlar.length - duzSay - kmSay) + ' oran otomatik' + (duzSay ? ', ' + duzSay + ' düzeltildi' : '') + (kmSay ? ', ' + kmSay + ' kırpmasız' : '');
   }
@@ -214,7 +231,7 @@
     img.onload = function(){
       var oranlar = (o.oranlar || varsayilanOranlar(o.alan)).map(function(x){ return Object.assign({ r: oranSayi(x.oran) }, x); });
       durum = { gorsel: o.gorsel, W: img.naturalWidth, H: img.naturalHeight, odak: o.odak || { x: .5, y: .5 }, oranlar: oranlar,
-        aktif: o.secili && oranlar.some(function(x){ return x.id === o.secili; }) ? o.secili : oranlar[0].id, duz: {}, kirpmasiz: {}, kip: o.secili ? 'cerceve' : 'odak', tamam: o.tamam };
+        aktif: o.secili && oranlar.some(function(x){ return x.id === o.secili; }) ? o.secili : oranlar[0].id, duz: {}, kirpmasiz: {}, digerAcik: false, kip: o.secili ? 'cerceve' : 'odak', tamam: o.tamam };
       if(o.ham){ durum.duz = JSON.parse(JSON.stringify(o.ham.duz)); durum.kirpmasiz = JSON.parse(JSON.stringify(o.ham.kirpmasiz)); }
       ov.querySelector('[data-kp-bilgi]').textContent = (o.ad ? o.ad + ' · ' : '') + durum.W + '×' + durum.H + ' · ' + oranlar.length + ' oran';
       ov.querySelectorAll('[data-kp-baslik]').forEach(function(b){ b.textContent = o.baslik || 'Asgari ücret görüşmelerinde ilk toplantı 4 Aralık\'ta yapılacak'; });
@@ -244,7 +261,7 @@
     var m = hedef && (hedef.style.backgroundImage || '').match(/url\(["']?([^"')]+)/);
     if(!m){ window.kbBildir('Önce bir görsel yükleyin ya da havuzdan seçin'); return; }
     var odakEl = alan.querySelector('.kg-odak'), odak = odakEl ? { x: parseFloat(odakEl.style.left) / 100, y: parseFloat(odakEl.style.top) / 100 } : null;
-    window.kbKirp({ gorsel: m[1], odak: odak, alan: alan.getAttribute('data-gorsel-alan') || 'haberler.kapak', secili: secili, ham: sonKirp.get(alan),
+    window.kbKirp({ gorsel: m[1], odak: odak, alan: alan.getAttribute('data-gorsel-alan') || 'haberler.kapak', secili: secili, oranlar: alan.getAttribute && alan.getAttribute('data-kirp-oranlar') ? alanOranlari(alan.getAttribute('data-kirp-oranlar')) : null, ham: sonKirp.get(alan),
       ad: alan.getAttribute('data-gorsel-ad'),
       tamam: function(s){
         sonKirp.set(alan, s.ham);

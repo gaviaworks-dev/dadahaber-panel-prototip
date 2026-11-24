@@ -40,6 +40,8 @@
     document.querySelectorAll('[data-izin-yok]').forEach(function(el){
       el.hidden = izinVar(rol, el.getAttribute('data-izin-yok'));
     });
+    /* kayıttan kapatılan modülün kutusu rolden bağımsız gizli kalır (menu_yaz.py) */
+    document.querySelectorAll('[data-modul-kapali]').forEach(function(el){ el.hidden = true; });
     /* hiç kalemi kalmayan grubu gizle */
     document.querySelectorAll('.sa-mgrp').forEach(function(g){
       g.hidden = !g.querySelector('.sa-mlink:not([hidden])');

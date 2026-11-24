@@ -43,25 +43,37 @@
       if(r.height <= 0) return 0;
       return Math.max(0, Math.min(1, (gorunen - r.top) / r.height));
     }
+    /* içerik ekrana sığıyorsa (kaydırılacak bir şey yoksa) düğme birkaç saniye sonra açılır (YS5) */
+    var sure = +(O.getAttribute('data-okuma-sure') || 3), sayacBasladi = false, kalan = sure;
+    function sigiyor(){
+      if(hedef.scrollHeight > hedef.clientHeight + 2) return false;
+      var r = hedef.getBoundingClientRect(); return r.top >= 0 && r.bottom <= window.innerHeight - 90;
+    }
+    function sayacBaslat(){
+      if(sayacBasladi) return; sayacBasladi = true; kalan = sure;
+      var z = setInterval(function(){ kalan--; if(kalan <= 0){ clearInterval(z); okundu = true; } ciz(); }, 1000);
+    }
     function ciz(){
       if(!gecerli()){
         btn.disabled = false; O.classList.remove('is-bekliyor', 'is-okundu');
         neden.innerHTML = '';
         return;
       }
-      var o = oran(); if(o >= .99) okundu = true;
+      var o = oran(); if(o >= .99 && !sigiyor()) okundu = true;
+      if(!okundu && sigiyor()){ sayacBaslat(); }
       btn.disabled = !okundu;
       O.classList.toggle('is-bekliyor', !okundu); O.classList.toggle('is-okundu', okundu);
       O.style.setProperty('--ko', (okundu ? 100 : Math.round(o * 100)) + '%');
       neden.innerHTML = okundu
         ? '<i class="fa-solid fa-circle-check" aria-hidden="true"></i>İçerik sonuna kadar okundu'
+        : sayacBasladi ? '<i class="fa-solid fa-hourglass-half" aria-hidden="true"></i>İçerik ekrana sığıyor; okumanız için <b>' + kalan + ' sn</b> sonra açılır'
         : '<i class="fa-solid fa-book-open-reader" aria-hidden="true"></i>Onaylamak için içeriği sonuna kadar okuyun <b>%' + Math.round(o * 100) + '</b>';
     }
     btn.setAttribute('aria-describedby', neden.id || (neden.id = 'ko' + Math.random().toString(36).slice(2, 7)));
     hedef.addEventListener('scroll', ciz, { passive:true });
     window.addEventListener('scroll', ciz, { passive:true });
     window.addEventListener('resize', ciz);
-    document.addEventListener('kb-rol', function(){ okundu = false; ciz(); });
+    document.addEventListener('kb-rol', function(){ okundu = false; sayacBasladi = false; ciz(); });
     ciz();
   });
 
@@ -257,6 +269,99 @@
   document.addEventListener('click', function(e){ var b = e.target.closest('[data-renk-ac]'); if(b){ e.preventDefault(); rAc(b); } });
   /* çekmece ya da pencerede açılan şablonlardaki renk alanları */
   new MutationObserver(function(){ renkKur(); }).observe(document.body, { childList:true, subtree:true });
+
+  /* ---------------- taşıyarak silme (B1) ----------------
+     kbTasiSil({ ad, tur, haber, alt, hedefler:[…], evetIs(hedef) }): içinde kayıt olan öğe doğrudan silinmez;
+     pencere kullanım sayısını yazar ve kayıtların taşınacağı yeri seçtirir; taşıma sonrası öğe çöpe gider. */
+  var tsOv = null, tsIs = null;
+  window.kbTasiSil = function(o){
+    if(!tsOv){
+      tsOv = document.createElement('div'); tsOv.className = 'sa-modal-ov kb-tasi-ov';
+      tsOv.innerHTML = '<div class="sa-modal danger kb-tasi" role="alertdialog" aria-modal="true" aria-labelledby="kbTasiBas"><div class="sa-modal-ico"><i class="fa-solid fa-folder-minus" aria-hidden="true"></i></div><h2 id="kbTasiBas"></h2><div class="kb-tasi-kullanim" data-ts-kullanim></div>'
+        + '<div class="frow"><span class="flabel" data-ts-etk></span><div class="kb-tasi-ara"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input type="search" placeholder="Konu ara" aria-label="Taşınacak konuyu ara"></div><div class="kb-tasi-liste" role="listbox" data-ts-liste></div></div>'
+        + '<p class="fhint" data-ts-not></p><div class="sa-modal-acts"><button type="button" class="btn btn-ghost" data-ts-hayir>Vazgeç</button><button type="button" class="btn btn-danger" data-ts-evet disabled></button></div></div>';
+      document.body.appendChild(tsOv);
+      tsOv.querySelector('input').addEventListener('input', function(e){ var q = (e.target.value || '').toLocaleLowerCase('tr'); tsOv.querySelectorAll('[data-ts-liste] button').forEach(function(b){ b.hidden = q && b.textContent.toLocaleLowerCase('tr').indexOf(q) === -1; }); });
+      tsOv.addEventListener('click', function(e){
+        if(e.target === tsOv || e.target.closest('[data-ts-hayir]')){ tsOv.classList.remove('open'); return; }
+        var b = e.target.closest('[data-ts-liste] button'); if(b){ tsOv.querySelectorAll('[data-ts-liste] button').forEach(function(x){ x.classList.toggle('is-sec', x === b); x.setAttribute('aria-selected', x === b); }); tsOv.querySelector('[data-ts-evet]').disabled = false; tsOv._hedef = b.dataset.v; return; }
+        if(e.target.closest('[data-ts-evet]')){ tsOv.classList.remove('open'); if(tsIs) tsIs(tsOv._hedef); }
+      });
+    }
+    tsIs = o.evetIs; tsOv._hedef = null;
+    tsOv.querySelector('h2').textContent = '“' + o.ad + '” silinmeden önce haberleri taşınmalı';
+    tsOv.querySelector('[data-ts-kullanim]').innerHTML = '<span><i class="fa-solid fa-newspaper" aria-hidden="true"></i><b>' + o.haber.toLocaleString('tr') + '</b> haber</span>' + (o.alt ? '<span><i class="fa-solid fa-sitemap" aria-hidden="true"></i><b>' + o.alt + '</b> alt konu</span>' : '');
+    tsOv.querySelector('[data-ts-etk]').textContent = 'Haberler nereye taşınsın?';
+    tsOv.querySelector('[data-ts-liste]').innerHTML = o.hedefler.map(function(h){ return '<button type="button" role="option" aria-selected="false" data-v="' + h.replace(/"/g, '&quot;') + '">' + h.replace(/</g, '&lt;') + '</button>'; }).join('');
+    tsOv.querySelector('[data-ts-not]').textContent = (o.alt ? 'Alt konular da çöpe gider. ' : '') + 'Haberlerin adresi yeni konuya göre değişir, eski adresler yönlendirilir. “' + o.ad + '” çöpe gider ve oradan geri alınabilir; işlem denetim izine yazılır.';
+    tsOv.querySelector('[data-ts-evet]').textContent = 'Taşı ve çöpe at'; tsOv.querySelector('[data-ts-evet]').disabled = true;
+    tsOv.querySelector('input').value = '';
+    tsOv.classList.add('open'); setTimeout(function(){ tsOv.querySelector('input').focus(); }, 50);
+  };
+
+  /* ---------------- satır listesi (formun içindeki tekrarlanan satırlar: kaynaklar vb.) ----------------
+     [data-satir-liste]: "ekle" yeni satırı düzenleme halinde açar; kalem satırı düzenler; çöp satırı kaldırır (B8: onaysız + Geri al). */
+  document.querySelectorAll('[data-satir-liste]').forEach(function(L){
+    var a1 = L.dataset.satirAlan1 || 'Başlık', a2 = L.dataset.satirAlan2 || 'Açıklama', adx = L.dataset.satirAd || 'Satır';
+    function esc2(s){ return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+    function duzenle(s){
+      var y = s.querySelector('.km-yazi'), b = y.firstChild ? (y.firstChild.nodeType === 3 ? y.firstChild.nodeValue : '') : '', k = y.querySelector('small') ? y.querySelector('small').textContent : '';
+      s.classList.add('is-duzenle'); s.dataset.eski = y.innerHTML;
+      y.innerHTML = '<input class="finput" data-s1 placeholder="' + esc2(a1) + '" value="' + esc2(b.trim()) + '"><input class="finput" data-s2 placeholder="' + esc2(a2) + '" value="' + esc2(k) + '"><span class="km-dz-btn"><button type="button" class="btn btn-acc btn-sm" data-satir-tamam>Tamam</button><button type="button" class="kb-bag" data-satir-vazgec>Vazgeç</button></span>';
+      y.querySelector('[data-s1]').focus();
+    }
+    function bitir(s, kaydet){
+      var y = s.querySelector('.km-yazi');
+      if(kaydet){ var v1 = y.querySelector('[data-s1]').value.trim(), v2 = y.querySelector('[data-s2]').value.trim();
+        if(!v1){ y.querySelector('[data-s1]').classList.add('is-hata'); y.querySelector('[data-s1]').focus(); return; }
+        y.innerHTML = esc2(v1) + (v2 ? '<small>' + esc2(v2) + '</small>' : ''); }
+      else if(s.dataset.yeni){ s.remove(); return; }
+      else y.innerHTML = s.dataset.eski;
+      s.classList.remove('is-duzenle'); delete s.dataset.yeni; L.dispatchEvent(new Event('input', { bubbles:true }));
+    }
+    L.addEventListener('click', function(e){
+      var s = e.target.closest('.km-satir');
+      if(e.target.closest('[data-satir-ekle]')){
+        var n = document.createElement('div'); n.className = 'km-satir'; n.setAttribute('data-sira', ''); n.dataset.yeni = '1';
+        n.innerHTML = '<button type="button" class="kb-tutamac" aria-label="Sırayı değiştir"><i class="fa-solid fa-grip-vertical" aria-hidden="true"></i></button><span class="km-yazi"></span><button type="button" class="ia-btn" data-satir-duzenle aria-label="' + adx + ' düzenle"><i class="fa-solid fa-pen" aria-hidden="true"></i></button><button type="button" class="ia-btn danger" data-satir-sil aria-label="' + adx + ' kaldır"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>';
+        L.insertBefore(n, e.target.closest('[data-satir-ekle]')); duzenle(n); return;
+      }
+      if(!s) return;
+      if(e.target.closest('[data-satir-duzenle]')){ if(!s.classList.contains('is-duzenle')) duzenle(s); return; }
+      if(e.target.closest('[data-satir-tamam]')){ bitir(s, true); return; }
+      if(e.target.closest('[data-satir-vazgec]')){ bitir(s, false); return; }
+      if(e.target.closest('[data-satir-sil]')){ var sonra = s.nextSibling, ad2 = (s.querySelector('.km-yazi').firstChild || {}).nodeValue || adx; s.remove(); L.dispatchEvent(new Event('input', { bubbles:true }));
+        window.kbBildir(adx + ' kaldırıldı: ' + ad2.trim(), function(){ L.insertBefore(s, sonra); }); }
+    });
+    L.addEventListener('keydown', function(e){ var s = e.target.closest('.km-satir.is-duzenle'); if(!s) return; if(e.key === 'Enter'){ e.preventDefault(); bitir(s, true); } if(e.key === 'Escape'){ e.stopPropagation(); bitir(s, false); } });
+  });
+
+  /* ---------------- bakım modu (Site Ayarları; K11, K15) ----------------
+     Açma: önce/sonra onayı → e-posta kodu → site bakımda (bant, rozet, kutu). Bitirme: onay. İkisi de denetim izine yazılır. */
+  document.querySelectorAll('[data-bakim-kutu]').forEach(function(K){
+    var bant = document.querySelector('[data-bakim-bant]'), rozet = document.querySelector('[data-bakim-rozet]');
+    function yaz(acik){
+      K.classList.toggle('is-bakim', acik);
+      K.querySelector('[data-bakim-baslik]').textContent = acik ? 'Site bakımda' : 'Site yayında';
+      K.querySelector('[data-bakim-alt]').textContent = acik ? 'Okurlar bakım sayfasını görüyor (503) · 24.11.2026 16.05\'ten beri · ' + ad() : 'Okurlar siteyi ve uygulamayı normal görüyor.';
+      var b = K.querySelector('[data-bakim-ac],[data-bakim-bitir]');
+      b.outerHTML = acik ? '<button type="button" class="btn btn-ghost btn-sm" data-bakim-bitir><i class="fa-solid fa-circle-play" aria-hidden="true"></i>Bakımı bitir</button>' : '<button type="button" class="btn btn-danger btn-sm" data-bakim-ac><i class="fa-solid fa-person-digging" aria-hidden="true"></i>Bakım modunu aç</button>';
+      if(bant){ bant.hidden = !acik; var oz = bant.querySelector('[data-bakim-ozet]'), bt = document.querySelector('#saBakimBitis .kt-deger'); if(oz) oz.textContent = bt && bt.textContent ? 'Planlanan bitiş: ' + bt.textContent + '.' : ''; }
+      if(rozet){ rozet.className = 'pstat ' + (acik ? 'warm' : 'ok'); rozet.textContent = acik ? 'Bakımda' : 'Yayında'; }
+    }
+    document.addEventListener('click', function(e){
+      if(e.target.closest('[data-bakim-ac]')){
+        window.kbOnay({ tehlike:true, ikon:'fa-person-digging', baslik:'Bakım modu açılsın mı?', metin:'Önce: site yayında → Sonra: okurlar bakım sayfasını görür (503), uygulama bakım ekranı gösterir. İzinli IP\'ler ve ekip önizleme bağlantısı siteyi görmeye devam eder. E-posta koduyla doğrulanır ve denetim izine yazılır.', evet:'Devam et',
+          evetIs: function(){ window.kbKod({ baslik:'Bakım modunu doğrulayın', evet:'Doğrula ve aç', evetIs: function(){ yaz(true); window.kbBildir('Bakım modu açıldı; denetim izine yazıldı'); } }); } });
+      }
+      if(e.target.closest('[data-bakim-bitir]')){
+        window.kbOnay({ ikon:'fa-circle-play', baslik:'Bakım bitsin mi?', metin:'Site ve uygulama hemen okurlara açılır. İşlem denetim izine yazılır.', evet:'Bakımı bitir', evetIs: function(){ yaz(false); window.kbBildir('Bakım bitti; site yayında'); } });
+      }
+    });
+  });
+  /* açık özellik sayısı (yan kart) */
+  var anSay = document.querySelector('[data-anahtar-say]');
+  if(anSay){ var anGun = function(){ var h = document.querySelectorAll('input[data-anahtar]'); anSay.textContent = Array.prototype.filter.call(h, function(x){ return x.checked; }).length + ' / ' + h.length; }; document.addEventListener('change', anGun); document.addEventListener('click', function(){ setTimeout(anGun, 50); }); }
 
   /* ---------------- maskeli gizli değer ----------------
      Değer hiçbir zaman açık gösterilmez; "Yenile" e-posta koduyla yeni değer üretir ve yalnızca o an bir kez gösterir. */

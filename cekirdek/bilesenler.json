@@ -1,0 +1,438 @@
+{
+ "_aciklama": "Ortak bileşen kataloğu (çekirdek). Modüller moduller.json → bilesenler alanında buradaki id'leri kullanır; menu_yaz.py denetler. 'eksik' bileşen, onu kullanan modül yayılıma girmeden önce çekirdeğe eklenir (modülün içine gömülmez). Dosyalar cekirdek/css ve cekirdek/js altındadır.",
+ "surum": 1,
+ "bilesenler": [
+  {
+   "id": "kart",
+   "ad": "Kart",
+   "kanca": "pnl-card · pc-head · pc-body",
+   "dosya": "kabuk.css",
+   "durum": "hazir",
+   "ui_kit": "kart",
+   "not": ""
+  },
+  {
+   "id": "kpi",
+   "ad": "KPI kutusu",
+   "kanca": "kpi-card",
+   "dosya": "kabuk.css",
+   "durum": "hazir",
+   "ui_kit": "kart",
+   "not": ""
+  },
+  {
+   "id": "kisa-liste",
+   "ad": "Kısa liste",
+   "kanca": "act-list",
+   "dosya": "kabuk.css",
+   "durum": "hazir",
+   "ui_kit": "kart",
+   "not": ""
+  },
+  {
+   "id": "durum-rozeti",
+   "ad": "Durum rozeti",
+   "kanca": "pstat ok|wait|off|warm|info",
+   "dosya": "kabuk.css",
+   "durum": "hazir",
+   "ui_kit": "rozet",
+   "not": ""
+  },
+  {
+   "id": "bos-durum",
+   "ad": "Boş · yükleniyor · hata",
+   "kanca": "pnl-empty · kb-iskelet · kb-hata",
+   "dosya": "kabuk.css · bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "tablo",
+   "not": ""
+  },
+  {
+   "id": "veri-tablosu",
+   "ad": "Veri tablosu",
+   "kanca": "[data-liste] · ptable · chips · filter-bar · pager",
+   "dosya": "bilesen.css · bilesen.js",
+   "durum": "hazir",
+   "ui_kit": "tablo",
+   "not": ""
+  },
+  {
+   "id": "satir-eylemleri",
+   "ad": "Satır eylemleri ve ⋯",
+   "kanca": "row-acts · ia-btn · kb-diger-menu",
+   "dosya": "bilesen.css · bilesen.js",
+   "durum": "hazir",
+   "ui_kit": "tablo",
+   "not": "görüntüle, düzenle, sil + ⋯"
+  },
+  {
+   "id": "toplu-islem",
+   "ad": "Toplu işlem çubuğu",
+   "kanca": "kb-toplu",
+   "dosya": "bilesen.css · bilesen.js",
+   "durum": "hazir",
+   "ui_kit": "tablo",
+   "not": ""
+  },
+  {
+   "id": "cop-sekmesi",
+   "ad": "Çöp sekmesi",
+   "kanca": "chip.kb-cop",
+   "dosya": "bilesen.css · bilesen.js",
+   "durum": "hazir",
+   "ui_kit": "tablo",
+   "not": "K11"
+  },
+  {
+   "id": "aranabilir-liste",
+   "ad": "Aranabilir açılır liste",
+   "kanca": "kb-secim",
+   "dosya": "bilesen.css · bilesen.js",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": ""
+  },
+  {
+   "id": "cip-girisi",
+   "ad": "Çip girişi (havuzlu, yerinde yönetim, serbest)",
+   "kanca": "kb-cip-girdi[data-havuz|data-havuz-yonet|data-serbest]",
+   "dosya": "bilesen.css · form.js",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": "B2"
+  },
+  {
+   "id": "tarih-saat",
+   "ad": "Tarih-saat seçici",
+   "kanca": "kb-tarih-sec",
+   "dosya": "bilesen.css · form.js",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": ""
+  },
+  {
+   "id": "telefon",
+   "ad": "Telefon (ülke kodu + maske)",
+   "kanca": "kb-tel",
+   "dosya": "bilesen.css · alan.js",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": ""
+  },
+  {
+   "id": "eposta",
+   "ad": "E-posta (anlık doğrulama)",
+   "kanca": "input[data-eposta]",
+   "dosya": "bilesen.css · alan.js",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": ""
+  },
+  {
+   "id": "birimli-sayi",
+   "ad": "Birimli sayı",
+   "kanca": "kb-birim",
+   "dosya": "bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": ""
+  },
+  {
+   "id": "renk-secici",
+   "ad": "Renk seçici",
+   "kanca": "kb-renkler[data-renk-ozel]",
+   "dosya": "bilesen.css · alan.js",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": ""
+  },
+  {
+   "id": "maskeli-alan",
+   "ad": "Maskeli gizli değer",
+   "kanca": "kb-maske",
+   "dosya": "bilesen.css · alan.js",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": ""
+  },
+  {
+   "id": "yayin-kanallari",
+   "ad": "Yayın kanalları",
+   "kanca": "kb-kanallar",
+   "dosya": "bilesen.css · alan.js",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": "Y1"
+  },
+  {
+   "id": "okuma-onayi",
+   "ad": "Okuma onayı düğmesi",
+   "kanca": "kb-okuma-onay",
+   "dosya": "bilesen.css · alan.js",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": "Y2, YS5"
+  },
+  {
+   "id": "satir-listesi",
+   "ad": "Satır listesi (ekle, düzenle, sil, sırala)",
+   "kanca": "[data-satir-liste] · [data-siralanir]",
+   "dosya": "bilesen.css · alan.js",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": "B3"
+  },
+  {
+   "id": "ozellik-anahtari",
+   "ad": "Özellik anahtarı",
+   "kanca": "input[data-anahtar]",
+   "dosya": "bilesen.css · alan.js",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": ""
+  },
+  {
+   "id": "profil-metin",
+   "ad": "Profile göre metin",
+   "kanca": "kb-profil-metin",
+   "dosya": "bilesen.css · form.js",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": "Bana etkisi"
+  },
+  {
+   "id": "ai-uret",
+   "ad": "AI ile üret adımı",
+   "kanca": "[data-ai-adim] · [data-ai-grup]",
+   "dosya": "bilesen.css · alan.js",
+   "durum": "hazir",
+   "ui_kit": "ai",
+   "not": ""
+  },
+  {
+   "id": "dil-secici",
+   "ad": "Dil seçici",
+   "kanca": "kb-dil",
+   "dosya": "bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "sekme",
+   "not": ""
+  },
+  {
+   "id": "sekmeli-duzenleme",
+   "ad": "Sekmeli düzenleme sayfası",
+   "kanca": "[data-sekmeli] · sa-form-tabs · form-layout · side-card · kb-kaydet",
+   "dosya": "bilesen.css · bilesen.js · form.js",
+   "durum": "hazir",
+   "ui_kit": "sekme",
+   "not": "sağ sütun sekmeye göre"
+  },
+  {
+   "id": "seo-sekmesi",
+   "ad": "SEO sekmesi",
+   "kanca": "serp · seo-score",
+   "dosya": "bilesen.css · form.js",
+   "durum": "hazir",
+   "ui_kit": "onizleme",
+   "not": ""
+  },
+  {
+   "id": "bildirim-sekmesi",
+   "ad": "Bildirim sekmesi",
+   "kanca": "kb-telefon · kb-web-push",
+   "dosya": "bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "onizleme",
+   "not": ""
+  },
+  {
+   "id": "bildirim-onizleme",
+   "ad": "Bildirim önizlemesi",
+   "kanca": "kb-telefon · kb-web-push",
+   "dosya": "bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "onizleme",
+   "not": ""
+  },
+  {
+   "id": "sosyal-sekmesi",
+   "ad": "Sosyal medya sekmesi",
+   "kanca": "kb-sosyal · kb-sosyal-arac",
+   "dosya": "bilesen.css · form.js",
+   "durum": "hazir",
+   "ui_kit": "onizleme",
+   "not": "platform editörleri"
+  },
+  {
+   "id": "sosyal-onizleme",
+   "ad": "Sosyal kart önizlemesi",
+   "kanca": "kb-sosyal-kart p-*",
+   "dosya": "bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "onizleme",
+   "not": ""
+  },
+  {
+   "id": "gorsel-alani",
+   "ad": "Görsel alanı (web + mobil)",
+   "kanca": "[data-gorsel-alan] · kb-gorsel",
+   "dosya": "bilesen.css · form.js",
+   "durum": "hazir",
+   "ui_kit": "medya",
+   "not": ""
+  },
+  {
+   "id": "medya-secici",
+   "ad": "Medya seçici (etiketle arama)",
+   "kanca": "[data-medya-sec] · kb-medya",
+   "dosya": "bilesen.css · form.js",
+   "durum": "hazir",
+   "ui_kit": "medya",
+   "not": "M4"
+  },
+  {
+   "id": "medya-etiketleme",
+   "ad": "Yüklemede etiketleme",
+   "kanca": "kbEtiketle",
+   "dosya": "bilesen.css · form.js",
+   "durum": "hazir",
+   "ui_kit": "medya",
+   "not": "M1–M3"
+  },
+  {
+   "id": "kirpma",
+   "ad": "Kırpma penceresi",
+   "kanca": "kbKirp · [data-kirp-ac]",
+   "dosya": "bilesen.css · kirp.js",
+   "durum": "hazir",
+   "ui_kit": "medya",
+   "not": "M5"
+  },
+  {
+   "id": "cekmece",
+   "ad": "Çekmece",
+   "kanca": "kbAc(…, 'cekmece')",
+   "dosya": "bilesen.css · bilesen.js",
+   "durum": "hazir",
+   "ui_kit": "pencere",
+   "not": ""
+  },
+  {
+   "id": "pencere",
+   "ad": "Pencere",
+   "kanca": "kbAc(…, 'pencere')",
+   "dosya": "bilesen.css · bilesen.js",
+   "durum": "hazir",
+   "ui_kit": "pencere",
+   "not": ""
+  },
+  {
+   "id": "onay",
+   "ad": "Onay diyaloğu",
+   "kanca": "kbOnay",
+   "dosya": "bilesen.css · bilesen.js",
+   "durum": "hazir",
+   "ui_kit": "pencere",
+   "not": ""
+  },
+  {
+   "id": "eposta-kodu",
+   "ad": "E-posta kodu doğrulaması",
+   "kanca": "kbKod",
+   "dosya": "bilesen.css · alan.js",
+   "durum": "hazir",
+   "ui_kit": "pencere",
+   "not": "K15"
+  },
+  {
+   "id": "tasiyarak-silme",
+   "ad": "Taşıyarak silme",
+   "kanca": "kbTasiSil",
+   "dosya": "bilesen.css · alan.js",
+   "durum": "hazir",
+   "ui_kit": "pencere",
+   "not": "B1"
+  },
+  {
+   "id": "kisa-bildirim",
+   "ad": "Kısa bildirim (geri al)",
+   "kanca": "kbBildir",
+   "dosya": "bilesen.css · bilesen.js",
+   "durum": "hazir",
+   "ui_kit": "pencere",
+   "not": ""
+  },
+  {
+   "id": "uyari-bandi",
+   "ad": "Uyarı bandı",
+   "kanca": "kb-bant bilgi|uyari|tehlike|tamam",
+   "dosya": "bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "rozet",
+   "not": ""
+  },
+  {
+   "id": "zengin-metin",
+   "ad": "Zengin metin editörü",
+   "kanca": "kb-zengin",
+   "dosya": "bilesen.css · form.js",
+   "durum": "eksik",
+   "ui_kit": "form",
+   "not": "geçici araç çubuğu; editör seçimi sorulacak"
+  },
+  {
+   "id": "dosya-yukleme",
+   "ad": "Dosya yükleme (video, ses, belge)",
+   "kanca": "—",
+   "dosya": "—",
+   "durum": "eksik",
+   "ui_kit": "medya",
+   "not": "Multimedya modülüyle"
+  },
+  {
+   "id": "takvim",
+   "ad": "Takvim görünümü",
+   "kanca": "—",
+   "dosya": "—",
+   "durum": "eksik",
+   "ui_kit": "",
+   "not": "Sosyal Medya ve Özel Widgetlar ile"
+  },
+  {
+   "id": "guven-skoru",
+   "ad": "Güven skoru göstergesi",
+   "kanca": "—",
+   "dosya": "—",
+   "durum": "eksik",
+   "ui_kit": "",
+   "not": "AI Haber Havuzu ile"
+  },
+  {
+   "id": "kaynak-teyidi",
+   "ad": "Kaynak teyidi paneli",
+   "kanca": "—",
+   "dosya": "—",
+   "durum": "eksik",
+   "ui_kit": "",
+   "not": "AI Haber Havuzu ile (K8)"
+  },
+  {
+   "id": "saglik-kutusu",
+   "ad": "Sağlık kutusu",
+   "kanca": "—",
+   "dosya": "—",
+   "durum": "eksik",
+   "ui_kit": "",
+   "not": "Sistem Sağlığı ve AI motoru ile"
+  },
+  {
+   "id": "esik-kaydirici",
+   "ad": "Eşik kaydırıcı",
+   "kanca": "—",
+   "dosya": "—",
+   "durum": "eksik",
+   "ui_kit": "",
+   "not": "AI otomatik yayın ayarı ile"
+  }
+ ]
+}
