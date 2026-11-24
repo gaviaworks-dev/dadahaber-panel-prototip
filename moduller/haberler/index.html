@@ -7,9 +7,9 @@
 <title>Haberler · Dada Haber Yönetim Paneli</title>
 <link rel="stylesheet" href="../../assets/vendor/fontawesome-6.5.2/css/all.min.css?v=c84e8169">
 <link rel="stylesheet" href="../../tema/dadahaber.css?v=d7460413" data-tema>
-<link rel="stylesheet" href="../../cekirdek/css/kabuk.css?v=5178d9e5">
-<link rel="stylesheet" href="../../cekirdek/css/bilesen.css?v=8335dce8">
-<!--P:bas--><script src="../../cekirdek/js/kayit.js?v=954cb4f6"></script><script src="../../cekirdek/js/erken.js?v=2cbfb3f6"></script><!--/P:bas-->
+<link rel="stylesheet" href="../../cekirdek/css/kabuk.css?v=3772fa53">
+<link rel="stylesheet" href="../../cekirdek/css/bilesen.css?v=7cc11b45">
+<!--P:bas--><script src="../../cekirdek/js/kayit.js?v=1fbb8311"></script><script src="../../cekirdek/js/erken.js?v=2cbfb3f6"></script><!--/P:bas-->
 </head>
 <body data-sayfa="haberler.liste">
 <div class="sa-app">
@@ -223,7 +223,7 @@
     <div class="sa-form-panel" id="kfDetay">
       <div class="kb-fs">
         <div class="kb-fs-tt">Temel bilgiler</div>
-        <div class="frow"><label for="kfAd">Ad <span class="zorunlu">*</span><span class="fdil">TR</span></label>
+        <div class="frow"><label for="kfAd">Ad <span class="zorunlu">*</span></label>
           <input class="finput" id="kfAd" data-alan="ad" data-zorunlu data-sayac="30|40" data-slug-hedef="kfSlug" placeholder="ör. Yerel Haberler">
           <div class="char-meter"><span>Menüde ve sayfa başlığında görünür</span><b>0 / 30</b></div>
           <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Kategori adı zorunlu.</div></div>
@@ -241,7 +241,7 @@
               <div class="kb-secim-bos" hidden>Bu adla kategori yok.</div>
             </div>
           </div></div>
-        <div class="frow"><label for="kfAciklama">Açıklama <span class="fdil">TR</span></label>
+        <div class="frow"><label for="kfAciklama">Açıklama</label>
           <textarea class="ftext" id="kfAciklama" data-sayac="160|200" rows="3" placeholder="Kategori sayfasının başında ve açılır menüde görünen kısa görev cümlesi"></textarea>
           <div class="char-meter"><span>Sitede kategori sayfasının başında</span><b>0 / 160</b></div></div>
       </div>
@@ -254,8 +254,8 @@
       <div class="kb-fs" id="kfGorunum">
         <div class="kb-fs-tt">Görünüm</div>
         <div class="frow"><span class="flabel">Renk</span>
-          <div class="kb-renkler" role="radiogroup" aria-label="Kategori rengi"><label class="kb-renk kat-gundem" title="Gündem"><input type="radio" name="kfRenk" value="gundem" checked><span></span><span class="sr-only">Gündem</span></label><label class="kb-renk kat-spor" title="Spor"><input type="radio" name="kfRenk" value="spor"><span></span><span class="sr-only">Spor</span></label><label class="kb-renk kat-finans" title="Finans"><input type="radio" name="kfRenk" value="finans"><span></span><span class="sr-only">Finans</span></label><label class="kb-renk kat-kadin" title="Kadın"><input type="radio" name="kfRenk" value="kadin"><span></span><span class="sr-only">Kadın</span></label><label class="kb-renk kat-savunma" title="Savunma"><input type="radio" name="kfRenk" value="savunma"><span></span><span class="sr-only">Savunma</span></label><label class="kb-renk kat-dunya" title="Dünya"><input type="radio" name="kfRenk" value="dunya"><span></span><span class="sr-only">Dünya</span></label><label class="kb-renk kat-kampus" title="Kampüs"><input type="radio" name="kfRenk" value="kampus"><span></span><span class="sr-only">Kampüs</span></label><label class="kb-renk kat-kesfet" title="Keşfet"><input type="radio" name="kfRenk" value="kesfet"><span></span><span class="sr-only">Keşfet</span></label><label class="kb-renk kat-kose" title="Köşe"><input type="radio" name="kfRenk" value="kose"><span></span><span class="sr-only">Köşe</span></label></div>
-          <span class="fhint">Kategori etiketinde ve menü vurgusunda; renkler temadan gelir.</span></div>
+          <div class="kb-renkler" role="radiogroup" aria-label="Kategori rengi" data-renk-ozel><label class="kb-renk kat-gundem" title="Gündem"><input type="radio" name="kfRenk" value="gundem" checked><span></span><span class="sr-only">Gündem</span></label><label class="kb-renk kat-spor" title="Spor"><input type="radio" name="kfRenk" value="spor"><span></span><span class="sr-only">Spor</span></label><label class="kb-renk kat-finans" title="Finans"><input type="radio" name="kfRenk" value="finans"><span></span><span class="sr-only">Finans</span></label><label class="kb-renk kat-kadin" title="Kadın"><input type="radio" name="kfRenk" value="kadin"><span></span><span class="sr-only">Kadın</span></label><label class="kb-renk kat-savunma" title="Savunma"><input type="radio" name="kfRenk" value="savunma"><span></span><span class="sr-only">Savunma</span></label><label class="kb-renk kat-dunya" title="Dünya"><input type="radio" name="kfRenk" value="dunya"><span></span><span class="sr-only">Dünya</span></label><label class="kb-renk kat-kampus" title="Kampüs"><input type="radio" name="kfRenk" value="kampus"><span></span><span class="sr-only">Kampüs</span></label><label class="kb-renk kat-kesfet" title="Keşfet"><input type="radio" name="kfRenk" value="kesfet"><span></span><span class="sr-only">Keşfet</span></label><label class="kb-renk kat-kose" title="Köşe"><input type="radio" name="kfRenk" value="kose"><span></span><span class="sr-only">Köşe</span></label></div>
+          <span class="fhint">Kategori etiketinde ve menü vurgusunda. Hazır renkler temadan gelir; + ile özel renk seçilir (okunurluk denetlenir).</span></div>
         <div class="frow"><span class="flabel">İkon</span>
           <div class="kb-secim is-dolu" data-deger="fa-newspaper" data-bos="İkon seçin">
             <button type="button" class="kb-secim-btn" data-acilir="kfIkonMenu" aria-expanded="false" aria-haspopup="listbox"><span class="ks-sol"><i class="fa-solid fa-newspaper ks-ikon" aria-hidden="true"></i><span class="ks-deger">Gazete</span></span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
@@ -280,10 +280,10 @@
     <div class="sa-form-panel" id="kfSeo" hidden>
       <div class="kb-fs">
         <div class="kb-fs-tt">Arama motoru</div>
-        <div class="frow"><label for="kfSeoB">SEO başlığı <span class="fdil">TR</span></label>
+        <div class="frow"><label for="kfSeoB">SEO başlığı</label>
           <input class="finput" id="kfSeoB" data-alan="seo-baslik" data-sayac="60|70">
           <div class="char-meter"><span>Arama sonucunda görünen başlık</span><b>0 / 60</b></div></div>
-        <div class="frow"><label for="kfSeoA">SEO açıklaması <span class="fdil">TR</span></label>
+        <div class="frow"><label for="kfSeoA">SEO açıklaması</label>
           <textarea class="ftext" id="kfSeoA" data-alan="seo-aciklama" data-sayac="155|170"></textarea>
           <div class="char-meter"><span>Arama sonucunda başlığın altında</span><b>0 / 155</b></div></div>
         <div class="frow"><span class="flabel">Arama sonucu önizlemesi</span>
@@ -299,8 +299,9 @@
 </template>
 
 
-<script src="../../cekirdek/js/kabuk.js?v=32860c0c"></script>
-<script src="../../cekirdek/js/bilesen.js?v=f9588f79"></script>
-<script src="../../cekirdek/js/form.js?v=9b3127cf"></script>
+<script src="../../cekirdek/js/kabuk.js?v=2e693a6e"></script>
+<script src="../../cekirdek/js/bilesen.js?v=4f6682d8"></script>
+<script src="../../cekirdek/js/form.js?v=8f46bc0a"></script>
+<script src="../../cekirdek/js/alan.js?v=4ab8c6c7"></script>
 </body>
 </html>
