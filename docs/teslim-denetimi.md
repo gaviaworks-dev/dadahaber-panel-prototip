@@ -5,6 +5,9 @@
 
 Modül: ________ · Teammate: ________ · Tarih: ________
 
+## 0 · Otomatik denetim (her teslimden önce, zorunlu)
+- [ ] `python3 -I araclar/denetim.py <modül klasörü>` → **KALDI 0** (kural başına sonuç; ayrıntı `docs/screenshots/denetim-son.json`). "KARAR" satırları (pano, uzun sayfa önerisi) lead'e iletilir. Betiğin denetledikleri: JS hatası, yatay taşma (1440/390), **liste araç satırı** (tek satır, taşmasız, listede bir tane), **çift blok**, **uzun sayfa**, **kilitli düğme**, satır eylemleri sırası, Çöp sekmesi (yoksa nedeni bantta), **boşluk** (yapışık ipucu/kutu), bildirimin düğmeyi kapatması, zorunlu alan (?yeni=1), elle zorunlu/yıldız, tarayıcı tarih alanı, `<style>`, satır içi renk ve boşluk. Açık istisna yalnız `body[data-denetim-istisna]` + `data-denetim-neden` ile (lead onayı).
+
 ## 1 · Sök-tak
 - [ ] Modül yalnızca kendi klasöründe; sayfaları `moduller.json`'da kayıtlı, `hazir` doğru.
 - [ ] Kapatılınca menüden çıkıyor, `python3 -I araclar/menu_yaz.py --kontrol` sorun bildirmiyor (kırık bağlantı 0, kapalı modüle bağlantı 0).
@@ -28,6 +31,7 @@ Modül: ________ · Teammate: ________ · Tarih: ________
 - [ ] Boş, yükleniyor ve hata durumları.
 - [ ] Yığılma ve satıra kırılma yok; dar ekranda sütun azalır ya da tablo yatay kayar.
 - [ ] **Tek veri görünümü (Beyar, yasak):** aynı kayıt kümesi sayfada iki görünümde (takvim + liste, kart + liste, pano + liste) alt alta yok; ikinci görünüm aynı alanda görünüm değiştiriciyle (Ay · Hafta · Liste / Izgara · Liste). Sekme, arama ve süzgeç tek ve açık görünüme uygulanıyor; Çöp, toplu seçim ve satır eylemleri liste görünümünde. Farklı veri gösteren özet kutuları (sayaçlar) istisna.
+- [ ] **Uzun sayfa yok:** sayfa birden çok büyük bloğu alt alta dizip birkaç ekran boyu uzamıyor; bloklar tek kartta sekmelere bölünmüş (sekmede sorun rozeti); sayfa başı düğmelerini tekrarlayan kutu yok.
 
 ## 4 · Eklenen düzenlenir ve silinir
 - [ ] "Ekle" ya da "yeni" ile oluşan her şey (kayıt, formdan eklenen etiket, havuza yerinde eklenen değer, sekme içindeki satır, ayardaki öğe) **aynı ekrandan düzenlenebiliyor ve silinebiliyor**.
@@ -38,6 +42,9 @@ Modül: ________ · Teammate: ________ · Tarih: ________
 - [ ] Havuzlu alanlarda havuz yerinde yönetiliyor: öneride ⋯ ile adını düzelt, sil, kullanım sayısı (B2). SEO anahtar kelimeleri havuzsuz.
 - [ ] ⋯ menüsünde "ekle" eylemlerinin karşılığı "çıkar" olarak görünüyor (B6); kalıcı silme e-posta kodu istiyor (B5).
 - [ ] Silinemeyen tek öğeler istisnalar (denetim izi, sistem logları, yasal metinlerin eski sürümleri, onay kayıtları) ve ekranda nedeni yazıyor.
+- [ ] **Yapılamayan eylemin düğmesi yok:** tamamen kilitli listede satırda kilitli/pasif düğme çizilmiyor (görüntüle + ⋯; neden bantta); kilit yalnız çoğu düzenlenebilir listede tek/az satır için (hiza).
+- [ ] **Liste araç satırı tek satır:** sekmeler + arama + en çok 2 süzgeç + Çöp aynı satırda (çekirdek toplar; sayfa ayrı satır kurmaz, süzgeç satırını tablodan sonra koymaz); 1440/1280/1024/768/390'da bölünmüyor.
+- [ ] **Boşluk:** ipucu/açıklama ait olduğu öğeye yakın, sonraki gruba uzak; sayfada elle boşluk (satır içi margin/padding, ipucunda `kb-ust-bosluk`) yok.
 
 ## 5 · Form
 - [ ] Telefon ülke kodlu ve maskeli, e-posta yazılırken doğrulanıyor.
