@@ -105,3 +105,23 @@ Modül: ________ · Teammate: ________ · Tarih: ________
 - Denetimde düzeltilenler: vitrin ve Günün 5'i havuzdan sıralı listeye geçti; reddet nedeni pencereye taşındı; ⋯ "Onayla ve yayınla" görseli eksik satırda gizli; yazar fotoğrafı oran sınıfı; sosyal oranlar kayıtla eşitlendi; kategori formundaki elle yıldız kaldırıldı.
 - Bilinçli istisnalar: haber sürümleri silinmez (varsayım); cron görevleri silinmez; Sosyal gönderide AI adımı yok (varsayım).
 - Çekirdeğe Dalga 2'de eklenenler kararlar dosyasında ("Dalga 2 öncesi …" ve "Dalga 2 sırasında …").
+
+
+---
+
+## Dalga 3 denetim sonucu (24.11.2026)
+
+| Modül | Teammate | Sayfa | Sök-tak / kayıt | JS | Taşma (4 genişlik) | Zorunlu alan ilkesi | Bileşen kaydı |
+|---|---|---|---|---|---|---|---|
+| Etkileşim | d2-sosyal (d3-etkilesim) | 8 | ✓ (kapatılınca sorun 0) | ✓ | ✓ | ✓ 6 form (`yanit`, `bulten`, `bulten-turu`, `test`, `push`, `reklam` — editör zorunlusu en çok 5) | ✓ |
+| Özel Widgetlar | d2-ai (d3-dikey) | 6 | ✓ (kapatılınca sorun 0) | ✓ | ✓ | ✓ 4 form (`kulup`, `takvim`, `ilan`, `duzeltme`) | ✓ |
+
+- Satır içi renkler yalnız veri (kulüp kurumsal rengi); kural gereği izinli.
+- Rol kapısı: Editör yalnız Yorumlar, Geri bildirimler ve Takvimler'i görüyor; diğerlerinde "yetki yok".
+- Bilinçli istisnalar: KVKK başvuruları, API verisi (puan tablosu, maçlar), bildirim kayıtları silinmez; nedeni ekranda.
+
+## Son tam denetim (24.11.2026)
+
+- **Kayıt:** `menu_yaz.py --kontrol --uyari` 0 sorun; açık 16 modülün bütün sayfaları `hazir:true`; "yapım aşamasında" sayfasına giden bağlantı yalnız bildirim merkezi tamamlanana kadar.
+- **Taşma ve JS:** 94 sayfa × 360 / 768 / 1440 → taşma 0, JS hatası 0, her sayfada tek `<h1>`, tarayıcı tarih alanı 0.
+- **Sök-tak:** `araclar/sok_tak.py` (Sosyal Medya kapatılır, sayılır, bağımlılık reddi denenir, geri açılır); her yaprak modül ayrıca kapatılarak denetlendi.
