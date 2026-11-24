@@ -1562,3 +1562,5 @@ body.kb-giris-sayfa{min-height:100vh;margin:0;display:grid;grid-template-columns
 .sa-form-tab .ch-cnt{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;margin-left:6px;padding:0 5px;border-radius:var(--radius-sm);background:var(--danger-tint);color:var(--danger);font-size:10.5px;font-weight:800;font-variant-numeric:tabular-nums} /* sekmede sorun sayısı rozeti */
 /* dokunma alanı ≥ 44 px (telefon): görünen boyut aynı, tıklanır alan genişler */
 @media(max-width:640px){.ia-btn,.chip,.pg-btn{position:relative}.ia-btn::after,.pg-btn::after{content:"";position:absolute;inset:-4px}.chip:not(.kb-cop)::after,.chip.kb-cop::after{content:"";position:absolute;inset:-7px -2px}}
+@media(max-width:640px){.kb-secim-btn{min-height:44px}}
+.kb-arac-aralik-pen,.kb-arac-filtre-pen{max-width:calc(100vw - 16px)}

@@ -242,8 +242,8 @@
       b.setAttribute('aria-expanded', ac ? 'true' : 'false');
       if(m) m.classList.toggle('open', ac);
       /* açılan menü ekrana sığar: sağdan ya da soldan taşıyorsa içeri kaydırılır */
-      if(m && ac){ m.style.marginLeft = ''; var mr = m.getBoundingClientRect(), vw = document.documentElement.clientWidth;
-        if(mr.width){ if(mr.right > vw - 8) m.style.marginLeft = (-(mr.right - vw + 8)) + 'px'; else if(mr.left < 8) m.style.marginLeft = (8 - mr.left) + 'px'; } }
+      if(m && ac){ m.style.translate = ''; var mr = m.getBoundingClientRect(), vw = document.documentElement.clientWidth;
+        if(mr.width){ var dx = mr.right > vw - 8 ? -(mr.right - vw + 8) : (mr.left < 8 ? 8 - mr.left : 0); if(mr.width > vw - 16) dx = 8 - mr.left; if(dx) m.style.translate = dx + 'px 0'; } }
       return;
     }
     if(!e.target.closest('.pnl-menu')) kapatHepsi();
