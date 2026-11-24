@@ -60,7 +60,7 @@ def hedef_href(anahtar, sayfa_yolu):
 def menu_html(sayfa_yolu):
     kontrol = hedef_href("kontrol-paneli.ana", sayfa_yolu)
     parca = [f'<nav class="sa-menu" id="saMenu" aria-label="Ana menü">',
-             f'<div class="sa-menu-head"><a class="kb-logo" href="{esc(kontrol)}" aria-label="{esc(kayit["proje_adi"])} Yönetim Paneli"></a></div>',
+             f'<div class="sa-menu-head"><a class="kb-logo-bag" href="{esc(kontrol)}" aria-label="{esc(kayit["proje_adi"])} Yönetim Paneli"><span class="kb-logo"></span><span class="kb-logo-isaret"></span></a></div>',
              '<div class="sa-mnav">']
     for g in sorted(kayit["gruplar"], key=lambda g: g["sira"]):
         mods = sorted([m for m in kayit["moduller"] if m["grup"] == g["id"] and m["id"] in acik], key=lambda m: m["sira"])
@@ -77,7 +77,7 @@ def menu_html(sayfa_yolu):
                     if n:
                         rozet = f'<span class="pl-cnt">{esc(n)}</span>'
                 linkler.append(
-                    f'<a class="sa-mlink" href="{esc(hedef_href(anahtar, sayfa_yolu))}" data-sayfa="{anahtar}" data-roller="{roller}">'
+                    f'<a class="sa-mlink" href="{esc(hedef_href(anahtar, sayfa_yolu))}" data-sayfa="{anahtar}" data-roller="{roller}" data-tip="{esc(s["baslik"])}">'
                     f'<i class="fa-solid {esc(s.get("ikon", "fa-circle"))}" aria-hidden="true"></i><span class="ml-ad">{esc(s["baslik"])}</span>{rozet}</a>')
         if not linkler:
             continue
@@ -90,10 +90,34 @@ def menu_html(sayfa_yolu):
     parca.append('</div>')
     cikis = goreli(YAKINDA, sayfa_yolu) + "?s=oturum.cikis"
     parca.append('<div class="sa-menu-foot">'
-                 f'<a class="sa-mlink" href="{esc(cikis)}"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i><span class="ml-ad">Çıkış</span></a>'
-                 f'<a class="sa-sig" href="https://gaviaworks.com" target="_blank" rel="noopener" aria-label="Gaviaworks"><img src="{esc(goreli("assets/gavia-isaret.png", sayfa_yolu))}" alt=""></a>'
-                 '</div></nav>')
+                 f'<a class="sa-mlink" href="{esc(cikis)}" data-tip="Çıkış"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i><span class="ml-ad">Çıkış</span></a>'
+                 f'<a class="sa-sig" href="https://gaviaworks.com" target="_blank" rel="noopener" aria-label="Gaviaworks" data-tip="Gaviaworks"><img src="{esc(goreli("assets/gavia-isaret.png", sayfa_yolu))}" alt=""></a>'
+                 '</div></nav>'
+                 '<button class="sa-divider" id="saDivider" type="button" aria-controls="saMenu" aria-label="Menüyü daralt"><span class="sa-grip" aria-hidden="true"></span></button>')
     return "".join(parca)
+
+def bildirim_html(sayfa_yolu):
+    satirlar, okunmadi = [], 0
+    for b in veri.get("bildirimler", []):
+        s = SAYFALAR[b["hedef"]]
+        if not s["acik"]:
+            continue
+        okunmadi += 1 if b.get("okunmadi") else 0
+        satirlar.append(
+            f'<a class="kb-bld{" is-yeni" if b.get("okunmadi") else ""}" href="{esc(hedef_href(b["hedef"], sayfa_yolu))}" data-roller="{" ".join(s["roller"])}">'
+            f'<span class="kb-bld-ico {esc(b["tur"])}"><i class="fa-solid {esc(b["ikon"])}" aria-hidden="true"></i></span>'
+            f'<span class="kb-bld-yazi"><b>{esc(b["baslik"])}</b><span>{esc(b["metin"])}</span></span>'
+            f'<span class="kb-bld-saat">{esc(b["saat"])}</span></a>')
+    yakinda = goreli(YAKINDA, sayfa_yolu)
+    return ('<div class="kb-bld-kap">'
+            '<button class="pnl-bell" type="button" data-acilir="bildirimMenu" aria-expanded="false" aria-haspopup="true" data-tip="Bildirimler" aria-label="Bildirimler">'
+            '<i class="fa-solid fa-bell" aria-hidden="true"></i><span class="pb-dot"></span></button>'
+            '<div class="pnl-menu kb-bildirim" id="bildirimMenu" role="menu">'
+            f'<div class="kb-bld-bas"><b>Bildirimler</b><span class="kb-bld-say">{okunmadi} okunmamış</span>'
+            '<button type="button" class="kb-bld-oku" data-bld-oku>Tümünü okundu say</button></div>'
+            f'<div class="kb-bld-liste">{"".join(satirlar)}</div>'
+            f'<a class="kb-bld-alt" href="{esc(yakinda)}?s=oturum.bildirimler">Bütün bildirimler<i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>'
+            '</div></div>')
 
 # ---------------------------------------------------------------- üst bar
 def ust_html(sayfa_yolu):
@@ -107,25 +131,31 @@ def ust_html(sayfa_yolu):
         '<button class="pnl-burger" id="pnlBurger" type="button" aria-label="Menüyü aç"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>'
         '<div class="pnl-search" role="search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>'
         '<label class="sr-only" for="pnlAra">Panelde ara</label>'
-        '<input id="pnlAra" type="search" placeholder="Haber, kişi, kaynak ya da ekran ara…" autocomplete="off"><kbd>⌘K</kbd></div>'
+        '<input id="pnlAra" type="search" placeholder="Haber, kişi, kaynak ya da ekran ara…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="araSonuc"><kbd>⌘K</kbd>'
+        '<div class="pnl-menu kb-ara-sonuc" id="araSonuc" role="listbox" aria-label="Arama sonuçları"></div></div>'
         '<div class="pnl-top-tools">'
         '<div class="kb-rol"><button class="kb-rol-btn" type="button" data-acilir="rolMenu" aria-expanded="false" aria-haspopup="true">'
         '<i class="fa-solid fa-masks-theater" aria-hidden="true"></i><span class="kr-etk">Rol</span><span class="kr-ad" id="krAd">Süper Admin</span></button>'
         '<div class="pnl-menu" id="rolMenu" role="menu"><div class="pmenu-head"><b>Prototip rol değiştirici</b><span>Seçilen rolün gördüğü menü ve kutular</span></div>'
         f'{rol_dugmeleri}</div></div>'
-        f'<a class="pnl-bell" href="{esc(kayit["site_adresi"])}" target="_blank" rel="noopener" data-tip="Siteyi görüntüle" aria-label="Siteyi görüntüle"><i class="fa-solid fa-globe" aria-hidden="true"></i></a>'
-        f'<a class="pnl-bell" href="{esc(yakinda)}?s=oturum.bildirimler" data-tip="Bildirimler" aria-label="Bildirimler"><i class="fa-solid fa-bell" aria-hidden="true"></i><span class="pb-dot"></span></a>'
+        f'<a class="pnl-bell kb-site" href="{esc(kayit["site_adresi"])}" target="_blank" rel="noopener" data-tip="Siteyi görüntüle" aria-label="Siteyi görüntüle"><i class="fa-solid fa-globe" aria-hidden="true"></i></a>'
+        f'{bildirim_html(sayfa_yolu)}'
         '<div class="kb-hesap"><button class="pnl-me" type="button" data-acilir="hesapMenu" aria-expanded="false" aria-haspopup="true">'
         '<span class="pm-ava" id="pmAva">SA</span><span class="pm-id"><span class="pm-name" id="pmName">Selin Aydemir</span><span class="pm-role" id="pmRole">Süper Admin</span></span>'
         '<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>'
         '<div class="pnl-menu" id="hesapMenu" role="menu"><div class="pmenu-head"><b id="pmMenuAd">Selin Aydemir</b><span id="pmMenuEposta">selin.aydemir@dadahaber.ornek</span></div>'
         f'<a href="{esc(yakinda)}?s=oturum.profil"><i class="fa-solid fa-user" aria-hidden="true"></i>Profilim</a>'
         f'<a href="{esc(yakinda)}?s=oturum.oturumlar"><i class="fa-solid fa-laptop" aria-hidden="true"></i>Aktif oturumlar</a>'
+        f'<a class="kb-yalniz-tel" href="{esc(kayit["site_adresi"])}" target="_blank" rel="noopener"><i class="fa-solid fa-globe" aria-hidden="true"></i>Siteyi görüntüle</a>'
         '<div class="pmenu-div"></div>'
         f'<a class="danger" href="{esc(yakinda)}?s=oturum.cikis"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>Çıkış</a>'
         '</div></div>'
         '</div></header>'
     )
+
+def bas_html(sayfa_yolu):
+    return (f'<script src="{esc(goreli("cekirdek/js/kayit.js", sayfa_yolu))}"></script>'
+            f'<script src="{esc(goreli("cekirdek/js/erken.js", sayfa_yolu))}"></script>')
 
 # ---------------------------------------------------------------- kayit.js
 OTURUM_SAYFALARI = {
@@ -138,6 +168,7 @@ def kayit_js():
         "menu": kayit["menu"],
         "roller": {r["id"]: {"ad": r["ad"], "izin_gruplari": r["izin_gruplari"]} for r in kayit["roller"]},
         "rol_degistirici": kayit["rol_degistirici"],
+        "etkilesim": {k: v for k, v in kayit.get("etkilesim", {}).items() if not k.startswith("_")},
         "personalar": veri["personalar"],
         "sayfalar": {k: {x: v[x] for x in ("baslik", "ikon", "modul_ad", "hazir", "acik", "roller")} for k, v in SAYFALAR.items()},
         "oturum_sayfalari": OTURUM_SAYFALARI,
@@ -201,6 +232,7 @@ for p, rel in sayfalar():
     t = p.read_text(encoding="utf-8")
     yeni, m1 = isaret_yaz(t, "menu", menu_html(rel))
     yeni, m2 = isaret_yaz(yeni, "ust", ust_html(rel))
+    yeni, _ = isaret_yaz(yeni, "bas", bas_html(rel))
     if not (m1 or m2):
         continue
     yeni = hedefleri_yaz(yeni, rel)
