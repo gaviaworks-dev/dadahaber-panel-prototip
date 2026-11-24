@@ -515,7 +515,7 @@ window.PANEL = {
    "baslik": "Vitrin ve Son Dakika",
    "ikon": "fa-star",
    "modul_ad": "Haberler ve Vitrin",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -527,7 +527,7 @@ window.PANEL = {
    "baslik": "Canlı Anlatım",
    "ikon": "fa-tower-broadcast",
    "modul_ad": "Haberler ve Vitrin",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -540,7 +540,7 @@ window.PANEL = {
    "baslik": "Dosyalar ve Formatlar",
    "ikon": "fa-folder-open",
    "modul_ad": "Haberler ve Vitrin",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -552,7 +552,7 @@ window.PANEL = {
    "baslik": "Yazarlar",
    "ikon": "fa-pen-nib",
    "modul_ad": "Haberler ve Vitrin",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -560,11 +560,99 @@ window.PANEL = {
     "editor"
    ]
   },
+  "haberler.son-dakika": {
+   "baslik": "Son Dakika",
+   "ikon": "fa-bolt",
+   "modul_ad": "Haberler ve Vitrin",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor"
+   ]
+  },
+  "haberler.canli-masa": {
+   "baslik": "Canlı anlatım masası",
+   "ikon": "fa-tower-broadcast",
+   "modul_ad": "Haberler ve Vitrin",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed"
+   ]
+  },
+  "haberler.dosya": {
+   "baslik": "Olay dosyası düzenle",
+   "ikon": "fa-folder-open",
+   "modul_ad": "Haberler ve Vitrin",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor"
+   ]
+  },
+  "haberler.gunun-5": {
+   "baslik": "Günün 5'i",
+   "ikon": "fa-list-ol",
+   "modul_ad": "Haberler ve Vitrin",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor"
+   ]
+  },
+  "haberler.inceleme": {
+   "baslik": "Doğrulama incelemesi düzenle",
+   "ikon": "fa-scale-balanced",
+   "modul_ad": "Haberler ve Vitrin",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor"
+   ]
+  },
+  "haberler.yazar": {
+   "baslik": "Yazar düzenle",
+   "ikon": "fa-pen-nib",
+   "modul_ad": "Haberler ve Vitrin",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor"
+   ]
+  },
+  "haberler.surumler": {
+   "baslik": "Sürüm geçmişi",
+   "ikon": "fa-clock-rotate-left",
+   "modul_ad": "Haberler ve Vitrin",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed",
+    "sosyal",
+    "analist"
+   ]
+  },
   "ai-havuz.havuz": {
    "baslik": "Haber Havuzu",
    "ikon": "fa-robot",
    "modul_ad": "AI Haber Havuzu",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -578,7 +666,7 @@ window.PANEL = {
    "baslik": "Kaynaklar",
    "ikon": "fa-rss",
    "modul_ad": "AI Haber Havuzu",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -589,17 +677,52 @@ window.PANEL = {
    "baslik": "Kaynak Motoru",
    "ikon": "fa-gears",
    "modul_ad": "AI Haber Havuzu",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super"
+   ]
+  },
+  "ai-havuz.duzenle": {
+   "baslik": "AI haber düzenle",
+   "ikon": "fa-robot",
+   "modul_ad": "AI Haber Havuzu",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed",
+    "analist"
+   ]
+  },
+  "ai-havuz.cron": {
+   "baslik": "Cron ve hat sağlığı",
+   "ikon": "fa-heart-pulse",
+   "modul_ad": "AI Haber Havuzu",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super"
+   ]
+  },
+  "ai-havuz.ayarlar": {
+   "baslik": "Otomatik yayın ve onay ayarları",
+   "ikon": "fa-sliders",
+   "modul_ad": "AI Haber Havuzu",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy"
    ]
   },
   "multimedya.video": {
    "baslik": "Video ve Akış",
    "ikon": "fa-video",
    "modul_ad": "Multimedya ve Medya Havuzu",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -612,7 +735,7 @@ window.PANEL = {
    "baslik": "Podcast",
    "ikon": "fa-podcast",
    "modul_ad": "Multimedya ve Medya Havuzu",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -624,7 +747,7 @@ window.PANEL = {
    "baslik": "Sesli Haber ve Spiker",
    "ikon": "fa-headphones",
    "modul_ad": "Multimedya ve Medya Havuzu",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -636,7 +759,7 @@ window.PANEL = {
    "baslik": "Galeri ve İnfografik",
    "ikon": "fa-images",
    "modul_ad": "Multimedya ve Medya Havuzu",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -649,7 +772,7 @@ window.PANEL = {
    "baslik": "Medya Havuzu",
    "ikon": "fa-photo-film",
    "modul_ad": "Multimedya ve Medya Havuzu",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -657,6 +780,118 @@ window.PANEL = {
     "editor",
     "kat-ed",
     "sosyal"
+   ]
+  },
+  "multimedya.video-duzenle": {
+   "baslik": "Video düzenle",
+   "ikon": "fa-video",
+   "modul_ad": "Multimedya ve Medya Havuzu",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed"
+   ]
+  },
+  "multimedya.akis-duzenle": {
+   "baslik": "Akış videosu düzenle",
+   "ikon": "fa-mobile-screen",
+   "modul_ad": "Multimedya ve Medya Havuzu",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed"
+   ]
+  },
+  "multimedya.canli-duzenle": {
+   "baslik": "Canlı yayın düzenle",
+   "ikon": "fa-tower-broadcast",
+   "modul_ad": "Multimedya ve Medya Havuzu",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed"
+   ]
+  },
+  "multimedya.seri": {
+   "baslik": "Podcast serisi düzenle",
+   "ikon": "fa-podcast",
+   "modul_ad": "Multimedya ve Medya Havuzu",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor"
+   ]
+  },
+  "multimedya.bolum": {
+   "baslik": "Podcast bölümü düzenle",
+   "ikon": "fa-microphone-lines",
+   "modul_ad": "Multimedya ve Medya Havuzu",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor"
+   ]
+  },
+  "multimedya.sesli-duzenle": {
+   "baslik": "Sesli bülten düzenle",
+   "ikon": "fa-headphones",
+   "modul_ad": "Multimedya ve Medya Havuzu",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor"
+   ]
+  },
+  "multimedya.galeri-duzenle": {
+   "baslik": "Galeri düzenle",
+   "ikon": "fa-images",
+   "modul_ad": "Multimedya ve Medya Havuzu",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed"
+   ]
+  },
+  "multimedya.infografik": {
+   "baslik": "İnfografik düzenle",
+   "ikon": "fa-chart-pie",
+   "modul_ad": "Multimedya ve Medya Havuzu",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed"
+   ]
+  },
+  "multimedya.sablon": {
+   "baslik": "Marka şablonu",
+   "ikon": "fa-stamp",
+   "modul_ad": "Multimedya ve Medya Havuzu",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy"
    ]
   },
   "ozel-dikeyler.spor": {
@@ -696,6 +931,29 @@ window.PANEL = {
   },
   "ozel-dikeyler.ilanlar": {
    "baslik": "Resmî İlanlar",
+   "ikon": "fa-bullhorn",
+   "modul_ad": "Özel Widgetlar",
+   "hazir": false,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy"
+   ]
+  },
+  "ozel-dikeyler.kulup": {
+   "baslik": "Kulüp düzenle",
+   "ikon": "fa-shield-halved",
+   "modul_ad": "Özel Widgetlar",
+   "hazir": false,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "kat-ed"
+   ]
+  },
+  "ozel-dikeyler.ilan": {
+   "baslik": "İlan düzenle",
    "ikon": "fa-bullhorn",
    "modul_ad": "Özel Widgetlar",
    "hazir": false,
@@ -745,7 +1003,7 @@ window.PANEL = {
    "baslik": "Gönderi Oluştur",
    "ikon": "fa-pen-to-square",
    "modul_ad": "Sosyal Medya Merkezi",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -757,7 +1015,7 @@ window.PANEL = {
    "baslik": "Yayın Takvimi",
    "ikon": "fa-calendar-check",
    "modul_ad": "Sosyal Medya Merkezi",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -770,12 +1028,25 @@ window.PANEL = {
    "baslik": "Hesaplar",
    "ikon": "fa-share-nodes",
    "modul_ad": "Sosyal Medya Merkezi",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
     "gyy",
     "sosyal"
+   ]
+  },
+  "sosyal-medya.kuyruk": {
+   "baslik": "Gönderim kuyruğu",
+   "ikon": "fa-list-check",
+   "modul_ad": "Sosyal Medya Merkezi",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "sosyal",
+    "analist"
    ]
   },
   "etkilesim.yorumlar": {
@@ -835,6 +1106,41 @@ window.PANEL = {
     "super",
     "gyy",
     "editor"
+   ]
+  },
+  "etkilesim.bulten-duzenle": {
+   "baslik": "Bülten düzenle",
+   "ikon": "fa-envelope-open-text",
+   "modul_ad": "Etkileşim",
+   "hazir": false,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "sosyal"
+   ]
+  },
+  "etkilesim.push-duzenle": {
+   "baslik": "Push bildirimi düzenle",
+   "ikon": "fa-bell",
+   "modul_ad": "Etkileşim",
+   "hazir": false,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "sosyal"
+   ]
+  },
+  "etkilesim.reklam-duzenle": {
+   "baslik": "Reklam alanı düzenle",
+   "ikon": "fa-rectangle-ad",
+   "modul_ad": "Etkileşim",
+   "hazir": false,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy"
    ]
   },
   "kullanicilar.liste": {
@@ -1368,6 +1674,272 @@ window.PANEL = {
     "bildirim": {
      "oran": "2:1"
     }
+   },
+   "yazar": {
+    "_kaynak": "public CSS (d2-haberler): yazarlar.html .yz1-av 88, yazar.html .pf-av 96, telefonda 72; daire",
+    "web": {
+     "kart": {
+      "oran": "1:1",
+      "px": [
+       88,
+       88
+      ]
+     },
+     "detay": {
+      "oran": "1:1",
+      "px": [
+       96,
+       96
+      ]
+     }
+    },
+    "mobil": {
+     "kart": {
+      "oran": "1:1",
+      "px": [
+       72,
+       72
+      ]
+     }
+    },
+    "mobil_webden_kirpilir": true
+   },
+   "manset": {
+    "_kaynak": "public CSS (d2-haberler): .manset .sol 9fr × 490px, yan kart 2:1; telefon önerisi",
+    "web": {
+     "detay": {
+      "oran": "1.93:1",
+      "px": [
+       948,
+       490
+      ]
+     },
+     "kart": {
+      "oran": "2:1",
+      "px": [
+       316,
+       155
+      ]
+     }
+    },
+    "mobil": {
+     "kart": {
+      "oran": "6:7",
+      "px": [
+       358,
+       420
+      ]
+     }
+    },
+    "mobil_webden_kirpilir": true
+   },
+   "canli_giris": {
+    "_kaynak": "d2-haberler: canlı anlatım girişinin görseli",
+    "web": {
+     "kart": {
+      "oran": "16:9",
+      "px": [
+       800,
+       450
+      ]
+     }
+    },
+    "mobil": {
+     "kart": {
+      "oran": "16:9",
+      "px": [
+       358,
+       201
+      ]
+     }
+    },
+    "mobil_webden_kirpilir": true
+   }
+  },
+  "multimedya": {
+   "video": {
+    "_kaynak": "public CSS (d2-medya): video.html .gk .gm 4:3, .oy-video 16:9",
+    "web": {
+     "kart": {
+      "oran": "4:3",
+      "px": [
+       308,
+       231
+      ]
+     },
+     "detay": {
+      "oran": "16:9",
+      "px": [
+       1280,
+       720
+      ]
+     }
+    },
+    "mobil": {
+     "kart": {
+      "oran": "4:3",
+      "px": [
+       358,
+       268
+      ]
+     }
+    },
+    "mobil_webden_kirpilir": true,
+    "bildirim": {
+     "oran": "2:1"
+    }
+   },
+   "akis": {
+    "_kaynak": "public CSS (d2-medya): .reel 188px, .ak-oy 420px, telefonda tam ekran",
+    "web": {
+     "kart": {
+      "oran": "9:16",
+      "px": [
+       188,
+       334
+      ]
+     },
+     "detay": {
+      "oran": "9:16",
+      "px": [
+       420,
+       747
+      ]
+     }
+    },
+    "mobil": {
+     "kart": {
+      "oran": "9:16",
+      "px": [
+       358,
+       636
+      ]
+     }
+    },
+    "mobil_webden_kirpilir": true
+   },
+   "podcast": {
+    "_kaynak": "public CSS (d2-medya): .pc 168px; telefonda .pc-kap 16:9",
+    "web": {
+     "kart": {
+      "oran": "1:1",
+      "px": [
+       168,
+       168
+      ]
+     },
+     "detay": {
+      "oran": "1:1",
+      "px": [
+       600,
+       600
+      ]
+     }
+    },
+    "mobil": {
+     "kart": {
+      "oran": "16:9",
+      "px": [
+       358,
+       201
+      ]
+     }
+    },
+    "mobil_webden_kirpilir": true
+   },
+   "galeri": {
+    "_kaynak": "public CSS (d2-medya): .kolaj 4:3; detay 16:10 varsayım",
+    "web": {
+     "kart": {
+      "oran": "4:3",
+      "px": [
+       308,
+       231
+      ]
+     },
+     "detay": {
+      "oran": "16:10",
+      "px": [
+       1280,
+       800
+      ]
+     }
+    },
+    "mobil": {
+     "kart": {
+      "oran": "4:3",
+      "px": [
+       358,
+       268
+      ]
+     }
+    },
+    "mobil_webden_kirpilir": true
+   },
+   "infografik": {
+    "_kaynak": "public CSS (d2-medya): .t-sira 4 sütun",
+    "web": {
+     "kart": {
+      "oran": "3:4",
+      "px": [
+       305,
+       407
+      ]
+     },
+     "detay": {
+      "oran": "3:4",
+      "px": [
+       900,
+       1200
+      ]
+     }
+    },
+    "mobil": {
+     "kart": {
+      "oran": "3:4",
+      "px": [
+       358,
+       477
+      ]
+     }
+    },
+    "mobil_webden_kirpilir": true
+   }
+  },
+  "ozel-dikeyler": {
+   "arma": {
+    "_kaynak": "varsayım (lead): kulüp arması (puan durumu satırı, takım sayfası)",
+    "web": {
+     "kart": {
+      "oran": "1:1",
+      "px": [
+       48,
+       48
+      ]
+     },
+     "detay": {
+      "oran": "1:1",
+      "px": [
+       160,
+       160
+      ]
+     }
+    },
+    "mobil": {
+     "kart": {
+      "oran": "1:1",
+      "px": [
+       40,
+       40
+      ]
+     }
+    },
+    "mobil_webden_kirpilir": true
+   }
+  },
+  "sosyal-medya": {
+   "gonderi": {
+    "_kaynak": "yalnız sosyal oranlar (oran_olculeri); web ve mobil kırpım yok"
    }
   },
   "kimlik-yetki": {
@@ -1650,6 +2222,111 @@ window.PANEL = {
   ]
  },
  "zorunlu": {
+  "haberler.son-dakika": {
+   "taslak": [
+    "baslik"
+   ],
+   "yayin": [
+    "baslik",
+    "kategori"
+   ],
+   "sistem": [
+    "saat"
+   ]
+  },
+  "haberler.canli": {
+   "taslak": [
+    "baslik"
+   ],
+   "yayin": [
+    "baslik",
+    "spot",
+    "kategori",
+    "kapak"
+   ],
+   "sistem": [
+    "yazar",
+    "baslangic"
+   ]
+  },
+  "haberler.canli-giris": {
+   "taslak": [
+    "metin"
+   ],
+   "yayin": [
+    "metin"
+   ],
+   "sistem": [
+    "saat",
+    "yazar"
+   ]
+  },
+  "haberler.dosya": {
+   "taslak": [
+    "baslik"
+   ],
+   "yayin": [
+    "baslik",
+    "spot",
+    "kategori",
+    "kapak",
+    "ozet"
+   ],
+   "sistem": [
+    "yazar"
+   ]
+  },
+  "haberler.gunun-5": {
+   "taslak": [
+    "baslik"
+   ],
+   "yayin": [
+    "baslik",
+    "haberler"
+   ],
+   "sistem": [
+    "kapak",
+    "yayin"
+   ]
+  },
+  "haberler.inceleme": {
+   "taslak": [
+    "baslik"
+   ],
+   "yayin": [
+    "baslik",
+    "spot",
+    "iddia",
+    "karar",
+    "bulgular",
+    "kapak"
+   ],
+   "sistem": [
+    "yazar"
+   ]
+  },
+  "haberler.yazar": {
+   "taslak": [
+    "ad"
+   ],
+   "yayin": [
+    "ad",
+    "unvan"
+   ],
+   "sistem": []
+  },
+  "haberler.surum-notu": {
+   "taslak": [
+    "metin"
+   ],
+   "yayin": [
+    "metin"
+   ],
+   "sistem": [
+    "zaman",
+    "yazar"
+   ]
+  },
   "haberler.haber": {
    "taslak": [
     "baslik"
@@ -1673,6 +2350,252 @@ window.PANEL = {
     "ad",
     "ust"
    ]
+  },
+  "ai-havuz.kaynak": {
+   "taslak": [
+    "ad"
+   ],
+   "yayin": [
+    "ad",
+    "adres",
+    "grup"
+   ],
+   "sistem": [
+    "tip"
+   ]
+  },
+  "ai-havuz.grup": {
+   "taslak": [
+    "ad"
+   ],
+   "yayin": [
+    "ad",
+    "siklik"
+   ],
+   "sistem": [
+    "kanallar"
+   ]
+  },
+  "ai-havuz.reddet": {
+   "taslak": [],
+   "yayin": [
+    "neden"
+   ],
+   "sistem": []
+  },
+  "multimedya.video": {
+   "taslak": [
+    "baslik"
+   ],
+   "yayin": [
+    "baslik",
+    "video",
+    "kategori",
+    "kapak"
+   ],
+   "sistem": [
+    "yazar",
+    "sure"
+   ]
+  },
+  "multimedya.akis": {
+   "taslak": [
+    "baslik"
+   ],
+   "yayin": [
+    "baslik",
+    "video",
+    "kategori",
+    "kapak"
+   ],
+   "sistem": [
+    "sure",
+    "sira"
+   ]
+  },
+  "multimedya.canli": {
+   "taslak": [
+    "baslik"
+   ],
+   "yayin": [
+    "baslik",
+    "video",
+    "baslangic",
+    "kategori",
+    "kapak"
+   ],
+   "sistem": [
+    "yazar"
+   ]
+  },
+  "multimedya.seri": {
+   "taslak": [
+    "ad"
+   ],
+   "yayin": [
+    "ad",
+    "kategori",
+    "kapak"
+   ]
+  },
+  "multimedya.bolum": {
+   "taslak": [
+    "baslik"
+   ],
+   "yayin": [
+    "baslik",
+    "seri",
+    "ses"
+   ],
+   "sistem": [
+    "bolum-no",
+    "sure",
+    "kapak"
+   ]
+  },
+  "multimedya.sesli": {
+   "taslak": [
+    "baslik"
+   ],
+   "yayin": [
+    "baslik",
+    "haberler",
+    "ses"
+   ],
+   "sistem": [
+    "okuma-metni",
+    "sure"
+   ]
+  },
+  "multimedya.galeri": {
+   "taslak": [
+    "baslik"
+   ],
+   "yayin": [
+    "baslik",
+    "kategori",
+    "slaytlar"
+   ],
+   "sistem": [
+    "kapak"
+   ]
+  },
+  "multimedya.infografik": {
+   "taslak": [
+    "baslik"
+   ],
+   "yayin": [
+    "baslik",
+    "kategori",
+    "gorsel"
+   ]
+  },
+  "multimedya.varlik": {
+   "taslak": [
+    "ad"
+   ],
+   "yayin": [
+    "ad",
+    "kategori"
+   ]
+  },
+  "sosyal-medya.gonderi": {
+   "taslak": [
+    "metin"
+   ],
+   "yayin": [
+    "metin"
+   ],
+   "sistem": [
+    "gorsel",
+    "zaman",
+    "hesap"
+   ]
+  },
+  "sosyal-medya.hizli": {
+   "taslak": [],
+   "yayin": [
+    "haber",
+    "metin",
+    "platform",
+    "zaman"
+   ],
+   "sistem": [
+    "zaman"
+   ]
+  },
+  "sosyal-medya.hesap": {
+   "taslak": [],
+   "yayin": [
+    "platform",
+    "ad"
+   ],
+   "sistem": []
+  },
+  "etkilesim.yanit": {
+   "taslak": [],
+   "yayin": [
+    "yanit"
+   ],
+   "sistem": []
+  },
+  "etkilesim.bulten": {
+   "taslak": [
+    "konu"
+   ],
+   "yayin": [
+    "tur",
+    "konu",
+    "haberler"
+   ],
+   "sistem": [
+    "zaman"
+   ]
+  },
+  "etkilesim.bulten-turu": {
+   "taslak": [],
+   "yayin": [
+    "ad",
+    "gun",
+    "saat"
+   ],
+   "sistem": []
+  },
+  "etkilesim.test": {
+   "taslak": [],
+   "yayin": [
+    "eposta"
+   ],
+   "sistem": []
+  },
+  "etkilesim.push": {
+   "taslak": [
+    "baslik"
+   ],
+   "yayin": [
+    "baslik",
+    "metin",
+    "kanal"
+   ],
+   "sistem": [
+    "zaman",
+    "gorsel",
+    "haber"
+   ]
+  },
+  "etkilesim.reklam": {
+   "taslak": [
+    "ad"
+   ],
+   "yayin": [
+    "ad",
+    "alan",
+    "kod",
+    "gorsel",
+    "baslangic",
+    "cihaz"
+   ],
+   "sistem": []
   },
   "kullanicilar.okur-durum": {
    "taslak": [],
