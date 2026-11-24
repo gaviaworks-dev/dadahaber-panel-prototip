@@ -88,3 +88,20 @@ Modül: ________ · Teammate: ________ · Tarih: ________
 
 - Lead denetimi: `menu_yaz.py --kontrol` 0 sorun (kırık bağlantı yok); 44 sayfada JS hatası 0; kayıtta 20 formun zorunlu listesi, hiçbirinde 5'ten fazla zorunlu yok; sayfalarda elle `data-zorunlu`/yıldız 0.
 - Bilinçli istisnalar (ekranda nedeni yazıyor): denetim izi ve loglar silinemez (Çöp yok); cron görevleri kodda tanımlı (silinmez); API anahtarı çöpe değil "İptal edildi"ye geçer; yasal metnin eski sürümleri ve onay kayıtları silinemez.
+
+
+---
+
+## Dalga 2 denetim sonucu (24.11.2026)
+
+| Modül | Teammate | Sayfa | Sök-tak / kayıt | JS | Taşma (4 genişlik) | Zorunlu alan ilkesi | Bileşen kaydı |
+|---|---|---|---|---|---|---|---|
+| Haberler kalanları | d2-haberler | 11 | ✓ | ✓ | ✓ 19 adres | ✓ 8 form (`son-dakika`, `canli`, `canli-giris`, `dosya`, `gunun-5`, `inceleme` 6 alan sınırda, `yazar`, `surum-notu`) | ✓ |
+| AI Haber Havuzu | d2-ai | 6 | ✓ | ✓ | ✓ | ✓ 3 form (`kaynak`, `grup`, `reddet`) + düzenlemede `haberler.haber` | ✓ |
+| Multimedya ve Medya Havuzu | d2-medya | 14 | ✓ | ✓ | ✓ | ✓ 9 form (`video`, `akis`, `canli`, `seri`, `bolum`, `sesli`, `galeri`, `infografik`, `varlik`) | ✓ |
+| Sosyal Medya Merkezi | d2-sosyal | 4 | ✓ | ✓ | ✓ | ✓ 3 form (`gonderi`, `hizli`, `hesap`) | ✓ |
+
+- Lead denetimi: statik kurallar (`<style>` yok, sabit renk yok, elle yıldız/`data-zorunlu` yok, tarayıcı tarih alanı yok, tek `<h1>`, `data-sayfa` kayıtta, zorunlu alan kimlikleri sayfada) + tarayıcıda 360/768/1024/1440 taşma ve JS hatası; `menu_yaz.py --kontrol` 0 sorun. Ekran görüntüsüyle görünüm kontrolü (vitrin, AI havuzu, kaynak motoru, gönderi, takvim, medya havuzu, galeri).
+- Denetimde düzeltilenler: vitrin ve Günün 5'i havuzdan sıralı listeye geçti; reddet nedeni pencereye taşındı; ⋯ "Onayla ve yayınla" görseli eksik satırda gizli; yazar fotoğrafı oran sınıfı; sosyal oranlar kayıtla eşitlendi; kategori formundaki elle yıldız kaldırıldı.
+- Bilinçli istisnalar: haber sürümleri silinmez (varsayım); cron görevleri silinmez; Sosyal gönderide AI adımı yok (varsayım).
+- Çekirdeğe Dalga 2'de eklenenler kararlar dosyasında ("Dalga 2 öncesi …" ve "Dalga 2 sırasında …").
