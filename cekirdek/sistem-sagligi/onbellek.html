@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../../assets/vendor/fontawesome-6.5.2/css/all.min.css?v=c84e8169">
 <link rel="stylesheet" href="../../tema/dadahaber.css?v=64b109bb" data-tema>
 <link rel="stylesheet" href="../../cekirdek/css/kabuk.css?v=b916425a">
-<link rel="stylesheet" href="../../cekirdek/css/bilesen.css?v=1c38b54e">
+<link rel="stylesheet" href="../../cekirdek/css/bilesen.css?v=7e3e7791">
 <!--P:bas--><script src="../js/kayit.js?v=c9671ba1"></script><script src="../js/erken.js?v=2cbfb3f6"></script><!--/P:bas-->
 </head>
 <body data-sayfa="sistem-sagligi.onbellek">
@@ -36,7 +36,7 @@
   <div class="kb-bant bilgi dash-row"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>Temizleme <b>onaydan ve e-posta kodundan sonra hemen</b> uygulanır ve denetim izine yazılır. Sunucuyu korumak için aynı önbellek <b>10 dakikada bir</b> temizlenebilir. Yayımlanan ve güncellenen haberin sayfası zaten kendiliğinden yenilenir; elle temizlik yalnız sorun olduğunda gerekir.</span></div>
 
   <section class="pnl-card dash-row" aria-labelledby="obBas">
-    <div class="pc-head"><h2 class="pc-title" id="obBas"><i class="fa-solid fa-broom" aria-hidden="true"></i>Önbellekler</h2><span class="kb-kap-alt">Önce tek adres, en son genel</span></div>
+    <div class="pc-head"><h2 class="pc-title" id="obBas"><i class="fa-solid fa-broom" aria-hidden="true"></i>Önbellekler</h2><a class="pc-link" data-hedef="denetim-izi.liste" href="../denetim-izi/index.html">Temizleme geçmişi<i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div>
     <div class="pc-body">
       <div class="kb-entegre-izgara"><article class="kb-entegre"><div class="kb-entegre-bas"><span class="kb-entegre-ikon"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></span><div><b>Genel önbellek</b><small>Bütün site: sayfa, veri ve görsel önbelleği birlikte</small></div><span class="pstat wait">Bekleme süresi</span></div><dl><dt>Boyut</dt><dd>3,8 GB</dd><dt>İsabet oranı</dt><dd>%94</dd><dt>Son temizleme</dt><dd>23.11.2026 16.02 · Selin Aydemir</dd><dt>Yeniden temizleme</dt><dd>16.12'den sonra</dd></dl><div class="kb-entegre-alt"><span class="fhint">Aynı önbellek 10 dakikada bir temizlenebilir · 16.12'de açılır</span></div></article><article class="kb-entegre"><div class="kb-entegre-bas"><span class="kb-entegre-ikon"><i class="fa-solid fa-file-lines" aria-hidden="true"></i></span><div><b>Sayfa önbelleği</b><small>Haber detayı, kategori, ana sayfa HTML&#x27;i</small></div><span class="pstat ok">Hazır</span></div><dl><dt>Boyut</dt><dd>1,1 GB</dd><dt>İsabet oranı</dt><dd>%91</dd><dt>Son temizleme</dt><dd>23.11.2026 14.40 · Sistem (yayın sonrası)</dd></dl><div class="kb-entegre-alt"><button type="button" class="btn btn-ghost btn-sm danger" data-onay-baslik="Sayfa önbelleği temizlensin mi?" data-onay-metin="Önce: 1,1 GB · isabet %91 → Sonra: boş, ilk ziyarette dolar. Haber ve kategori sayfaları ilk ziyarette yeniden üretilir; ana sayfa ısıtma görevi 5 dakika içinde yeniden doldurur. Aynı önbellek 10 dakikada bir temizlenebilir. E-posta koduyla doğrulanır ve denetim izine yazılır." data-onay-evet="Temizle" data-onay-tehlike data-onay-ikon="fa-broom" data-kod data-kod-baslik="Temizlemeyi doğrulayın" data-bildir-sonra="Sayfa önbelleği temizlendi; denetim izine yazıldı"><i class="fa-solid fa-broom" aria-hidden="true"></i>Temizle</button></div></article><article class="kb-entegre"><div class="kb-entegre-bas"><span class="kb-entegre-ikon"><i class="fa-solid fa-image" aria-hidden="true"></i></span><div><b>Görsel önbelleği</b><small>Kırpılmış ve küçültülmüş görseller, CDN</small></div><span class="pstat ok">Hazır</span></div><dl><dt>Boyut</dt><dd>2,6 GB</dd><dt>İsabet oranı</dt><dd>%97</dd><dt>Son temizleme</dt><dd>21.11.2026 09.14 · Selin Aydemir</dd></dl><div class="kb-entegre-alt"><button type="button" class="btn btn-ghost btn-sm danger" data-onay-baslik="Görsel önbelleği temizlensin mi?" data-onay-metin="Önce: 2,6 GB · isabet %97 → Sonra: boş, ilk ziyarette dolar. Kırpılmış görseller CDN&#x27;den yeniden çekilir; ilk saatte görsel trafiği yaklaşık 3 kat artar. Aynı önbellek 10 dakikada bir temizlenebilir. E-posta koduyla doğrulanır ve denetim izine yazılır." data-onay-evet="Temizle" data-onay-tehlike data-onay-ikon="fa-broom" data-kod data-kod-baslik="Temizlemeyi doğrulayın" data-bildir-sonra="Görsel önbelleği temizlendi; denetim izine yazıldı"><i class="fa-solid fa-broom" aria-hidden="true"></i>Temizle</button></div></article></div>
       <div class="form-sec-tt kb-ust-bosluk"><i class="fa-solid fa-link" aria-hidden="true"></i>Tek adresi temizle</div>
@@ -47,7 +47,6 @@
     </div>
   </section>
 
-  <div class="dash-2">
     <section class="pnl-card" aria-labelledby="obRutin">
       <div class="pc-head"><h2 class="pc-title" id="obRutin"><i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>Rutin temizlik görevleri</h2><a class="pc-link" data-hedef="sistem-sagligi.ana" data-hedef-ek="#ssCron" href="index.html#ssCron">Bütün görevler<i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div>
       <div class="ptable-wrap"><table class="ptable">
@@ -55,24 +54,13 @@
         <tbody><tr><td class="kb-ana"><div class="rcp-id"><div class="rcp-name" title="Süresi dolan oturum ve kod temizliği">Süresi dolan oturum ve kod temizliği</div><div class="rcp-by">Her saat</div></div></td><td><span class="kb-tarih">16.00</span></td><td class="kb-gizle-m">14 oturum, 31 kod silindi</td><td><span class="pstat ok">Çalışıyor</span></td></tr><tr><td class="kb-ana"><div class="rcp-id"><div class="rcp-name" title="Önbellek ısıtma">Önbellek ısıtma</div><div class="rcp-by">Her 5 dakikada</div></div></td><td><span class="kb-tarih">16.00</span></td><td class="kb-gizle-m">49 sayfa önbelleğe alındı</td><td><span class="pstat ok">Çalışıyor</span></td></tr><tr><td class="kb-ana"><div class="rcp-id"><div class="rcp-name" title="Geçici yükleme dosyaları">Geçici yükleme dosyaları</div><div class="rcp-by">Her gün 04.30</div></div></td><td><span class="kb-tarih">04.30</span></td><td class="kb-gizle-m">212 dosya · 1,4 GB boşaldı</td><td><span class="pstat ok">Çalışıyor</span></td></tr><tr><td class="kb-ana"><div class="rcp-id"><div class="rcp-name" title="Kullanılmayan görsel türevleri">Kullanılmayan görsel türevleri</div><div class="rcp-by">Her pazar 05.00</div></div></td><td><span class="kb-tarih">22.11 05.00</span></td><td class="kb-gizle-m">3.840 türev · 2,1 GB boşaldı</td><td><span class="pstat ok">Çalışıyor</span></td></tr><tr><td class="kb-ana"><div class="rcp-id"><div class="rcp-name" title="Log arşivleme">Log arşivleme</div><div class="rcp-by">Her pazar 04.00</div></div></td><td><span class="kb-tarih">22.11 04.00</span></td><td class="kb-gizle-m">Duraklatıldı · depolama taşıması</td><td><span class="pstat off">Duraklatıldı</span></td></tr></tbody>
       </table></div>
     </section>
-    <section class="pnl-card" aria-labelledby="obGecmis">
-      <div class="pc-head"><h2 class="pc-title" id="obGecmis"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i>Son temizlemeler</h2></div>
-      <div class="pc-body sa-gecmis">
-        <div><b>Genel önbellek</b><span>Selin Aydemir · 23.11.2026 16.02 · e-posta koduyla</span></div>
-        <div><b>Sayfa önbelleği</b><span>Sistem · 23.11.2026 14.40 · yayın sonrası</span></div>
-        <div><b>Görsel önbelleği</b><span>Selin Aydemir · 21.11.2026 09.14 · e-posta koduyla</span></div>
-        <div><b>Veri önbelleği</b><span>Sistem · 23.11.2026 08.00 · günlük</span></div>
-        <a class="kb-bag" data-hedef="denetim-izi.liste" href="../denetim-izi/index.html">Denetim izinde bütün kayıtlar</a>
-      </div>
-    </section>
-  </div>
   </div>
 </main>
 </div>
 <script src="../../cekirdek/js/kabuk.js?v=28067448"></script>
-<script src="../../cekirdek/js/bilesen.js?v=8581c1f4"></script>
+<script src="../../cekirdek/js/bilesen.js?v=96778b9f"></script>
 <script src="../../cekirdek/js/form.js?v=3e61bbbf"></script>
-<script src="../../cekirdek/js/alan.js?v=b305d117"></script>
+<script src="../../cekirdek/js/alan.js?v=a951298f"></script>
 <script src="../../cekirdek/js/kirp.js?v=7e601950"></script>
 </body>
 </html>

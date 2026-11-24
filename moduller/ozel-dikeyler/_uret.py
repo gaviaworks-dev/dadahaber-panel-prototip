@@ -696,16 +696,13 @@ def tk_sablonlar(r):
 
 def sayfa_takvimler():
     canli = [r for r in TAKVIM if r[8] != "cop"]
-    def olaylar(tur=None):
-        return "".join(f'<a data-tanim="tkGor-{r[0]}" data-tarih="{r[3]}" data-ton="{TK_TUR[r[1]][1]}" data-ikon="fa-solid {TK_TUR[r[1]][2]}" data-not="{e(TK_TUR[r[1]][0] + " · " + r[4] + (" · " + r[5] if r[5] else ""))}" href="takvimler.html">{e(r[2])}</a>' for r in canli if tur is None or r[1] == tur)
-    takvimler = "".join(f'<div class="kb-takvim" id="tkV-{k}" data-baslangic="23.11.2026" data-gorunum="ay" data-gun-ac="tkYeni"{"" if k == "hepsi" else " hidden"}><div class="kb-takvim-veri" hidden>{olaylar(None if k == "hepsi" else k)}</div></div>' for k in ["hepsi"] + list(TK_TUR))
-    seg = f'<button type="button" class="chip is-on" aria-pressed="true" data-hedef="tkV-hepsi">Tümü<span class="ch-cnt">{len(canli)}</span></button>' + "".join(f'<button type="button" class="chip" aria-pressed="false" data-hedef="tkV-{k}">{I(v[2])}{v[0]}<span class="ch-cnt">{sum(1 for r in canli if r[1] == k)}</span></button>' for k, v in TK_TUR.items())
     rows = []
     for r in TAKVIM:
         tid, tur, bas_, tarih, kat, kurum, not_, onem, dur, eko, asama = r
         ad, ton, ik = TK_TUR[tur]
         durum = "cop" if dur == "cop" else tur
-        rows.append(f'<tr data-satir="{tid}" data-durum="{durum}" data-kategori="{e(kat)}" data-onem="{onem}" data-yayin="{dur}" data-ara="{e(bas_ + " " + kat + " " + kurum + " " + ad)}" data-baslik="{e(bas_)}"{" data-onceki=\"gundem\"" if dur == "cop" else ""}>'
+        olay = f' data-tarih="{tarih}" data-ad="{e(bas_)}" data-ton="{ton}" data-ikon="fa-solid {ik}" data-not="{e(ad + " · " + kat + (" · " + kurum if kurum else ""))}"'
+        rows.append(f'<tr data-satir="{tid}" data-durum="{durum}" data-kategori="{e(kat)}" data-onem="{onem}" data-yayin="{dur}"{olay} data-ara="{e(bas_ + " " + kat + " " + kurum + " " + ad)}" data-baslik="{e(bas_)}"{" data-onceki=\"gundem\"" if dur == "cop" else ""}>'
                     f'<td class="kb-sec-hucre"><input type="checkbox" class="kb-onay-kutu" aria-label="Seç: {e(bas_)}"></td>'
                     f'<td class="kb-ana"><div class="rcp-id"><div class="rcp-name" title="{e(bas_)}">{e(bas_)}</div><div class="rcp-by">{I(ik)}{ad} · {e(kat)}{" · " + e(kurum) if kurum else ""}</div></div></td>'
                     f'<td><span class="kb-tarih">{e(tarih)}</span></td>'
@@ -719,8 +716,9 @@ def sayfa_takvimler():
     yuksek = sum(1 for r in canli if r[7] == "yuksek")
     s = bas("Takvimler", "takvimler")
     s += f"""
-<!-- TAKVİMLER (D4): gündem, ekonomik, sınav ve etkinlik takvimi tek ekranda. Üstte kb-takvim (tür süzgeci: her tür ayrı takvim, data-segment),
-     altta liste (sekme = tür, sağ uçta Çöp). Kayıt çekmecede (görüntüle → düzenle); boş güne tıklayınca yeni kayıt (data-gun-ac). -->
+<!-- TAKVİMLER (D4; KURAL · tek veri görünümü): gündem, ekonomik, sınav ve etkinlik takvimi tek kartta. Tür sekmeleri, arama ve süzgeç
+     bir kez; takvim listeye bağlı (olaylar satırlardan, tr[data-tarih]); Ay · Hafta takvimi, "Liste" tabloyu gösterir (Çöp, toplu seçim,
+     satır eylemleri orada). Kayıt çekmecede (görüntüle → düzenle); boş güne tıklayınca yeni kayıt (data-gun-ac). -->
 <main class="pnl-main" id="icerik">
   <div class="pnl-page-head">
     <div>
@@ -732,18 +730,12 @@ def sayfa_takvimler():
     </div>
   </div>
 
-  <section class="pnl-card dash-row" data-durum-gizle="hata yukleniyor bos" aria-labelledby="tkTakvimBas">
-    <div class="pc-head"><h2 class="pc-title" id="tkTakvimBas">{I("fa-calendar-days")}Takvim</h2></div>
-    <div class="kb-liste-ust"><div class="chips" data-segment role="group" aria-label="Takvim türü">{seg}</div></div>
-    <div class="pc-body">{takvimler}</div>
-  </section>
-
   <section class="pnl-card" data-liste data-liste-ad="kayıt" data-sayfa-boy="25" data-liste-cop-not="Kayıt takvimlerden kalkar ve Çöp sekmesine taşınır" aria-labelledby="tkListeBas">
-    <div class="pc-head"><h2 class="pc-title" id="tkListeBas">{I("fa-list")}Kayıtlar</h2></div>
+    <h2 class="sr-only" id="tkListeBas">Takvim kayıtları</h2>
     <div class="kb-liste-ust">
       <div class="chips" role="tablist" aria-label="Takvim türü">
         <button type="button" class="chip is-on" role="tab" aria-selected="true" data-sekme="hepsi">Tümü<span class="ch-cnt">0</span></button>
-        {"".join(f'<button type="button" class="chip" role="tab" aria-selected="false" data-sekme="{k}">{v[0]}<span class="ch-cnt">0</span></button>' for k, v in TK_TUR.items())}
+        {"".join(f'<button type="button" class="chip" role="tab" aria-selected="false" data-sekme="{k}">{I(v[2])}{v[0]}<span class="ch-cnt">0</span></button>' for k, v in TK_TUR.items())}
       </div>
       <button type="button" class="chip kb-cop" role="tab" aria-selected="false" data-sekme="cop">{I("fa-trash")}Çöp<span class="ch-cnt">0</span></button>
     </div>
@@ -759,6 +751,7 @@ def sayfa_takvimler():
       <button type="button" class="btn btn-ghost btn-sm danger" data-toplu="cop">{I("fa-trash")}<span>Çöpe taşı</span></button>
       <button type="button" class="kb-suz-temizle" data-secim-temizle>Seçimi temizle</button>
     </div>
+    <div class="kb-takvim" data-baslangic="23.11.2026" data-gorunum="ay" data-gun-ac="tkYeni"></div>
     <div class="ptable-wrap"><table class="ptable">
       <thead><tr><th class="kb-sec-hucre"><input type="checkbox" class="kb-onay-kutu" data-hepsini-sec aria-label="Görünen bütün kayıtları seç"></th><th class="kb-ana">Kayıt</th><th>Tarih</th><th class="kb-gizle-m">Not</th><th class="kb-gizle-t">Önem</th><th>Durum</th><th><span class="sr-only">İşlemler</span></th></tr></thead>
       <tbody data-satirlar>{"".join(rows)}</tbody>
