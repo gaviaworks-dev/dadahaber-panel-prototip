@@ -229,11 +229,18 @@ def hedefleri_yaz(t, sayfa_yolu):
         # öğenin kendi varsayılan gizliliğine (sekme paneli, açılır kutu) dokunulmaz.
         etiket = m.group(0)
         mid = re.search(r'data-modul="([^"]+)"', etiket).group(1)
-        if " data-modul-kapali" in etiket:
-            etiket = re.sub(r'\sdata-modul-kapali', "", etiket)
-            etiket = re.sub(r'\shidden(="[^"]*")?', "", etiket)
+        # Öğe kapatılmadan önce zaten gizliyse (sekme paneli, açılır kutu) işaret data-modul-kapali="kendi" olur
+        # ve açılınca hidden kalır; yalnız bu betiğin eklediği hidden kaldırılır.
+        m_k = re.search(r'\sdata-modul-kapali(="([^"]*)")?', etiket)
+        if m_k:
+            kendi = m_k.group(2) == "kendi"
+            etiket = etiket.replace(m_k.group(0), "")
+            if not kendi:
+                etiket = re.sub(r'\shidden(="[^"]*")?', "", etiket)
         if mid in acik:
             return etiket
+        if re.search(r'\shidden(?=[\s>=])', etiket):
+            return etiket[:-1] + ' data-modul-kapali="kendi">'
         return etiket[:-1] + " hidden data-modul-kapali>"
     return re.sub(r'<\w+\b[^>]*\sdata-modul="[^"]+"[^>]*>', kutu, t)
 
