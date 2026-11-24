@@ -204,7 +204,12 @@ d = DUZ.read_text(encoding="utf-8")
 def sec_isaretli(deger, ad, alt, secili):
     return f'<button type="button" data-deger="{e(deger)}" data-ad="{e(ad)}"{" class=\"is-sec\"" if secili else ""}>{e(ad)}' + (f'<span class="ks-alt">{e(alt)}</span>' if alt else "") + "</button>"
 d = yaz(d, "hb-df-kat", "".join(sec_isaretli(b_, b_, f"{len(a_)} alt konu", b_ == "Gündem") for b_, a_ in agac.items()))
-d = yaz(d, "hb-df-alt", "".join(sec_isaretli(a_, a_, "", a_ == "Türkiye") for a_ in agac["Gündem"]))
+# alt konular: çoklu seçim (Beyar 24.11.2026); ilk seçilen ana alt konu. Ana kategori değişince havuz değişir.
+alt_harita = {b_: a_ for b_, a_ in agac.items()}
+cip = lambda v: f'<span class="kb-cip" data-deger="{e(v)}"><span>{e(v)}</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span>'
+d = yaz(d, "hb-df-alt", (f'<div class="kb-cip-girdi" data-alan-id="alt-konu" data-birincil data-havuz-kapali data-ana-kaynak="#dfKatSecim" '
+    f'data-havuz="{e(json.dumps(agac["Gündem"], ensure_ascii=False))}" data-alt-harita="{e(json.dumps(alt_harita, ensure_ascii=False))}">'
+    + cip("Türkiye") + cip("Siyaset") + '<input type="text" placeholder="Alt konu ara" aria-label="Alt konu ara"><div class="pnl-menu kb-cip-oneri"></div></div>'))
 d = yaz(d, "hb-df-yazar", "".join(f'<div class="ks-grup">{e(b_)}</div>' + "".join(sec_isaretli(a_, a_, "", a_ == "Hakan Uysal") for a_ in ads) for b_, ads in yazarlar.items()))
 d = yaz(d, "hb-df-tur", "".join(sec_isaretli(x, x, "", x == "Haber") for x in turler))
 DUZ.write_text(d, encoding="utf-8")
