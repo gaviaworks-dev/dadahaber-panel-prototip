@@ -1,0 +1,16 @@
+/* S1 · C — Açık (beyaz) menü, kehribar vurgu, siyah ana düğme */
+@import url("../../tema/dadahaber.css");
+:root{
+  --menu-bg:#FFFFFF;
+  --menu-glow:rgba(252,182,35,.08);
+  --on-menu:rgba(18,18,18,.78);
+  --on-menu-mut:rgba(18,18,18,.48);
+  --on-menu-faint:rgba(18,18,18,.42);
+  --menu-hair:#ECECEC;
+  --menu-hover:rgba(18,18,18,.04);
+  --menu-active-bg:#FFF4C2;
+  --menu-active-fg:#121212;
+  --menu-accent:#CC9F01;
+  --sig-filter:brightness(0) opacity(.7);
+}
+.kb-logo{background-image:url("../../tema/logo-tam.png")}
