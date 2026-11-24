@@ -1,0 +1,8 @@
+# Proje kuralı: tasks/ ve ekran görüntüleri git'e girmez; kaynak belgeler ve başka panellerin
+# referans ekranları iç belgedir, açık depoya girmez.
+tasks/
+docs/screenshots/
+docs/kaynak/
+docs/referans/
+.DS_Store
+__pycache__/
