@@ -271,10 +271,10 @@ html.kb-yukleniyor *,html.kb-yukleniyor *::before,html.kb-yukleniyor *::after{tr
 .pnl-menu .pmenu-head{padding:8px 12px 11px;border-bottom:1px solid var(--line);margin-bottom:6px}
 .pnl-menu .pmenu-head b{display:block;font-size:13.5px;color:var(--slate);font-weight:700}
 .pnl-menu .pmenu-head span{font-size:11.5px;color:var(--muted)}
-.pnl-menu a,.pnl-menu button{display:flex;align-items:center;gap:11px;width:100%;padding:9px 12px;border:none;background:none;cursor:pointer;text-align:left;border-radius:var(--radius-sm);font-size:13.5px;font-weight:600;color:var(--slate-2);transition:.15s var(--ease)}
-.pnl-menu a i,.pnl-menu button i{width:16px;text-align:center;font-size:14px;color:var(--muted);transition:.15s var(--ease)}
-.pnl-menu a:hover,.pnl-menu button:hover{background:var(--bg);color:var(--slate)}
-.pnl-menu a:hover i,.pnl-menu button:hover i{color:var(--acc-ink)}
+.pnl-menu a:not(.btn),.pnl-menu button:not(.btn){display:flex;align-items:center;gap:11px;width:100%;padding:9px 12px;border:none;background:none;cursor:pointer;text-align:left;border-radius:var(--radius-sm);font-size:13.5px;font-weight:600;color:var(--slate-2);transition:.15s var(--ease)}
+.pnl-menu a:not(.btn) i,.pnl-menu button:not(.btn) i{width:16px;text-align:center;font-size:14px;color:var(--muted);transition:.15s var(--ease)}
+.pnl-menu a:not(.btn):hover,.pnl-menu button:not(.btn):hover{background:var(--bg);color:var(--slate)}
+.pnl-menu a:not(.btn):hover i,.pnl-menu button:not(.btn):hover i{color:var(--acc-ink)}
 .pnl-menu .is-sec{color:var(--slate);font-weight:700}
 .pnl-menu .is-sec i{color:var(--acc-ink)}
 .pnl-menu .pm-ek{margin-left:auto;font-size:11px;color:var(--muted);font-weight:600}
