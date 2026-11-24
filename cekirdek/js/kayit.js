@@ -841,7 +841,51 @@ window.PANEL = {
    "baslik": "Kullanıcılar",
    "ikon": "fa-users",
    "modul_ad": "Kullanıcılar",
-   "hazir": false,
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy"
+   ]
+  },
+  "kullanicilar.uye": {
+   "baslik": "Ekip üyesi",
+   "ikon": "fa-user",
+   "modul_ad": "Kullanıcılar",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy"
+   ]
+  },
+  "kullanicilar.davet": {
+   "baslik": "Ekip üyesi davet et",
+   "ikon": "fa-user-plus",
+   "modul_ad": "Kullanıcılar",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy"
+   ]
+  },
+  "kullanicilar.okurlar": {
+   "baslik": "Okurlar",
+   "ikon": "fa-user-group",
+   "modul_ad": "Kullanıcılar",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy"
+   ]
+  },
+  "kullanicilar.okur": {
+   "baslik": "Okur detayı",
+   "ikon": "fa-user",
+   "modul_ad": "Kullanıcılar",
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -852,11 +896,231 @@ window.PANEL = {
    "baslik": "Roller ve Yetki",
    "ikon": "fa-user-shield",
    "modul_ad": "Kimlik ve Yetki",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
     "gyy"
+   ]
+  },
+  "kimlik-yetki.rol": {
+   "baslik": "Rol düzenle",
+   "ikon": "fa-user-shield",
+   "modul_ad": "Kimlik ve Yetki",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy"
+   ]
+  },
+  "kimlik-yetki.izin-gruplari": {
+   "baslik": "İzin grupları",
+   "ikon": "fa-layer-group",
+   "modul_ad": "Kimlik ve Yetki",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy"
+   ]
+  },
+  "kimlik-yetki.izin-grubu": {
+   "baslik": "İzin grubu düzenle",
+   "ikon": "fa-layer-group",
+   "modul_ad": "Kimlik ve Yetki",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy"
+   ]
+  },
+  "kimlik-yetki.oturumlar": {
+   "baslik": "Aktif oturumlar",
+   "ikon": "fa-laptop",
+   "modul_ad": "Kimlik ve Yetki",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed",
+    "sosyal",
+    "analist"
+   ]
+  },
+  "kimlik-yetki.guvenlik": {
+   "baslik": "Güvenlik politikası",
+   "ikon": "fa-shield-halved",
+   "modul_ad": "Kimlik ve Yetki",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy"
+   ]
+  },
+  "kimlik-yetki.profil": {
+   "baslik": "Profilim",
+   "ikon": "fa-user",
+   "modul_ad": "Kimlik ve Yetki",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed",
+    "sosyal",
+    "analist"
+   ]
+  },
+  "kimlik-yetki.giris": {
+   "baslik": "Giriş",
+   "ikon": "fa-right-to-bracket",
+   "modul_ad": "Kimlik ve Yetki",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed",
+    "sosyal",
+    "analist"
+   ]
+  },
+  "kimlik-yetki.dogrulama": {
+   "baslik": "İki adımlı doğrulama",
+   "ikon": "fa-shield",
+   "modul_ad": "Kimlik ve Yetki",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed",
+    "sosyal",
+    "analist"
+   ]
+  },
+  "kimlik-yetki.sifremi-unuttum": {
+   "baslik": "Şifremi unuttum",
+   "ikon": "fa-key",
+   "modul_ad": "Kimlik ve Yetki",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed",
+    "sosyal",
+    "analist"
+   ]
+  },
+  "kimlik-yetki.yeni-sifre": {
+   "baslik": "Yeni şifre",
+   "ikon": "fa-key",
+   "modul_ad": "Kimlik ve Yetki",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed",
+    "sosyal",
+    "analist"
+   ]
+  },
+  "kimlik-yetki.davet-kabul": {
+   "baslik": "Davet ve e-posta onayı",
+   "ikon": "fa-envelope-circle-check",
+   "modul_ad": "Kimlik ve Yetki",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed",
+    "sosyal",
+    "analist"
+   ]
+  },
+  "kimlik-yetki.dogrulama-kurulum": {
+   "baslik": "2FA kurulumu",
+   "ikon": "fa-shield",
+   "modul_ad": "Kimlik ve Yetki",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed",
+    "sosyal",
+    "analist"
+   ]
+  },
+  "kimlik-yetki.davet-eposta": {
+   "baslik": "Davet e-postası önizlemesi",
+   "ikon": "fa-envelope",
+   "modul_ad": "Kimlik ve Yetki",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy"
+   ]
+  },
+  "kimlik-yetki.baglanti-gecersiz": {
+   "baslik": "Bağlantı geçersiz",
+   "ikon": "fa-link-slash",
+   "modul_ad": "Kimlik ve Yetki",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed",
+    "sosyal",
+    "analist"
+   ]
+  },
+  "kimlik-yetki.yetki-yok": {
+   "baslik": "Yetki yok (403)",
+   "ikon": "fa-ban",
+   "modul_ad": "Kimlik ve Yetki",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed",
+    "sosyal",
+    "analist"
+   ]
+  },
+  "kimlik-yetki.bulunamadi": {
+   "baslik": "Sayfa bulunamadı (404)",
+   "ikon": "fa-circle-question",
+   "modul_ad": "Kimlik ve Yetki",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed",
+    "sosyal",
+    "analist"
    ]
   },
   "site-ayarlari.ayarlar": {
@@ -874,7 +1138,27 @@ window.PANEL = {
    "baslik": "Entegrasyonlar",
    "ikon": "fa-plug",
    "modul_ad": "Entegrasyonlar",
-   "hazir": false,
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super"
+   ]
+  },
+  "entegrasyonlar.ayar": {
+   "baslik": "Entegrasyon ayarı",
+   "ikon": "fa-gear",
+   "modul_ad": "Entegrasyonlar",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super"
+   ]
+  },
+  "entegrasyonlar.api": {
+   "baslik": "API anahtarları",
+   "ikon": "fa-key",
+   "modul_ad": "Entegrasyonlar",
+   "hazir": true,
    "acik": true,
    "roller": [
     "super"
@@ -884,7 +1168,40 @@ window.PANEL = {
    "baslik": "Yasal Metinler",
    "ikon": "fa-file-contract",
    "modul_ad": "Yasal Metinler",
-   "hazir": false,
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy"
+   ]
+  },
+  "yasal-metinler.duzenle": {
+   "baslik": "Yasal metin düzenle",
+   "ikon": "fa-file-pen",
+   "modul_ad": "Yasal Metinler",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy"
+   ]
+  },
+  "yasal-metinler.surumler": {
+   "baslik": "Sürüm geçmişi",
+   "ikon": "fa-clock-rotate-left",
+   "modul_ad": "Yasal Metinler",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy"
+   ]
+  },
+  "yasal-metinler.onaylar": {
+   "baslik": "Onay kayıtları",
+   "ikon": "fa-list-check",
+   "modul_ad": "Yasal Metinler",
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -895,7 +1212,18 @@ window.PANEL = {
    "baslik": "Sayfalar",
    "ikon": "fa-file-lines",
    "modul_ad": "Sayfalar",
-   "hazir": false,
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy"
+   ]
+  },
+  "sayfalar.duzenle": {
+   "baslik": "Sayfa düzenle",
+   "ikon": "fa-file-pen",
+   "modul_ad": "Sayfalar",
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -906,7 +1234,22 @@ window.PANEL = {
    "baslik": "Raporlar",
    "ikon": "fa-chart-pie",
    "modul_ad": "Raporlar",
-   "hazir": false,
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed",
+    "sosyal",
+    "analist"
+   ]
+  },
+  "raporlar.disa-aktarim": {
+   "baslik": "Dışa aktarımlar",
+   "ikon": "fa-file-export",
+   "modul_ad": "Raporlar",
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -921,7 +1264,43 @@ window.PANEL = {
    "baslik": "Denetim İzi",
    "ikon": "fa-clipboard-list",
    "modul_ad": "Denetim İzi",
-   "hazir": false,
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "analist"
+   ]
+  },
+  "denetim-izi.loglar": {
+   "baslik": "Sistem logları",
+   "ikon": "fa-terminal",
+   "modul_ad": "Denetim İzi",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "analist"
+   ]
+  },
+  "denetim-izi.kayit": {
+   "baslik": "Denetim kaydı",
+   "ikon": "fa-file-lines",
+   "modul_ad": "Denetim İzi",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "analist"
+   ]
+  },
+  "denetim-izi.log": {
+   "baslik": "Log kaydı",
+   "ikon": "fa-terminal",
+   "modul_ad": "Denetim İzi",
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -933,7 +1312,17 @@ window.PANEL = {
    "baslik": "Sistem Sağlığı",
    "ikon": "fa-heart-pulse",
    "modul_ad": "Sistem Sağlığı",
-   "hazir": false,
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super"
+   ]
+  },
+  "sistem-sagligi.onbellek": {
+   "baslik": "Önbellek ve rutin temizlik",
+   "ikon": "fa-broom",
+   "modul_ad": "Sistem Sağlığı",
+   "hazir": true,
    "acik": true,
    "roller": [
     "super"
@@ -978,6 +1367,19 @@ window.PANEL = {
     "mobil_webden_kirpilir": true,
     "bildirim": {
      "oran": "2:1"
+    }
+   }
+  },
+  "kimlik-yetki": {
+   "profil": {
+    "web": {
+     "kart": {
+      "oran": "1:1",
+      "px": [
+       256,
+       256
+      ]
+     }
     }
    }
   }
@@ -1246,5 +1648,208 @@ window.PANEL = {
    "Türkiye",
    "Çalışma ve Sosyal Güvenlik Bakanlığı, Ankara"
   ]
+ },
+ "zorunlu": {
+  "haberler.haber": {
+   "taslak": [
+    "baslik"
+   ],
+   "yayin": [
+    "baslik",
+    "spot",
+    "metin",
+    "kategori",
+    "kapak"
+   ],
+   "sistem": [
+    "yazar"
+   ]
+  },
+  "haberler.kategori": {
+   "taslak": [
+    "ad"
+   ],
+   "yayin": [
+    "ad",
+    "ust"
+   ]
+  },
+  "kullanicilar.okur-durum": {
+   "taslak": [],
+   "yayin": [
+    "gerekce"
+   ],
+   "sistem": []
+  },
+  "kullanicilar.okur": {
+   "taslak": [
+    "ad"
+   ],
+   "yayin": [
+    "ad"
+   ],
+   "sistem": []
+  },
+  "kullanicilar.uye-durum": {
+   "taslak": [],
+   "yayin": [
+    "gerekce"
+   ],
+   "sistem": []
+  },
+  "kullanicilar.uye": {
+   "taslak": [
+    "ad"
+   ],
+   "yayin": [
+    "ad",
+    "eposta"
+   ],
+   "sistem": []
+  },
+  "kullanicilar.davet": {
+   "taslak": [],
+   "yayin": [
+    "ad",
+    "eposta",
+    "rol"
+   ],
+   "sistem": []
+  },
+  "kimlik-yetki.davet-kabul": {
+   "taslak": [],
+   "yayin": [
+    "sifre",
+    "sifre-tekrar",
+    "kurallar"
+   ],
+   "sistem": []
+  },
+  "kimlik-yetki.yeni-sifre": {
+   "taslak": [],
+   "yayin": [
+    "sifre",
+    "sifre-tekrar"
+   ],
+   "sistem": []
+  },
+  "kimlik-yetki.sifremi-unuttum": {
+   "taslak": [],
+   "yayin": [
+    "eposta"
+   ],
+   "sistem": []
+  },
+  "kimlik-yetki.giris": {
+   "taslak": [],
+   "yayin": [
+    "eposta",
+    "sifre"
+   ],
+   "sistem": []
+  },
+  "kimlik-yetki.profil": {
+   "taslak": [],
+   "yayin": [
+    "ad",
+    "eposta"
+   ],
+   "sistem": []
+  },
+  "kimlik-yetki.izin-grubu": {
+   "taslak": [
+    "ad"
+   ],
+   "yayin": [
+    "ad"
+   ],
+   "sistem": [
+    "kod"
+   ]
+  },
+  "kimlik-yetki.rol": {
+   "taslak": [
+    "ad"
+   ],
+   "yayin": [
+    "ad",
+    "seviye"
+   ],
+   "sistem": []
+  },
+  "site-ayarlari.site": {
+   "taslak": [],
+   "yayin": [
+    "site-adi",
+    "eposta"
+   ]
+  },
+  "entegrasyonlar.anahtar": {
+   "taslak": [],
+   "yayin": [
+    "ad",
+    "kapsam"
+   ],
+   "sistem": [
+    "gecerlilik",
+    "deger"
+   ]
+  },
+  "entegrasyonlar.ayar": {
+   "taslak": [],
+   "yayin": [
+    "ad",
+    "adres"
+   ],
+   "sistem": [
+    "api-anahtari",
+    "imza-sirri",
+    "siklik",
+    "zaman-asimi",
+    "deneme",
+    "onbellek"
+   ]
+  },
+  "yasal-metinler.metin": {
+   "taslak": [
+    "ad"
+   ],
+   "yayin": [
+    "ad",
+    "metin"
+   ],
+   "sistem": [
+    "surum",
+    "yururluk",
+    "adres",
+    "seo-baslik",
+    "seo-aciklama"
+   ]
+  },
+  "sayfalar.sayfa": {
+   "taslak": [
+    "baslik"
+   ],
+   "yayin": [
+    "baslik",
+    "metin"
+   ],
+   "sistem": [
+    "adres",
+    "seo-baslik",
+    "seo-aciklama"
+   ]
+  },
+  "raporlar.disa-aktarim": {
+   "taslak": [],
+   "yayin": [
+    "alanlar"
+   ],
+   "sistem": [
+    "rapor",
+    "bicim",
+    "aralik"
+   ]
+  }
  }
 };
