@@ -1,45 +1,351 @@
 {
   "_aciklama": "Panele özgü ek örnek veri sözlüğü (K12). Haber başlıkları, yazarlar, kategoriler ve sayılar public sözlükten (dadahaber-prototip/araclar/ornek_veri.json) okunur; burada yalnızca sitede olmayan panel alanları durur. Elle değer yazılan tek yer burasıdır; sayfalar buradan beslenir.",
-  "simdi": { "tarih": "2026-11-23", "gun": "Pazartesi", "saat": "16.05", "kaynak": "public sözlük simdi" },
-
-  "personalar": {
-    "super":  { "ad": "Selin Aydemir", "bas_harf": "SA", "unvan": "Süper Admin", "eposta": "selin.aydemir@dadahaber.ornek" },
-    "gyy":    { "ad": "Ayşe Yıldız",   "bas_harf": "AY", "unvan": "Haber Müdürü", "eposta": "ayse.yildiz@dadahaber.ornek" },
-    "editor": { "ad": "Mehmet Koçak",  "bas_harf": "MK", "unvan": "Gündem Editörü", "eposta": "mehmet.kocak@dadahaber.ornek" },
-    "kat-ed": { "ad": "Burak Tan",     "bas_harf": "BT", "unvan": "Spor Editörü", "eposta": "burak.tan@dadahaber.ornek" },
-    "sosyal": { "ad": "Ece Demirel",   "bas_harf": "ED", "unvan": "Sosyal Medya Uzmanı", "eposta": "ece.demirel@dadahaber.ornek" },
-    "analist":{ "ad": "Kerem Aksoy",   "bas_harf": "KA", "unvan": "Analist", "eposta": "kerem.aksoy@dadahaber.ornek" }
+  "simdi": {
+    "tarih": "2026-11-23",
+    "gun": "Pazartesi",
+    "saat": "16.05",
+    "kaynak": "public sözlük simdi"
   },
-
-  "rozetler": { "ai_taslak": 12, "yorum_bekleyen": 5, "sosyal_hata": 1 },
-
+  "personalar": {
+    "super": {
+      "ad": "Selin Aydemir",
+      "bas_harf": "SA",
+      "unvan": "Süper Admin",
+      "eposta": "selin.aydemir@dadahaber.ornek"
+    },
+    "gyy": {
+      "ad": "Ayşe Yıldız",
+      "bas_harf": "AY",
+      "unvan": "Haber Müdürü",
+      "eposta": "ayse.yildiz@dadahaber.ornek"
+    },
+    "editor": {
+      "ad": "Mehmet Koçak",
+      "bas_harf": "MK",
+      "unvan": "Gündem Editörü",
+      "eposta": "mehmet.kocak@dadahaber.ornek"
+    },
+    "kat-ed": {
+      "ad": "Burak Tan",
+      "bas_harf": "BT",
+      "unvan": "Spor Editörü",
+      "eposta": "burak.tan@dadahaber.ornek"
+    },
+    "sosyal": {
+      "ad": "Ece Demirel",
+      "bas_harf": "ED",
+      "unvan": "Sosyal Medya Uzmanı",
+      "eposta": "ece.demirel@dadahaber.ornek"
+    },
+    "analist": {
+      "ad": "Kerem Aksoy",
+      "bas_harf": "KA",
+      "unvan": "Analist",
+      "eposta": "kerem.aksoy@dadahaber.ornek"
+    }
+  },
+  "rozetler": {
+    "ai_taslak": 12,
+    "yorum_bekleyen": 5,
+    "sosyal_hata": 1
+  },
   "kontrol_paneli": {
     "anlik_okur": "3.482",
     "anlik_okur_degisim": "+%14 son 1 saat",
     "bugun_yayimlanan": "838",
     "bugun_yayimlanan_kaynak": "public sözlük: 23.11.2026 tarihli haber sayısı",
     "bugun_goruntulenme": "7,97 Mn",
-    "ai_taslak": 12, "ai_gorsel_eksik": 3, "ai_otomatik_yayimlanan": 0,
-    "ai_maliyet_ay": "₺1.993", "ai_maliyet_ay_usd": "$50,47", "ai_islenen_ay": 194,
+    "ai_taslak": 12,
+    "ai_gorsel_eksik": 3,
+    "ai_otomatik_yayimlanan": 0,
+    "ai_maliyet_ay": "₺1.993",
+    "ai_maliyet_ay_usd": "$50,47",
+    "ai_islenen_ay": 194,
     "yorum_bekleyen": 5,
     "ai_taslaklar": [
-      { "baslik": "Meteoroloji'den Marmara için turuncu kod uyarısı", "kaynak": "Meteoroloji Genel Müdürlüğü", "grup": "T1", "skor": 94, "kategori": "Gündem", "saat": "15.58", "kaynak_sayisi": 3 },
-      { "baslik": "Kuzey Marmara Otoyolu'nda tır geçişine kısıtlama uzatıldı", "kaynak": "Karayolları Genel Müdürlüğü", "grup": "T1", "skor": 91, "kategori": "Gündem", "saat": "15.41", "kaynak_sayisi": 2, "gorsel_eksik": true },
-      { "baslik": "PPK kararı sonrası piyasalarda ilk tepki: BIST 100 yükselişte", "kaynak": "Reuters", "grup": "T3", "skor": 88, "kategori": "Finans", "saat": "15.20", "kaynak_sayisi": 3 },
-      { "baslik": "Bursa'da kar nedeniyle 120 köy yolu ulaşıma kapandı", "kaynak": "Demirören Haber Ajansı", "grup": "T2", "skor": 82, "kategori": "Gündem", "saat": "14.52", "kaynak_sayisi": 2, "gorsel_eksik": true },
-      { "baslik": "AB genişleme toplantısının sonuç bildirgesi yayımlandı", "kaynak": "Associated Press", "grup": "T3", "skor": 76, "kategori": "Dünya", "saat": "14.35", "kaynak_sayisi": 1 }
+      {
+        "baslik": "Meteoroloji'den Marmara için turuncu kod uyarısı",
+        "kaynak": "Meteoroloji Genel Müdürlüğü",
+        "grup": "T1",
+        "skor": 94,
+        "kategori": "Gündem",
+        "saat": "15.58",
+        "kaynak_sayisi": 3
+      },
+      {
+        "baslik": "Kuzey Marmara Otoyolu'nda tır geçişine kısıtlama uzatıldı",
+        "kaynak": "Karayolları Genel Müdürlüğü",
+        "grup": "T1",
+        "skor": 91,
+        "kategori": "Gündem",
+        "saat": "15.41",
+        "kaynak_sayisi": 2,
+        "gorsel_eksik": true
+      },
+      {
+        "baslik": "PPK kararı sonrası piyasalarda ilk tepki: BIST 100 yükselişte",
+        "kaynak": "Reuters",
+        "grup": "T3",
+        "skor": 88,
+        "kategori": "Finans",
+        "saat": "15.20",
+        "kaynak_sayisi": 3
+      },
+      {
+        "baslik": "Bursa'da kar nedeniyle 120 köy yolu ulaşıma kapandı",
+        "kaynak": "Demirören Haber Ajansı",
+        "grup": "T2",
+        "skor": 82,
+        "kategori": "Gündem",
+        "saat": "14.52",
+        "kaynak_sayisi": 2,
+        "gorsel_eksik": true
+      },
+      {
+        "baslik": "AB genişleme toplantısının sonuç bildirgesi yayımlandı",
+        "kaynak": "Associated Press",
+        "grup": "T3",
+        "skor": 76,
+        "kategori": "Dünya",
+        "saat": "14.35",
+        "kaynak_sayisi": 1
+      }
     ],
     "zamanlanmis": [
-      { "saat": "16.30", "tur": "Push", "ikon": "fa-bell", "baslik": "Okullar 24 Kasım'da da tatil: valilik açıklaması", "kanal": "Telefon ve web" },
-      { "saat": "17.00", "tur": "Sosyal", "ikon": "fa-share-nodes", "baslik": "Asgari ücret görüşmeleri takvimi", "kanal": "X · Facebook · LinkedIn" },
-      { "saat": "18.00", "tur": "Bülten", "ikon": "fa-envelope-open-text", "baslik": "Akşam Bülteni · 23 Kasım", "kanal": "E-bülten" },
-      { "saat": "19.00", "tur": "Haber", "ikon": "fa-newspaper", "baslik": "Günün 5'i · akşam seçimi", "kanal": "Site" }
+      {
+        "saat": "16.30",
+        "tur": "Push",
+        "ikon": "fa-bell",
+        "baslik": "Okullar 24 Kasım'da da tatil: valilik açıklaması",
+        "kanal": "Telefon ve web"
+      },
+      {
+        "saat": "17.00",
+        "tur": "Sosyal",
+        "ikon": "fa-share-nodes",
+        "baslik": "Asgari ücret görüşmeleri takvimi",
+        "kanal": "X · Facebook · LinkedIn"
+      },
+      {
+        "saat": "18.00",
+        "tur": "Bülten",
+        "ikon": "fa-envelope-open-text",
+        "baslik": "Akşam Bülteni · 23 Kasım",
+        "kanal": "E-bülten"
+      },
+      {
+        "saat": "19.00",
+        "tur": "Haber",
+        "ikon": "fa-newspaper",
+        "baslik": "Günün 5'i · akşam seçimi",
+        "kanal": "Site"
+      }
     ],
     "sistem": [
-      { "ad": "Cron", "durum": "ok", "metin": "Çalışıyor · son çalışma 16.00" },
-      { "ad": "Kuyruk", "durum": "ok", "metin": "Kilit temiz · 0 bekleyen iş" },
-      { "ad": "Sosyal hesaplar", "durum": "warm", "metin": "Instagram bağlantısının süresi doldu" },
-      { "ad": "Entegrasyonlar", "durum": "ok", "metin": "9 / 9 bağlantı sağlıklı" }
+      {
+        "ad": "Cron",
+        "durum": "ok",
+        "metin": "Çalışıyor · son çalışma 16.00"
+      },
+      {
+        "ad": "Kuyruk",
+        "durum": "ok",
+        "metin": "Kilit temiz · 0 bekleyen iş"
+      },
+      {
+        "ad": "Sosyal hesaplar",
+        "durum": "warm",
+        "metin": "Instagram bağlantısının süresi doldu"
+      },
+      {
+        "ad": "Entegrasyonlar",
+        "durum": "ok",
+        "metin": "9 / 9 bağlantı sağlıklı"
+      }
+    ]
+  },
+  "bildirimler": [
+    {
+      "saat": "16.05",
+      "ikon": "fa-bolt",
+      "tur": "warm",
+      "baslik": "Son dakika yayımlandı",
+      "metin": "İstanbul Valiliği: okullar 24 Kasım'da da tatil",
+      "hedef": "haberler.vitrin",
+      "okunmadi": true
+    },
+    {
+      "saat": "15.58",
+      "ikon": "fa-robot",
+      "tur": "acc",
+      "baslik": "12 AI taslağı onay bekliyor",
+      "metin": "3'ü görsel eksik · en yüksek güven %94",
+      "hedef": "ai-havuz.havuz",
+      "okunmadi": true
+    },
+    {
+      "saat": "15.30",
+      "ikon": "fa-triangle-exclamation",
+      "tur": "warm",
+      "baslik": "Instagram bağlantısının süresi doldu",
+      "metin": "17.00 gönderisi bekletiliyor; hesabı yeniden bağlayın",
+      "hedef": "sosyal-medya.hesaplar",
+      "okunmadi": true
+    },
+    {
+      "saat": "15.22",
+      "ikon": "fa-comments",
+      "tur": "acc",
+      "baslik": "5 yorum onay bekliyor",
+      "metin": "En eskisi 42 dakika önce geldi",
+      "hedef": "etkilesim.yorumlar",
+      "okunmadi": true
+    },
+    {
+      "saat": "14.48",
+      "ikon": "fa-flag",
+      "tur": "info",
+      "baslik": "Okurdan düzeltme bildirimi",
+      "metin": "\"Asgari ücret nasıl belirleniyor?\" haberinde tarih",
+      "hedef": "etkilesim.geri",
+      "okunmadi": false
+    },
+    {
+      "saat": "14.00",
+      "ikon": "fa-gears",
+      "tur": "ok",
+      "baslik": "Kaynak taraması tamamlandı",
+      "metin": "14.00 çalışması: 18 kaynak, 42 yeni içerik",
+      "hedef": "ai-havuz.motor",
+      "okunmadi": false
+    }
+  ],
+  "haberler_ek": {
+    "_not": "Sitede görünmeyen haber kayıtları (taslak, zamanlanmış, çöp). Yayındaki haberler public sözlükten okunur. Çöptekiler sözlükteki eşdeğer başlıklardan (mükerrer kayıt) seçildi.",
+    "kayitlar": [
+      {
+        "durum": "taslak",
+        "baslik": "Marmara'da kar: İstanbul'da toplu taşıma seferleri 24 Kasım'da da uzatılacak",
+        "bolum": "Gündem",
+        "alt_konu": "İstanbul",
+        "yazar": "Sibel Arslan",
+        "tarih": "2026-11-23",
+        "saat": "15.52",
+        "gorsel": "p183.jpg",
+        "tur": "Haber"
+      },
+      {
+        "durum": "taslak",
+        "baslik": "Derbide ilk yarı: Galatasaray–Fenerbahçe maçında öne çıkanlar",
+        "bolum": "Spor",
+        "alt_konu": "Futbol",
+        "yazar": "Gizem Aktaş",
+        "tarih": "2026-11-23",
+        "saat": "15.48",
+        "gorsel": "p155.jpg",
+        "tur": "Haber"
+      },
+      {
+        "durum": "taslak",
+        "baslik": "TÜİK tüketici güven endeksini açıklayacak: beklentiler ne yönde",
+        "bolum": "Finans",
+        "alt_konu": "Türkiye Ekonomisi",
+        "yazar": "Can Demir",
+        "tarih": "2026-11-23",
+        "saat": "15.10",
+        "gorsel": "p117.jpg",
+        "tur": "Haber"
+      },
+      {
+        "durum": "taslak",
+        "baslik": "AB genişleme toplantısında Türkiye'nin üyelik süreci de konuşuldu",
+        "bolum": "Dünya",
+        "alt_konu": "Avrupa",
+        "yazar": "Hande Polat",
+        "tarih": "2026-11-23",
+        "saat": "14.40",
+        "gorsel": null,
+        "tur": "Haber"
+      },
+      {
+        "durum": "taslak",
+        "baslik": "KPSS tercih kılavuzu için geri sayım: adaylar ne zaman başvuracak",
+        "bolum": "Kampüs",
+        "alt_konu": "KPSS",
+        "yazar": "Ece Demirel",
+        "tarih": "2026-11-23",
+        "saat": "13.55",
+        "gorsel": "p188.jpg",
+        "tur": "Haber"
+      },
+      {
+        "durum": "taslak",
+        "baslik": "Karın getirdiği sessizlik",
+        "bolum": "Köşe",
+        "alt_konu": "",
+        "yazar": "Aylin Sezer",
+        "tarih": "2026-11-23",
+        "saat": "12.30",
+        "gorsel": null,
+        "tur": "Köşe yazısı"
+      },
+      {
+        "durum": "zamanli",
+        "baslik": "Günün 5'i: 23 Kasım akşamının öne çıkan gelişmeleri",
+        "bolum": "Gündem",
+        "alt_konu": "Türkiye",
+        "yazar": "Ayşe Yıldız",
+        "tarih": "2026-11-23",
+        "saat": "19.00",
+        "gorsel": "p178.jpg",
+        "tur": "Haber"
+      },
+      {
+        "durum": "zamanli",
+        "baslik": "Kar yağışı sonrası sürücülere 10 öneri",
+        "bolum": "Keşfet",
+        "alt_konu": "Otomobil",
+        "yazar": "Ozan Er",
+        "tarih": "2026-11-24",
+        "saat": "07.30",
+        "gorsel": "p192.jpg",
+        "tur": "Haber"
+      },
+      {
+        "durum": "zamanli",
+        "baslik": "Haftanın ekonomi takvimi: 24–28 Kasım",
+        "bolum": "Finans",
+        "alt_konu": "Ekonomi Analizi",
+        "yazar": "Elif Aras",
+        "tarih": "2026-11-24",
+        "saat": "08.00",
+        "gorsel": "p163.jpg",
+        "tur": "Haber"
+      },
+      {
+        "durum": "cop",
+        "baslik": "İstanbul Valiliği: okullar yarın da tatil",
+        "bolum": "Gündem",
+        "alt_konu": "İstanbul",
+        "yazar": "Sibel Arslan",
+        "tarih": "2026-11-23",
+        "saat": "15.58",
+        "gorsel": "p183.jpg",
+        "tur": "Haber",
+        "not": "Mükerrer kayıt; yayındaki: \"İstanbul Valiliği: okullar 24 Kasım'da da tatil\""
+      },
+      {
+        "durum": "cop",
+        "baslik": "Marmara'da kar yağışı: İstanbul'da okullar yarın da tatil",
+        "bolum": "Gündem",
+        "alt_konu": "İstanbul",
+        "yazar": "Sibel Arslan",
+        "tarih": "2026-11-23",
+        "saat": "15.40",
+        "gorsel": "p117.jpg",
+        "tur": "Haber",
+        "not": "Mükerrer kayıt"
+      }
     ]
   }
 }

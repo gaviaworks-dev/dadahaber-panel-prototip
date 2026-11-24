@@ -4,7 +4,8 @@ window.PANEL = {
  "menu": {
   "katlanir": true,
   "etkin_grup_acik": true,
-  "durumu_hatirla": true
+  "durumu_hatirla": true,
+  "daraltma": "ikon"
  },
  "roller": {
   "super": {
@@ -58,6 +59,11 @@ window.PANEL = {
   "super",
   "editor"
  ],
+ "etkilesim": {
+  "satir": "sayfa",
+  "kucuk_tanim": "cekmece",
+  "onay": "pencere"
+ },
  "personalar": {
   "super": {
    "ad": "Selin Aydemir",
@@ -115,6 +121,21 @@ window.PANEL = {
   "haberler.liste": {
    "baslik": "Haberler",
    "ikon": "fa-newspaper",
+   "modul_ad": "Haberler ve Vitrin",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor",
+    "kat-ed",
+    "sosyal",
+    "analist"
+   ]
+  },
+  "haberler.duzenle": {
+   "baslik": "Haber Düzenle",
+   "ikon": "fa-pen",
    "modul_ad": "Haberler ve Vitrin",
    "hazir": false,
    "acik": true,
@@ -278,7 +299,7 @@ window.PANEL = {
   "ozel-dikeyler.spor": {
    "baslik": "Spor",
    "ikon": "fa-futbol",
-   "modul_ad": "Özel Dikeyler",
+   "modul_ad": "Özel Widgetlar",
    "hazir": false,
    "acik": true,
    "roller": [
@@ -290,7 +311,7 @@ window.PANEL = {
   "ozel-dikeyler.takvimler": {
    "baslik": "Takvimler",
    "ikon": "fa-calendar-days",
-   "modul_ad": "Özel Dikeyler",
+   "modul_ad": "Özel Widgetlar",
    "hazir": false,
    "acik": true,
    "roller": [
@@ -302,7 +323,7 @@ window.PANEL = {
   "ozel-dikeyler.veri": {
    "baslik": "Veri Bantları",
    "ikon": "fa-chart-line",
-   "modul_ad": "Özel Dikeyler",
+   "modul_ad": "Özel Widgetlar",
    "hazir": false,
    "acik": true,
    "roller": [
@@ -313,7 +334,7 @@ window.PANEL = {
   "ozel-dikeyler.ilanlar": {
    "baslik": "Resmî İlanlar",
    "ikon": "fa-bullhorn",
-   "modul_ad": "Özel Dikeyler",
+   "modul_ad": "Özel Widgetlar",
    "hazir": false,
    "acik": true,
    "roller": [

@@ -7,7 +7,7 @@
   "site_adresi": "https://gaviaworks-dev.github.io/dadahaber-prototip/index.html",
   "yakinda_sayfasi": "cekirdek/yakinda.html",
 
-  "menu": { "katlanir": true, "etkin_grup_acik": true, "durumu_hatirla": true },
+  "menu": { "katlanir": true, "etkin_grup_acik": true, "durumu_hatirla": true, "daraltma": "ikon" },
 
   "roller": [
     { "id": "super",   "ad": "Süper Admin",           "seviye": 100, "izin_gruplari": ["*"] },
@@ -18,6 +18,8 @@
     { "id": "analist", "ad": "Analist",               "seviye": 30,  "izin_gruplari": ["rapor"] }
   ],
   "rol_degistirici": ["super", "editor"],
+
+  "etkilesim": { "_durum": "P1 seçimi bekleniyor (pilot modülde bir kez seçilir, UI kitte dondurulur)", "satir": "sayfa", "kucuk_tanim": "cekmece", "onay": "pencere" },
 
   "izin_gruplari": [
     { "id": "ai-maliyet",  "ad": "Maliyet ve token",       "aciklama": "AI ve kaynak maliyeti, token sayıları" },
@@ -43,7 +45,7 @@
     { "id": "yayin",     "ad": "Yayın Merkezi",   "sira": 2 },
     { "id": "ai",        "ad": "AI Haber Havuzu", "sira": 3 },
     { "id": "medya",     "ad": "Multimedya",      "sira": 4 },
-    { "id": "dikey",     "ad": "Özel Dikeyler",   "sira": 5 },
+    { "id": "dikey",     "ad": "Özel Widgetlar",  "sira": 5 },
     { "id": "sosyal",    "ad": "Sosyal Medya",    "sira": 6 },
     { "id": "etkilesim", "ad": "Etkileşim",       "sira": 7 },
     { "id": "sistem",    "ad": "Sistem",          "sira": 8 }
@@ -72,7 +74,8 @@
         "kapak": { "web": { "kart": { "oran": "16:10", "px": null }, "detay": { "oran": "2.4:1", "px": null } }, "mobil": { "kart": { "oran": "16:10", "px": null } }, "mobil_webden_kirpilir": true }
       },
       "sayfalar": [
-        { "id": "liste",    "baslik": "Haberler",              "ikon": "fa-newspaper",       "dosya": "moduller/haberler/index.html",   "hazir": false, "menude": true, "rozet": null },
+        { "id": "liste",    "baslik": "Haberler",              "ikon": "fa-newspaper",       "dosya": "moduller/haberler/index.html",   "hazir": true,  "menude": true, "rozet": null },
+        { "id": "duzenle",  "baslik": "Haber Düzenle",         "ikon": "fa-pen",             "dosya": "moduller/haberler/duzenle.html", "hazir": false, "menude": false },
         { "id": "vitrin",   "baslik": "Vitrin ve Son Dakika",  "ikon": "fa-star",            "dosya": "moduller/haberler/vitrin.html",  "hazir": false, "menude": true, "roller": ["super", "gyy", "editor"] },
         { "id": "canli",    "baslik": "Canlı Anlatım",         "ikon": "fa-tower-broadcast", "dosya": "moduller/haberler/canli.html",   "hazir": false, "menude": true, "roller": ["super", "gyy", "editor", "kat-ed"] },
         { "id": "dosyalar", "baslik": "Dosyalar ve Formatlar", "ikon": "fa-folder-open",     "dosya": "moduller/haberler/dosyalar.html","hazir": false, "menude": true, "roller": ["super", "gyy", "editor"] },
@@ -113,7 +116,7 @@
       ]
     },
     {
-      "id": "ozel-dikeyler", "ad": "Özel Dikeyler", "cekirdek": false, "acik": true,
+      "id": "ozel-dikeyler", "ad": "Özel Widgetlar", "cekirdek": false, "acik": true,
       "grup": "dikey", "sira": 1, "klasor": "moduller/ozel-dikeyler/",
       "roller": ["super", "gyy", "editor", "kat-ed", "analist"], "bagimli": ["entegrasyonlar"],
       "bilesenler": ["veri-tablosu", "satir-eylemleri", "cop-sekmesi", "takvim", "tarih-saat", "aranabilir-liste"],
