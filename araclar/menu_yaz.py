@@ -22,7 +22,7 @@ from pathlib import Path
 
 KOK = Path(__file__).resolve().parent.parent
 KONTROL = "--kontrol" in sys.argv
-# --yalniz <klasör>: yalnız bu klasördeki sayfaları yazar, kayit.js'e dokunmaz (yayılımda teammate'ler aynı anda çalışır)
+# --yalniz <klasör|dosya>[,…]: yalnız bunları yazar, kayit.js'e dokunmaz (yayılımda teammate'ler aynı anda çalışır); lead --kayit-js ekleyince kayit.js de yazılır
 YALNIZ = sys.argv[sys.argv.index("--yalniz") + 1] if "--yalniz" in sys.argv else None
 ATLANAN = {"docs", "tasks", "assets", "secenekler", ".git", "araclar", "veri"}
 
@@ -59,6 +59,14 @@ def hedef_href(anahtar, sayfa_yolu):
         return goreli(s["dosya"], sayfa_yolu)
     return goreli(YAKINDA, sayfa_yolu) + "?s=" + anahtar
 
+OTURUM_HEDEF = {"oturum.profil": "kimlik-yetki.profil", "oturum.oturumlar": "kimlik-yetki.oturumlar", "oturum.cikis": "kimlik-yetki.giris"}
+def oturum_href(anahtar, sayfa_yolu):
+    """Hesap menüsü ve çıkış: Kimlik ve Yetki sayfaları hazırsa oraya, değilse yapım aşamasına."""
+    k = OTURUM_HEDEF.get(anahtar)
+    if k and k in SAYFALAR and SAYFALAR[k]["hazir"]:
+        return goreli(SAYFALAR[k]["dosya"], sayfa_yolu)
+    return goreli(YAKINDA, sayfa_yolu) + "?s=" + anahtar
+
 # ---------------------------------------------------------------- menü
 def menu_html(sayfa_yolu):
     kontrol = hedef_href("kontrol-paneli.ana", sayfa_yolu)
@@ -91,7 +99,7 @@ def menu_html(sayfa_yolu):
                          f'<button class="sa-msec" type="button" aria-expanded="true">{esc(g["ad"])}<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>'
                          f'<div class="sa-mgrp-list"><div>{"".join(linkler)}</div></div></div>')
     parca.append('</div>')
-    cikis = goreli(YAKINDA, sayfa_yolu) + "?s=oturum.cikis"
+    cikis = oturum_href("oturum.cikis", sayfa_yolu)
     parca.append('<div class="sa-menu-foot">'
                  f'<a class="sa-mlink" href="{esc(cikis)}" data-tip="Çıkış"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i><span class="ml-ad">Çıkış</span></a>'
                  f'<a class="sa-sig" href="https://gaviaworks.com" target="_blank" rel="noopener" aria-label="Gaviaworks" data-tip="Gaviaworks"><img src="{esc(goreli("assets/gavia-isaret.png", sayfa_yolu))}" alt=""></a>'
@@ -147,11 +155,11 @@ def ust_html(sayfa_yolu):
         '<span class="pm-ava" id="pmAva">SA</span><span class="pm-id"><span class="pm-name" id="pmName">Selin Aydemir</span><span class="pm-role" id="pmRole">Süper Admin</span></span>'
         '<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>'
         '<div class="pnl-menu" id="hesapMenu" role="menu"><div class="pmenu-head"><b id="pmMenuAd">Selin Aydemir</b><span id="pmMenuEposta">selin.aydemir@dadahaber.ornek</span></div>'
-        f'<a href="{esc(yakinda)}?s=oturum.profil"><i class="fa-solid fa-user" aria-hidden="true"></i>Profilim</a>'
-        f'<a href="{esc(yakinda)}?s=oturum.oturumlar"><i class="fa-solid fa-laptop" aria-hidden="true"></i>Aktif oturumlar</a>'
+        f'<a href="{esc(oturum_href("oturum.profil", sayfa_yolu))}"><i class="fa-solid fa-user" aria-hidden="true"></i>Profilim</a>'
+        f'<a href="{esc(oturum_href("oturum.oturumlar", sayfa_yolu))}"><i class="fa-solid fa-laptop" aria-hidden="true"></i>Aktif oturumlar</a>'
         f'<a class="kb-yalniz-tel" href="{esc(kayit["site_adresi"])}" target="_blank" rel="noopener"><i class="fa-solid fa-globe" aria-hidden="true"></i>Siteyi görüntüle</a>'
         '<div class="pmenu-div"></div>'
-        f'<a class="danger" href="{esc(yakinda)}?s=oturum.cikis"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>Çıkış</a>'
+        f'<a class="danger" href="{esc(oturum_href("oturum.cikis", sayfa_yolu))}"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>Çıkış</a>'
         '</div></div>'
         '</div></header>'
     )
@@ -258,13 +266,13 @@ def sayfalar():
         rel = p.relative_to(KOK)
         if rel.parts[0] in ATLANAN:
             continue
-        if YALNIZ and not rel.as_posix().startswith(YALNIZ.rstrip("/") + "/"):
+        if YALNIZ and not any(rel.as_posix() == y or rel.as_posix().startswith(y.rstrip("/") + "/") for y in YALNIZ.split(",")):
             continue
         yield p, rel.as_posix()
 
 kjs = KOK / "cekirdek" / "js" / "kayit.js"
 icerik = kayit_js()
-if not KONTROL and not YALNIZ and (not kjs.exists() or kjs.read_text(encoding="utf-8") != icerik):
+if not KONTROL and (not YALNIZ or "--kayit-js" in sys.argv) and (not kjs.exists() or kjs.read_text(encoding="utf-8") != icerik):
     kjs.write_text(icerik, encoding="utf-8")
 
 sorunlar, yazilan = [], 0

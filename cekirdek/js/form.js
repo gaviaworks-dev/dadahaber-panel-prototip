@@ -245,9 +245,14 @@
       b.addEventListener('click', function(){
         var h = dogrula(b.dataset.kaydetTur);
         if(h){ window.kbBildir(h + ' zorunlu alan boş; işaretli sekmelere bakın', null, 'uyari'); var ilk = F.querySelector('.frow.has-error'); var p = ilk && ilk.closest('.sa-form-panel'); if(p && p.hidden){ var s = F.querySelector('.sa-form-tab[data-panel="' + p.id + '"]'); if(s) s.click(); } if(ilk) ilk.scrollIntoView({block:'center', behavior:'smooth'}); return; }
-        kirli = false; cubuk.classList.remove('is-kirli'); cubuk.querySelector('.kk-durum i').className = 'fa-solid fa-circle-check';
-        if(durum) durum.textContent = (b.dataset.kaydetMetin || 'Kaydedildi') + ' · 23.11.2026 16.05 · ' + (document.getElementById('pmName') ? document.getElementById('pmName').textContent : '');
-        window.kbBildir(b.dataset.bildir || 'Değişiklikler kaydedildi; önceki hal sürüm geçmişinde');
+        function kaydet(){
+          kirli = false; cubuk.classList.remove('is-kirli'); cubuk.querySelector('.kk-durum i').className = 'fa-solid fa-circle-check';
+          if(durum) durum.textContent = (b.dataset.kaydetMetin || 'Kaydedildi') + ' · 23.11.2026 16.05 · ' + (document.getElementById('pmName') ? document.getElementById('pmName').textContent : '');
+          window.kbBildir(b.dataset.bildir || 'Değişiklikler kaydedildi; önceki hal sürüm geçmişinde');
+        }
+        /* hassas kayıt (K15: rol, izin grubu, güvenlik politikası, otomatik yayın ayarı): data-kod → önce e-posta kodu */
+        if(b.hasAttribute('data-kod') && window.kbKod) window.kbKod({ baslik: b.dataset.kodBaslik || 'Kaydetmeyi e-posta koduyla doğrulayın', evet: 'Doğrula ve kaydet', evetIs: kaydet });
+        else kaydet();
       });
     });
     F.addEventListener('input', function(e){ var r = e.target.closest && e.target.closest('.frow.has-error'); if(r) r.classList.remove('has-error'); });
@@ -484,7 +489,7 @@
   function medyaKapat(){ if(mOv && mOv.classList.contains('open')){ mOv.classList.remove('open'); if(mBtn && mBtn.focus) mBtn.focus(); } }
   document.addEventListener('click', function(e){
     var b = e.target.closest('[data-medya-sec]');
-    if(b){ e.preventDefault(); if(!mOv) medyaKur(); mBtn = b; mSec = null; mSuz = { kategori:'', kisi:'' }; var s = mOv.querySelector('input[type=search]'); s.value = ''; mOv.querySelector('.kb-medya-gez').innerHTML = gezCiz(); medyaCiz(); mOv.classList.add('open'); s.focus(); return; }
+    if(b){ e.preventDefault(); if(!mOv) medyaKur(); mBtn = b; mSec = null; mSuz = { kategori:'', kisi:'' }; var s = mOv.querySelector('input[type=search]'); s.value = b.dataset.medyaAra || ''; /* data-medya-ara: hazır arama (görsel eksik haberde öneri, YS1) */ mOv.querySelector('.kb-medya-gez').innerHTML = gezCiz(); medyaCiz(); mOv.classList.add('open'); s.focus(); return; }
     var y = e.target.closest('[data-gorsel-yukle]');
     if(y){ e.preventDefault(); yukleBtn = y; gizliDosya.click(); }
   });
