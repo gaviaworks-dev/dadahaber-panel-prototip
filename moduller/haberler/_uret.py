@@ -22,7 +22,9 @@ SITE = "https://gaviaworks-dev.github.io/dadahaber-prototip/"
 LISTEDE = 25
 
 soz = json.loads((PUB / "araclar" / "ornek_veri.json").read_text(encoding="utf-8"))
-ek = json.loads((KOK / "veri" / "panel.json").read_text(encoding="utf-8"))["haberler_ek"]["kayitlar"]
+_pv = json.loads((KOK / "veri" / "panel.json").read_text(encoding="utf-8"))
+ek = _pv["haberler_ek"]["kayitlar"]
+AI = _pv["ai_kaynakli"]["kayitlar"]
 kayit = json.loads((KOK / "moduller.json").read_text(encoding="utf-8"))
 e = lambda s: html.escape(str(s), quote=True)
 
@@ -77,7 +79,9 @@ def satir(h, i):
     thumb = (f'<span class="rcp-thumb" style="background-image:url(../../veri/gorsel/kucuk/{g})"></span>' if g
              else '<span class="rcp-thumb kb-yok" title="Görsel eksik"><i class="fa-solid fa-image" aria-hidden="true"></i></span>')
     tur = h.get("tur", "Haber")
-    alt_satir = f'<i class="fa-solid {TUR_IKON.get(tur, "fa-newspaper")}" aria-hidden="true"></i>{e(tur)} · {e(h.get("yazar", ""))}'
+    ai = AI.get(h.get("id", ""))
+    ai_etk = (f'<span class="kb-ai-etk" title="AI haber havuzundan · {e(ai["kaynak"])} ({ai["grup"]}) · güven %{ai["skor"]} · {e(ai["onay"])} onayladı"><i class="fa-solid fa-robot" aria-hidden="true"></i>AI · %{ai["skor"]}</span>' if ai else "")
+    alt_satir = ai_etk + f'<i class="fa-solid {TUR_IKON.get(tur, "fa-newspaper")}" aria-hidden="true"></i>{e(tur)} · {e(h.get("yazar", ""))}'
     if h.get("sure"): alt_satir += f' · {e(h["sure"])}'
     if h.get("not"): alt_satir += f' · {e(h["not"])}'
     zaman = tarih(h["tarih"], h["saat"])
@@ -95,6 +99,8 @@ def satir(h, i):
         "ara": ara, "baslik": h["baslik"], "href": duz_href(kimlik), "kat": f'{h["bolum"]}' + (f' › {alt}' if alt and alt != h["bolum"] else ""),
         "yayin": zaman, "goruntulenme": gor, "tur-ad": tur, "durum-ad": d_ad,
         "gorsel": f"../../veri/gorsel/{g}" if g else "",
+        "kaynak": "ai" if ai else "editor",
+        "kaynak-ad": (f'AI haber havuzu · {ai["kaynak"]} ({ai["grup"]}) · güven %{ai["skor"]} · {ai["onay"]} onayladı' if ai else "Editör girişi"),
     }
     nits = " ".join(f'data-{k}="{e(v)}"' for k, v in nit.items())
     return (f'<tr {nits}>'
@@ -120,15 +126,20 @@ BOLUMLER = ["Gündem", "Spor", "Finans", "Kadın", "Savunma", "Dünya", "Kampüs
 KESFET = ["Teknoloji", "Yapay Zekâ", "Bilim", "Uzay", "Siber Güvenlik", "Oyun", "Gelecek", "İklim", "Sağlık", "Halk Sağlığı",
           "Otomobil", "Seyahat", "Gastronomi", "Kültür ve Yaşam", "Sinema", "Dizi", "Müzik", "Kitap", "Tiyatro", "Sergi"]  # sayfa-envanteri §3
 linkler = re.findall(r'<a [^>]*href="([a-z0-9-]+)\.html"[^>]*>([^<]+)<', ust)
-agac, sim = {}, None
-for slug, ad in linkler:
+agac, slug, sim = {}, {}, None
+for s, ad in linkler:
     ad = html.unescape(ad.strip())
     if ad in BOLUMLER and ad not in agac:
-        sim = ad; agac[sim] = []; continue
-    if sim and ad not in ("Tümünü Gör", "Son Dakika") and slug not in HIZMET and ad not in agac[sim]:
-        agac[sim].append(ad)
+        sim = ad; agac[sim] = []; slug[sim] = s; continue
+    if sim and ad not in ("Tümünü Gör", "Son Dakika") and s not in HIZMET and ad not in agac[sim]:
+        agac[sim].append(ad); slug[(sim, ad)] = s
+def tr_slug(s):
+    m = str.maketrans("çğıöşüâîûÇĞİÖŞÜ", "cgiosuaiuCGIOSU")
+    return re.sub(r"[^a-z0-9]+", "-", s.translate(m).lower()).strip("-")
 agac["Keşfet"] = KESFET
-agac["Köşe"] = []
+slug["Keşfet"] = "kesfet"
+for a_ in KESFET: slug[("Keşfet", a_)] = tr_slug(a_)
+agac["Köşe"] = []; slug["Köşe"] = "kose-yazisi"
 say_b = {}; say_a = {}
 for h in soz["haberler"]:
     say_b[h["bolum"]] = say_b.get(h["bolum"], 0) + 1
@@ -136,13 +147,23 @@ for h in soz["haberler"]:
     say_a[k] = say_a.get(k, 0) + 1
 RENK = {"Gündem": "gundem", "Spor": "spor", "Finans": "finans", "Kadın": "kadin", "Savunma": "savunma", "Dünya": "dunya", "Kampüs": "kampus", "Keşfet": "kesfet", "Köşe": "kose"}
 fmt = lambda n: f"{n:,}".replace(",", ".")
+def duzenle_btn(ad, ust, sl, baslik):
+    seo_b = f"{ad} Haberleri" + (f" · {ust}" if ust else "") + " | Dada Haber"
+    seo_a = f"{ad} ile ilgili son dakika gelişmeleri, analizler ve özel haberler Dada Haber'de."
+    return (f'<button type="button" class="ka-btn" data-sablon-ac="hbKategoriForm" data-baslik-yaz="{e(ad)} · düzenle" '
+            f'data-deger-ad="{e(ad)}" data-deger-ust-tur="{"alt" if ust else "ana"}" data-deger-ust="{e(ust)}" data-deger-slug="{e(sl)}" data-deger-seo-baslik="{e(seo_b)}" data-deger-seo-aciklama="{e(seo_a)}" '
+            f'aria-label="{e(ad)} düzenle" title="Düzenle"><i class="fa-solid fa-pen" aria-hidden="true"></i></button>')
 parca = []
-for b, altlar in agac.items():
-    lis = "".join(f'<li>{e(a)}<span class="ka-say">{fmt(say_a.get((b, a.lower()), 0))}</span></li>' for a in altlar)
-    parca.append(f'<details class="kat-{RENK[b]}"{" open" if b == "Gündem" else ""}><summary><i class="fa-solid fa-chevron-right" aria-hidden="true"></i><span class="ka-renk"></span>{e(b)}'
-                 f'<span class="ka-say">{len(altlar)} alt konu · {fmt(say_b.get(b, 0))} haber</span></summary>'
+for b_, altlar in agac.items():
+    lis = "".join(f'<li>{e(a_)}<span class="ka-say">{fmt(say_a.get((b_, a_.lower()), 0))}</span>{duzenle_btn(a_, b_, slug.get((b_, a_), tr_slug(a_)), b_)}</li>' for a_ in altlar)
+    ekle = (f'<button type="button" class="ka-btn" data-sablon-ac="hbKategoriForm" data-baslik-yaz="{e(b_)} · yeni alt konu" data-deger-ad="" data-deger-ust-tur="alt" data-deger-ust="{e(b_)}" data-deger-slug="" data-deger-seo-baslik="" data-deger-seo-aciklama="" '
+            f'aria-label="{e(b_)} altına alt konu ekle" title="Alt konu ekle"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>')
+    parca.append(f'<details class="kat-{RENK[b_]}"{" open" if b_ == "Gündem" else ""}><summary><i class="fa-solid fa-chevron-right" aria-hidden="true"></i><span class="ka-renk"></span>{e(b_)}'
+                 f'<span class="ka-say">{len(altlar)} alt konu · {fmt(say_b.get(b_, 0))} haber</span>{ekle}{duzenle_btn(b_, "", slug[b_], b_)}</summary>'
                  + (f"<ul>{lis}</ul>" if lis else "") + "</details>")
 agac_html = "".join(parca)
+ust_secenek = "".join(
+    f'<button type="button" data-deger="{e(b_)}" data-ad="{e(b_)}">{e(b_)}<span class="ks-alt">{len(altlar)} alt konu</span></button>' for b_, altlar in agac.items())
 
 # ---- süzgeç seçenekleri ----
 def secenek(deger, ad, alt=""):
@@ -166,8 +187,20 @@ t = yaz(t, "hb-suz-kategori", suz_kat)
 t = yaz(t, "hb-suz-yazar", suz_yaz)
 t = yaz(t, "hb-suz-tur", suz_tur)
 t = yaz(t, "hb-agac", agac_html)
+t = yaz(t, "hb-kat-ust", ust_secenek)
 toplam = len(soz["haberler"])
 t = re.sub(r'(data-sekme="hepsi"[^>]*data-taban=")\d*(")', rf"\g<1>{toplam - LISTEDE}\2", t)
 t = re.sub(r'(data-sekme="yayinda"[^>]*data-taban=")\d*(")', rf"\g<1>{toplam - LISTEDE}\2", t)
 SAYFA.write_text(t, encoding="utf-8")
+
+# ---- düzenleme sayfası: ana kategori, alt konu, yazar, tür seçenekleri ----
+DUZ = KOK / "moduller" / "haberler" / "duzenle.html"
+d = DUZ.read_text(encoding="utf-8")
+def sec_isaretli(deger, ad, alt, secili):
+    return f'<button type="button" data-deger="{e(deger)}" data-ad="{e(ad)}"{" class=\"is-sec\"" if secili else ""}>{e(ad)}' + (f'<span class="ks-alt">{e(alt)}</span>' if alt else "") + "</button>"
+d = yaz(d, "hb-df-kat", "".join(sec_isaretli(b_, b_, f"{len(a_)} alt konu", b_ == "Gündem") for b_, a_ in agac.items()))
+d = yaz(d, "hb-df-alt", "".join(sec_isaretli(a_, a_, "", a_ == "Türkiye") for a_ in agac["Gündem"]))
+d = yaz(d, "hb-df-yazar", "".join(f'<div class="ks-grup">{e(b_)}</div>' + "".join(sec_isaretli(a_, a_, "", a_ == "Hakan Uysal") for a_ in ads) for b_, ads in yazarlar.items()))
+d = yaz(d, "hb-df-tur", "".join(sec_isaretli(x, x, "", x == "Haber") for x in turler))
+DUZ.write_text(d, encoding="utf-8")
 print(f"satır {len(kayitlar)} · görselli {sum(1 for h in kayitlar if h.get('gorsel'))} · kategori {len(agac)} · yayında toplam {toplam}")

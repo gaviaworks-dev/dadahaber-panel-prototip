@@ -102,6 +102,125 @@ window.PANEL = {
    "eposta": "kerem.aksoy@dadahaber.ornek"
   }
  },
+ "medya": {
+  "_not": "Stok örnek görseller (picsum.photos, Unsplash lisanslı); haber içeriğiyle ilgisizdir. Klasör ve adlar örnek.",
+  "kok": "veri/gorsel/",
+  "kucuk": "veri/gorsel/kucuk/",
+  "gorseller": [
+   {
+    "dosya": "p117.jpg",
+    "ad": "Kentsel ulaşım",
+    "klasor": "Stok havuzu",
+    "kaynak": "Unsplash lisanslı",
+    "olcu": "1200×800"
+   },
+   {
+    "dosya": "p122.jpg",
+    "ad": "Kıyı ve rüzgâr",
+    "klasor": "Stok havuzu",
+    "kaynak": "Unsplash lisanslı",
+    "olcu": "1200×800"
+   },
+   {
+    "dosya": "p133.jpg",
+    "ad": "Gece şehir",
+    "klasor": "Stok havuzu",
+    "kaynak": "Unsplash lisanslı",
+    "olcu": "1200×800"
+   },
+   {
+    "dosya": "p155.jpg",
+    "ad": "Raylı sistem",
+    "klasor": "Stok havuzu",
+    "kaynak": "Unsplash lisanslı",
+    "olcu": "1200×800"
+   },
+   {
+    "dosya": "p158.jpg",
+    "ad": "Kalabalık cadde",
+    "klasor": "Stok havuzu",
+    "kaynak": "Unsplash lisanslı",
+    "olcu": "1200×800"
+   },
+   {
+    "dosya": "p163.jpg",
+    "ad": "Ofis ve masa",
+    "klasor": "Stok havuzu",
+    "kaynak": "Unsplash lisanslı",
+    "olcu": "1200×800"
+   },
+   {
+    "dosya": "p164.jpg",
+    "ad": "Kitaplar",
+    "klasor": "Stok havuzu",
+    "kaynak": "Unsplash lisanslı",
+    "olcu": "1200×800"
+   },
+   {
+    "dosya": "p178.jpg",
+    "ad": "Sisli sokak",
+    "klasor": "Stok havuzu",
+    "kaynak": "Unsplash lisanslı",
+    "olcu": "1200×800"
+   },
+   {
+    "dosya": "p180.jpg",
+    "ad": "Kırsal yol",
+    "klasor": "Stok havuzu",
+    "kaynak": "Unsplash lisanslı",
+    "olcu": "1200×800"
+   },
+   {
+    "dosya": "p182.jpg",
+    "ad": "Kar ve araç",
+    "klasor": "Stok havuzu",
+    "kaynak": "Unsplash lisanslı",
+    "olcu": "1200×800"
+   },
+   {
+    "dosya": "p183.jpg",
+    "ad": "Kış trafiği",
+    "klasor": "Stok havuzu",
+    "kaynak": "Unsplash lisanslı",
+    "olcu": "1200×800"
+   },
+   {
+    "dosya": "p188.jpg",
+    "ad": "Kent silueti",
+    "klasor": "Stok havuzu",
+    "kaynak": "Unsplash lisanslı",
+    "olcu": "1200×800"
+   },
+   {
+    "dosya": "p192.jpg",
+    "ad": "Pencere ve ışık",
+    "klasor": "Stok havuzu",
+    "kaynak": "Unsplash lisanslı",
+    "olcu": "1200×800"
+   },
+   {
+    "dosya": "p193.jpg",
+    "ad": "Pazar yeri",
+    "klasor": "Stok havuzu",
+    "kaynak": "Unsplash lisanslı",
+    "olcu": "1200×800"
+   },
+   {
+    "dosya": "p195.jpg",
+    "ad": "Kara ve deniz",
+    "klasor": "Stok havuzu",
+    "kaynak": "Unsplash lisanslı",
+    "olcu": "1200×800"
+   },
+   {
+    "dosya": "p203.jpg",
+    "ad": "Sahil ve bisiklet",
+    "klasor": "Stok havuzu",
+    "kaynak": "Unsplash lisanslı",
+    "olcu": "1200×800"
+   }
+  ]
+ },
  "sayfalar": {
   "kontrol-paneli.ana": {
    "baslik": "Kontrol Paneli",
@@ -137,7 +256,7 @@ window.PANEL = {
    "baslik": "Haber Düzenle",
    "ikon": "fa-pen",
    "modul_ad": "Haberler ve Vitrin",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",

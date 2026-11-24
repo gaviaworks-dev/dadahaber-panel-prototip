@@ -347,5 +347,183 @@
         "not": "Mükerrer kayıt"
       }
     ]
+  },
+  "ai_kaynakli": {
+    "_not": "Yayındaki haberlerden AI haber havuzundan gelip editör onayıyla yayımlananlar (otomatik yayın kapalı, K8). Public sözlükte kaynak bilgisi yok; panel alanı.",
+    "kayitlar": {
+      "istanbul-valiligi-okullar-24-kasim-da-da-tatil": {
+        "kaynak": "İstanbul Valiliği",
+        "grup": "T1",
+        "skor": 96,
+        "onay": "Sibel Arslan"
+      },
+      "savunma-sanayiinde-2027-yatirim-programi-aciklandi": {
+        "kaynak": "Savunma Sanayii Başkanlığı",
+        "grup": "T1",
+        "skor": 94,
+        "onay": "Mert Yalın"
+      },
+      "ab-disisleri-bakanlari-bruksel-de-genisleme-gundemini-ele-aldi": {
+        "kaynak": "Associated Press",
+        "grup": "T3",
+        "skor": 88,
+        "onay": "Zeynep Ak"
+      },
+      "turkiye-ile-japonya-arasinda-ekonomik-ortaklik-gorusmeleri-suruyor": {
+        "kaynak": "Anadolu Ajansı",
+        "grup": "T2",
+        "skor": 90,
+        "onay": "Kaan Yücel"
+      },
+      "g7-ulkeleri-kritik-mineraller-icin-ortak-tedarik-plani-hazirladi": {
+        "kaynak": "Reuters",
+        "grup": "T3",
+        "skor": 87,
+        "onay": "Merve Çınar"
+      },
+      "hindistan-da-eyalet-secimlerinin-sonuclari-aciklandi": {
+        "kaynak": "Reuters",
+        "grup": "T3",
+        "skor": 84,
+        "onay": "Merve Çınar"
+      },
+      "lgs-icin-ornek-soru-kitapcigi-yayimlandi": {
+        "kaynak": "Millî Eğitim Bakanlığı",
+        "grup": "T1",
+        "skor": 95,
+        "onay": "Mehmet Koçak"
+      },
+      "besiktas-turk-telekom-u-84-80-gecti": {
+        "kaynak": "Anadolu Ajansı",
+        "grup": "T2",
+        "skor": 91,
+        "onay": "Emre Sönmez"
+      },
+      "kamu-kurumlari-icin-toplu-kirtasiye-alimi-ihalesi": {
+        "kaynak": "Resmî Gazete",
+        "grup": "T1",
+        "skor": 93,
+        "onay": "Ozan Er"
+      }
+    }
+  },
+  "medya_havuzu": {
+    "_not": "Stok örnek görseller (picsum.photos, Unsplash lisanslı); haber içeriğiyle ilgisizdir. Klasör ve adlar örnek.",
+    "kok": "veri/gorsel/",
+    "kucuk": "veri/gorsel/kucuk/",
+    "gorseller": [
+      {
+        "dosya": "p117.jpg",
+        "ad": "Kentsel ulaşım",
+        "klasor": "Stok havuzu",
+        "kaynak": "Unsplash lisanslı",
+        "olcu": "1200×800"
+      },
+      {
+        "dosya": "p122.jpg",
+        "ad": "Kıyı ve rüzgâr",
+        "klasor": "Stok havuzu",
+        "kaynak": "Unsplash lisanslı",
+        "olcu": "1200×800"
+      },
+      {
+        "dosya": "p133.jpg",
+        "ad": "Gece şehir",
+        "klasor": "Stok havuzu",
+        "kaynak": "Unsplash lisanslı",
+        "olcu": "1200×800"
+      },
+      {
+        "dosya": "p155.jpg",
+        "ad": "Raylı sistem",
+        "klasor": "Stok havuzu",
+        "kaynak": "Unsplash lisanslı",
+        "olcu": "1200×800"
+      },
+      {
+        "dosya": "p158.jpg",
+        "ad": "Kalabalık cadde",
+        "klasor": "Stok havuzu",
+        "kaynak": "Unsplash lisanslı",
+        "olcu": "1200×800"
+      },
+      {
+        "dosya": "p163.jpg",
+        "ad": "Ofis ve masa",
+        "klasor": "Stok havuzu",
+        "kaynak": "Unsplash lisanslı",
+        "olcu": "1200×800"
+      },
+      {
+        "dosya": "p164.jpg",
+        "ad": "Kitaplar",
+        "klasor": "Stok havuzu",
+        "kaynak": "Unsplash lisanslı",
+        "olcu": "1200×800"
+      },
+      {
+        "dosya": "p178.jpg",
+        "ad": "Sisli sokak",
+        "klasor": "Stok havuzu",
+        "kaynak": "Unsplash lisanslı",
+        "olcu": "1200×800"
+      },
+      {
+        "dosya": "p180.jpg",
+        "ad": "Kırsal yol",
+        "klasor": "Stok havuzu",
+        "kaynak": "Unsplash lisanslı",
+        "olcu": "1200×800"
+      },
+      {
+        "dosya": "p182.jpg",
+        "ad": "Kar ve araç",
+        "klasor": "Stok havuzu",
+        "kaynak": "Unsplash lisanslı",
+        "olcu": "1200×800"
+      },
+      {
+        "dosya": "p183.jpg",
+        "ad": "Kış trafiği",
+        "klasor": "Stok havuzu",
+        "kaynak": "Unsplash lisanslı",
+        "olcu": "1200×800"
+      },
+      {
+        "dosya": "p188.jpg",
+        "ad": "Kent silueti",
+        "klasor": "Stok havuzu",
+        "kaynak": "Unsplash lisanslı",
+        "olcu": "1200×800"
+      },
+      {
+        "dosya": "p192.jpg",
+        "ad": "Pencere ve ışık",
+        "klasor": "Stok havuzu",
+        "kaynak": "Unsplash lisanslı",
+        "olcu": "1200×800"
+      },
+      {
+        "dosya": "p193.jpg",
+        "ad": "Pazar yeri",
+        "klasor": "Stok havuzu",
+        "kaynak": "Unsplash lisanslı",
+        "olcu": "1200×800"
+      },
+      {
+        "dosya": "p195.jpg",
+        "ad": "Kara ve deniz",
+        "klasor": "Stok havuzu",
+        "kaynak": "Unsplash lisanslı",
+        "olcu": "1200×800"
+      },
+      {
+        "dosya": "p203.jpg",
+        "ad": "Sahil ve bisiklet",
+        "klasor": "Stok havuzu",
+        "kaynak": "Unsplash lisanslı",
+        "olcu": "1200×800"
+      }
+    ]
   }
 }

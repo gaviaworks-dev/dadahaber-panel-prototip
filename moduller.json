@@ -71,11 +71,11 @@
         "vitrin": { "kapsam": "manset", "manset_slayt": 5, "yan_kart": 3 }
       },
       "gorsel_alanlari": {
-        "kapak": { "web": { "kart": { "oran": "16:10", "px": null }, "detay": { "oran": "2.4:1", "px": null } }, "mobil": { "kart": { "oran": "16:10", "px": null } }, "mobil_webden_kirpilir": true }
+        "kapak": { "_kaynak": "sitenin görünen genişliği (kap 1280px; masaüstü 4 kart; telefon 390 - 2×16)", "web": { "kart": { "oran": "16:10", "px": [308, 193] }, "detay": { "oran": "2.4:1", "px": [1280, 533] } }, "mobil": { "kart": { "oran": "16:10", "px": [358, 224] } }, "mobil_webden_kirpilir": true, "bildirim": { "oran": "2:1" } }
       },
       "sayfalar": [
         { "id": "liste",    "baslik": "Haberler",              "ikon": "fa-newspaper",       "dosya": "moduller/haberler/index.html",   "hazir": true,  "menude": true, "rozet": null },
-        { "id": "duzenle",  "baslik": "Haber Düzenle",         "ikon": "fa-pen",             "dosya": "moduller/haberler/duzenle.html", "hazir": false, "menude": false },
+        { "id": "duzenle",  "baslik": "Haber Düzenle",         "ikon": "fa-pen",             "dosya": "moduller/haberler/duzenle.html", "hazir": true, "menude": false },
         { "id": "vitrin",   "baslik": "Vitrin ve Son Dakika",  "ikon": "fa-star",            "dosya": "moduller/haberler/vitrin.html",  "hazir": false, "menude": true, "roller": ["super", "gyy", "editor"] },
         { "id": "canli",    "baslik": "Canlı Anlatım",         "ikon": "fa-tower-broadcast", "dosya": "moduller/haberler/canli.html",   "hazir": false, "menude": true, "roller": ["super", "gyy", "editor", "kat-ed"] },
         { "id": "dosyalar", "baslik": "Dosyalar ve Formatlar", "ikon": "fa-folder-open",     "dosya": "moduller/haberler/dosyalar.html","hazir": false, "menude": true, "roller": ["super", "gyy", "editor"] },
