@@ -45,7 +45,11 @@ Bu kurallar `CLAUDE.md`'dedir; burada yalnızca karar defterinde iz bıraksın d
 
 | Parça | Seçilen | Kaynak / önizleme | Tarih |
 |---|---|---|---|
-| (henüz yok) | | | |
+| Menü grubu adı (katman 4) | **Özel Widgetlar** (eski adı "Özel Dikeyler"). Beyar kabuk onayında yeniden soracak; değişebilir. Yalnızca `moduller.json`'daki grup ve modül adı değişir | `moduller.json` | 24.11.2026 |
+| Kabuk onayı | **Kabuk kilitlendi** (yan menü, üst bar, rol değiştirici, bildirim paneli, genel arama, Kontrol Paneli; masaüstü, tablet, telefon). Beyar: "genel hataları gider, kilitleyelim" → "sen bildiğin gibi yap, modüllere geç". Bundan sonra kabuğa yalnızca Beyar onayıyla dokunulur; açık kalan tek kalem menü grubu adı ("Özel Widgetlar", yeniden sorulacak) | `moduller/kontrol-paneli/index.html` | 24.11.2026 |
+| S2 · Menünün daraltılmış hali | **A · İkon şeridi** (76px): menü kenarındaki sekmeyle daralır; logo yerine işaret, kalem adları üstüne gelince ipucu olarak, rozetler ikonun köşesinde, grup başlıkları ince çizgi. Dar/açık hal hatırlanır, sayfa geçişlerinde menü sıçramaz, kaydırma yeri korunur (Beyar düzeltmesi) | `secenekler/kabuk-daraltma.html` · `moduller.json` → `menu.daraltma: ikon` | 24.11.2026 |
+| KURAL · üstüne gelme (ikincil kontroller) | **Bütün ikincil kontroller üstüne gelince üst bardaki çan gibi tepki verir:** kehribar çerçeve, koyu kehribar yazı ve ikon; zemin ve konum değişmez. Kapsam: çerçeveli düğme ("Rapor indir" gibi), ikon düğmesi, rol düğmesi; ileride eklenen her ikincil kontrol. Hiçbir düğme üstüne gelince yerinden oynamaz (ana ve tehlike düğmesinde yalnızca zemin koyulaşır) | Beyar ("Rapor indir" siyah çerçeveyle kötü duruyordu) | 24.11.2026 |
+| S1 · Tema | **A · Koyu menü, kehribar dolu ana düğme (koyu yazı); etkin menü kalemi kehribar zemin, koyu yazı ve ikon.** Yasin Bey seçti (Beyar önce B demişti). Düzeltme (Beyar): üstüne gelinen kalemin yazısı silikleşmez, ikonla aynı netlikte; etkin kalemin ikonu kehribar zeminde görünür (koyu) | `secenekler/kabuk-tema.html` · `tema/dadahaber.css` | 24.11.2026 |
 
 ## 4 · CC'nin verdiği küçük seçimler (Beyar gözden geçirecek)
 

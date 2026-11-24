@@ -280,7 +280,7 @@ K1, K3, K7 ve K16 Yasin Bey'e de soruldu; cevabı farklı gelirse yalnızca kay�
 - **Roller:** SA ● · GYY ● · ED ● · KE ◐ · SM ◐ (havuzdan seçer, yükler) · AN —.
 - **Sitede:** `video*.html`, `akis.html`, `canli-yayin.html`, `podcast*.html`, `haber-dinle*.html` (9), Spiker paneli (her sayfada), `foto-fokus*.html`, `infografik*.html`.
 
-### D4 · Özel Dikeyler
+### D4 · Özel Widgetlar (eski adı Özel Widgetlar)
 
 | # | Ekran | Tür | İçerik |
 |---|---|---|---|
@@ -409,7 +409,7 @@ K1, K3, K7 ve K16 Yasin Bey'e de soruldu; cevabı farklı gelirse yalnızca kay�
 | D1 Kontrol Paneli | ● | ● | ◐ | ◐ | ◐ | ◐ |
 | D2 Haberler ve Vitrin | ● | ● | ● | ◐ kendi kategorisi | ◐ sosyal sekmesi | ◐ okur |
 | D3 Multimedya | ● | ● | ● | ◐ | ◐ | — |
-| D4 Özel Dikeyler | ● | ● | ◐ | ● spor | — | ◐ |
+| D4 Özel Widgetlar | ● | ● | ◐ | ● spor | — | ◐ |
 | D5 AI Havuzu | ● | ● | ● havuz | ◐ | — | ◐ |
 | D5 Kaynaklar, frekans, maliyet, cron | ● | ◐ kaynaklar | — | — | — | — |
 | D6 Sosyal Medya | ● | ● | ◐ | — | ● | ◐ |
@@ -469,7 +469,7 @@ MULTİMEDYA                              (katman 3)
   Galeri ve İnfografik
   Medya Havuzu                 ⟶ sağ üst: Marka şablonu
 
-ÖZEL DİKEYLER                           (katman 4)
+ÖZEL WİDGETLAR                          (katman 4 · eski adı Özel Widgetlar)
   Spor                         ⟶ sekme: Kulüpler · Ligler · Maçlar
   Takvimler
   Veri Bantları
@@ -615,7 +615,7 @@ Tek kayıt dosyası. Yan menü bundan üretilir: betik menü HTML'ini sayfalara 
     { "id": "yayin",     "ad": "Yayın Merkezi",   "sira": 2 },
     { "id": "ai",        "ad": "AI Haber Havuzu", "sira": 3 },
     { "id": "medya",     "ad": "Multimedya",      "sira": 4 },
-    { "id": "dikey",     "ad": "Özel Dikeyler",   "sira": 5 },
+    { "id": "dikey",     "ad": "Özel Widgetlar",   "sira": 5 },
     { "id": "sosyal",    "ad": "Sosyal Medya",    "sira": 6 },
     { "id": "etkilesim", "ad": "Etkileşim",       "sira": 7 },
     { "id": "sistem",    "ad": "Sistem",          "sira": 8 }
