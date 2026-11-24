@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="tr"><head><meta charset="utf-8"><title>Panel denetimi (tarayıcı ölçümü)</title></head>
+<body><pre id="sonuc">bekliyor</pre>
+<script>
+/* araclar/denetim.py bu sayfayı başsız Chrome'la açar: ?s=sayfa1,sayfa2&w=1440,390
+   Her sayfa her genişlikte bir iframe'de açılır, kurallar ölçülür, sonuç JSON olarak #sonuc'a yazılır.
+   Kurallar docs/teslim-denetimi.md "Otomatik denetim" bölümünde. */
+var q = new URLSearchParams(location.search), S = (q.get('s') || '').split(',').filter(Boolean),
+    W = (q.get('w') || '1440,390').split(',').map(Number), ISLER = [], SONUC = [];
+S.forEach(function(s){ W.forEach(function(w){ ISLER.push([s, w]); }); });
+function gorunur(e){ if(!e || !e.getClientRects().length) return false; var c = e.closest('[hidden],template'); return !c; }
+function olc(d, w, sayfa, hatalar){
+  var r = { sayfa: sayfa, w: w, ihlal: [], karar: [] };
+  /* açık istisna: <body data-denetim-istisna="cift-blok uzun-sayfa" data-denetim-neden="…"> (UI kit gibi vitrin sayfaları) */
+  var IST = ((d.body && d.body.getAttribute('data-denetim-istisna')) || '').split(/\s+/);
+  var win = d.defaultView, main = d.querySelector('.pnl-main') || d.body;
+  function ihlal(k, m){ if(IST.indexOf(k) > -1) return; r.ihlal.push(k + ': ' + m); }
+  function karar(k, m){ if(IST.indexOf(k) > -1) return; r.karar.push(k + ': ' + m); }
+  /* genel: JS hatası, yatay taşma */
+  if(hatalar.length) ihlal('js', hatalar.slice(0, 2).join(' | '));
+  if(d.documentElement.scrollWidth > w + 1) ihlal('tasma', 'sayfa ' + d.documentElement.scrollWidth + 'px');
+  /* 1 · araç satırı: ham sekme/süzgeç satırı kalmamalı; her araç satırı tek satır (≤ 64 px) ve taşmasız; bir listede bir araç satırı */
+  Array.prototype.forEach.call(d.querySelectorAll('.kb-liste-ust, .filter-bar:not(.kb-arac)'), function(x){ if(gorunur(x) && x.querySelector('.chips, .fb-search, .kb-secim')) ihlal('arac-satiri', 'kalıba girmemiş satır (' + x.className + ')'); });
+  Array.prototype.forEach.call(d.querySelectorAll('.kb-arac'), function(x){
+    if(!gorunur(x)) return;
+    var rc = x.getBoundingClientRect(), R = rc.right - parseFloat(win.getComputedStyle(x).paddingRight) + 2, tas = false;
+    if(rc.height > 66) ihlal('arac-satiri', 'yükseklik ' + Math.round(rc.height) + 'px');
+    Array.prototype.forEach.call(x.querySelectorAll('.kb-arac-sol > *, .kb-arac-sag > *'), function(c){ if(c.hidden || c.classList.contains('pnl-menu') || !c.offsetWidth) return; if(c.getBoundingClientRect().right > R) tas = true; });
+    var ch = x.querySelector('.kb-arac-sol .chips'); if(ch && ch.offsetWidth && ch.scrollWidth > ch.clientWidth + 1) tas = true;
+    if(tas) ihlal('arac-satiri', 'taşıyor');
+  });
+  Array.prototype.forEach.call(d.querySelectorAll('[data-liste], [data-kart-liste]'), function(L){ if(!gorunur(L)) return; var n = Array.prototype.filter.call(L.querySelectorAll('.kb-arac'), gorunur).length; if(n > 1) ihlal('arac-satiri', 'bir listede ' + n + ' araç satırı'); });
+  if(w < 1000) return r; /* aşağıdaki yapı kuralları geniş ekranda ölçülür */
+  /* 2 · çift blok: ana sütunda aynı anda görünen büyük veri görünümleri (tablo ≥3 satır, takvim, matris, kart ızgarası, log) */
+  var bloklar = Array.prototype.filter.call(main.querySelectorAll('table.ptable, .kb-takvim, table.kb-matris, .kb-entegre-izgara, .kb-medya-izgara, [data-kart-liste], pre.kb-log'), function(b){
+    if(!gorunur(b) || b.closest('.side-card') || b.parentElement.closest('table.ptable, .kb-takvim, [data-kart-liste]')) return false;
+    if(b.matches('table.ptable')){ var sat = Array.prototype.filter.call(b.querySelectorAll('tbody tr'), gorunur).length; if(sat < 3) return false; if(b.closest('[data-liste]') && b.closest('[data-liste]').querySelector('.kb-takvim') && b.closest('[data-liste]').dataset.gorunum !== 'liste') return false; }
+    return b.getBoundingClientRect().height > 160;
+  });
+  var pano = /kontrol-paneli|raporlar\/index/.test(sayfa);
+  if(bloklar.length > 1){ var m = bloklar.length + ' büyük veri görünümü alt alta (' + bloklar.map(function(b){ var t = b.closest('.pnl-card'); t = t && t.querySelector('.pc-title, h2'); return t ? t.textContent.trim().slice(0, 24) : b.className.split(' ')[0]; }).join(' · ') + ')'; if(pano) karar('cift-blok', m); else ihlal('cift-blok', m); }
+  /* 3 · uzun sayfa: 1,5 ekrandan uzun ve ana sütunda 3+ büyük kart */
+  var h = Math.max(d.documentElement.scrollHeight, main.scrollHeight), kartlar = Array.prototype.filter.call(main.querySelectorAll('.pnl-card'), function(c){ return gorunur(c) && !c.closest('.side-card') && !c.parentElement.closest('.pnl-card') && c.getBoundingClientRect().height > 240; });
+  if(h > 1.5 * 900 && kartlar.length >= 3) karar('uzun-sayfa', (h / 900).toFixed(1) + ' ekran, ' + kartlar.length + ' büyük kart');
+  /* 4 · kilitli düğme: bir tabloda satırların yarısından çoğu kilitli düğme taşıyorsa (yapılamayan eylem çizilmiş) */
+  Array.prototype.forEach.call(main.querySelectorAll('table.ptable'), function(t){ if(!gorunur(t)) return; var sat = Array.prototype.filter.call(t.querySelectorAll('tbody tr[data-satir]'), gorunur); if(sat.length < 3) return; var k = sat.filter(function(x){ return x.querySelector('.kb-kilit, .row-acts .ia-btn:disabled'); }).length; if(k > sat.length / 2) ihlal('kilitli-dugme', k + '/' + sat.length + ' satırda'); });
+  /* 5 · satır eylemleri sırası: görüntüle · düzenle · sil · ⋯ */
+  var SIRA = ['fa-eye', 'fa-pen', 'fa-trash', 'fa-ellipsis'], bozuk = 0;
+  Array.prototype.forEach.call(main.querySelectorAll('.row-acts'), function(ra){ if(!gorunur(ra)) return; var s = Array.prototype.map.call(ra.querySelectorAll('.ia-btn i, .ia-btn'), function(i){ for(var j = 0; j < SIRA.length; j++){ if(i.classList && i.classList.contains(SIRA[j])) return j; } return -1; }).filter(function(x){ return x > -1; }); for(var j = 1; j < s.length; j++){ if(s[j] < s[j - 1]){ bozuk++; break; } } });
+  if(bozuk) ihlal('satir-eylemleri', bozuk + ' satırda sıra bozuk');
+  /* 6 · Çöp sekmesi: listede Çöp yoksa nedeni bantta yazmalı (silinmez kayıt) */
+  Array.prototype.forEach.call(d.querySelectorAll('[data-liste]'), function(L){ if(!gorunur(L)) return; if(L.querySelector('[data-sekme="cop"]')) return; var bant = (L.closest('.pnl-main') || d).querySelectorAll('.kb-bant'); var neden = Array.prototype.some.call(bant, function(b){ return /silin|değiştirile|çöp|kalıcı|yalnız okunur|API/i.test(b.textContent); }); if(!neden) ihlal('cop', '"' + (L.dataset.listeAd || 'liste') + '" listesinde Çöp yok ve nedeni yazmıyor'); });
+  /* 7 · boşluk: ipucu/açıklama ait olduğu öğeye yakın (2–12 px), sonraki alana uzak (≥ 12 px); kutular birbirine yapışık değil */
+  var yapisik = [];
+  Array.prototype.forEach.call(main.querySelectorAll('.fhint, .char-meter, .kb-aciklama'), function(x){
+    if(!gorunur(x) || x.closest('.flabel')) return; /* etiket satırındaki ipucu altındaki alana aittir */
+    var xs0 = win.getComputedStyle(x); if(parseFloat(xs0.borderTopWidth) > 0 || parseFloat(xs0.borderBottomWidth) > 0) return; /* çerçeveli dipnot şeridi */
+    var once = x.previousElementSibling, sonra = x.nextElementSibling, rc = x.getBoundingClientRect();
+    while(once && !gorunur(once)) once = once.previousElementSibling; while(sonra && !gorunur(sonra)) sonra = sonra.nextElementSibling;
+    var orc = once && once.getBoundingClientRect(), ustte = orc && orc.bottom <= rc.top + 2 && orc.left < rc.right && orc.right > rc.left; /* yalnız üstündeki öğe (yan yana olan sayılmaz) */
+    var xs = win.getComputedStyle(x), pt = parseFloat(xs.paddingTop) || 0, pb = parseFloat(xs.paddingBottom) || 0;
+    if(once && ustte){ var g = rc.top - orc.bottom + pt; if(g < 1) yapisik.push('ipucu öğesine yapışık: "' + x.textContent.trim().slice(0, 30) + '"'); if(g > 14) yapisik.push('ipucu öğesinden uzak (' + Math.round(g) + 'px): "' + x.textContent.trim().slice(0, 30) + '"'); }
+    var kutuIci = function(e){ var cs = win.getComputedStyle(e); return parseFloat(cs.borderBottomWidth) > 0 || (cs.backgroundColor && cs.backgroundColor !== 'rgba(0, 0, 0, 0)' && cs.backgroundColor !== 'transparent'); };
+    if(!sonra && x.parentElement && !kutuIci(x.parentElement) && !(x.parentElement.parentElement && kutuIci(x.parentElement.parentElement) && !x.parentElement.nextElementSibling)){ var ust = x.parentElement, ss = ust.nextElementSibling; while(ss && !gorunur(ss)) ss = ss.nextElementSibling; if(ss && ss.getBoundingClientRect().left < rc.right && ss.getBoundingClientRect().right > rc.left){ var g2 = ss.getBoundingClientRect().top - rc.bottom + pb; if(g2 >= 0 && g2 < 12) yapisik.push('ipucu sonraki alana yakın (' + Math.round(g2) + 'px): "' + x.textContent.trim().slice(0, 30) + '"'); } }
+  });
+  Array.prototype.forEach.call(main.querySelectorAll('.kb-bant, .sa-bakim-durum, .kb-saglik-izgara, .kpi-grid'), function(b){ if(!gorunur(b)) return; var s = b.nextElementSibling; while(s && !gorunur(s)) s = s.nextElementSibling; if(!s) return; var g = s.getBoundingClientRect().top - b.getBoundingClientRect().bottom; if(g >= 0 && g < 4 && s.getBoundingClientRect().height > 10) yapisik.push('kutu altındakine yapışık: ' + b.className.split(' ')[0]); });
+  if(yapisik.length) ihlal('bosluk', yapisik.slice(0, 3).join(' | ') + (yapisik.length > 3 ? ' (+' + (yapisik.length - 3) + ')' : ''));
+  /* 8 · bildirim düğmeleri kapatmaz: kısa bildirim çıkınca kaydet çubuğu / pencere alt çubuğu düğmeleriyle kesişmemeli */
+  if(win.kbBildir){
+    win.kbBildir('Denetim: bildirim konumu');
+    var toast = Array.prototype.filter.call(d.querySelectorAll('.sa-toast, .kb-toast'), gorunur).pop();
+    if(toast){ var tr = toast.getBoundingClientRect(); Array.prototype.forEach.call(d.querySelectorAll('.kb-kaydet .btn, .kb-kap-alt-cubuk .btn'), function(b){ if(!gorunur(b)) return; var br = b.getBoundingClientRect(); if(br.left < tr.right && br.right > tr.left && br.top < tr.bottom && br.bottom > tr.top) ihlal('bildirim', 'kısa bildirim "' + b.textContent.trim() + '" düğmesinin üstüne biniyor'); }); }
+  }
+  /* 9 · zorunlu alan: ana düğme eksik alanda pasif görünür (yalnız ?yeni=1 açılan formlarda) */
+  if(/[?&]yeni=1/.test(sayfa)){ var ana = Array.prototype.filter.call(d.querySelectorAll('.kb-kaydet .btn-acc[data-kaydet]'), gorunur)[0]; var eks = win.kbEksikler && d.querySelector('[data-zorunlu-kayit]') ? win.kbEksikler(d.querySelector('[data-zorunlu-kayit]')) : []; if(ana && eks.length && !ana.classList.contains('is-pasif')) ihlal('zorunlu', 'eksik alan varken ana düğme pasif görünmüyor'); }
+  return r;
+}
+var i = 0;
+function sonraki(){
+  if(i >= ISLER.length){ document.getElementById('sonuc').textContent = JSON.stringify(SONUC); return; }
+  var s = ISLER[i][0], w = ISLER[i][1]; i++;
+  var f = document.createElement('iframe'), hatalar = [];
+  f.style.cssText = 'width:' + w + 'px;height:900px;border:0';
+  var t = setInterval(function(){ try{ var cw = f.contentWindow; if(cw && !cw._dz){ cw._dz = 1; cw.addEventListener('error', function(e){ hatalar.push(e.message); }); } }catch(x){} }, 3);
+  f.onload = function(){ setTimeout(function(){ clearInterval(t); try{ SONUC.push(olc(f.contentDocument, w, s, hatalar)); }catch(e){ SONUC.push({ sayfa:s, w:w, ihlal:['denetim: ' + e.message], karar:[] }); } f.remove(); sonraki(); }, 1100); };
+  f.src = '/' + s; document.body.appendChild(f);
+}
+sonraki();
+</script></body></html>
