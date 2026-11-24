@@ -1560,3 +1560,5 @@ body.kb-giris-sayfa{min-height:100vh;margin:0;display:grid;grid-template-columns
 @media(max-width:1024px){:where(.pnl-card) > :where(.kb-bant){margin:var(--b-3) 16px}}
 .kb-profil-metin .kb-pm-kaynak{margin-top:var(--b-2)} /* profil metninin kaynak satırı sayaçtan ayrışır */
 .sa-form-tab .ch-cnt{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;margin-left:6px;padding:0 5px;border-radius:var(--radius-sm);background:var(--danger-tint);color:var(--danger);font-size:10.5px;font-weight:800;font-variant-numeric:tabular-nums} /* sekmede sorun sayısı rozeti */
+/* dokunma alanı ≥ 44 px (telefon): görünen boyut aynı, tıklanır alan genişler */
+@media(max-width:640px){.ia-btn,.chip,.pg-btn{position:relative}.ia-btn::after,.pg-btn::after{content:"";position:absolute;inset:-4px}.chip:not(.kb-cop)::after,.chip.kb-cop::after{content:"";position:absolute;inset:-7px -2px}}
