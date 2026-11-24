@@ -170,6 +170,7 @@ def kayit_js():
         "rol_degistirici": kayit["rol_degistirici"],
         "etkilesim": {k: v for k, v in kayit.get("etkilesim", {}).items() if not k.startswith("_")},
         "personalar": veri["personalar"],
+        "medya": veri.get("medya_havuzu", {}),
         "sayfalar": {k: {x: v[x] for x in ("baslik", "ikon", "modul_ad", "hazir", "acik", "roller")} for k, v in SAYFALAR.items()},
         "oturum_sayfalari": OTURUM_SAYFALARI,
     }
@@ -199,7 +200,11 @@ def hedefleri_yaz(t, sayfa_yolu):
         etiket = re.sub(r'\s(href|hidden)(="[^"]*")?', "", etiket)
         if not s["acik"]:
             return etiket[:-1] + " hidden>"
-        return etiket[:-1] + f' href="{esc(hedef_href(anahtar, sayfa_yolu))}">'
+        ek = re.search(r'data-hedef-ek="([^"]*)"', etiket)
+        href = hedef_href(anahtar, sayfa_yolu)
+        if ek and SAYFALAR[anahtar]["hazir"]:
+            href += html.unescape(ek.group(1))
+        return etiket[:-1] + f' href="{esc(href)}">'
     t = re.sub(r'<a\b[^>]*\sdata-hedef="[^"]+"[^>]*>', bas, t)
     def kutu(m):
         etiket = m.group(0)

@@ -58,6 +58,10 @@ button,input,select,textarea{font:inherit;color:inherit}
    düğmesi ve rol düğmesi aynı kuralı paylaşır; düğmeler üstüne gelince yerinden oynamaz. */
 .btn-ghost:hover,.btn-ghost:focus-visible,.pnl-bell:hover,.pnl-bell:focus-visible,.kb-rol-btn:hover,.kb-rol-btn[aria-expanded="true"]{border-color:var(--acc);color:var(--acc-ink)}
 .kb-rol-btn:hover i,.kb-rol-btn[aria-expanded="true"] i{color:var(--acc-ink)}
+/* KURAL (Beyar, 24.11.2026): yıkıcı işlem (çöpe taşı, sil, kaldır) üstüne gelince kırmızı — çerçeveli düğme, ikon düğmesi ve menü kalemi aynı */
+.btn-ghost.danger:hover,.btn-ghost.danger:focus-visible{border-color:var(--danger);color:var(--danger);background:var(--danger-tint)}
+.pnl-menu .danger:hover,.pnl-menu .danger:focus-visible{background:var(--danger-tint);color:var(--danger)}
+.pnl-menu .danger:hover i{color:var(--danger)}
 .btn-sm{padding:10px 16px;font-size:13px;border-radius:var(--radius-sm)}
 .btn-danger{background:var(--danger);color:var(--paper)}
 .btn-danger:hover{background:var(--danger-deep)}

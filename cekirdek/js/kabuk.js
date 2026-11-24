@@ -216,17 +216,21 @@
       var m = document.getElementById(b.getAttribute('data-acilir')); if(m) m.classList.remove('open');
     });
   }
-  document.querySelectorAll('[data-acilir]').forEach(function(b){
-    b.addEventListener('click', function(e){
+  /* açılır kutular: belgeye tek dinleyici (çekmece ya da pencerede sonradan eklenenler de çalışır) */
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-acilir]');
+    if(b){
       e.stopPropagation();
       var m = document.getElementById(b.getAttribute('data-acilir'));
+      if(!m){ var kap = b.parentNode; m = kap && kap.querySelector('#' + b.getAttribute('data-acilir')); }
       var ac = b.getAttribute('aria-expanded') !== 'true';
       kapatHepsi(b);
       b.setAttribute('aria-expanded', ac ? 'true' : 'false');
       if(m) m.classList.toggle('open', ac);
-    });
+      return;
+    }
+    if(!e.target.closest('.pnl-menu')) kapatHepsi();
   });
-  document.addEventListener('click', function(e){ if(!e.target.closest('.pnl-menu')) kapatHepsi(); });
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape'){ kapatHepsi(); document.body.classList.remove('nav-open'); }
     if((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'){
