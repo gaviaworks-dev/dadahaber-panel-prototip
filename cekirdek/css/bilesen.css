@@ -1475,3 +1475,15 @@ body.kb-giris-sayfa{min-height:100vh;margin:0;display:grid;grid-template-columns
 .kb-marka-oniz:not([data-renk]) .kmo-serit{color:var(--on-acc)} /* sarı üstüne beyaz yazı yok (marka kararı) */
 [data-liste][data-gorunum="izgara"] tbody td.kb-ana{max-width:none;width:auto;min-width:0} /* ızgarada ana hücre genişliği (d2-medya bildirimi) */
 .kb-bant:has(.kb-bant-eylem){align-items:center} /* eylem düğmeli bantta yazı ve ikon düğmeyle ortalı */
+
+/* ================= tek veri görünümü: listeye bağlı takvim ([data-liste] içinde .kb-takvim) =================
+   Aynı kayıtlar iki görünümde alt alta gösterilmez (Beyar kuralı). Takvim açıkken tablo, sayfalama ve toplu seçim gizli;
+   liste açıkken takvim gövdesi ve gezinme gizli, yalnız görünüm değiştirici kalır. Sekme, arama ve süzgeç tek ve ikisine birden uygulanır. */
+[data-liste] > .kb-takvim,[data-liste] .kb-takvim{padding:14px 20px 4px}
+[data-liste][data-gorunum="takvim"] .ptable-wrap,[data-liste][data-gorunum="takvim"] .pager,[data-liste][data-gorunum="takvim"] .kb-toplu,[data-liste][data-gorunum="takvim"] [data-hepsini-sec]{display:none}
+[data-liste][data-gorunum="takvim"] .kb-takvim{padding-bottom:20px}
+[data-liste][data-gorunum="liste"] .kb-takvim-govde,[data-liste][data-gorunum="liste"] .kb-takvim-gez{display:none}
+[data-liste][data-gorunum="liste"] .kb-takvim-ust{justify-content:flex-end}
+[data-liste][data-gorunum="liste"] .kb-takvim{padding-bottom:0}
+@media(max-width:640px){[data-liste] .kb-takvim{padding:10px 12px 0}}
+[data-liste][data-gorunum="izgara"] .rcp-cell > .kb-ava:first-child{margin:12px 0 0 48px} /* görselsiz kartta seçim kutusu avatarın üstüne binmez (d2-sosyal) */

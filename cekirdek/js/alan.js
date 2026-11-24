@@ -750,9 +750,31 @@
      Olay bağlantısı kendi sayfasını açar (satır → sayfa); data-tanim taşıyan olay çekmece açar. Boş güne tıklamak
      data-gun-ac şablonunu çekmecede açar ve içindeki tarih seçiciye o günü yazar. Telefonda Ay ve Hafta Liste olur. */
   window.kbKurucu('.kb-takvim', function(T){
-    var veri = T.querySelector('.kb-takvim-veri'); if(!veri) return;
+    /* Listeye bağlı takvim (tek veri görünümü kuralı): [data-liste] içindeki .kb-takvim olaylarını listenin satırlarından
+       (tr[data-satir][data-tarih]) okur; listenin sekme, arama ve süzgeci takvime de uygulanır. "Liste" düğmesi listenin
+       kendi tablosunu (Çöp, toplu seçim, satır eylemleri) gösterir; Ay/Hafta takvimi gösterir. L[data-gorunum="takvim|liste"]. */
+    var BL = T.closest('[data-liste]');
+    var veri = T.querySelector('.kb-takvim-veri');
+    if(BL){ if(!veri){ veri = document.createElement('div'); veri.className = 'kb-takvim-veri'; veri.hidden = true; T.appendChild(veri); } }
+    if(!veri) return;
+    function listedenOku(){
+      veri.innerHTML = '';
+      BL.querySelectorAll('tr[data-satir][data-tarih]').forEach(function(r){
+        if(r._kbGecti === false || r.dataset.durum === 'cop') return;
+        var a = document.createElement('a'), ilk = r.querySelector('.row-acts a[href]:not([href="#"]), .row-acts [data-tanim], [data-hedef]');
+        a.dataset.tarih = r.dataset.tarih; if(r.dataset.ton) a.dataset.ton = r.dataset.ton; if(r.dataset.ikon) a.dataset.ikon = r.dataset.ikon;
+        if(r.dataset.not) a.dataset.not = r.dataset.not;
+        if(r.dataset.href) a.href = r.dataset.href; else if(ilk && ilk.getAttribute('href') && ilk.getAttribute('href') !== '#') a.href = ilk.getAttribute('href'); else if(ilk && ilk.hasAttribute('data-tanim')) a.setAttribute('data-tanim', ilk.getAttribute('data-tanim'));
+        a._kbSatir = r;
+        a.textContent = r.dataset.ad || ((r.querySelector('.rcp-name') || r.querySelector('td.kb-ana') || r).textContent || '').trim();
+        veri.appendChild(a);
+      });
+    }
+    if(BL) listedenOku();
     function coz(s){ var m = (s || '').match(/(\d{1,2})\.(\d{1,2})\.(\d{4})(?:\s+(\d{1,2})\.(\d{2}))?/); return m ? { g:+m[1], a:+m[2] - 1, y:+m[3], h:m[4] ? +m[4] : null, m:m[5] ? +m[5] : 0 } : null; }
-    var olaylar = Array.prototype.map.call(veri.querySelectorAll('[data-tarih]'), function(el){ var t = coz(el.dataset.tarih); return t ? { t:t, el:el, d:new Date(t.y, t.a, t.g, t.h || 0, t.m) } : null; }).filter(Boolean).sort(function(a, b){ return a.d - b.d; });
+    var olaylar = [];
+    function olaylariOku(){ olaylar = Array.prototype.map.call(veri.querySelectorAll('[data-tarih]'), function(el){ var t = coz(el.dataset.tarih); return t ? { t:t, el:el, d:new Date(t.y, t.a, t.g, t.h || 0, t.m) } : null; }).filter(Boolean).sort(function(a, b){ return a.d - b.d; }); }
+    olaylariOku();
     var bugun = coz(T.dataset.bugun || T.dataset.baslangic) || (function(){ var n = new Date(); return { y:n.getFullYear(), a:n.getMonth(), g:n.getDate() }; })();
     var odak = new Date(bugun.y, bugun.a, bugun.g), gorunum = T.dataset.gorunum || 'ay', dar = window.matchMedia('(max-width:640px)');
     var ust = document.createElement('div'); ust.className = 'kb-takvim-ust';
@@ -772,6 +794,7 @@
     function gunBtn(d, metin, sinif){ return '<button type="button" class="' + sinif + '" data-takvim-gun="' + iki(d.getDate()) + '.' + iki(d.getMonth() + 1) + '.' + d.getFullYear() + '" aria-label="' + d.getDate() + ' ' + AYLAR[d.getMonth()] + ' ' + GUNLER[(d.getDay() + 6) % 7] + (T.dataset.gunAc ? ', yeni ekle' : '') + '">' + metin + '</button>'; }
     function ciz(){
       var g = gorunum !== 'liste' && dar.matches ? 'liste' : gorunum; /* telefonda Ay ve Hafta Liste olur */
+      if(BL){ BL.dataset.gorunum = g === 'liste' ? 'liste' : 'takvim'; if(g === 'liste'){ ust.querySelectorAll('[data-gorunum]').forEach(function(b){ var on = b.dataset.gorunum === 'liste'; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', on); }); T.dataset.etkin = 'liste'; govde.innerHTML = ''; return; } }
       ust.querySelectorAll('[data-gorunum]').forEach(function(b){ var on = b.dataset.gorunum === g; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', on); });
       T.dataset.etkin = g; var h = '', bas, d, i;
       if(g === 'hafta'){
@@ -812,11 +835,18 @@
     govde.addEventListener('click', function(e){
       var f = e.target.closest('[data-takvim-hafta]'); if(f){ odak = new Date(+f.dataset.takvimHafta); gorunum = 'hafta'; ciz(); return; }
       var o = e.target.closest('.kb-takvim-olay');
-      if(o){ if(o.hasAttribute('data-tanim')){ e.preventDefault(); window.kbAc(o.getAttribute('data-tanim'), 'cekmece'); } else if(o.getAttribute('href') === '#'){ e.preventDefault(); } return; }
+      if(o){ if(o.hasAttribute('data-tanim')){ e.preventDefault(); window.kbAc(o.getAttribute('data-tanim'), 'cekmece'); } else if(o.getAttribute('href') === '#'){ e.preventDefault(); if(BL){ var ad0 = o.textContent.trim(); var r0 = Array.prototype.filter.call(BL.querySelectorAll('tr[data-satir]'), function(r){ return (r.dataset.ad || '').trim() === ad0 || ((r.querySelector('.rcp-name') || {}).textContent || '').trim() === ad0; })[0]; var td = r0 && r0.querySelector('td.kb-ana, td:nth-child(2)'); if(td) td.click(); } } return; }
       var gb = e.target.closest('[data-takvim-gun]');
       if(gb && T.dataset.gunAc){ var t = coz(gb.dataset.takvimGun); window.kbAc(T.dataset.gunAc, 'cekmece', function(k){ var kt = k.querySelector('.kb-tarih-sec'); if(kt && kt.kbAyarla) kt.kbAyarla({ y:t.y, a:t.a, g:t.g, h:10, m:0 }); }); }
     });
     if(dar.addEventListener) dar.addEventListener('change', ciz);
+    if(BL){
+      BL.addEventListener('kb-liste-suzuldu', function(e){
+        /* Çöp yalnız liste görünümünde (sözleşme) */
+        if(e.detail && e.detail.sekme === 'cop' && gorunum !== 'liste'){ gorunum = 'liste'; }
+        listedenOku(); olaylariOku(); ciz();
+      });
+    }
     ciz();
   });
   /* =====================================================================

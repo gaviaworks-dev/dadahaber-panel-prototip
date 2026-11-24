@@ -392,11 +392,11 @@
   {
    "id": "takvim",
    "ad": "Takvim görünümü",
-   "kanca": "kb-takvim · kb-takvim-veri [data-tarih][data-ton] · data-gun-ac",
+   "kanca": "kb-takvim · kb-takvim-veri [data-tarih][data-ton] · data-gun-ac · [data-liste] içinde: satırlardan (tr[data-tarih]) okur, Liste = tablo",
    "dosya": "bilesen.css · alan.js",
    "durum": "hazir",
    "ui_kit": "yayin",
-   "not": "Ay · Hafta · Liste; telefonda Liste"
+   "not": "tek veri görünümü: listeye bağlanınca Ay · Hafta takvim, Liste tablo"
   },
   {
    "id": "guven-skoru",

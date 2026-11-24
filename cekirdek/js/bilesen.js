@@ -429,9 +429,11 @@
         var d = r.dataset.durum, g = gorunur(r) && (sekme === 'hepsi' ? d !== 'cop' : d === sekme);
         if(g && v) g = tr(r.dataset.ara).indexOf(v) > -1;
         if(g) Object.keys(sz).forEach(function(k){ var rv = r.dataset[k] || ''; if(coklu[k] ? ('|' + rv + '|').indexOf('|' + sz[k] + '|') === -1 : rv !== sz[k]) g = false; });
+        r._kbGecti = g; /* sayfalamadan önce süzgeçten geçti mi (bağlı takvim görünümü bunu okur) */
         if(g && n >= sayfaBoy) g = false;
         r.hidden = !g; if(g) n++;
       });
+      L.dispatchEvent(new CustomEvent('kb-liste-suzuldu', { detail:{ sekme: sekme } }));
       if(bosSatir) bosSatir.hidden = n > 0;
       var sk = L.querySelector('.chip[data-sekme="' + sekme + '"]');
       var toplam = suzVar ? n : +(sk && sk.dataset.toplam || n);
