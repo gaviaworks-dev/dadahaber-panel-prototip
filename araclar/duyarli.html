@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="tr"><head><meta charset="utf-8"><title>Duyarlı test (tarayıcı ölçümü)</title></head>
+<body><pre id="sonuc">bekliyor</pre>
+<script>
+/* araclar/duyarli.py ya da elle: ?w=390&s=sayfa1,sayfa2 — her sayfa verilen genişlikte iframe'de açılır.
+   Ölçülen (CLAUDE.md "Arayüz kuralları" + kararlar): yatay taşma; kesilen metin; üst üste binen düğmeler; tablonun kendi içinde
+   kayması; yan menünün açılıp kapanması (≤1024); açılır menü ve çekmece/pencerenin ekrana sığması; kaydet çubuğunun içeriği
+   kapatması; dokunma hedefi ≥ 44 px (≤ 640). Sekmeli formlarda her sekme ayrıca taşma için ölçülür. */
+var q = new URLSearchParams(location.search), S = (q.get('s') || '').split(',').filter(Boolean), W = +(q.get('w') || 1440), SON = [];
+function gor(e){ return e && e.getClientRects().length && !e.closest('[hidden],template'); }
+function kes(a, b){ return a.left < b.right - 1 && a.right > b.left + 1 && a.top < b.bottom - 1 && a.bottom > b.top + 1; }
+function bekle(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+async function olc(f, s){
+  var d = f.contentDocument, w = f.contentWindow, r = { sayfa:s, w:W, hata:[] }, H = function(k, m){ r.hata.push(k + ': ' + m); };
+  if(!d || !d.body) { H('test', 'sayfa yüklenemedi'); return r; }
+  var main = d.querySelector('.pnl-main') || d.body;
+  function tasma(et){ if(d.documentElement.scrollWidth > W + 1) H('tasma', (et || '') + 'sayfa ' + d.documentElement.scrollWidth + 'px'); }
+  tasma();
+  /* kesilen metin: düğme, sekme, başlık, etiket (bilerek üç nokta konmuşsa sayılmaz) */
+  var kesik = [];
+  Array.prototype.forEach.call(main.querySelectorAll('.btn, .chip, h1, h2, .pc-title, label, .sa-form-tab, th'), function(e){
+    if(!gor(e) || e.closest('.sr-only') || e.classList.contains('sr-only')) return; var cs = w.getComputedStyle(e); if(cs.textOverflow === 'ellipsis' || e.closest('.kb-arac-sol .chips')) return;
+    if(e.scrollWidth > e.clientWidth + 2 && cs.overflow !== 'visible') kesik.push(e.textContent.trim().slice(0, 24));
+  });
+  if(kesik.length) H('kesik-metin', kesik.slice(0, 3).join(' | ') + (kesik.length > 3 ? ' (+' + (kesik.length - 3) + ')' : ''));
+  /* üst üste binen düğmeler (aynı kapta) */
+  var dg = Array.prototype.filter.call(main.querySelectorAll('.btn, .ia-btn, .chip'), function(e){ return gor(e) && !e.closest('.pnl-menu, .kb-kaydet, .kb-kap-alt-cubuk') && e.offsetWidth; }).slice(0, 160), binen = 0;
+  for(var i = 0; i < dg.length; i++){ var a = dg[i].getBoundingClientRect(); for(var j = i + 1; j < dg.length; j++){ if(dg[i].contains(dg[j]) || dg[j].contains(dg[i])) continue; if(kes(a, dg[j].getBoundingClientRect())){ binen++; if(binen === 1) H('binen', dg[i].textContent.trim().slice(0, 18) + ' × ' + dg[j].textContent.trim().slice(0, 18)); } } }
+  /* tablo: kabından genişse kap kaymalı */
+  Array.prototype.forEach.call(main.querySelectorAll('.ptable-wrap'), function(t){ if(!gor(t)) return; var tb = t.querySelector('table'); if(tb && tb.scrollWidth > t.clientWidth + 2){ var ox = w.getComputedStyle(t).overflowX; if(ox !== 'auto' && ox !== 'scroll') H('tablo', 'kabından taşıyor, kaymıyor'); } });
+  /* dokunma hedefi (≤ 640) */
+  if(W <= 640){
+    var kucuk = {};
+    Array.prototype.forEach.call(d.querySelectorAll('.pnl-main .btn, .pnl-main .ia-btn, .pnl-main .chip, .pnl-main .sa-form-tab, .pnl-top button, .pnl-main .kb-secim-btn, .pnl-main .pg-btn'), function(e){ if(!gor(e) || e.closest('.pnl-menu')) return; var rc = e.getBoundingClientRect(); var ef = Math.max(rc.height, (function(){ var af = w.getComputedStyle(e, '::after'); return af && af.content !== 'none' && af.position === 'absolute' ? rc.height + 22 : 0; })()); if(ef < 43.5){ var k = (e.className || e.tagName).toString().split(' ')[0]; kucuk[k] = (kucuk[k] || 0) + 1; } });
+    var kk = Object.keys(kucuk); if(kk.length) H('dokunma', kk.map(function(k){ return k + '×' + kucuk[k]; }).join(', '));
+  }
+  /* yan menü (≤ 1024): aç, kapat */
+  var burger = d.getElementById('pnlBurger');
+  if(W <= 1024 && burger && gor(burger)){
+    burger.click(); await bekle(120); var acik = d.body.classList.contains('nav-open');
+    d.dispatchEvent(new w.KeyboardEvent('keydown', { key:'Escape', bubbles:true })); await bekle(120);
+    if(!acik) H('yan-menu', 'açılmıyor'); else if(d.body.classList.contains('nav-open')) H('yan-menu', 'Esc ile kapanmıyor');
+  }
+  /* açılır menüler ekrana sığmalı (ilk 6 görünür tetik) */
+  var tet = Array.prototype.filter.call(main.querySelectorAll('[data-acilir]'), gor).slice(0, 6);
+  for(var t = 0; t < tet.length; t++){
+    var b = tet[t]; b.click(); await bekle(80);
+    var m = d.getElementById(b.getAttribute('data-acilir'));
+    if(m && m.classList.contains('open')){ var mr = m.getBoundingClientRect(); if(mr.width && (mr.left < -1 || mr.right > W + 1)) H('acilir', '"' + b.textContent.trim().slice(0, 18) + '" menüsü ekrandan taşıyor (' + Math.round(mr.left) + '…' + Math.round(mr.right) + ')'); }
+    d.body.click(); d.dispatchEvent(new w.KeyboardEvent('keydown', { key:'Escape', bubbles:true })); await bekle(40);
+  }
+  /* çekmece / pencere: ilk tanım tetiği */
+  var tn = Array.prototype.filter.call(main.querySelectorAll('[data-tanim], [data-sablon-ac], [data-pencere]'), gor)[0];
+  if(tn){ tn.click(); await bekle(350); var k2 = d.querySelector('.kb-cekmece.open, .kb-pencere.open, .kb-cekmece:not([hidden]), .kb-pencere:not([hidden])');
+    if(k2){ k2.classList.add('open'); await bekle(420); var kr = k2.getBoundingClientRect(); /* başsız iframe'de requestAnimationFrame gelmez: açılış sınıfı elle */ if(kr.width && (kr.left < -1 || kr.right > W + 1)) H('cekmece', 'ekrana sığmıyor (' + Math.round(kr.width) + 'px)'); if(d.documentElement.scrollWidth > W + 1) H('cekmece', 'açıkken sayfa taşıyor'); }
+    if(w.kbKapat) w.kbKapat(); await bekle(300); }
+  /* kaydet çubuğu: sayfa sonuna inince son içerik çubuğun altında kalmamalı */
+  var bar = Array.prototype.filter.call(d.querySelectorAll('.kb-kaydet'), gor)[0];
+  if(bar && w.getComputedStyle(bar).position !== 'static'){
+    d.documentElement.style.scrollBehavior = 'auto'; w.scrollTo({ top: d.documentElement.scrollHeight, behavior: 'instant' }); await bekle(120);
+    var br = bar.getBoundingClientRect(), son = null;
+    Array.prototype.forEach.call(main.querySelectorAll('.form-sec, .pnl-card, .frow'), function(e){ if(gor(e) && !bar.contains(e) && !e.contains(bar)){ var er = e.getBoundingClientRect(); if(!son || er.bottom > son.bottom) son = er; } });
+    if(son && son.bottom > br.top + 2 && son.top < br.top) H('kaydet-cubugu', 'son içerik çubuğun altında kalıyor (' + Math.round(son.bottom - br.top) + 'px)');
+    w.scrollTo(0, 0);
+  }
+  /* sekmeli formlar: her sekmede taşma */
+  var sek = Array.prototype.filter.call(main.querySelectorAll('.sa-form-tab[data-panel]'), gor);
+  for(var z = 1; z < sek.length && z < 7; z++){ sek[z].click(); await bekle(120); if(d.documentElement.scrollWidth > W + 1) H('tasma', 'sekme "' + sek[z].textContent.trim().slice(0, 16) + '" ' + d.documentElement.scrollWidth + 'px'); }
+  return r;
+}
+(async function(){
+  for(var i = 0; i < S.length; i++){
+    var s = S[i], f = document.createElement('iframe'), hat = [];
+    f.style.cssText = 'width:' + W + 'px;height:800px;border:0';
+    var t = setInterval(function(){ try{ var cw = f.contentWindow; if(cw && !cw._dy){ cw._dy = 1; cw.addEventListener('error', function(e){ hat.push(e.message); }); } }catch(x){} }, 3);
+    await new Promise(function(res){ f.onload = res; f.src = '../' + s; document.body.appendChild(f); });
+    await bekle(900); clearInterval(t);
+    try{ var r = await olc(f, s); if(hat.length) r.hata.unshift('js: ' + hat[0]); SON.push(r); }catch(e){ SON.push({ sayfa:s, w:W, hata:['test: ' + e.message] }); }
+    f.remove();
+  }
+  document.getElementById('sonuc').textContent = JSON.stringify(SON);
+})();
+</script></body></html>
