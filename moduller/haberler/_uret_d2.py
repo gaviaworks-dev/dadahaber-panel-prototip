@@ -1061,7 +1061,7 @@ def surumler():
             + (alt_cubuk(f'<button type="button" class="btn btn-acc btn-sm"{onay("Sürüm " + no + "’e dönülsün mü?", "Haberin şimdiki hali (Sürüm 4) korunur; Sürüm " + no + " içeriğiyle yeni bir Sürüm 5 oluşur ve hemen yayına yansır. İşlem denetim izine yazılır.", "Bu sürüme dön", ikon="fa-clock-rotate-left", bildir="Sürüm " + no + " içeriğiyle Sürüm 5 oluşturuldu; sitede yayında")}>{I("fa-clock-rotate-left")}Bu sürüme dön</button>') if no != "4" else "")))
         s_satir.append(tr(f"s{no}", "yayinda" if no == "4" else "eski", f"Sürüm {no} {ozet} {kim}", f"Sürüm {no}",
             [(f'<b>Sürüm {no}</b>', ""), ana_hucre(ozet, f"{kim} · {islem}"), (rozet(cls, dur), ""), (f'<span class="kb-tarih">{zaman}</span>', "kb-gizle-m")],
-            ia_tanim(tid, "Görüntüle", "fa-eye") + kilit("Sürüm kaydı değiştirilemez") + kilit("Sürüm kaydı silinemez; denetim izinin parçasıdır") + DIGER, secim_kutu=False))
+            ia_tanim(tid, "Görüntüle", "fa-eye") + DIGER, secim_kutu=False))
     s_menu = (m_btn("Bu sürüme dön", "fa-clock-rotate-left", "eski", onay("Bu sürüme dönülsün mü?", "Şimdiki hal korunur; seçilen sürümün içeriğiyle yeni bir sürüm oluşur ve hemen yayına yansır. İşlem denetim izine yazılır.", "Bu sürüme dön", ikon="fa-clock-rotate-left", bildir="Seçilen sürümün içeriğiyle Sürüm 5 oluşturuldu"))
               + m_a("Karşılaştır", "fa-code-compare", "haberler.surumler", "?sekme=pFark") + DENETIM)
     for k, d, ad, zaman, kim, metin in NOTLAR:

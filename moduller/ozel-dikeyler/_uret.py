@@ -103,8 +103,10 @@ def row_acts(gor, duz, sil, gor_ad="Görüntüle", duz_ad="Düzenle", sil_ad="Ç
         if x[0] == "tanim":
             return f'<button type="button" class="ia-btn" data-tanim="{x[1]}" aria-label="{e(ad)}" title="{e(ad)}">{I(ikon)}</button>'
         return f'<button type="button" class="ia-btn kb-kilit" disabled aria-label="{e(ad)}: kilitli" title="{e(x[1])}">{I("fa-lock")}</button>'
-    s = b(gor, "fa-eye", gor_ad) + b(duz, "fa-pen", duz_ad)
-    if sil == "sil":
+    s = b(gor, "fa-eye", gor_ad) + (b(duz, "fa-pen", duz_ad) if duz else "")  # yapılamayan eylemin düğmesi çizilmez (Beyar)
+    if sil is None:
+        pass
+    elif sil == "sil":
         s += f'<button type="button" class="ia-btn danger" data-sil aria-label="{e(sil_ad)}" title="{e(sil_ad)}">{I("fa-trash")}</button>'
     elif sil[0] == "tasi":
         s += f'<button type="button" class="ia-btn danger" {sil[1]} aria-label="{e(sil_ad)}" title="{e(sil_ad)}">{I("fa-trash")}</button>'
@@ -266,7 +268,7 @@ def mac_satir(m):
             f'<td class="say"><b>{e(skor)}</b></td><td class="kb-gizle-m">{e(not_)}</td>'
             f'<td class="kb-gizle-t"><span class="kb-tarih">{e(tarih_kisa(zaman))}</span></td>'
             f'<td><span class="pstat {sinif}">{dad}</span></td>'
-            f'<td>{row_acts(("tanim", "mcGor-" + mid), ("tanim", "mcDz-" + mid), ("kilit", "Maçlar spor veri API'sinden gelir; silinmez, skor elle düzeltilir"), duz_ad="Skoru düzelt")}</td></tr>')
+            f'<td>{row_acts(("tanim", "mcGor-" + mid), ("tanim", "mcDz-" + mid), None, duz_ad="Skoru düzelt")}</td></tr>')
 
 
 def mac_sablonlar(m):
@@ -320,7 +322,7 @@ def sayfa_spor():
                        f'<td class="say">{t["O"]}</td><td class="say kb-gizle-m">{t["G"]}</td><td class="say kb-gizle-m">{t["B"]}</td><td class="say kb-gizle-m">{t["M"]}</td>'
                        f'<td class="say kb-gizle-t">{t["A"]}:{t["Y"]}</td><td class="say kb-gizle-m">{"+" if t["AV"] > 0 else ""}{t["AV"]}</td><td class="say"><b>{t["P"]}</b></td>'
                        f'<td><span class="pstat {"info" if elle else "ok"}" title="{"22.11.2026 18.40 · Burak Tan · 12. hafta golü API'de yanlış işlendi" if elle else "Spor veri API · 15.57"}">{"Elle düzeltildi" if elle else "API"}</span></td>'
-                       f'<td>{row_acts(("href", f"kulup.html?id={kid}", "ozel-dikeyler.kulup"), ("tanim", "spDz-" + TR_SLUG(t["kod"])), ("kilit", "Puan tablosu API verisidir; silinmez, elle düzeltilir"), gor_ad="Kulübü aç", duz_ad="Düzelt", diger=False)}</td></tr>')
+                       f'<td>{row_acts(("href", f"kulup.html?id={kid}", "ozel-dikeyler.kulup"), ("tanim", "spDz-" + TR_SLUG(t["kod"])), None, gor_ad="Kulübü aç", duz_ad="Düzelt", diger=False)}</td></tr>')
         pt_sab.append(duzelt_tablo_sablon(t, n))
     maclar = "".join(mac_satir(m) for m in MACLAR)
     mac_sab = "".join(mac_sablonlar(m) for m in MACLAR)
