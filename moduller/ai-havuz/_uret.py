@@ -1044,7 +1044,7 @@ def sayfa_ayarlar():
         <div class="frow"><span class="flabel">Geçerli olduğu roller</span>
           <div class="kb-secenek-grup" role="group" aria-label="Okuma zorunluluğunun geçerli olduğu roller">{rol_kutu}</div>
           <span class="fhint">Başlangıç: Editör ve Kategori Editörü açık; Süper Admin ve Genel Yayın Yönetmeni muaf (YS6).</span></div>
-        <div class="form-grid kb-iki-sutun">
+        <div class="form-grid kb-iki-sutun kb-ust-bosluk">
           <div class="frow"><span class="flabel">Okunması gereken</span>
             <div class="kb-secenek-grup"><label class="kb-secenek"><input type="radio" name="ayOkunacak" checked>Detay sekmesi</label><label class="kb-secenek"><input type="radio" name="ayOkunacak">Bütün sekmeler</label></div>
             <span class="fhint">YS5: Detay sekmesi sonuna kadar kaydırılınca açılır; diğer sekmelere girmek zorunlu değil.</span></div>
@@ -1052,7 +1052,7 @@ def sayfa_ayarlar():
             <div class="kb-birim"><input class="finput" id="aySure" inputmode="numeric" value="{OKUMA['sigan_icerik_saniye']}"><span>saniye</span></div>
             <span class="fhint">Kaydırılacak bir şey yoksa düğme bu süre sonunda açılır.</span></div>
         </div>
-        <div class="kb-bant bilgi">{I("fa-robot")}<span><b>Otomatik yayın bu kuralın bilinçli istisnasıdır (YS7).</b> Eşiğin üstündeki haber okunmadan çıkar; okuma kuralı yalnız editörün önüne düşen haberlerde geçerlidir. Otomatik çıkan her haber listede ve denetim izinde “Otomatik yayımlandı” olarak işaretlenir.</span></div>
+        <div class="kb-bant bilgi kb-ust-bosluk">{I("fa-robot")}<span><b>Otomatik yayın bu kuralın bilinçli istisnasıdır (YS7).</b> Eşiğin üstündeki haber okunmadan çıkar; okuma kuralı yalnız editörün önüne düşen haberlerde geçerlidir. Otomatik çıkan her haber listede ve denetim izinde “Otomatik yayımlandı” olarak işaretlenir.</span></div>
       </div>
     </div>
 
