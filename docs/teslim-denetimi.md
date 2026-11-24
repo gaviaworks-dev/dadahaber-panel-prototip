@@ -27,6 +27,7 @@ Modül: ________ · Teammate: ________ · Tarih: ________
 - [ ] Durum sekmeleri + sağ uçta Çöp sekmesi; arama ve aranabilir süzgeçler; seçimde toplu işlem çubuğu.
 - [ ] Boş, yükleniyor ve hata durumları.
 - [ ] Yığılma ve satıra kırılma yok; dar ekranda sütun azalır ya da tablo yatay kayar.
+- [ ] **Tek veri görünümü (Beyar, yasak):** aynı kayıt kümesi sayfada iki görünümde (takvim + liste, kart + liste, pano + liste) alt alta yok; ikinci görünüm aynı alanda görünüm değiştiriciyle (Ay · Hafta · Liste / Izgara · Liste). Sekme, arama ve süzgeç tek ve açık görünüme uygulanıyor; Çöp, toplu seçim ve satır eylemleri liste görünümünde. Farklı veri gösteren özet kutuları (sayaçlar) istisna.
 
 ## 4 · Eklenen düzenlenir ve silinir
 - [ ] "Ekle" ya da "yeni" ile oluşan her şey (kayıt, formdan eklenen etiket, havuza yerinde eklenen değer, sekme içindeki satır, ayardaki öğe) **aynı ekrandan düzenlenebiliyor ve silinebiliyor**.
