@@ -130,8 +130,10 @@ def row_acts(gor, duz, sil, gor_ad="Görüntüle", duz_ad="Düzenle", sil_ad="Ç
         if x[0] == "tanim":
             return f'<button type="button" class="ia-btn" data-tanim="{x[1]}" aria-label="{e(ad)}" title="{e(ad)}">{I(ikon)}</button>'
         return f'<button type="button" class="ia-btn kb-kilit" disabled aria-label="{e(ad)}: kilitli" title="{e(x[1])}">{I("fa-lock")}</button>'
-    s = b(gor, "fa-eye", gor_ad) + b(duz, "fa-pen", duz_ad)
-    if sil == "sil":
+    s = b(gor, "fa-eye", gor_ad) + (b(duz, "fa-pen", duz_ad) if duz else "")  # yapılamayan eylemin düğmesi çizilmez (Beyar)
+    if sil is None:
+        pass
+    elif sil == "sil":
         s += f'<button type="button" class="ia-btn danger" data-sil aria-label="{e(sil_ad)}" title="{e(sil_ad)}">{I("fa-trash")}</button>'
     elif sil[0] == "tasi":
         s += f'<button type="button" class="ia-btn danger" {sil[1]} aria-label="{e(sil_ad)}" title="{e(sil_ad)}">{I("fa-trash")}</button>'
@@ -844,6 +846,7 @@ def sayfa_motor():
     return s
 
 # ================================================================== CRON VE HAT SAĞLIĞI
+HAT_LOG = [("bilgi", "16.04.08", "Görsel temizleme: 14 görsel, 1 temizlenemedi → “KAP: iki enerji şirketinden…” Görsel eksik"), ("bilgi", "16.03.13", "12 taslak havuza düştü; 3'ü görsel eksik"), ("uyari", "16.02.40", "“Benzinde indirim beklentisi…” tek kaynaklı (T4); güven %62"), ("uyari", "16.02.22", "Çelişki: “AB genişleme toplantısında…” 3. kaynakta tarih farklı"), ("bilgi", "16.01.01", "AI üretimi başladı: 42 içerik, 17 olay grubu"), ("hata", "16.00.20", "Defense News: 403 Forbidden (11. deneme)"), ("bilgi", "16.00.00", "Kaynak taraması başladı: T1–T4, 18 etkin kaynak")] + [("bilgi", "15.50.48", "Kaynak taraması bitti: 18 kaynak, 37 yeni içerik"), ("uyari", "15.31.02", "Teknoloji Gündemi yavaş yanıt verdi (5,8 sn)"), ("bilgi", "15.20.11", "11 taslak havuza düştü"), ("hata", "15.20.04", "Defense News: 403 Forbidden (10. deneme)")]
 CRONLAR = [
     # id, ad, komut, sıklık, son, süre, sonraki, durum, log
     ("tara", "Kaynak taraması", "kaynak:tara", "Her 10 dakikada", "16.00", "48 sn", "16.10", "ok",
@@ -876,7 +879,7 @@ def sayfa_cron():
                     f'<td class="kb-ana"><div class="rcp-id"><div class="rcp-name" title="{e(ad)}">{e(ad)}</div><div class="rcp-by">{I("fa-terminal")}{e(kom)}</div></div></td>'
                     f'<td class="kb-gizle-m">{e(sik)}</td><td class="kb-gizle-m"><span class="kb-tarih">{e(son_)}</span></td><td class="say kb-gizle-t">{e(sure)}</td>'
                     f'<td class="kb-gizle-m"><span class="kb-tarih muted">{e(sonraki)}</span></td><td><span class="pstat {sinif}">{dad}</span></td>'
-                    f'<td>{row_acts(("tanim", "crLog-" + cid), ("kilit", "Sistem görevi kodda tanımlıdır; sıklığı Kaynak Motoru ve otomatik yayın ayarından değişir"), ("kilit", "Sistem görevi silinemez; gerekirse ⋯ menüsünden duraklatılır"), gor_ad="Günlüğü görüntüle")}</td></tr>')
+                    f'<td>{row_acts(("tanim", "crLog-" + cid), None, None, gor_ad="Günlüğü görüntüle")}</td></tr>')
         sab.append(f"""<template id="crLog-{cid}" data-baslik="{e(ad)}" data-alt="{e(sik)} · {e(kom)}">
   <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum"><div><span>Durum</span><b><span class="pstat {sinif}">{dad}</span></b></div><div><span>Son çalışma</span><b>{e(son_)}</b></div><div><span>Süre</span><b>{e(sure)}</b></div><div><span>Sonraki</span><b>{e(sonraki)}</b></div><div><span>Kilit</span><b>{"Serbest" if dur != "durdu" else "—"}</b></div></div></div>
   <div class="kb-fs"><div class="kb-fs-tt">Son çalışmalar</div><pre class="kb-log">{log_html(log, cid)}</pre><p class="fhint kb-ust-bosluk">Sistem logları silinemez ve değiştirilemez; 90 günden eskisi arşive taşınır.</p></div>
@@ -909,14 +912,20 @@ def sayfa_cron():
     </div>
   </div>
 
-  <div data-izin="cron-saglik">
-  <div class="kb-bant tehlike dash-row">{I("fa-triangle-exclamation")}<span><b>1 hata.</b> Defense News 14.20'den beri 403 döndürüyor; T3 grubunda beklenen çekimin %81'i gerçekleşti. AI kuyruğu yoğun (96 iş), taslaklar 6 dk gecikmeli düşüyor.</span><a class="btn btn-ghost btn-sm kb-bant-eylem" data-hedef="ai-havuz.kaynaklar" href="kaynaklar.html">{I("fa-rss")}Kaynaklar</a></div>
+  <section class="pnl-card" data-izin="cron-saglik" data-sekmeli aria-label="Cron ve hat sağlığı">
+    <div class="sa-form-tabs" role="tablist" aria-label="Hat sağlığı bölümleri">
+      <button type="button" class="sa-form-tab is-on" role="tab" aria-selected="true" data-panel="crGenel">{I("fa-gauge-high")}Genel bakış</button>
+      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="crGrup">{I("fa-layer-group")}Kaynak grupları<span class="ch-cnt" title="1 grupta çekim eksik">1</span></button>
+      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="crGorev">{I("fa-clock")}Zamanlanmış görevler<span class="ch-cnt" title="1 görev hata veriyor">1</span></button>
+      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="crLog">{I("fa-wave-square")}Hat günlüğü<span class="ch-cnt" title="1 hata, 2 uyarı · son 1 saat">3</span></button>
+    </div>
 
-  <section class="pnl-card dash-row" aria-labelledby="crKutu">
-    <div class="pc-head"><h2 class="pc-title" id="crKutu">{I("fa-heart-pulse")}Hat durumu</h2><span class="kb-kap-alt">Son kontrol 16.04</span></div>
-    <div class="pc-body"><div class="kb-saglik-izgara">
-      <a class="kb-saglik" href="#crGorev"><span class="kb-saglik-bas"><span class="status-nokta"></span>Kaynak taraması</span><span class="kb-saglik-deger">16.00</span><span class="kb-saglik-meta">48 sn · 42 yeni içerik · sonraki 16.10</span></a>
-      <a class="kb-saglik" href="#crGorev"><span class="kb-saglik-bas"><span class="status-nokta"></span>AI taslak üretimi</span><span class="kb-saglik-deger">2 dk 12 sn</span><span class="kb-saglik-meta">16.01 · 12 taslak havuza düştü</span></a>
+    <!-- ===== GENEL BAKIŞ ===== -->
+    <div class="sa-form-panel pc-body" id="crGenel" role="tabpanel">
+      <div class="kb-bant tehlike">{I("fa-triangle-exclamation")}<span><b>1 hata.</b> Defense News 14.20'den beri 403 döndürüyor; T3 grubunda beklenen çekimin %81'i gerçekleşti. AI kuyruğu yoğun (96 iş), taslaklar 6 dk gecikmeli düşüyor.</span><a class="btn btn-ghost btn-sm kb-bant-eylem" data-hedef="ai-havuz.kaynaklar" href="kaynaklar.html">{I("fa-rss")}Kaynaklar</a></div>
+      <div class="kb-saglik-izgara kb-ust-bosluk">
+      <a class="kb-saglik" href="cron.html?sekme=crGorev"><span class="kb-saglik-bas"><span class="status-nokta"></span>Kaynak taraması</span><span class="kb-saglik-deger">16.00</span><span class="kb-saglik-meta">48 sn · 42 yeni içerik · sonraki 16.10</span></a>
+      <a class="kb-saglik" href="cron.html?sekme=crGorev"><span class="kb-saglik-bas"><span class="status-nokta"></span>AI taslak üretimi</span><span class="kb-saglik-deger">2 dk 12 sn</span><span class="kb-saglik-meta">16.01 · 12 taslak havuza düştü</span></a>
       <div class="kb-saglik"><span class="kb-saglik-bas"><span class="status-nokta"></span>Kilit</span><span class="kb-saglik-deger">Serbest</span><span class="kb-saglik-meta">Son alınma 16.01 · 2 dk 12 sn tuttu · çakışma yok</span></div>
       <a class="kb-saglik uyari" data-hedef="sistem-sagligi.ana" href="../../cekirdek/sistem-sagligi/index.html"><span class="kb-saglik-bas"><span class="status-nokta"></span>AI kuyruğu</span><span class="kb-saglik-deger">96 iş</span><span class="kb-saglik-meta">Normalin 3 katı · en eski 6 dk</span></a>
       <a class="kb-saglik hata" data-hedef="ai-havuz.kaynaklar" href="kaynaklar.html"><span class="kb-saglik-bas"><span class="status-nokta"></span>Etkin kaynak</span><span class="kb-saglik-deger">17 / 18</span><span class="kb-saglik-meta">Defense News 14.20'den beri hata</span></a>
@@ -925,19 +934,22 @@ def sayfa_cron():
       <a class="kb-saglik" data-hedef="ai-havuz.ayarlar" href="ayarlar.html"><span class="kb-saglik-bas"><span class="status-nokta"></span>Otomatik yayın</span><span class="kb-saglik-deger">Kapalı</span><span class="kb-saglik-meta">22.11.2026 23.30'dan beri · eşik %{ESIK}</span></a>
       <div class="kb-saglik"><span class="kb-saglik-bas"><span class="status-nokta"></span>AI servisi</span><span class="kb-saglik-deger">1,8 sn</span><span class="kb-saglik-meta">Ortalama yanıt · hata %0,4 · Claude Haiku 4.5</span></div>
       <div class="kb-saglik" data-izin="ai-maliyet"><span class="kb-saglik-bas"><span class="status-nokta"></span>Maliyet · bugün</span><span class="kb-saglik-deger">$2,31</span><span class="kb-saglik-meta">~₺91 · ay toplamı $50,47</span></div>
-    </div></div>
-  </section>
+    </div>
+      <div class="kb-fs kb-ust-bosluk"><div class="kb-fs-tt">Son olaylar</div><pre class="kb-log">{log_html(HAT_LOG[:5], "ai-hat")}</pre>
+        <a class="kb-bag" href="cron.html?sekme=crLog">Bütün hat günlüğü</a></div>
+    </div>
 
-  <section class="pnl-card dash-row" aria-labelledby="crKatman">
-    <div class="pc-head"><h2 class="pc-title" id="crKatman">{I("fa-layer-group")}Kaynak grupları · son 24 saat</h2><span class="kb-kap-alt">Beklenen ve gerçekleşen çekim</span></div>
+    <!-- ===== KAYNAK GRUPLARI · SON 24 SAAT ===== -->
+    <div class="sa-form-panel" id="crGrup" role="tabpanel" hidden>
+      <div class="pc-body"><p class="fhint">Son 24 saatte grup başına beklenen ve gerçekleşen çekim. Sıklık ve kanallar <a class="kb-bag" data-hedef="ai-havuz.motor" href="motor.html">Kaynak Motoru'nda</a>.</p></div>
     <div class="ptable-wrap"><table class="ptable">
       <thead><tr><th class="kb-ana">Grup</th><th class="say">Beklenen</th><th class="say">Gerçekleşen</th><th class="say kb-gizle-m">Oran</th><th class="say kb-gizle-t">Yeni içerik</th><th>Durum</th></tr></thead>
       <tbody>{"".join(katman)}</tbody>
     </table></div>
-  </section>
+    </div>
 
-  <section class="pnl-card dash-row" id="crGorev" data-liste data-liste-ad="görev" data-sayfa-boy="25" aria-labelledby="crGorevBas">
-    <div class="pc-head"><h2 class="pc-title" id="crGorevBas">{I("fa-clock")}Zamanlanmış görevler (cron)</h2><span class="kb-kap-alt">Silinmez, duraklatılır</span></div>
+    <!-- ===== ZAMANLANMIŞ GÖREVLER ===== -->
+    <div class="sa-form-panel" id="crGorev" role="tabpanel" data-liste data-liste-ad="görev" data-sayfa-boy="25" hidden>
     <div class="pc-body"><div class="kb-bant bilgi">{I("fa-lock")}<span><b>Sistem görevleri kodda tanımlıdır; düzenlenmez ve silinmez.</b> Gerekirse ⋯ menüsünden duraklatılır. Sıklıklar Kaynak Motoru'ndan, otomatik yayın görevi otomatik yayın ayarından yönetilir. Görev günlükleri sistem logudur, değiştirilemez.</span></div></div>
     <div class="kb-liste-ust">
       <div class="chips" role="tablist" aria-label="Duruma göre">
@@ -971,13 +983,14 @@ def sayfa_cron():
       <button type="button" data-bildir="Son 7 günün görev günlüğü indiriliyor (CSV, prototip)">{I("fa-file-arrow-down")}Günlüğü indir</button>
       <button type="button" data-bildir="Bu görevin uyarıları e-postanıza da gelecek (prototip)">{I("fa-bell")}Hata olunca bana haber ver</button>
     </div>
-  </section>
+    </div>
 
-  <section class="pnl-card" aria-labelledby="crLogBas">
-    <div class="pc-head"><h2 class="pc-title" id="crLogBas">{I("fa-wave-square")}Hat günlüğü</h2><a class="pc-link" data-hedef="denetim-izi.loglar" href="../../cekirdek/denetim-izi/loglar.html">Bütün loglar{I("fa-arrow-right")}</a></div>
-    <div class="pc-body"><pre class="kb-log">{log_html([("bilgi", "16.04.08", "Görsel temizleme: 14 görsel, 1 temizlenemedi → “KAP: iki enerji şirketinden…” Görsel eksik"), ("bilgi", "16.03.13", "12 taslak havuza düştü; 3'ü görsel eksik"), ("uyari", "16.02.40", "“Benzinde indirim beklentisi…” tek kaynaklı (T4); güven %62"), ("uyari", "16.02.22", "Çelişki: “AB genişleme toplantısında…” 3. kaynakta tarih farklı"), ("bilgi", "16.01.01", "AI üretimi başladı: 42 içerik, 17 olay grubu"), ("hata", "16.00.20", "Defense News: 403 Forbidden (11. deneme)"), ("bilgi", "16.00.00", "Kaynak taraması başladı: T1–T4, 18 etkin kaynak")], "ai-hat")}</pre><p class="fhint kb-ust-bosluk">Sistem logları silinemez ve değiştirilemez; 90 günden eskisi arşive taşınır.</p></div>
+    <!-- ===== HAT GÜNLÜĞÜ ===== -->
+    <div class="sa-form-panel pc-body" id="crLog" role="tabpanel" hidden>
+      <pre class="kb-log">{log_html(HAT_LOG, "ai-hat")}</pre>
+      <p class="fhint kb-ust-bosluk">Sistem logları silinemez ve değiştirilemez; 90 günden eskisi arşive taşınır. <a class="kb-bag" data-hedef="denetim-izi.loglar" href="../../cekirdek/denetim-izi/loglar.html">Bütün sistem logları</a></p>
+    </div>
   </section>
-  </div>
 
   <div class="kb-bant tehlike" data-izin-yok="cron-saglik">{I("fa-lock")}<span><b>Bu ekran yalnız Süper Admin'e açık.</b> Cron ve hat sağlığı “Cron ve sistem sağlığı” izin grubundadır.</span></div>
 </main>
@@ -1269,7 +1282,7 @@ def profil_blok(r):
         v = r["etki"].get(pid, "")
         on = bool(v)
         cipler.append(f'<button type="button" class="kb-pm-cip{" is-on" if on else ""}" data-pm-cip="{pid}" aria-pressed="{"true" if on else "false"}">{I(ik)}{ad}<i class="fa-solid {"fa-check" if on else "fa-plus"} kb-pm-durum" aria-hidden="true"></i></button>')
-        kartlar.append(f'<div class="kb-pm-kart" data-pm-kart="{pid}" data-oneri="{e(v or "Bu profil için öneri üretilmedi; kendi metninizi yazın.")}"{"" if on else " hidden"}><div class="kb-pm-bas">{I(ik)}<b>{ad}</b><button type="button" class="ia-btn danger" data-pm-kaldir aria-label="{ad} metnini kaldır" title="Kaldır">{I("fa-xmark")}</button></div><div class="frow"><textarea class="ftext" rows="2" data-sayac="180|240" aria-label="{ad} için Bana etkisi" placeholder="{ad} bu haberden nasıl etkilenir?">{e(v)}</textarea><div class="char-meter"><span></span><b>0 / 180</b></div></div><input class="finput kb-pm-kaynak" value="" placeholder="Kaynak (isteğe bağlı) · ör. TÜİK · 3 Kasım" aria-label="{ad} kaynağı"></div>')
+        kartlar.append(f'<div class="kb-pm-kart" data-pm-kart="{pid}" data-oneri="{e(v or "Bu profil için öneri üretilmedi; kendi metninizi yazın.")}"{"" if on else " hidden"}><div class="kb-pm-bas">{I(ik)}<b>{ad}</b><button type="button" class="ia-btn danger" data-pm-kaldir aria-label="{ad} metnini kaldır" title="Kaldır">{I("fa-xmark")}</button></div><div class="frow"><textarea class="ftext" rows="2" data-sayac="180|240" aria-label="{ad} için Bana etkisi" placeholder="{ad} bu haberden nasıl etkilenir?">{e(v)}</textarea><div class="char-meter"><span></span><b>0 / 180</b></div></div><input class="finput kb-pm-kaynak kb-ust-bosluk" value="" placeholder="Kaynak (isteğe bağlı) · ör. TÜİK · 3 Kasım" aria-label="{ad} kaynağı"></div>')
     return f"""          <div class="kb-profil-metin" data-profil-metin>
             <div class="kb-pm-ust"><span class="flabel">Bana etkisi</span><span class="kb-pm-say" data-pm-say></span>
               <button type="button" class="btn btn-ghost btn-sm kb-sag" data-pm-oner>{I("fa-wand-magic-sparkles")}Profillere göre öner</button></div>
