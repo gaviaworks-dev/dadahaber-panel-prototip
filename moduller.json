@@ -212,9 +212,8 @@
       },
       "sayfalar": [
         { "id": "gonderi",  "baslik": "Gönderi Oluştur", "ikon": "fa-pen-to-square",   "dosya": "moduller/sosyal-medya/gonderi.html",  "hazir": true, "menude": true, "roller": ["super", "gyy", "sosyal"] },
-        { "id": "takvim",   "baslik": "Yayın Takvimi",   "ikon": "fa-calendar-check",  "dosya": "moduller/sosyal-medya/takvim.html",   "hazir": true, "menude": true, "rozet": "sosyal_hata", "roller": ["super", "gyy", "sosyal", "analist"] },
-        { "id": "hesaplar", "baslik": "Hesaplar",        "ikon": "fa-share-nodes",     "dosya": "moduller/sosyal-medya/hesaplar.html", "hazir": true, "menude": true, "roller": ["super", "gyy", "sosyal"] },
-        { "id": "kuyruk", "baslik": "Gönderim kuyruğu", "ikon": "fa-list-check", "dosya": "moduller/sosyal-medya/kuyruk.html", "hazir": true, "menude": false, "roller": ["super", "gyy", "sosyal", "analist"] }
+        { "id": "kuyruk",   "baslik": "Yayın Takvimi",   "ikon": "fa-calendar-check",  "dosya": "moduller/sosyal-medya/kuyruk.html",   "hazir": true, "menude": true, "rozet": "sosyal_hata", "roller": ["super", "gyy", "sosyal", "analist"] },
+        { "id": "hesaplar", "baslik": "Hesaplar",        "ikon": "fa-share-nodes",     "dosya": "moduller/sosyal-medya/hesaplar.html", "hazir": true, "menude": true, "roller": ["super", "gyy", "sosyal"] }
       ]
     },
     {

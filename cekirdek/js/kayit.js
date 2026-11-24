@@ -1011,7 +1011,7 @@ window.PANEL = {
     "sosyal"
    ]
   },
-  "sosyal-medya.takvim": {
+  "sosyal-medya.kuyruk": {
    "baslik": "Yayın Takvimi",
    "ikon": "fa-calendar-check",
    "modul_ad": "Sosyal Medya Merkezi",
@@ -1034,19 +1034,6 @@ window.PANEL = {
     "super",
     "gyy",
     "sosyal"
-   ]
-  },
-  "sosyal-medya.kuyruk": {
-   "baslik": "Gönderim kuyruğu",
-   "ikon": "fa-list-check",
-   "modul_ad": "Sosyal Medya Merkezi",
-   "hazir": true,
-   "acik": true,
-   "roller": [
-    "super",
-    "gyy",
-    "sosyal",
-    "analist"
    ]
   },
   "etkilesim.yorumlar": {
