@@ -1,0 +1,230 @@
+#!/usr/bin/env python3
+"""Kabuk parçalarını modül kaydından sayfalara yazar (K13: karma yöntem).
+
+Kullanım:  python3 -I araclar/menu_yaz.py [--kontrol]
+
+Ne yapar:
+  1. moduller.json ve veri/panel.json'u okur.
+  2. İşaretli sayfalarda <!--P:menu-->…<!--/P:menu--> ve <!--P:ust-->…<!--/P:ust-->
+     arasını yeniden yazar (yan menü + üst bar). Bağlantılar sayfanın klasörüne göre göreli.
+  3. data-hedef="modul.sayfa" taşıyan öğelere href yazar; modül kapalıysa öğeyi gizler
+     (hidden). data-modul="modul" taşıyan kutuları modül kapalıysa gizler. Böylece bir
+     modül kayıttan kapatılınca hiçbir yerde kırık bağlantı kalmaz.
+  4. cekirdek/js/kayit.js dosyasını üretir (JS'nin rol, izin ve sayfa bilgisi; file://
+     altında fetch çalışmadığı için kayıt JS dosyasına gömülür).
+  5. Yerel CSS ve JS bağlantılarına içerik özetinden sürüm eki koyar (?v=…).
+  6. Denetler: kırık yerel bağlantı, kapalı modüle bağlantı, hazır sayılan ama dosyası
+     olmayan sayfa. Sorun varsa çıkış kodu 1.
+--kontrol: yalnızca denetler, dosya yazmaz.
+"""
+import hashlib, html, json, os, re, sys
+from pathlib import Path
+
+KOK = Path(__file__).resolve().parent.parent
+KONTROL = "--kontrol" in sys.argv
+ATLANAN = {"docs", "tasks", "assets", "secenekler", ".git", "araclar", "veri"}
+
+kayit = json.loads((KOK / "moduller.json").read_text(encoding="utf-8"))
+veri = json.loads((KOK / "veri" / "panel.json").read_text(encoding="utf-8"))
+moduller = {m["id"]: m for m in kayit["moduller"]}
+acik = {k for k, m in moduller.items() if m.get("acik")}
+YAKINDA = kayit["yakinda_sayfasi"]
+
+def esc(s): return html.escape(str(s), quote=True)
+
+def sayfa_haritasi():
+    harita = {}
+    for m in kayit["moduller"]:
+        for s in m.get("sayfalar", []):
+            harita[f'{m["id"]}.{s["id"]}'] = {
+                "baslik": s["baslik"], "ikon": s.get("ikon", "fa-circle"), "modul": m["id"],
+                "modul_ad": m["ad"], "grup": m["grup"], "hazir": bool(s.get("hazir")),
+                "dosya": s["dosya"], "roller": s.get("roller", m.get("roller", [])),
+                "acik": m["id"] in acik,
+            }
+    return harita
+SAYFALAR = sayfa_haritasi()
+
+def goreli(hedef, sayfa_yolu):
+    return os.path.relpath(KOK / hedef, (KOK / sayfa_yolu).parent).replace(os.sep, "/")
+
+def hedef_href(anahtar, sayfa_yolu):
+    s = SAYFALAR.get(anahtar)
+    if not s:
+        raise SystemExit(f"Kayıtta olmayan hedef: {anahtar} ({sayfa_yolu})")
+    if s["hazir"]:
+        return goreli(s["dosya"], sayfa_yolu)
+    return goreli(YAKINDA, sayfa_yolu) + "?s=" + anahtar
+
+# ---------------------------------------------------------------- menü
+def menu_html(sayfa_yolu):
+    kontrol = hedef_href("kontrol-paneli.ana", sayfa_yolu)
+    parca = [f'<nav class="sa-menu" id="saMenu" aria-label="Ana menü">',
+             f'<div class="sa-menu-head"><a class="kb-logo" href="{esc(kontrol)}" aria-label="{esc(kayit["proje_adi"])} Yönetim Paneli"></a></div>',
+             '<div class="sa-mnav">']
+    for g in sorted(kayit["gruplar"], key=lambda g: g["sira"]):
+        mods = sorted([m for m in kayit["moduller"] if m["grup"] == g["id"] and m["id"] in acik], key=lambda m: m["sira"])
+        linkler = []
+        for m in mods:
+            for s in m.get("sayfalar", []):
+                if not s.get("menude"):
+                    continue
+                anahtar = f'{m["id"]}.{s["id"]}'
+                roller = " ".join(s.get("roller", m.get("roller", [])))
+                rozet = ""
+                if s.get("rozet"):
+                    n = veri["rozetler"].get(s["rozet"])
+                    if n:
+                        rozet = f'<span class="pl-cnt">{esc(n)}</span>'
+                linkler.append(
+                    f'<a class="sa-mlink" href="{esc(hedef_href(anahtar, sayfa_yolu))}" data-sayfa="{anahtar}" data-roller="{roller}">'
+                    f'<i class="fa-solid {esc(s.get("ikon", "fa-circle"))}" aria-hidden="true"></i><span class="ml-ad">{esc(s["baslik"])}</span>{rozet}</a>')
+        if not linkler:
+            continue
+        if g["ad"] is None:
+            parca.extend(linkler)
+        else:
+            parca.append(f'<div class="sa-mgrp" data-grup="{g["id"]}">'
+                         f'<button class="sa-msec" type="button" aria-expanded="true">{esc(g["ad"])}<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>'
+                         f'<div class="sa-mgrp-list"><div>{"".join(linkler)}</div></div></div>')
+    parca.append('</div>')
+    cikis = goreli(YAKINDA, sayfa_yolu) + "?s=oturum.cikis"
+    parca.append('<div class="sa-menu-foot">'
+                 f'<a class="sa-mlink" href="{esc(cikis)}"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i><span class="ml-ad">Çıkış</span></a>'
+                 f'<a class="sa-sig" href="https://gaviaworks.com" target="_blank" rel="noopener" aria-label="Gaviaworks"><img src="{esc(goreli("assets/gavia-isaret.png", sayfa_yolu))}" alt=""></a>'
+                 '</div></nav>')
+    return "".join(parca)
+
+# ---------------------------------------------------------------- üst bar
+def ust_html(sayfa_yolu):
+    yakinda = goreli(YAKINDA, sayfa_yolu)
+    roller = {r["id"]: r for r in kayit["roller"]}
+    rol_dugmeleri = "".join(
+        f'<button type="button" data-rol-sec="{rid}"><i class="fa-solid fa-user-tag" aria-hidden="true"></i>{esc(roller[rid]["ad"])}</button>'
+        for rid in kayit["rol_degistirici"])
+    return (
+        '<header class="pnl-top">'
+        '<button class="pnl-burger" id="pnlBurger" type="button" aria-label="Menüyü aç"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>'
+        '<div class="pnl-search" role="search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>'
+        '<label class="sr-only" for="pnlAra">Panelde ara</label>'
+        '<input id="pnlAra" type="search" placeholder="Haber, kişi, kaynak ya da ekran ara…" autocomplete="off"><kbd>⌘K</kbd></div>'
+        '<div class="pnl-top-tools">'
+        '<div class="kb-rol"><button class="kb-rol-btn" type="button" data-acilir="rolMenu" aria-expanded="false" aria-haspopup="true">'
+        '<i class="fa-solid fa-masks-theater" aria-hidden="true"></i><span class="kr-etk">Rol</span><span class="kr-ad" id="krAd">Süper Admin</span></button>'
+        '<div class="pnl-menu" id="rolMenu" role="menu"><div class="pmenu-head"><b>Prototip rol değiştirici</b><span>Seçilen rolün gördüğü menü ve kutular</span></div>'
+        f'{rol_dugmeleri}</div></div>'
+        f'<a class="pnl-bell" href="{esc(kayit["site_adresi"])}" target="_blank" rel="noopener" data-tip="Siteyi görüntüle" aria-label="Siteyi görüntüle"><i class="fa-solid fa-globe" aria-hidden="true"></i></a>'
+        f'<a class="pnl-bell" href="{esc(yakinda)}?s=oturum.bildirimler" data-tip="Bildirimler" aria-label="Bildirimler"><i class="fa-solid fa-bell" aria-hidden="true"></i><span class="pb-dot"></span></a>'
+        '<div class="kb-hesap"><button class="pnl-me" type="button" data-acilir="hesapMenu" aria-expanded="false" aria-haspopup="true">'
+        '<span class="pm-ava" id="pmAva">SA</span><span class="pm-id"><span class="pm-name" id="pmName">Selin Aydemir</span><span class="pm-role" id="pmRole">Süper Admin</span></span>'
+        '<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>'
+        '<div class="pnl-menu" id="hesapMenu" role="menu"><div class="pmenu-head"><b id="pmMenuAd">Selin Aydemir</b><span id="pmMenuEposta">selin.aydemir@dadahaber.ornek</span></div>'
+        f'<a href="{esc(yakinda)}?s=oturum.profil"><i class="fa-solid fa-user" aria-hidden="true"></i>Profilim</a>'
+        f'<a href="{esc(yakinda)}?s=oturum.oturumlar"><i class="fa-solid fa-laptop" aria-hidden="true"></i>Aktif oturumlar</a>'
+        '<div class="pmenu-div"></div>'
+        f'<a class="danger" href="{esc(yakinda)}?s=oturum.cikis"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>Çıkış</a>'
+        '</div></div>'
+        '</div></header>'
+    )
+
+# ---------------------------------------------------------------- kayit.js
+OTURUM_SAYFALARI = {
+    "oturum.cikis": "Çıkış ve giriş ekranı", "oturum.profil": "Profilim",
+    "oturum.oturumlar": "Aktif oturumlar", "oturum.bildirimler": "Bildirimler",
+}
+def kayit_js():
+    js = {
+        "proje_adi": kayit["proje_adi"],
+        "menu": kayit["menu"],
+        "roller": {r["id"]: {"ad": r["ad"], "izin_gruplari": r["izin_gruplari"]} for r in kayit["roller"]},
+        "rol_degistirici": kayit["rol_degistirici"],
+        "personalar": veri["personalar"],
+        "sayfalar": {k: {x: v[x] for x in ("baslik", "ikon", "modul_ad", "hazir", "acik", "roller")} for k, v in SAYFALAR.items()},
+        "oturum_sayfalari": OTURUM_SAYFALARI,
+    }
+    return ("/* ÜRETİLMİŞ DOSYA — elle değiştirme. Kaynak: moduller.json + veri/panel.json · araclar/menu_yaz.py */\n"
+            "window.PANEL = " + json.dumps(js, ensure_ascii=False, indent=1) + ";\n")
+
+# ---------------------------------------------------------------- yardımcılar
+def surum(t, sayfa_yolu):
+    def degis(m):
+        on, yol, son = m.group(1), m.group(2), m.group(4)
+        if yol.startswith(("http", "//")):
+            return m.group(0)
+        dosya = ((KOK / sayfa_yolu).parent / yol).resolve()
+        if not dosya.exists():
+            return m.group(0)
+        v = hashlib.md5(dosya.read_bytes()).hexdigest()[:8]
+        return f'{on}{yol}?v={v}{son}'
+    return re.sub(r'((?:href|src)=")([^"?]+\.(?:css|js))(\?v=[0-9a-f]+)?(")', degis, t)
+
+def hedefleri_yaz(t, sayfa_yolu):
+    def bas(m):
+        etiket = m.group(0)
+        anahtar = re.search(r'data-hedef="([^"]+)"', etiket).group(1)
+        s = SAYFALAR.get(anahtar)
+        if not s:
+            raise SystemExit(f"Kayıtta olmayan hedef: {anahtar} ({sayfa_yolu})")
+        etiket = re.sub(r'\s(href|hidden)(="[^"]*")?', "", etiket)
+        if not s["acik"]:
+            return etiket[:-1] + " hidden>"
+        return etiket[:-1] + f' href="{esc(hedef_href(anahtar, sayfa_yolu))}">'
+    t = re.sub(r'<a\b[^>]*\sdata-hedef="[^"]+"[^>]*>', bas, t)
+    def kutu(m):
+        etiket = m.group(0)
+        mid = re.search(r'data-modul="([^"]+)"', etiket).group(1)
+        etiket = re.sub(r'\shidden(="[^"]*")?', "", etiket)
+        return etiket if mid in acik else etiket[:-1] + " hidden>"
+    return re.sub(r'<\w+\b[^>]*\sdata-modul="[^"]+"[^>]*>', kutu, t)
+
+def isaret_yaz(t, ad, icerik):
+    desen = re.compile(rf"(<!--P:{ad}-->).*?(<!--/P:{ad}-->)", re.S)
+    if not desen.search(t):
+        return t, False
+    return desen.sub(lambda m: m.group(1) + icerik + m.group(2), t), True
+
+# ---------------------------------------------------------------- çalıştır
+def sayfalar():
+    for p in sorted(KOK.rglob("*.html")):
+        rel = p.relative_to(KOK)
+        if rel.parts[0] in ATLANAN:
+            continue
+        yield p, rel.as_posix()
+
+kjs = KOK / "cekirdek" / "js" / "kayit.js"
+icerik = kayit_js()
+if not KONTROL and (not kjs.exists() or kjs.read_text(encoding="utf-8") != icerik):
+    kjs.write_text(icerik, encoding="utf-8")
+
+sorunlar, yazilan = [], 0
+for p, rel in sayfalar():
+    t = p.read_text(encoding="utf-8")
+    yeni, m1 = isaret_yaz(t, "menu", menu_html(rel))
+    yeni, m2 = isaret_yaz(yeni, "ust", ust_html(rel))
+    if not (m1 or m2):
+        continue
+    yeni = hedefleri_yaz(yeni, rel)
+    yeni = surum(yeni, rel)
+    # denetim: yerel bağlantılar
+    for h in re.findall(r'(?:href|src)="([^"#:]+?)(?:[?#][^"]*)?"', yeni):
+        if h.startswith(("http", "//", "mailto")) or not h:
+            continue
+        if not ((KOK / rel).parent / h).resolve().exists():
+            sorunlar.append(f"{rel}: kırık bağlantı → {h}")
+    for anahtar, s in SAYFALAR.items():
+        if not s["acik"] and goreli(s["dosya"], rel) in yeni:
+            sorunlar.append(f"{rel}: kapalı modüle bağlantı → {anahtar}")
+    if '"#"' in yeni:
+        sorunlar.append(f'{rel}: boş bağlantı href="#"')
+    if yeni != t and not KONTROL:
+        p.write_text(yeni, encoding="utf-8")
+        yazilan += 1
+
+for anahtar, s in SAYFALAR.items():
+    if s["hazir"] and not (KOK / s["dosya"]).exists():
+        sorunlar.append(f"kayıt: hazır sayılan sayfanın dosyası yok → {anahtar} ({s['dosya']})")
+
+print(f"{'Denetim' if KONTROL else 'Yazıldı'}: {yazilan} sayfa · açık modül {len(acik)}/{len(moduller)}")
+for s in sorunlar:
+    print("SORUN:", s)
+sys.exit(1 if sorunlar else 0)

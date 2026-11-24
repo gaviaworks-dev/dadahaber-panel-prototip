@@ -1,0 +1,176 @@
+{
+  "_aciklama": "Modül kaydı (tek kaynak). Yan menü ve rol görünürlüğü buradan üretilir: python3 -I araclar/menu_yaz.py. Elle menü yazılmaz. Yasin Bey'e bağlı ayarlar: anket/sozluk/firma-rehberi.acik (K1), menu.* (K3), ai-havuz.ayarlar kaynak alanları (K7), haberler.ayarlar.vitrin.kapsam (K16).",
+  "surum": 1,
+  "proje": "dadahaber",
+  "proje_adi": "Dada Haber",
+  "tema": "tema/dadahaber.css",
+  "site_adresi": "https://gaviaworks-dev.github.io/dadahaber-prototip/index.html",
+  "yakinda_sayfasi": "cekirdek/yakinda.html",
+
+  "menu": { "katlanir": true, "etkin_grup_acik": true, "durumu_hatirla": true },
+
+  "roller": [
+    { "id": "super",   "ad": "Süper Admin",           "seviye": 100, "izin_gruplari": ["*"] },
+    { "id": "gyy",     "ad": "Genel Yayın Yönetmeni", "seviye": 80,  "izin_gruplari": ["icerik", "vitrin", "yorum", "rapor", "sosyal", "bulten-push"] },
+    { "id": "editor",  "ad": "Editör",                "seviye": 50,  "izin_gruplari": ["icerik", "vitrin", "yorum", "ai-havuz"] },
+    { "id": "kat-ed",  "ad": "Spor/Kategori Editörü", "seviye": 40,  "izin_gruplari": ["icerik", "spor"], "kapsam": "kategori" },
+    { "id": "sosyal",  "ad": "Sosyal Medya Uzmanı",   "seviye": 40,  "izin_gruplari": ["sosyal", "bulten-push"] },
+    { "id": "analist", "ad": "Analist",               "seviye": 30,  "izin_gruplari": ["rapor"] }
+  ],
+  "rol_degistirici": ["super", "editor"],
+
+  "izin_gruplari": [
+    { "id": "ai-maliyet",  "ad": "Maliyet ve token",       "aciklama": "AI ve kaynak maliyeti, token sayıları" },
+    { "id": "cron-saglik", "ad": "Cron ve sistem sağlığı", "aciklama": "Cron, kuyruk, entegrasyon hataları" },
+    { "id": "icerik",      "ad": "İçerik",                 "aciklama": "Haber ve multimedya oluşturma, düzenleme, yayınlama" },
+    { "id": "vitrin",      "ad": "Vitrin ve son dakika",   "aciklama": "Manşet ve son dakika" },
+    { "id": "yorum",       "ad": "Yorum moderasyonu",      "aciklama": "Yorum onay, gizleme, yanıt" },
+    { "id": "ai-havuz",    "ad": "AI haber havuzu",        "aciklama": "AI taslaklarını onaylama ve reddetme" },
+    { "id": "spor",        "ad": "Spor verisi",            "aciklama": "Kulüp, lig, maç ve veri düzeltme" },
+    { "id": "sosyal",      "ad": "Sosyal medya",           "aciklama": "Gönderi, takvim, hesaplar" },
+    { "id": "bulten-push", "ad": "Bülten ve push",         "aciklama": "E-bülten ve anlık bildirim" },
+    { "id": "rapor",       "ad": "Raporlar",               "aciklama": "Rapor görüntüleme ve dışa aktarım" }
+  ],
+
+  "dogrulama": {
+    "yontem": "eposta-kodu",
+    "giriste_sorulmayan_roller": ["super"],
+    "hassas_islemler": ["rol-degistir", "api-anahtari", "toplu-silme", "bakim-modu-ac", "otomatik-yayin-ayari"]
+  },
+
+  "gruplar": [
+    { "id": "panel",     "ad": null,              "sira": 1 },
+    { "id": "yayin",     "ad": "Yayın Merkezi",   "sira": 2 },
+    { "id": "ai",        "ad": "AI Haber Havuzu", "sira": 3 },
+    { "id": "medya",     "ad": "Multimedya",      "sira": 4 },
+    { "id": "dikey",     "ad": "Özel Dikeyler",   "sira": 5 },
+    { "id": "sosyal",    "ad": "Sosyal Medya",    "sira": 6 },
+    { "id": "etkilesim", "ad": "Etkileşim",       "sira": 7 },
+    { "id": "sistem",    "ad": "Sistem",          "sira": 8 }
+  ],
+
+  "moduller": [
+    {
+      "id": "kontrol-paneli", "ad": "Kontrol Paneli", "cekirdek": false, "acik": true,
+      "grup": "panel", "sira": 1, "klasor": "moduller/kontrol-paneli/",
+      "roller": ["super", "gyy", "editor", "kat-ed", "sosyal", "analist"], "bagimli": [],
+      "bilesenler": ["kart", "kpi", "kisa-liste", "durum-rozeti", "bos-durum"],
+      "sayfalar": [
+        { "id": "ana", "baslik": "Kontrol Paneli", "ikon": "fa-gauge-high", "dosya": "moduller/kontrol-paneli/index.html", "hazir": true, "menude": true }
+      ]
+    },
+    {
+      "id": "haberler", "ad": "Haberler ve Vitrin", "cekirdek": false, "acik": true,
+      "grup": "yayin", "sira": 1, "klasor": "moduller/haberler/",
+      "roller": ["super", "gyy", "editor", "kat-ed", "sosyal", "analist"], "bagimli": ["multimedya", "kullanicilar"],
+      "bilesenler": ["veri-tablosu", "satir-eylemleri", "toplu-islem", "cop-sekmesi", "sekmeli-duzenleme", "dil-secici", "zengin-metin", "gorsel-alani", "kirpma", "aranabilir-liste", "tarih-saat", "seo-sekmesi", "bildirim-sekmesi", "sosyal-sekmesi"],
+      "ayarlar": {
+        "kategori": { "ana_zorunlu": true, "alt_konu_zorunlu": true, "ek_kategori": true },
+        "vitrin": { "kapsam": "manset", "manset_slayt": 5, "yan_kart": 3 }
+      },
+      "gorsel_alanlari": {
+        "kapak": { "web": { "kart": { "oran": "16:10", "px": null }, "detay": { "oran": "2.4:1", "px": null } }, "mobil": { "kart": { "oran": "16:10", "px": null } }, "mobil_webden_kirpilir": true }
+      },
+      "sayfalar": [
+        { "id": "liste",    "baslik": "Haberler",              "ikon": "fa-newspaper",       "dosya": "moduller/haberler/index.html",   "hazir": false, "menude": true, "rozet": null },
+        { "id": "vitrin",   "baslik": "Vitrin ve Son Dakika",  "ikon": "fa-star",            "dosya": "moduller/haberler/vitrin.html",  "hazir": false, "menude": true, "roller": ["super", "gyy", "editor"] },
+        { "id": "canli",    "baslik": "Canlı Anlatım",         "ikon": "fa-tower-broadcast", "dosya": "moduller/haberler/canli.html",   "hazir": false, "menude": true, "roller": ["super", "gyy", "editor", "kat-ed"] },
+        { "id": "dosyalar", "baslik": "Dosyalar ve Formatlar", "ikon": "fa-folder-open",     "dosya": "moduller/haberler/dosyalar.html","hazir": false, "menude": true, "roller": ["super", "gyy", "editor"] },
+        { "id": "yazarlar", "baslik": "Yazarlar",              "ikon": "fa-pen-nib",         "dosya": "moduller/haberler/yazarlar.html","hazir": false, "menude": true, "roller": ["super", "gyy", "editor"] }
+      ]
+    },
+    {
+      "id": "ai-havuz", "ad": "AI Haber Havuzu", "cekirdek": false, "acik": true,
+      "grup": "ai", "sira": 1, "klasor": "moduller/ai-havuz/",
+      "roller": ["super", "gyy", "editor", "kat-ed", "analist"], "bagimli": ["haberler", "entegrasyonlar"],
+      "bilesenler": ["veri-tablosu", "satir-eylemleri", "toplu-islem", "cop-sekmesi", "guven-skoru", "kaynak-teyidi", "saglik-kutusu", "esik-kaydirici"],
+      "ayarlar": {
+        "sekmeler": ["taslak", "yayinlanan", "reddedilen"],
+        "satir_etiketleri": ["gorsel-eksik", "otomatik-yayimlandi"],
+        "kaynak_gruplari": [ { "id": "T1", "ad": "Resmî" }, { "id": "T2", "ad": "Kurumsal Basın" }, { "id": "T3", "ad": "Uluslararası Medya" }, { "id": "T4", "ad": "Düşük Öncelik" } ],
+        "kaynak_tipleri": ["rss", "scraper", "haber-sitesi", "sosyal-hesap"],
+        "medya_izni_kapaliysa": "gorsel-eksik",
+        "gosterilen_kaynak_sayisi": 3,
+        "otomatik_yayin": { "acik": false, "esik": 85, "kosullar": [] }
+      },
+      "sayfalar": [
+        { "id": "havuz",     "baslik": "Haber Havuzu",  "ikon": "fa-robot",  "dosya": "moduller/ai-havuz/index.html",     "hazir": false, "menude": true, "rozet": "ai_taslak", "roller": ["super", "gyy", "editor", "kat-ed", "analist"] },
+        { "id": "kaynaklar", "baslik": "Kaynaklar",     "ikon": "fa-rss",    "dosya": "moduller/ai-havuz/kaynaklar.html", "hazir": false, "menude": true, "roller": ["super", "gyy"] },
+        { "id": "motor",     "baslik": "Kaynak Motoru", "ikon": "fa-gears",  "dosya": "moduller/ai-havuz/motor.html",     "hazir": false, "menude": true, "roller": ["super"] }
+      ]
+    },
+    {
+      "id": "multimedya", "ad": "Multimedya ve Medya Havuzu", "cekirdek": false, "acik": true,
+      "grup": "medya", "sira": 1, "klasor": "moduller/multimedya/",
+      "roller": ["super", "gyy", "editor", "kat-ed", "sosyal"], "bagimli": [],
+      "bilesenler": ["veri-tablosu", "satir-eylemleri", "cop-sekmesi", "medya-secici", "gorsel-alani", "kirpma", "dosya-yukleme", "seo-sekmesi"],
+      "sayfalar": [
+        { "id": "video",   "baslik": "Video ve Akış",          "ikon": "fa-video",        "dosya": "moduller/multimedya/video.html",   "hazir": false, "menude": true, "roller": ["super", "gyy", "editor", "kat-ed"] },
+        { "id": "podcast", "baslik": "Podcast",                "ikon": "fa-podcast",      "dosya": "moduller/multimedya/podcast.html", "hazir": false, "menude": true, "roller": ["super", "gyy", "editor"] },
+        { "id": "sesli",   "baslik": "Sesli Haber ve Spiker",  "ikon": "fa-headphones",   "dosya": "moduller/multimedya/sesli.html",   "hazir": false, "menude": true, "roller": ["super", "gyy", "editor"] },
+        { "id": "galeri",  "baslik": "Galeri ve İnfografik",   "ikon": "fa-images",       "dosya": "moduller/multimedya/galeri.html",  "hazir": false, "menude": true, "roller": ["super", "gyy", "editor", "kat-ed"] },
+        { "id": "havuz",   "baslik": "Medya Havuzu",           "ikon": "fa-photo-film",   "dosya": "moduller/multimedya/havuz.html",   "hazir": false, "menude": true, "roller": ["super", "gyy", "editor", "kat-ed", "sosyal"] }
+      ]
+    },
+    {
+      "id": "ozel-dikeyler", "ad": "Özel Dikeyler", "cekirdek": false, "acik": true,
+      "grup": "dikey", "sira": 1, "klasor": "moduller/ozel-dikeyler/",
+      "roller": ["super", "gyy", "editor", "kat-ed", "analist"], "bagimli": ["entegrasyonlar"],
+      "bilesenler": ["veri-tablosu", "satir-eylemleri", "cop-sekmesi", "takvim", "tarih-saat", "aranabilir-liste"],
+      "sayfalar": [
+        { "id": "spor",      "baslik": "Spor",          "ikon": "fa-futbol",        "dosya": "moduller/ozel-dikeyler/spor.html",      "hazir": false, "menude": true, "roller": ["super", "gyy", "kat-ed"] },
+        { "id": "takvimler", "baslik": "Takvimler",     "ikon": "fa-calendar-days", "dosya": "moduller/ozel-dikeyler/takvimler.html", "hazir": false, "menude": true, "roller": ["super", "gyy", "editor"] },
+        { "id": "veri",      "baslik": "Veri Bantları", "ikon": "fa-chart-line",    "dosya": "moduller/ozel-dikeyler/veri.html",      "hazir": false, "menude": true, "roller": ["super", "gyy"] },
+        { "id": "ilanlar",   "baslik": "Resmî İlanlar", "ikon": "fa-bullhorn",      "dosya": "moduller/ozel-dikeyler/ilanlar.html",   "hazir": false, "menude": true, "roller": ["super", "gyy"] }
+      ]
+    },
+    { "id": "anket",         "ad": "Anketler",      "cekirdek": false, "acik": false, "grup": "dikey", "sira": 8,  "klasor": "moduller/anket/",         "roller": ["super", "gyy", "editor"], "bagimli": [], "sayfalar": [ { "id": "liste", "baslik": "Anketler",      "ikon": "fa-square-poll-vertical", "dosya": "moduller/anket/index.html",         "hazir": false, "menude": true } ] },
+    { "id": "sozluk",        "ad": "Sözlük",        "cekirdek": false, "acik": false, "grup": "dikey", "sira": 9,  "klasor": "moduller/sozluk/",        "roller": ["super", "gyy", "editor"], "bagimli": [], "sayfalar": [ { "id": "liste", "baslik": "Sözlük",        "ikon": "fa-book",                 "dosya": "moduller/sozluk/index.html",        "hazir": false, "menude": true } ] },
+    { "id": "firma-rehberi", "ad": "Firma Rehberi", "cekirdek": false, "acik": false, "grup": "dikey", "sira": 10, "klasor": "moduller/firma-rehberi/", "roller": ["super", "gyy", "editor"], "bagimli": [], "sayfalar": [ { "id": "liste", "baslik": "Firma Rehberi", "ikon": "fa-building",             "dosya": "moduller/firma-rehberi/index.html", "hazir": false, "menude": true } ] },
+    {
+      "id": "sosyal-medya", "ad": "Sosyal Medya Merkezi", "cekirdek": false, "acik": true,
+      "grup": "sosyal", "sira": 1, "klasor": "moduller/sosyal-medya/",
+      "roller": ["super", "gyy", "sosyal", "analist"], "bagimli": ["haberler", "multimedya"],
+      "bilesenler": ["sosyal-onizleme", "kirpma", "takvim", "maskeli-alan", "durum-rozeti"],
+      "ayarlar": {
+        "platformlar": [
+          { "id": "x",         "ad": "X",         "acik": true,  "oranlar": ["16:9", "1:1", "serbest"] },
+          { "id": "facebook",  "ad": "Facebook",  "acik": true,  "oranlar": ["1.91:1", "1:1", "serbest"] },
+          { "id": "linkedin",  "ad": "LinkedIn",  "acik": true,  "oranlar": ["1.91:1", "1:1", "serbest"] },
+          { "id": "instagram", "ad": "Instagram", "acik": true,  "oranlar": ["1:1", "4:5", "serbest"] },
+          { "id": "telegram",  "ad": "Telegram",  "acik": true,  "oranlar": ["16:9", "1:1", "serbest"] },
+          { "id": "whatsapp",  "ad": "WhatsApp kanalı", "acik": false },
+          { "id": "youtube",   "ad": "YouTube",   "acik": false },
+          { "id": "tiktok",    "ad": "TikTok",    "acik": false }
+        ]
+      },
+      "sayfalar": [
+        { "id": "gonderi",  "baslik": "Gönderi Oluştur", "ikon": "fa-pen-to-square",   "dosya": "moduller/sosyal-medya/gonderi.html",  "hazir": false, "menude": true, "roller": ["super", "gyy", "sosyal"] },
+        { "id": "takvim",   "baslik": "Yayın Takvimi",   "ikon": "fa-calendar-check",  "dosya": "moduller/sosyal-medya/takvim.html",   "hazir": false, "menude": true, "rozet": "sosyal_hata", "roller": ["super", "gyy", "sosyal", "analist"] },
+        { "id": "hesaplar", "baslik": "Hesaplar",        "ikon": "fa-share-nodes",     "dosya": "moduller/sosyal-medya/hesaplar.html", "hazir": false, "menude": true, "roller": ["super", "gyy", "sosyal"] }
+      ]
+    },
+    {
+      "id": "etkilesim", "ad": "Etkileşim", "cekirdek": false, "acik": true,
+      "grup": "etkilesim", "sira": 1, "klasor": "moduller/etkilesim/",
+      "roller": ["super", "gyy", "editor", "sosyal", "analist"], "bagimli": ["haberler"],
+      "bilesenler": ["veri-tablosu", "satir-eylemleri", "toplu-islem", "cop-sekmesi", "zengin-metin", "tarih-saat", "bildirim-onizleme"],
+      "sayfalar": [
+        { "id": "yorumlar",  "baslik": "Yorumlar",               "ikon": "fa-comments",           "dosya": "moduller/etkilesim/yorumlar.html",  "hazir": false, "menude": true, "rozet": "yorum_bekleyen", "roller": ["super", "gyy", "editor"] },
+        { "id": "bulten",    "baslik": "Bülten",                 "ikon": "fa-envelope-open-text", "dosya": "moduller/etkilesim/bulten.html",    "hazir": false, "menude": true, "roller": ["super", "gyy", "sosyal"] },
+        { "id": "push",      "baslik": "Push Bildirimleri",      "ikon": "fa-bell",               "dosya": "moduller/etkilesim/push.html",      "hazir": false, "menude": true, "roller": ["super", "gyy", "sosyal"] },
+        { "id": "reklam",    "baslik": "Reklam Alanları",        "ikon": "fa-rectangle-ad",       "dosya": "moduller/etkilesim/reklam.html",    "hazir": false, "menude": true, "roller": ["super", "gyy"] },
+        { "id": "geri",      "baslik": "Okur Geri Bildirimleri", "ikon": "fa-inbox",              "dosya": "moduller/etkilesim/geri.html",      "hazir": false, "menude": true, "roller": ["super", "gyy", "editor"] }
+      ]
+    },
+    { "id": "kullanicilar",   "ad": "Kullanıcılar",    "cekirdek": true, "acik": true, "grup": "sistem", "sira": 1, "klasor": "cekirdek/kullanicilar/",   "roller": ["super", "gyy"], "bagimli": [], "sayfalar": [ { "id": "liste", "baslik": "Kullanıcılar",    "ikon": "fa-users",          "dosya": "cekirdek/kullanicilar/index.html",   "hazir": false, "menude": true } ] },
+    { "id": "kimlik-yetki",   "ad": "Kimlik ve Yetki", "cekirdek": true, "acik": true, "grup": "sistem", "sira": 2, "klasor": "cekirdek/kimlik-yetki/",   "roller": ["super", "gyy"], "bagimli": [], "sayfalar": [ { "id": "roller", "baslik": "Roller ve Yetki", "ikon": "fa-user-shield",    "dosya": "cekirdek/kimlik-yetki/index.html",   "hazir": false, "menude": true } ] },
+    { "id": "site-ayarlari",  "ad": "Site Ayarları",   "cekirdek": true, "acik": true, "grup": "sistem", "sira": 3, "klasor": "cekirdek/site-ayarlari/",  "roller": ["super", "gyy"], "bagimli": [], "sayfalar": [ { "id": "ayarlar", "baslik": "Site Ayarları",  "ikon": "fa-sliders",        "dosya": "cekirdek/site-ayarlari/index.html",  "hazir": false, "menude": true } ] },
+    { "id": "entegrasyonlar", "ad": "Entegrasyonlar",  "cekirdek": true, "acik": true, "grup": "sistem", "sira": 4, "klasor": "cekirdek/entegrasyonlar/", "roller": ["super"],        "bagimli": [], "sayfalar": [ { "id": "liste", "baslik": "Entegrasyonlar",  "ikon": "fa-plug",           "dosya": "cekirdek/entegrasyonlar/index.html", "hazir": false, "menude": true } ] },
+    { "id": "yasal-metinler", "ad": "Yasal Metinler",  "cekirdek": true, "acik": true, "grup": "sistem", "sira": 5, "klasor": "cekirdek/yasal-metinler/", "roller": ["super", "gyy"], "bagimli": [], "sayfalar": [ { "id": "liste", "baslik": "Yasal Metinler",  "ikon": "fa-file-contract",  "dosya": "cekirdek/yasal-metinler/index.html", "hazir": false, "menude": true } ] },
+    { "id": "sayfalar",       "ad": "Sayfalar",        "cekirdek": true, "acik": true, "grup": "sistem", "sira": 6, "klasor": "cekirdek/sayfalar/",       "roller": ["super", "gyy"], "bagimli": [], "sayfalar": [ { "id": "liste", "baslik": "Sayfalar",        "ikon": "fa-file-lines",     "dosya": "cekirdek/sayfalar/index.html",       "hazir": false, "menude": true } ] },
+    { "id": "raporlar",       "ad": "Raporlar",        "cekirdek": true, "acik": true, "grup": "sistem", "sira": 7, "klasor": "cekirdek/raporlar/",       "roller": ["super", "gyy", "editor", "kat-ed", "sosyal", "analist"], "bagimli": [], "sayfalar": [ { "id": "liste", "baslik": "Raporlar", "ikon": "fa-chart-pie", "dosya": "cekirdek/raporlar/index.html", "hazir": false, "menude": true } ] },
+    { "id": "denetim-izi",    "ad": "Denetim İzi",     "cekirdek": true, "acik": true, "grup": "sistem", "sira": 8, "klasor": "cekirdek/denetim-izi/",    "roller": ["super", "gyy", "analist"], "bagimli": [], "sayfalar": [ { "id": "liste", "baslik": "Denetim İzi", "ikon": "fa-clipboard-list", "dosya": "cekirdek/denetim-izi/index.html", "hazir": false, "menude": true } ] },
+    { "id": "sistem-sagligi", "ad": "Sistem Sağlığı",  "cekirdek": true, "acik": true, "grup": "sistem", "sira": 9, "klasor": "cekirdek/sistem-sagligi/", "roller": ["super"],        "bagimli": [], "sayfalar": [ { "id": "ana", "baslik": "Sistem Sağlığı",    "ikon": "fa-heart-pulse",    "dosya": "cekirdek/sistem-sagligi/index.html", "hazir": false, "menude": true } ] }
+  ]
+}
