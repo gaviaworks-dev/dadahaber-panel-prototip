@@ -330,14 +330,16 @@
           if(dmBtn) dmBtn.setAttribute('aria-expanded', 'false');
           dmBtn = b; b.setAttribute('aria-expanded', 'true');
           var r = b.getBoundingClientRect();
-          dm.style.top = (r.bottom + 6) + 'px'; dm.style.left = 'auto'; dm.style.right = (window.innerWidth - r.right) + 'px';
           var row = b.closest('tr'), dr = row ? row.dataset.durum : '', rol = doc.dataset.rol;
           dm._satir = row;
           dm.querySelectorAll('[data-durum-icin]').forEach(function(x){ x.hidden = x.getAttribute('data-durum-icin').split(' ').indexOf(dr) === -1; });
           dm.querySelectorAll('[data-roller]').forEach(function(x){ if(!x.hidden) x.hidden = x.getAttribute('data-roller').split(' ').indexOf(rol) === -1; });
+          /* konum açılmadan önce, kalemler süzüldükten sonra hesaplanır: altta yer yoksa doğrudan üstte açılır (zıplama yok) */
+          var h = dm.offsetHeight, alt = r.bottom + 6;
+          dm.style.left = 'auto'; dm.style.right = (window.innerWidth - r.right) + 'px';
+          dm.style.top = (alt + h > window.innerHeight - 8 ? Math.max(8, r.top - h - 6) : alt) + 'px';
+          dm.classList.toggle('kb-yukari', alt + h > window.innerHeight - 8);
           dm.classList.add('open');
-          var mr = dm.getBoundingClientRect();
-          if(mr.bottom > window.innerHeight - 8) dm.style.top = Math.max(8, r.top - mr.height - 6) + 'px';
         });
       });
       document.addEventListener('click', function(e){ if(!e.target.closest('.kb-diger-menu') && dmBtn){ dm.classList.remove('open'); dmBtn.setAttribute('aria-expanded', 'false'); dmBtn = null; } });

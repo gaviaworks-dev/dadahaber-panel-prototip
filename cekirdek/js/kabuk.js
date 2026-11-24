@@ -59,6 +59,8 @@
     document.querySelectorAll('[data-persona]').forEach(function(el){
       var v = per[el.getAttribute('data-persona')]; if(v) el.textContent = v;
     });
+    /* role bağlı bileşenler (okuma onayı vb.) bu olayı dinler */
+    document.dispatchEvent(new CustomEvent('kb-rol', { detail: rol }));
   }
 
   /* ---- etkin kalem ---- */

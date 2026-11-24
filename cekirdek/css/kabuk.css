@@ -112,7 +112,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .sa-mlink i{width:20px;text-align:center;font-size:15px;color:var(--on-menu-mut);transition:.18s var(--ease);flex:none}
 .sa-mlink:hover{background:var(--menu-hover);color:var(--menu-hover-fg)}
 .sa-mlink:hover i{color:var(--menu-accent)}
-.sa-mlink.is-active{background:var(--menu-active-bg);color:var(--menu-active-fg);font-weight:700}
+.sa-mlink.is-active{background:var(--menu-active-bg);color:var(--menu-active-fg);font-weight:500}
 .sa-mlink.is-active i{color:var(--menu-active-icon)}
 .sa-mlink.is-active .pl-cnt{background:var(--menu-active-cnt-bg);color:var(--menu-active-cnt-fg)}
 .sa-mlink.is-active::before{
@@ -265,7 +265,7 @@ html.kb-yukleniyor *,html.kb-yukleniyor *::before,html.kb-yukleniyor *::after{tr
 .pnl-menu{
   position:absolute;top:calc(100% + 10px);right:0;min-width:236px;z-index:var(--z-pop);
   background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:var(--sh-lg);
-  padding:7px;opacity:0;transform:translateY(-6px);pointer-events:none;transition:.16s var(--ease);
+  padding:7px;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease);
 }
 .pnl-menu.open{opacity:1;transform:none;pointer-events:auto}
 .pnl-menu .pmenu-head{padding:8px 12px 11px;border-bottom:1px solid var(--line);margin-bottom:6px}
