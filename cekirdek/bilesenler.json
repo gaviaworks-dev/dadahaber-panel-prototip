@@ -50,7 +50,7 @@
   {
    "id": "veri-tablosu",
    "ad": "Veri tablosu",
-   "kanca": "[data-liste data-liste-ad=\"…\"] · ptable · chips · filter-bar · pager · data-sekme-ilk · data-suz-coklu · [data-gorunum-sec] ızgara · [data-gez-suz]",
+   "kanca": "[data-liste data-liste-ad=\"…\"] · ptable · chips · filter-bar · pager · data-sekme-ilk · data-suz-coklu · [data-gorunum-sec] ızgara · [data-gez-suz] · satırda data-roller / data-modul",
    "dosya": "bilesen.css · bilesen.js",
    "durum": "hazir",
    "ui_kit": "tablo",
@@ -68,7 +68,7 @@
   {
    "id": "toplu-islem",
    "ad": "Toplu işlem çubuğu",
-   "kanca": "kb-toplu",
+   "kanca": "kb-toplu · [data-toplu=\"…\"][data-toplu-durum]",
    "dosya": "bilesen.css · bilesen.js",
    "durum": "hazir",
    "ui_kit": "tablo",
@@ -527,7 +527,7 @@
   {
    "id": "onay-zinciri",
    "ad": "Bildirimsel onay zinciri",
-   "kanca": "[data-onay-baslik] · data-kod · data-bildir-sonra · data-sonra-durum · data-sonra-kaldir · data-sonra-kapat · olay kb-onaylandi",
+   "kanca": "[data-onay-baslik] · data-kod · data-bildir-sonra · data-sonra-durum · data-sonra-kaldir · data-sonra-kapat · data-onaysiz · olay kb-onaylandi",
    "dosya": "alan.js",
    "durum": "hazir",
    "ui_kit": "pencere",

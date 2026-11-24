@@ -216,7 +216,7 @@
     if(acikKap && acikKap !== k){ acikKap.classList.remove('open'); acikKap.hidden = true; }
     if(!acikKap) kapOnce = document.activeElement;
     acikKap = k; k._satir = sonSatir;
-    k.hidden = false; perde.classList.add('open');
+    clearTimeout(k._kbGizle); k.hidden = false; perde.classList.add('open');
     requestAnimationFrame(function(){ k.classList.add('open'); k.querySelector('.kb-kapat').focus(); });
     document.body.style.overflow = 'hidden';
   };
@@ -224,7 +224,7 @@
     if(!acikKap) return;
     var k = acikKap; acikKap = null;
     k.classList.remove('open'); perde.classList.remove('open'); document.body.style.overflow = '';
-    setTimeout(function(){ k.hidden = true; }, 260);
+    clearTimeout(k._kbGizle); k._kbGizle = setTimeout(function(){ if(acikKap !== k) k.hidden = true; }, 260);
     if(kapOnce && kapOnce.focus) kapOnce.focus();
   };
   perde.addEventListener('click', window.kbKapat);
@@ -419,12 +419,14 @@
       } else { suzEk[k] = v; uygula(); }
     }); /* data-sekme-ilk: "Tümü" sekmesi olmayan listelerde başlangıç (ör. AI havuzu, K6) */
 
+    /* satırın kendi görünürlüğü: kapalı modül (data-modul-kapali) ve rol (data-roller) liste süzgecinden önce gelir */
+    function gorunur(r){ if(r.hasAttribute('data-modul-kapali')) return false; var rl = r.getAttribute('data-roller'); return !rl || rl.split(' ').indexOf(doc.dataset.rol) > -1; }
     function uygula(){
       var v = ara ? tr(ara.value.trim()) : '', n = 0, suzVar = !!v;
       var sz = {}; suzler.forEach(function(s){ if(s.dataset.deger){ sz[s.dataset.suz] = s.dataset.deger; suzVar = true; } });
       Object.keys(suzEk).forEach(function(k){ if(suzEk[k]){ sz[k] = suzEk[k]; coklu[k] = true; suzVar = true; } });
       satirlar.forEach(function(r){
-        var d = r.dataset.durum, g = sekme === 'hepsi' ? d !== 'cop' : d === sekme;
+        var d = r.dataset.durum, g = gorunur(r) && (sekme === 'hepsi' ? d !== 'cop' : d === sekme);
         if(g && v) g = tr(r.dataset.ara).indexOf(v) > -1;
         if(g) Object.keys(sz).forEach(function(k){ var rv = r.dataset[k] || ''; if(coklu[k] ? ('|' + rv + '|').indexOf('|' + sz[k] + '|') === -1 : rv !== sz[k]) g = false; });
         if(g && n >= sayfaBoy) g = false;
@@ -450,7 +452,7 @@
     function sayaclar(){
       sekmeler.forEach(function(c){
         var s = c.dataset.sekme; if(c.dataset.sabit) return;
-        var n = satirlar.filter(function(r){ return s === 'hepsi' ? r.dataset.durum !== 'cop' : r.dataset.durum === s; }).length;
+        var n = satirlar.filter(function(r){ return gorunur(r) && (s === 'hepsi' ? r.dataset.durum !== 'cop' : r.dataset.durum === s); }).length;
         var t = +(c.dataset.taban || 0) + n; c.dataset.toplam = t; var e = c.querySelector('.ch-cnt'); if(e) e.textContent = sayiYaz(t);
       });
     }
@@ -482,6 +484,12 @@
           window.kbOnay({ tehlike:true, baslik: s.length + ' ' + AD + ' çöpe taşınsın mı?', metin:(L.dataset.listeCopNot || 'Seçilenler yayından kalkar ve Çöp sekmesine taşınır') + '; oradan geri alınabilir. İşlem denetim izine önceki ve sonraki haliyle yazılır.', evet:'Çöpe taşı',
             evetIs: function(){ var eski = s.map(function(r){ return [r, r.dataset.durum]; }); s.forEach(function(r){ r.dataset.onceki = r.dataset.durum; r.dataset.durum = 'cop'; }); sayaclar(); secimTemizle(); uygula();
               window.kbBildir(s.length + ' ' + AD + ' çöpe taşındı', function(){ eski.forEach(function(x){ x[0].dataset.durum = x[1]; }); sayaclar(); uygula(); }); } });
+        } else if(b.dataset.topluDurum){
+          /* data-toplu-durum="okundu" [data-toplu-durum-ad] [data-toplu-durum-sinif]: seçili satırların durumu değişir; Geri al */
+          var eski2 = s.map(function(r){ var rz = r.querySelector('.pstat'); return [r, r.dataset.durum, rz && rz.textContent, rz && rz.className]; });
+          s.forEach(function(r){ r.dataset.durum = b.dataset.topluDurum; var rz = r.querySelector('.pstat'); if(rz){ if(b.dataset.topluDurumAd) rz.textContent = b.dataset.topluDurumAd; if(b.dataset.topluDurumSinif) rz.className = 'pstat ' + b.dataset.topluDurumSinif; } });
+          sayaclar(); secimTemizle(); uygula();
+          window.kbBildir(b.dataset.bildir || (s.length + ' ' + AD + ' güncellendi'), function(){ eski2.forEach(function(x){ x[0].dataset.durum = x[1]; var rz = x[0].querySelector('.pstat'); if(rz){ rz.textContent = x[2]; rz.className = x[3]; } }); sayaclar(); uygula(); });
         } else {
           window.kbBildir(b.dataset.bildir || 'İşlem uygulandı'); secimTemizle();
         }
@@ -489,6 +497,7 @@
     });
 
     /* dışarıdan durum değişince (onay zinciri vb.) sayaçlar ve görünüm yenilenir */
+    document.addEventListener('kb-rol', function(){ sayaclar(); uygula(); });
     L.addEventListener('kb-liste-yenile', function(){ satirlar = Array.prototype.slice.call(govde.querySelectorAll('tr[data-satir]')); sayaclar(); uygula(); });
 
     /* satır: tıklama sözleşmeye göre; içindeki düğme ve bağlantılar kendi işini yapar */

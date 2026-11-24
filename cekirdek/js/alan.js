@@ -520,13 +520,14 @@
              [data-kod] [data-kod-baslik="…"] [data-bildir-sonra="…"]>
      Onay penceresi → (data-kod varsa) e-posta kodu → kısa bildirim; sonunda düğmede 'kb-onaylandi' olayı. Açık ⋯ menüsü kapanır. */
   document.addEventListener('click', function(e){
-    var b = e.target.closest('[data-onay-baslik]'); if(!b || b.disabled) return;
+    var b = e.target.closest('[data-onay-baslik],[data-onaysiz]'); if(!b || b.disabled) return;
     e.preventDefault(); e.stopPropagation();
     document.querySelectorAll('.kb-diger-menu.open').forEach(function(m){ m.classList.remove('open'); });
     /* data-sonra-durum="iptal" [data-sonra-durum-ad="İptal edildi"] [data-sonra-durum-sinif="off"]: onaydan sonra satırın durumu değişir
        (satırdaki ya da satırın ⋯ menüsündeki düğme); durum rozeti güncellenir, liste sayaçları yenilenir.
        data-sonra-kaldir: satır listeden kalkar (oturum kapatma, bağlantı kaldırma); bildirimde Geri al.
-       data-sonra-kapat: çekmece ya da pencerenin içinden tetiklenince iş bitince kap kapanır. */
+       data-sonra-kapat: çekmece ya da pencerenin içinden tetiklenince iş bitince kap kapanır.
+       data-onaysiz (data-onay-baslik yerine): onay penceresi açılmaz, sonrası aynı (okundu say gibi hafif işler). */
     var menu = b.closest('.kb-diger-menu'), kap = b.closest('.kb-cekmece,.kb-pencere'), satir = b.closest('tr[data-satir]') || (menu && menu._satir) || (kap && kap._satir) || null;
     function bitir(){
       if(satir && b.dataset.sonraDurum){
@@ -539,6 +540,7 @@
       if(b.hasAttribute('data-sonra-kapat') && kap && window.kbKapat) window.kbKapat(); /* çekmece/pencere içinden: iş bitince kapanır */
       b.dispatchEvent(new CustomEvent('kb-onaylandi', { bubbles:true, detail:{ satir: satir } }));
     }
+    if(b.hasAttribute('data-onaysiz')){ bitir(); return; } /* hafif işlem (okundu say): onay sorulmaz, sonrası aynı (sonra-durum, bildirim) */
     window.kbOnay({ tehlike: b.hasAttribute('data-onay-tehlike'), ikon: b.dataset.onayIkon || (b.hasAttribute('data-onay-tehlike') ? 'fa-triangle-exclamation' : 'fa-circle-check'),
       baslik: b.dataset.onayBaslik, metin: b.dataset.onayMetin || '', evet: b.dataset.onayEvet || 'Onayla',
       evetIs: function(){ if(b.hasAttribute('data-kod')) window.kbKod({ baslik: b.dataset.kodBaslik || 'E-posta koduyla doğrulayın', evet: 'Doğrula', evetIs: bitir }); else bitir(); } });

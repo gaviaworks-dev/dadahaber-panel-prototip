@@ -32,6 +32,7 @@
   function rolUygula(rol){
     doc.dataset.rol = rol;
     document.querySelectorAll('[data-roller]').forEach(function(el){
+      if(el.matches('[data-liste] tr[data-satir]')) return; /* liste satırını liste süzer (rol + sekme + süzgeç birlikte) */
       el.hidden = el.getAttribute('data-roller').split(/\s+/).indexOf(rol) === -1;
     });
     document.querySelectorAll('[data-izin]').forEach(function(el){
