@@ -7,6 +7,7 @@ Modül: ________ · Teammate: ________ · Tarih: ________
 
 ## 0 · Otomatik denetim (her teslimden önce, zorunlu)
 - [ ] `python3 -I araclar/denetim.py <modül klasörü>` → **KALDI 0** (kural başına sonuç; ayrıntı `docs/screenshots/denetim-son.json`). "KARAR" satırları (pano, uzun sayfa önerisi) lead'e iletilir. Betiğin denetledikleri: JS hatası, yatay taşma (1440/390), **liste araç satırı** (tek satır, taşmasız, listede bir tane), **çift blok**, **uzun sayfa**, **kilitli düğme**, satır eylemleri sırası, Çöp sekmesi (yoksa nedeni bantta), **boşluk** (yapışık ipucu/kutu), bildirimin düğmeyi kapatması, zorunlu alan (?yeni=1), elle zorunlu/yıldız, tarayıcı tarih alanı, `<style>`, satır içi renk ve boşluk. Açık istisna yalnız `body[data-denetim-istisna]` + `data-denetim-neden` ile (lead onayı).
+- [ ] `python3 -I araclar/duyarli.py <modül klasörü>` (yerelde) ve dalga sonunda `--taban https://gaviaworks-dev.github.io/dadahaber-panel-prototip` (canlıda) → 5 genişlikte sorun 0.
 
 ## 1 · Sök-tak
 - [ ] Modül yalnızca kendi klasöründe; sayfaları `moduller.json`'da kayıtlı, `hazir` doğru.
