@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Kabuk parçalarını modül kaydından sayfalara yazar (K13: karma yöntem).
 
-Kullanım:  python3 -I araclar/menu_yaz.py [--kontrol]
+Kullanım:  python3 -I araclar/menu_yaz.py [--kontrol] [--uyari] [--yalniz cekirdek/kullanicilar]
 
 Ne yapar:
   1. moduller.json ve veri/panel.json'u okur.
@@ -22,6 +22,8 @@ from pathlib import Path
 
 KOK = Path(__file__).resolve().parent.parent
 KONTROL = "--kontrol" in sys.argv
+# --yalniz <klasör>: yalnız bu klasördeki sayfaları yazar, kayit.js'e dokunmaz (yayılımda teammate'ler aynı anda çalışır)
+YALNIZ = sys.argv[sys.argv.index("--yalniz") + 1] if "--yalniz" in sys.argv else None
 ATLANAN = {"docs", "tasks", "assets", "secenekler", ".git", "araclar", "veri"}
 
 kayit = json.loads((KOK / "moduller.json").read_text(encoding="utf-8"))
@@ -179,6 +181,8 @@ def kayit_js():
         "sosyal_platformlar": [x for x in moduller.get("sosyal-medya", {}).get("ayarlar", {}).get("platformlar", []) if x.get("acik")] if "sosyal-medya" in acik else [],
         "sosyal_oranlar": [{"oran": o, "ad": "Sosyal " + o, "px": px} for o, px in moduller.get("sosyal-medya", {}).get("ayarlar", {}).get("oran_olculeri", {}).items()] if "sosyal-medya" in acik else [],
         "sosyal_oneriler": veri.get("sosyal_hesap_onerileri", {}),
+        # zorunlu alanlar tek yerden (modül kaydı → ayarlar.zorunlu); anahtar "modul.form"
+        "zorunlu": {f"{k}.{f}": v for k, m in moduller.items() for f, v in (m.get("ayarlar", {}) or {}).get("zorunlu", {}).items()},
     }
     return ("/* ÜRETİLMİŞ DOSYA — elle değiştirme. Kaynak: moduller.json + veri/panel.json · araclar/menu_yaz.py */\n"
             "window.PANEL = " + json.dumps(js, ensure_ascii=False, indent=1) + ";\n")
@@ -254,11 +258,13 @@ def sayfalar():
         rel = p.relative_to(KOK)
         if rel.parts[0] in ATLANAN:
             continue
+        if YALNIZ and not rel.as_posix().startswith(YALNIZ.rstrip("/") + "/"):
+            continue
         yield p, rel.as_posix()
 
 kjs = KOK / "cekirdek" / "js" / "kayit.js"
 icerik = kayit_js()
-if not KONTROL and (not kjs.exists() or kjs.read_text(encoding="utf-8") != icerik):
+if not KONTROL and not YALNIZ and (not kjs.exists() or kjs.read_text(encoding="utf-8") != icerik):
     kjs.write_text(icerik, encoding="utf-8")
 
 sorunlar, yazilan = [], 0
@@ -266,9 +272,9 @@ for p, rel in sayfalar():
     t = p.read_text(encoding="utf-8")
     yeni, m1 = isaret_yaz(t, "menu", menu_html(rel))
     yeni, m2 = isaret_yaz(yeni, "ust", ust_html(rel))
-    yeni, _ = isaret_yaz(yeni, "bas", bas_html(rel))
+    yeni, m3 = isaret_yaz(yeni, "bas", bas_html(rel))
     yeni, _ = isaret_yaz(yeni, "katalog", katalog_html())
-    if not (m1 or m2):
+    if not (m1 or m2 or m3):   # kabuksuz sayfalar (giriş akışı) yalnız P:bas taşır
         continue
     yeni = hedefleri_yaz(yeni, rel)
     yeni = surum(yeni, rel)

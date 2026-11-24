@@ -65,6 +65,9 @@ button,input,select,textarea{font:inherit;color:inherit}
 .btn-sm{padding:10px 16px;font-size:13px;border-radius:var(--radius-sm)}
 .btn-danger{background:var(--danger);color:var(--paper)}
 .btn-danger:hover{background:var(--danger-deep)}
+.btn:disabled{background:var(--bg);color:var(--muted);border:1px solid var(--line);cursor:not-allowed;box-shadow:none}
+/* KURAL: zorunlu alan eksikken ana düğme pasif görünür, tıklanabilir kalır (tıklanınca eksik alan gösterilir) */
+.btn.is-pasif,.btn.is-pasif:hover{background:var(--bg);color:var(--muted);border:1px solid var(--line);box-shadow:none;cursor:not-allowed}
 
 .sa-app{min-height:100vh}
 

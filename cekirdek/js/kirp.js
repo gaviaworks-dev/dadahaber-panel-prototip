@@ -259,7 +259,7 @@
     var secili = b.getAttribute('data-kirp-ac') || null;
     var hedef = (secili && alan.querySelector('[data-kirp-oran="' + secili + '"]')) || alan.querySelector('[data-kirp-oran]') || alan.querySelector('[data-gorsel-hedef]');
     var m = hedef && (hedef.style.backgroundImage || '').match(/url\(["']?([^"')]+)/);
-    if(!m){ window.kbBildir('Önce bir görsel yükleyin ya da havuzdan seçin'); return; }
+    if(!m){ window.kbBildir('Önce bir görsel yükleyin ya da havuzdan seçin', null, 'uyari'); return; }
     var odakEl = alan.querySelector('.kg-odak'), odak = odakEl ? { x: parseFloat(odakEl.style.left) / 100, y: parseFloat(odakEl.style.top) / 100 } : null;
     window.kbKirp({ gorsel: m[1], odak: odak, alan: alan.getAttribute('data-gorsel-alan') || 'haberler.kapak', secili: secili, oranlar: alan.getAttribute && alan.getAttribute('data-kirp-oranlar') ? alanOranlari(alan.getAttribute('data-kirp-oranlar')) : null, ham: sonKirp.get(alan),
       ad: alan.getAttribute('data-gorsel-ad'),

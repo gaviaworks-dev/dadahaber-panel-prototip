@@ -50,7 +50,7 @@
   {
    "id": "veri-tablosu",
    "ad": "Veri tablosu",
-   "kanca": "[data-liste] · ptable · chips · filter-bar · pager",
+   "kanca": "[data-liste data-liste-ad=\"…\"] · ptable · chips · filter-bar · pager",
    "dosya": "bilesen.css · bilesen.js",
    "durum": "hazir",
    "ui_kit": "tablo",
@@ -355,12 +355,12 @@
   },
   {
    "id": "kisa-bildirim",
-   "ad": "Kısa bildirim (geri al)",
-   "kanca": "kbBildir",
+   "ad": "Kısa bildirim (başarı, bilgi, uyarı, hata; geri al)",
+   "kanca": "kbBildir(metin, geriAl, 'basari|bilgi|uyari|hata')",
    "dosya": "bilesen.css · bilesen.js",
    "durum": "hazir",
    "ui_kit": "pencere",
-   "not": ""
+   "not": "düğmelerin üstüne binmez"
   },
   {
    "id": "uyari-bandi",
@@ -373,12 +373,12 @@
   },
   {
    "id": "zengin-metin",
-   "ad": "Zengin metin editörü",
-   "kanca": "kb-zengin",
-   "dosya": "bilesen.css · form.js",
-   "durum": "eksik",
+   "ad": "Zengin metin editörü (TipTap)",
+   "kanca": ".kb-editor > .ke-alan · data-editor-kisa · data-editor-medya",
+   "dosya": "bilesen.css · editor.js · assets/vendor/tiptap-2.27.3",
+   "durum": "hazir",
    "ui_kit": "form",
-   "not": "geçici araç çubuğu; editör seçimi sorulacak"
+   "not": "Beyar seçimi 24.11.2026; metne medya ekleme Multimedya ile"
   },
   {
    "id": "dosya-yukleme",
@@ -419,11 +419,11 @@
   {
    "id": "saglik-kutusu",
    "ad": "Sağlık kutusu",
-   "kanca": "—",
-   "dosya": "—",
-   "durum": "eksik",
-   "ui_kit": "",
-   "not": "Sistem Sağlığı ve AI motoru ile"
+   "kanca": "kb-saglik ok|uyari|hata · kb-saglik-izgara",
+   "dosya": "bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "kart",
+   "not": "Sistem Sağlığı, AI motoru"
   },
   {
    "id": "esik-kaydirici",
@@ -433,6 +433,168 @@
    "durum": "eksik",
    "ui_kit": "",
    "not": "AI otomatik yayın ayarı ile"
+  },
+  {
+   "id": "tarih-araligi",
+   "ad": "Tarih aralığı",
+   "kanca": "kb-aralik · kb-tarih-sec[data-saatsiz]",
+   "dosya": "bilesen.css · alan.js · form.js",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": "hazır seçim + iki tarih"
+  },
+  {
+   "id": "fark-gorunumu",
+   "ad": "Fark görünümü (önce / sonra)",
+   "kanca": "kb-fark · kb-fark-satir · del/ins",
+   "dosya": "bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "onizleme",
+   "not": "denetim izi, sürümler"
+  },
+  {
+   "id": "izin-matrisi",
+   "ad": "İzin matrisi",
+   "kanca": "table.kb-matris · data-matris-sutun/satir",
+   "dosya": "bilesen.css · alan.js",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": "rol × izin"
+  },
+  {
+   "id": "grafik",
+   "ad": "Grafik (çizgi, sütun)",
+   "kanca": "kb-cizgi[data-degerler] · kb-sutun-grafik",
+   "dosya": "bilesen.css · alan.js",
+   "durum": "hazir",
+   "ui_kit": "kart",
+   "not": "raporlar"
+  },
+  {
+   "id": "ilerleme",
+   "ad": "İlerleme çubuğu",
+   "kanca": "kb-ilerleme",
+   "dosya": "bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "kart",
+   "not": ""
+  },
+  {
+   "id": "entegrasyon-karti",
+   "ad": "Entegrasyon kartı",
+   "kanca": "kb-entegre",
+   "dosya": "bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "kart",
+   "not": "durum, son kullanım, son hata"
+  },
+  {
+   "id": "log-goruntuleyici",
+   "ad": "Log görüntüleyici",
+   "kanca": "kb-log · kl-satir bilgi|uyari|hata",
+   "dosya": "bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "onizleme",
+   "not": ""
+  },
+  {
+   "id": "giris-duzeni",
+   "ad": "Giriş ekranı düzeni (kabuksuz)",
+   "kanca": "body.kb-giris-sayfa · kb-giris-marka · kb-giris-kart",
+   "dosya": "bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": "giriş, 2FA, şifre, davet"
+  },
+  {
+   "id": "sifre-alani",
+   "ad": "Şifre alanı (göster, kural, güç)",
+   "kanca": "kb-sifre · kb-sifre-kural · kb-sifre-guc",
+   "dosya": "bilesen.css · alan.js",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": ""
+  },
+  {
+   "id": "kod-kutulari",
+   "ad": "Kod kutuları (sayfa içi)",
+   "kanca": "[data-kod-kutular]",
+   "dosya": "bilesen.css · alan.js",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": "2FA"
+  },
+  {
+   "id": "onay-zinciri",
+   "ad": "Bildirimsel onay zinciri",
+   "kanca": "[data-onay-baslik] · data-kod · data-bildir-sonra · olay kb-onaylandi",
+   "dosya": "alan.js",
+   "durum": "hazir",
+   "ui_kit": "pencere",
+   "not": "onay → e-posta kodu → bildirim (Dalga 1 isteği)"
+  },
+  {
+   "id": "kart-suzgeci",
+   "ad": "Kart ızgarası süzgeci",
+   "kanca": "[data-kart-liste] · .chip[data-sekme] · [data-kart][data-durum]",
+   "dosya": "alan.js",
+   "durum": "hazir",
+   "ui_kit": "kart",
+   "not": "Dalga 1 isteği"
+  },
+  {
+   "id": "silinemez",
+   "ad": "Silinemez satır",
+   "kanca": "ia-btn.kb-kilit[disabled] + kb-bant bilgi",
+   "dosya": "bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "tablo",
+   "not": "istisnalar: denetim izi, loglar, eski sürüm, onay kaydı"
+  },
+  {
+   "id": "kayda-gore-blok",
+   "ad": "Kayda göre değişen bloklar",
+   "kanca": "?id=… · [data-kayit-icin] · [data-kayit-varsayilan]",
+   "dosya": "form.js",
+   "durum": "hazir",
+   "ui_kit": "sekme",
+   "not": "tek düzenleme sayfası, kayda özgü bloklar (Dalga 1 isteği)"
+  },
+  {
+   "id": "zorunlu-alan",
+   "ad": "Zorunlu alan kuralı (pasif ana düğme, eksik gösterimi)",
+   "kanca": "[data-zorunlu] · data-zorunlu-metin · [data-dogrula] · .btn.is-pasif · kbEksikGoster",
+   "dosya": "bilesen.js · kabuk.css · bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": "sayfa, çekmece, pencere"
+  },
+  {
+   "id": "avatar",
+   "ad": "Avatar (baş harf / fotoğraf)",
+   "kanca": "kb-ava k-sm|k-lg",
+   "dosya": "bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "rozet",
+   "not": "ekip, oturumlar"
+  },
+  {
+   "id": "sayfa-durumu",
+   "ad": "Sayfa durumu (?durum=)",
+   "kanca": "[data-durum-goster] · [data-durum-gizle]",
+   "dosya": "form.js",
+   "durum": "hazir",
+   "ui_kit": "sekme",
+   "not": "giriş akışı halleri"
+  },
+  {
+   "id": "tasiyarak-silme-tetik",
+   "ad": "Taşıyarak silme tetikleyicisi",
+   "kanca": "[data-tasi-sil] · data-tasi-ad/-sayi/-birim/-hedefler",
+   "dosya": "alan.js",
+   "durum": "hazir",
+   "ui_kit": "pencere",
+   "not": "rol, izin grubu"
   }
  ]
 }

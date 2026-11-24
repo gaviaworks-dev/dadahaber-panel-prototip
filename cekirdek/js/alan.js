@@ -16,7 +16,7 @@
   function ad(){ var el = document.getElementById('pmName'); return el ? el.textContent : ''; }
 
   /* ---------------- yayın kanalları ---------------- */
-  document.querySelectorAll('.kb-kanallar').forEach(function(K){
+  window.kbKurucu('.kb-kanallar', function(K){
     var not = K.parentNode.querySelector('[data-kanal-uyari]');
     function guncelle(){
       var secili = K.querySelectorAll('input:checked').length;
@@ -30,7 +30,7 @@
      <div class="kb-okuma-onay" data-okuma-hedef="#icerik" data-okuma-roller="editor kat-ed">
        <button class="btn btn-acc" data-okuma-btn>Onayla ve Yayınla</button><span class="ko-neden"></span></div>
      Hedef kendi içinde kayıyorsa onu, kaymıyorsa sayfayı izler. Kural rolde geçerli değilse düğme hemen etkindir. */
-  document.querySelectorAll('.kb-okuma-onay').forEach(function(O){
+  window.kbKurucu('.kb-okuma-onay', function(O){
     var hedef = document.querySelector(O.getAttribute('data-okuma-hedef')), btn = O.querySelector('[data-okuma-btn]'), neden = O.querySelector('.ko-neden');
     if(!hedef || !btn) return;
     var okundu = false;
@@ -83,15 +83,16 @@
     kov = document.createElement('div'); kov.className = 'sa-modal-ov kb-kod-ov';
     kov.innerHTML = '<div class="sa-modal kb-kod" role="alertdialog" aria-modal="true" aria-labelledby="kbKodBas"><div class="sa-modal-ico"><i class="fa-solid fa-envelope-circle-check" aria-hidden="true"></i></div>'
       + '<h2 id="kbKodBas"></h2><p data-kod-metin></p>'
-      + '<div class="kb-kod-kutular" role="group" aria-label="6 haneli kod">' + [0,1,2,3,4,5].map(function(i){ return '<input inputmode="numeric" maxlength="1" aria-label="' + (i + 1) + '. hane" autocomplete="one-time-code">'; }).join('') + '</div>'
+      + '<div class="kb-kod-kutular" role="group" aria-label="6 haneli kod" data-zorunlu-kod>' + [0,1,2,3,4,5].map(function(i){ return '<input inputmode="numeric" maxlength="1" aria-label="' + (i + 1) + '. hane" autocomplete="one-time-code">'; }).join('') + '</div>'
       + '<div class="kb-kod-alt"><span data-kod-sure></span><button type="button" class="kb-bag" data-kod-yeniden disabled>Kodu yeniden gönder</button></div>'
       + '<div class="ferr kb-kod-hata" data-kod-hata><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Kod 6 rakam olmalı.</div>'
       + '<p class="fhint kb-kod-ipucu">Prototip: herhangi 6 rakam kabul edilir.</p>'
       + '<div class="sa-modal-acts"><button type="button" class="btn btn-ghost" data-kod-hayir>Vazgeç</button><button type="button" class="btn btn-acc" data-kod-evet>Doğrula</button></div></div>';
     document.body.appendChild(kov);
     var kutular = kov.querySelectorAll('.kb-kod-kutular input');
+    function kodPasif(){ var b = kov.querySelector('[data-kod-evet]'), tam = Array.prototype.every.call(kutular, function(k){ return k.value; }); b.classList.toggle('is-pasif', !tam); b.setAttribute('aria-disabled', !tam); }
     kutular.forEach(function(k, i){
-      k.addEventListener('input', function(){ k.value = k.value.replace(/\D/g, '').slice(-1); kov.querySelector('[data-kod-hata]').style.display = ''; if(k.value && kutular[i + 1]) kutular[i + 1].focus(); });
+      k.addEventListener('input', function(){ k.value = k.value.replace(/\D/g, '').slice(-1); kov.querySelector('[data-kod-hata]').style.display = ''; kov.querySelector('.kb-kod-kutular').classList.remove('has-error'); if(k.value && kutular[i + 1]) kutular[i + 1].focus(); kodPasif(); });
       k.addEventListener('keydown', function(e){ if(e.key === 'Backspace' && !k.value && kutular[i - 1]) kutular[i - 1].focus(); if(e.key === 'Enter') kov.querySelector('[data-kod-evet]').click(); });
       k.addEventListener('paste', function(e){ var v = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6); if(!v) return; e.preventDefault(); v.split('').forEach(function(c, j){ if(kutular[j]) kutular[j].value = c; }); kutular[Math.min(5, v.length)].focus(); });
     });
@@ -100,7 +101,7 @@
       if(e.target.closest('[data-kod-yeniden]')){ sayac(); window.kbBildir('Yeni kod e-postanıza gönderildi'); return; }
       if(e.target.closest('[data-kod-evet]')){
         var v = Array.prototype.map.call(kutular, function(k){ return k.value; }).join('');
-        if(v.length < 6){ kov.querySelector('[data-kod-hata]').style.display = 'flex'; return; }
+        if(v.length < 6){ kov.querySelector('[data-kod-hata]').style.display = 'flex'; kov.querySelector('.kb-kod-kutular').classList.add('has-error'); var bos = Array.prototype.filter.call(kutular, function(k){ return !k.value; })[0]; if(bos) bos.focus(); return; }
         var is = kodIs; kodKapat(); if(is) is();
       }
     });
@@ -121,7 +122,8 @@
     kov.querySelector('[data-kod-metin]').textContent = (o.metin ? o.metin + ' ' : '') + '6 haneli kod ' + gizli + ' adresine gönderildi.';
     kov.querySelector('[data-kod-evet]').textContent = o.evet || 'Doğrula';
     kov.querySelector('[data-kod-hata]').style.display = '';
-    kov.querySelectorAll('.kb-kod-kutular input').forEach(function(k){ k.value = ''; });
+    kov.querySelectorAll('.kb-kod-kutular input').forEach(function(k){ k.value = ''; }); kov.querySelector('.kb-kod-kutular').classList.remove('has-error');
+    var kb_ = kov.querySelector('[data-kod-evet]'); kb_.classList.add('is-pasif'); kb_.setAttribute('aria-disabled', 'true');
     kodIs = o.evetIs; kodOnce = document.activeElement;
     kov.classList.add('open'); sayac();
     setTimeout(function(){ kov.querySelector('.kb-kod-kutular input').focus(); }, 60);
@@ -130,16 +132,16 @@
   /* ---------------- AI ile üret adımı ----------------
      [data-ai-adim data-ai-kaynak="#a,#b"]: kaynak alanlar doluysa işaretli [data-ai-grup] bölümleri üretilir.
      Üretilen bölüm "AI önerisi" etiketi alır; etiket bölümde bir değişiklik yapılınca "gözden geçirildi"ye döner. */
-  document.querySelectorAll('[data-ai-adim]').forEach(function(A){
+  window.kbKurucu('[data-ai-adim]', function(A){
     var kaynak = (A.getAttribute('data-ai-kaynak') || '').split(',').map(function(s){ return document.querySelector(s.trim()); }).filter(Boolean);
     var btn = A.querySelector('[data-ai-uret]'), neden = A.querySelector('[data-ai-neden]'), durumEl = A.querySelector('[data-ai-durum]');
     function hazir(){ return kaynak.every(function(k){ return k.value.trim().length > 0; }); }
-    function bak(){ if(A.classList.contains('is-bitti')) return; var h = hazir(); btn.disabled = !h || !A.querySelector('.kaa-secim input:checked'); neden.textContent = h ? 'Başlık ve spot hazır' : 'Önce başlık ve spot'; }
+    function bak(){ if(A.classList.contains('is-bitti')) return; var h = hazir() && !!A.querySelector('.kaa-secim input:checked'); btn.disabled = false; btn.classList.toggle('is-pasif', !h); btn.setAttribute('aria-disabled', !h); neden.textContent = hazir() ? 'Başlık ve spot hazır' : 'Önce başlık ve spot'; }
     kaynak.forEach(function(k){ k.addEventListener('input', bak); });
     A.querySelector('.kaa-secim').addEventListener('change', bak); bak();
     function doldur(g){
       g.querySelectorAll('[data-ai-ornek]').forEach(function(el){
-        if(el.classList.contains('kz-alan')) el.innerHTML = el.dataset.aiOrnek;
+        if(el.classList.contains('kz-alan')){ if(window.kbEditorYaz) window.kbEditorYaz(el, el.dataset.aiOrnek); else el.innerHTML = el.dataset.aiOrnek; }
         else if(el.classList.contains('kb-secim')){ var o = el.querySelector('button[data-deger="' + el.dataset.aiOrnek + '"]'); if(o){ el.dataset.deger = el.dataset.aiOrnek; el.classList.add('is-dolu'); var l = el.querySelector('.ks-deger'); if(l) l.textContent = o.getAttribute('data-ad') || o.textContent; } }
         else { el.value = el.dataset.aiOrnek; el.dispatchEvent(new Event('input', { bubbles:true })); }
       });
@@ -169,6 +171,10 @@
       bekleyen(); window.kbBildir('AI bölümü onaylandı');
     });
     btn.addEventListener('click', function(){
+      if(A.classList.contains('is-bitti')) return;
+      var eks = kaynak.filter(function(k){ return !k.value.trim(); });
+      if(eks.length){ eks.forEach(function(k){ if(!k.hasAttribute('data-zorunlu-metin')) k.setAttribute('data-zorunlu-metin', (k.closest('.frow').querySelector('label') || {}).textContent ? 'Üretim için ' + k.closest('.frow').querySelector('label').textContent.replace('*', '').trim().toLocaleLowerCase('tr') + ' gerekli' : 'Bu alan gerekli'); }); window.kbEksikGoster(eks); return; }
+      if(!A.querySelector('.kaa-secim input:checked')){ window.kbBildir('Üretilecek en az bir bölüm seçin', null, 'uyari'); return; }
       var secilen = Array.prototype.map.call(A.querySelectorAll('.kaa-secim input:checked'), function(i){ return i.value; });
       A.classList.add('is-uretiyor'); btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>Üretiliyor…';
       setTimeout(function(){
@@ -278,30 +284,35 @@
     if(!tsOv){
       tsOv = document.createElement('div'); tsOv.className = 'sa-modal-ov kb-tasi-ov';
       tsOv.innerHTML = '<div class="sa-modal danger kb-tasi" role="alertdialog" aria-modal="true" aria-labelledby="kbTasiBas"><div class="sa-modal-ico"><i class="fa-solid fa-folder-minus" aria-hidden="true"></i></div><h2 id="kbTasiBas"></h2><div class="kb-tasi-kullanim" data-ts-kullanim></div>'
-        + '<div class="frow"><span class="flabel" data-ts-etk></span><div class="kb-tasi-ara"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input type="search" placeholder="Konu ara" aria-label="Taşınacak konuyu ara"></div><div class="kb-tasi-liste" role="listbox" data-ts-liste></div></div>'
+        + '<div class="frow"><span class="flabel" data-ts-etk></span><div class="kb-tasi-ara"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input type="search" placeholder="Ara" aria-label="Taşınacak yeri ara"></div><div class="kb-tasi-liste" role="listbox" data-ts-liste></div><div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Taşınacak yeri seçin</div></div>'
         + '<p class="fhint" data-ts-not></p><div class="sa-modal-acts"><button type="button" class="btn btn-ghost" data-ts-hayir>Vazgeç</button><button type="button" class="btn btn-danger" data-ts-evet disabled></button></div></div>';
       document.body.appendChild(tsOv);
       tsOv.querySelector('input').addEventListener('input', function(e){ var q = (e.target.value || '').toLocaleLowerCase('tr'); tsOv.querySelectorAll('[data-ts-liste] button').forEach(function(b){ b.hidden = q && b.textContent.toLocaleLowerCase('tr').indexOf(q) === -1; }); });
       tsOv.addEventListener('click', function(e){
         if(e.target === tsOv || e.target.closest('[data-ts-hayir]')){ tsOv.classList.remove('open'); return; }
-        var b = e.target.closest('[data-ts-liste] button'); if(b){ tsOv.querySelectorAll('[data-ts-liste] button').forEach(function(x){ x.classList.toggle('is-sec', x === b); x.setAttribute('aria-selected', x === b); }); tsOv.querySelector('[data-ts-evet]').disabled = false; tsOv._hedef = b.dataset.v; return; }
-        if(e.target.closest('[data-ts-evet]')){ tsOv.classList.remove('open'); if(tsIs) tsIs(tsOv._hedef); }
+        var b = e.target.closest('[data-ts-liste] button'); if(b){ tsOv.querySelectorAll('[data-ts-liste] button').forEach(function(x){ x.classList.toggle('is-sec', x === b); x.setAttribute('aria-selected', x === b); }); var ev = tsOv.querySelector('[data-ts-evet]'); ev.classList.remove('is-pasif'); ev.setAttribute('aria-disabled', 'false'); tsOv.querySelector('[data-ts-liste]').closest('.frow').classList.remove('has-error'); tsOv._hedef = b.dataset.v; return; }
+        if(e.target.closest('[data-ts-evet]')){
+          if(!tsOv._hedef){ var fr = tsOv.querySelector('[data-ts-liste]').closest('.frow'); fr.classList.add('has-error'); fr.querySelector('.kb-tasi-ara input').focus(); return; }
+          tsOv.classList.remove('open'); if(tsIs) tsIs(tsOv._hedef); }
       });
     }
     tsIs = o.evetIs; tsOv._hedef = null;
-    tsOv.querySelector('h2').textContent = '“' + o.ad + '” silinmeden önce haberleri taşınmalı';
-    tsOv.querySelector('[data-ts-kullanim]').innerHTML = '<span><i class="fa-solid fa-newspaper" aria-hidden="true"></i><b>' + o.haber.toLocaleString('tr') + '</b> haber</span>' + (o.alt ? '<span><i class="fa-solid fa-sitemap" aria-hidden="true"></i><b>' + o.alt + '</b> alt konu</span>' : '');
-    tsOv.querySelector('[data-ts-etk]').textContent = 'Haberler nereye taşınsın?';
+    var bir = o.birim || 'haber';
+    tsOv.querySelector('h2').textContent = '“' + o.ad + '” silinmeden önce ' + (o.birimCogul || bir + 'ler') + ' taşınmalı';
+    tsOv.querySelector('[data-ts-kullanim]').innerHTML = '<span><i class="fa-solid ' + (o.ikon || 'fa-newspaper') + '" aria-hidden="true"></i><b>' + (o.sayi != null ? o.sayi : o.haber).toLocaleString('tr') + '</b> ' + bir + '</span>' + (o.alt ? '<span><i class="fa-solid fa-sitemap" aria-hidden="true"></i><b>' + o.alt + '</b> alt konu</span>' : '');
+    tsOv.querySelector('[data-ts-etk]').textContent = o.soru || ((o.birimCogul || bir + 'ler').charAt(0).toLocaleUpperCase('tr') + (o.birimCogul || bir + 'ler').slice(1) + ' nereye taşınsın?');
+    tsOv.querySelector('.kb-tasi-ara input').placeholder = o.araMetin || 'Ara';
+    tsOv.querySelector('[data-ts-liste]').closest('.frow').querySelector('.ferr').lastChild.textContent = o.eksikMetin || 'Taşınacak yeri seçin';
     tsOv.querySelector('[data-ts-liste]').innerHTML = o.hedefler.map(function(h){ return '<button type="button" role="option" aria-selected="false" data-v="' + h.replace(/"/g, '&quot;') + '">' + h.replace(/</g, '&lt;') + '</button>'; }).join('');
-    tsOv.querySelector('[data-ts-not]').textContent = (o.alt ? 'Alt konular da çöpe gider. ' : '') + 'Haberlerin adresi yeni konuya göre değişir, eski adresler yönlendirilir. “' + o.ad + '” çöpe gider ve oradan geri alınabilir; işlem denetim izine yazılır.';
-    tsOv.querySelector('[data-ts-evet]').textContent = 'Taşı ve çöpe at'; tsOv.querySelector('[data-ts-evet]').disabled = true;
+    tsOv.querySelector('[data-ts-not]').textContent = o.not || ((o.alt ? 'Alt konular da çöpe gider. ' : '') + 'Haberlerin adresi yeni konuya göre değişir, eski adresler yönlendirilir. “' + o.ad + '” çöpe gider ve oradan geri alınabilir; işlem denetim izine yazılır.');
+    var tev = tsOv.querySelector('[data-ts-evet]'); tev.textContent = 'Taşı ve çöpe at'; tev.disabled = false; tev.classList.add('is-pasif'); tev.setAttribute('aria-disabled', 'true'); tsOv.querySelector('[data-ts-liste]').closest('.frow').classList.remove('has-error');
     tsOv.querySelector('input').value = '';
     tsOv.classList.add('open'); setTimeout(function(){ tsOv.querySelector('input').focus(); }, 50);
   };
 
   /* ---------------- satır listesi (formun içindeki tekrarlanan satırlar: kaynaklar vb.) ----------------
      [data-satir-liste]: "ekle" yeni satırı düzenleme halinde açar; kalem satırı düzenler; çöp satırı kaldırır (B8: onaysız + Geri al). */
-  document.querySelectorAll('[data-satir-liste]').forEach(function(L){
+  window.kbKurucu('[data-satir-liste]', function(L){
     var a1 = L.dataset.satirAlan1 || 'Başlık', a2 = L.dataset.satirAlan2 || 'Açıklama', adx = L.dataset.satirAd || 'Satır';
     function esc2(s){ return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
     function duzenle(s){
@@ -363,34 +374,168 @@
   var anSay = document.querySelector('[data-anahtar-say]');
   if(anSay){ var anGun = function(){ var h = document.querySelectorAll('input[data-anahtar]'); anSay.textContent = Array.prototype.filter.call(h, function(x){ return x.checked; }).length + ' / ' + h.length; }; document.addEventListener('change', anGun); document.addEventListener('click', function(){ setTimeout(anGun, 50); }); }
 
+  /* ---------------- tarih aralığı ----------------
+     .kb-aralik: hazır seçimler (Bugün, Son 7 gün, Son 30 gün, Bu ay) + iki saatsiz tarih seçici (başlangıç, bitiş).
+     Elle tarih seçilince hazır seçim "Özel" olur. Değişince 'kb-aralik' olayı (detail: {bas, bit}). */
+  var BUGUN = { y:2026, a:10, g:23 };
+  window.kbKurucu('.kb-aralik', function(A){
+    var t2 = A.querySelectorAll('.kb-tarih-sec'), bas = t2[0], bit = t2[1];
+    function gun(n){ var d = new Date(BUGUN.y, BUGUN.a, BUGUN.g - n); return { y:d.getFullYear(), a:d.getMonth(), g:d.getDate(), h:0, m:0 }; }
+    function bildir(){ A.dispatchEvent(new CustomEvent('kb-aralik', { bubbles:true, detail:{ bas: bas && bas.dataset.secili, bit: bit && bit.dataset.secili } })); }
+    function hazir(k){
+      A.querySelectorAll('[data-aralik]').forEach(function(b){ var on = b.dataset.aralik === k; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', on); });
+      if(k === 'ozel' || !bas || !bit || !bas.kbAyarla) return;
+      var b0 = k === 'ay' ? { y:BUGUN.y, a:BUGUN.a, g:1, h:0, m:0 } : gun(k === 'bugun' ? 0 : +k - 1);
+      bas.kbAyarla(b0); bit.kbAyarla(gun(0)); bildir();
+    }
+    A.addEventListener('click', function(e){ var b = e.target.closest('[data-aralik]'); if(b) hazir(b.dataset.aralik); });
+    A.addEventListener('kb-tarih', function(){ hazir('ozel'); bildir(); });
+    var on = A.querySelector('[data-aralik].is-on'); setTimeout(function(){ hazir(on ? on.dataset.aralik : '7'); }, 0);
+  });
+
+  /* ---------------- izin matrisi ----------------
+     table.kb-matris: satır = izin, sütun = rol. Sütun başlığındaki düğme o rolün bütün izinlerini, satır başındaki düğme
+     o iznin bütün rollerini açar/kapatır. Kilitli hücre (Süper Admin) değişmez. */
+  window.kbKurucu('.kb-matris', function(M){
+    function kutular(sec){ return Array.prototype.filter.call(M.querySelectorAll(sec), function(i){ return !i.disabled; }); }
+    function topla(liste){ var hepsi = liste.every(function(i){ return i.checked; }); liste.forEach(function(i){ i.checked = !hepsi; }); M.dispatchEvent(new Event('input', { bubbles:true })); say(); }
+    function say(){ M.querySelectorAll('[data-matris-say]').forEach(function(s){ var k = s.getAttribute('data-matris-say'); var l = M.querySelectorAll('input[data-rol="' + k + '"]'); s.textContent = Array.prototype.filter.call(l, function(i){ return i.checked; }).length + '/' + l.length; }); }
+    M.addEventListener('click', function(e){
+      var s = e.target.closest('[data-matris-sutun]'); if(s){ topla(kutular('input[data-rol="' + s.getAttribute('data-matris-sutun') + '"]')); return; }
+      var r = e.target.closest('[data-matris-satir]'); if(r){ topla(kutular('tr[data-izin-satir="' + r.getAttribute('data-matris-satir') + '"] input')); }
+    });
+    M.addEventListener('change', say); say();
+  });
+
+  /* ---------------- çizgi grafik ----------------
+     .kb-cizgi[data-degerler="12,18,9,…"][data-etiketler="Pzt,Sal,…"][data-birim="haber"]: SVG çizgi + alan, son değer vurgulu. */
+  window.kbKurucu('.kb-cizgi[data-degerler]', function(G){
+    var v = G.dataset.degerler.split(',').map(Number), et = (G.dataset.etiketler || '').split(','), W = 600, H = 160, p = 8;
+    var mx = Math.max.apply(null, v) || 1, mn = Math.min(0, Math.min.apply(null, v));
+    var x = function(i){ return p + i * (W - 2 * p) / Math.max(1, v.length - 1); }, y = function(d){ return H - p - (d - mn) / (mx - mn) * (H - 2 * p); };
+    var yol = v.map(function(d, i){ return (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(d).toFixed(1); }).join(' ');
+    var son = v.length - 1;
+    G.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" role="img" aria-label="' + (G.dataset.ad || 'Grafik') + ': ' + v.join(', ') + '">'
+      + [0.25, .5, .75].map(function(k){ return '<line x1="0" x2="' + W + '" y1="' + (p + k * (H - 2 * p)) + '" y2="' + (p + k * (H - 2 * p)) + '" class="kc-izgara"/>'; }).join('')
+      + '<path d="' + yol + ' L' + x(son) + ' ' + (H - p) + ' L' + x(0) + ' ' + (H - p) + ' Z" class="kc-alan"/><path d="' + yol + '" class="kc-cizgi"/>'
+      + '<circle cx="' + x(son) + '" cy="' + y(v[son]) + '" r="4" class="kc-nokta"/></svg>'
+      + (et.length > 1 ? '<div class="kc-etiketler">' + et.map(function(e){ return '<span>' + e + '</span>'; }).join('') + '</div>' : '');
+  });
+
+  /* ---------------- şifre alanı ----------------
+     .kb-sifre: göster/gizle düğmesi; [data-sifre-kural] listesi yazarken işaretlenir (8+ karakter, büyük ve küçük harf, rakam). */
+  window.kbKurucu('.kb-sifre', function(S){
+    var i = S.querySelector('input'), b = S.querySelector('[data-sifre-goster]'), kural = S.parentNode.querySelector('[data-sifre-kural]');
+    if(b) b.addEventListener('click', function(){ var g = i.type === 'password'; i.type = g ? 'text' : 'password'; b.setAttribute('aria-label', g ? 'Şifreyi gizle' : 'Şifreyi göster'); b.innerHTML = '<i class="fa-solid ' + (g ? 'fa-eye-slash' : 'fa-eye') + '" aria-hidden="true"></i>'; });
+    function bak(){
+      if(!kural) return; var v = i.value, K = { uzun: v.length >= 8, harf: /[a-zçğıöşü]/.test(v) && /[A-ZÇĞİÖŞÜ]/.test(v), rakam: /\d/.test(v) }, n = 0;
+      kural.querySelectorAll('[data-kural]').forEach(function(li){ var ok = K[li.dataset.kural]; li.classList.toggle('is-ok', ok); if(ok) n++; });
+      var g = kural.querySelector('[data-sifre-guc]'); if(g){ g.style.setProperty('--guc', (n / 3 * 100) + '%'); g.dataset.seviye = n; }
+    }
+    i.addEventListener('input', bak); bak();
+  });
+
+  /* ---------------- sayfa içi kod kutuları (2FA ekranı) ----------------
+     [data-kod-kutular] içindeki 6 kutu: rakam yazınca ilerler, yapıştırma dağıtılır; dolunca 'kb-kod-dolu' olayı. */
+  window.kbKurucu('[data-kod-kutular]', function(K){
+    var k = K.querySelectorAll('input');
+    k.forEach(function(x, i){
+      x.addEventListener('input', function(){ x.value = x.value.replace(/\D/g, '').slice(-1); if(x.value && k[i + 1]) k[i + 1].focus(); if(Array.prototype.every.call(k, function(y){ return y.value; })) K.dispatchEvent(new CustomEvent('kb-kod-dolu', { bubbles:true })); });
+      x.addEventListener('keydown', function(e){ if(e.key === 'Backspace' && !x.value && k[i - 1]) k[i - 1].focus(); });
+      x.addEventListener('paste', function(e){ var v = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, k.length); if(!v) return; e.preventDefault(); v.split('').forEach(function(c, j){ k[j].value = c; }); k[Math.min(k.length - 1, v.length)].focus(); if(v.length === k.length) K.dispatchEvent(new CustomEvent('kb-kod-dolu', { bubbles:true })); });
+    });
+  });
+
+  /* bildirimsel tetikleyici: <button data-tasi-sil data-tasi-ad="Editör" data-tasi-sayi="14" data-tasi-birim="kullanıcı"
+     data-tasi-hedefler="Genel Yayın Yönetmeni|Kategori Editörü" [data-tasi-not="…"] [data-tasi-ikon="fa-users"] [data-bildir-sonra="…"]>
+     Sayı 0 ise normal silme onayı (çöp + geri al). Sonunda düğmede 'kb-tasindi' olayı (detail.hedef). */
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-tasi-sil]'); if(!b) return;
+    e.preventDefault(); e.stopPropagation();
+    document.querySelectorAll('.kb-diger-menu.open').forEach(function(m){ m.classList.remove('open'); });
+    var adx = b.dataset.tasiAd || 'Kayıt', n = +(b.dataset.tasiSayi || 0), bir = b.dataset.tasiBirim || 'kayıt';
+    function bitti(h){ window.kbBildir(b.dataset.bildirSonra || ('“' + adx + '” çöpe taşındı' + (h ? '; ' + n + ' ' + bir + ' “' + h + '” altına taşındı' : '')), function(){ window.kbBildir('Geri alındı'); }); b.dispatchEvent(new CustomEvent('kb-tasindi', { bubbles:true, detail:{ hedef:h } })); }
+    if(!n){ window.kbOnay({ tehlike:true, baslik:'“' + adx + '” silinsin mi?', metin:'Kullanan ' + bir + ' yok. Çöpe gider, oradan geri alınabilir; işlem denetim izine yazılır.', evet:'Çöpe taşı', evetIs: function(){ bitti(null); } }); return; }
+    window.kbTasiSil({ ad: adx, sayi: n, birim: bir, birimCogul: b.dataset.tasiBirimCogul, ikon: b.dataset.tasiIkon, soru: b.dataset.tasiSoru,
+      hedefler: (b.dataset.tasiHedefler || '').split('|').filter(Boolean), not: b.dataset.tasiNot || ('“' + adx + '” çöpe gider ve oradan geri alınabilir; işlem denetim izine yazılır.'), evetIs: bitti });
+  }, true);
+
   /* ---------------- maskeli gizli değer ----------------
      Değer hiçbir zaman açık gösterilmez; "Yenile" e-posta koduyla yeni değer üretir ve yalnızca o an bir kez gösterir. */
-  document.querySelectorAll('.kb-maske').forEach(function(M){
-    M.addEventListener('click', function(e){
-      var b = e.target.closest('[data-maske-yenile],[data-maske-kopyala],[data-maske-gizle]'); if(!b) return;
-      if(b.hasAttribute('data-maske-kopyala')){
-        var v = M.querySelector('.km-acik code').textContent;
-        if(navigator.clipboard) navigator.clipboard.writeText(v).catch(function(){});
-        window.kbBildir('Kopyalandı; bu değer bir daha gösterilmeyecek'); return;
+  /* olay yetkilendirmesiyle bağlanır: çekmece ve pencere şablonlarındaki maskeli alanlar da çalışır.
+     data-maske-yeni: değer henüz yok; "Yenile" düğmesi oluşturma düğmesi gibi davranır (API anahtarı oluştur). */
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-maske-yenile],[data-maske-kopyala],[data-maske-gizle]'); if(!b) return;
+    var M = b.closest('.kb-maske'); if(!M) return;
+    if(b.hasAttribute('data-maske-kopyala')){
+      var v = M.querySelector('.km-acik code').textContent;
+      if(navigator.clipboard) navigator.clipboard.writeText(v).catch(function(){});
+      window.kbBildir('Kopyalandı; bu değer bir daha gösterilmeyecek'); return;
+    }
+    if(b.hasAttribute('data-maske-gizle')){ M.classList.remove('is-acik'); M.querySelector('.km-acik').hidden = true; return; }
+    var yeni = M.hasAttribute('data-maske-yeni'), adx = M.dataset.ad || 'Değer';
+    function uret(){
+      var harf = 'abcdefghjkmnpqrstuvwxyz23456789', v = (M.dataset.onEk || '');
+      for(var i = 0; i < 24; i++) v += harf.charAt(Math.floor(Math.random() * harf.length));
+      M.querySelector('.km-deger').textContent = '•'.repeat(16) + v.slice(-4);
+      M.querySelector('.km-acik code').textContent = v;
+      M.querySelector('.km-acik').hidden = false; M.classList.add('is-acik'); M.removeAttribute('data-maske-yeni');
+      var m = M.querySelector('.km-meta'); if(m) m.textContent = (yeni ? 'Oluşturuldu' : 'Yenilendi') + ' · 24.11.2026 16.05 · ' + ad();
+      M.dispatchEvent(new CustomEvent('kb-maske', { bubbles:true, detail:{ yeni: yeni } }));
+      window.kbBildir(adx + (yeni ? ' oluşturuldu' : ' yenilendi') + '; denetim izine yazıldı');
+    }
+    var kod = function(){ window.kbKod({ baslik: yeni ? 'Oluşturmayı doğrulayın' : 'Yenilemeyi doğrulayın', evet: yeni ? 'Doğrula ve oluştur' : 'Doğrula ve yenile', evetIs: uret }); };
+    if(yeni){ kod(); return; }
+    window.kbOnay({ ikon:'fa-rotate', baslik: adx + ' yenilensin mi?', metin: M.dataset.yenileMetin || 'Eski değer hemen geçersiz olur; onu kullanan yerler yeni değerle güncellenmelidir. İşlem e-posta koduyla doğrulanır ve denetim izine yazılır.', evet:'Yenile', evetIs: kod });
+  });
+
+  /* ---------------- bildirimsel onay zinciri ----------------
+     <button data-onay-baslik="…" data-onay-metin="…" data-onay-evet="Yayına al" [data-onay-tehlike] [data-onay-ikon="fa-…"]
+             [data-kod] [data-kod-baslik="…"] [data-bildir-sonra="…"]>
+     Onay penceresi → (data-kod varsa) e-posta kodu → kısa bildirim; sonunda düğmede 'kb-onaylandi' olayı. Açık ⋯ menüsü kapanır. */
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-onay-baslik]'); if(!b || b.disabled) return;
+    e.preventDefault(); e.stopPropagation();
+    document.querySelectorAll('.kb-diger-menu.open').forEach(function(m){ m.classList.remove('open'); });
+    /* data-sonra-durum="iptal" [data-sonra-durum-ad="İptal edildi"] [data-sonra-durum-sinif="off"]: onaydan sonra satırın durumu değişir
+       (satırdaki ya da satırın ⋯ menüsündeki düğme); durum rozeti güncellenir, liste sayaçları yenilenir. */
+    var menu = b.closest('.kb-diger-menu'), kap = b.closest('.kb-cekmece,.kb-pencere'), satir = b.closest('tr[data-satir]') || (menu && menu._satir) || (kap && kap._satir) || null;
+    function bitir(){
+      if(satir && b.dataset.sonraDurum){
+        satir.dataset.durum = b.dataset.sonraDurum;
+        var rz = satir.querySelector('.pstat'); if(rz){ if(b.dataset.sonraDurumAd) rz.textContent = b.dataset.sonraDurumAd; if(b.dataset.sonraDurumSinif) rz.className = 'pstat ' + b.dataset.sonraDurumSinif; }
+        satir.dispatchEvent(new CustomEvent('kb-liste-yenile', { bubbles:true }));
       }
-      if(b.hasAttribute('data-maske-gizle')){ M.classList.remove('is-acik'); M.querySelector('.km-acik').hidden = true; return; }
-      window.kbOnay({ ikon:'fa-rotate', baslik: (M.dataset.ad || 'Değer') + ' yenilensin mi?', metin: M.dataset.yenileMetin || 'Eski değer hemen geçersiz olur; onu kullanan yerler yeni değerle güncellenmelidir. İşlem e-posta koduyla doğrulanır ve denetim izine yazılır.', evet:'Yenile',
-        evetIs: function(){ window.kbKod({ baslik:'Yenilemeyi doğrulayın', evet:'Doğrula ve yenile', evetIs: function(){
-          var harf = 'abcdefghjkmnpqrstuvwxyz23456789', v = (M.dataset.onEk || '');
-          for(var i = 0; i < 24; i++) v += harf.charAt(Math.floor(Math.random() * harf.length));
-          M.querySelector('.km-deger').textContent = '•'.repeat(16) + v.slice(-4);
-          M.querySelector('.km-acik code').textContent = v;
-          M.querySelector('.km-acik').hidden = false; M.classList.add('is-acik');
-          var m = M.querySelector('.km-meta'); if(m) m.textContent = 'Yenilendi · 24.11.2026 16.05 · ' + ad();
-          window.kbBildir((M.dataset.ad || 'Değer') + ' yenilendi; denetim izine yazıldı');
-        } }); } });
-    });
+      if(b.dataset.bildirSonra) window.kbBildir(b.dataset.bildirSonra);
+      b.dispatchEvent(new CustomEvent('kb-onaylandi', { bubbles:true, detail:{ satir: satir } }));
+    }
+    window.kbOnay({ tehlike: b.hasAttribute('data-onay-tehlike'), ikon: b.dataset.onayIkon || (b.hasAttribute('data-onay-tehlike') ? 'fa-triangle-exclamation' : 'fa-circle-check'),
+      baslik: b.dataset.onayBaslik, metin: b.dataset.onayMetin || '', evet: b.dataset.onayEvet || 'Onayla',
+      evetIs: function(){ if(b.hasAttribute('data-kod')) window.kbKod({ baslik: b.dataset.kodBaslik || 'E-posta koduyla doğrulayın', evet: 'Doğrula', evetIs: bitir }); else bitir(); } });
+  }, true);
+
+  /* ---------------- kart ızgarası süzgeci ----------------
+     [data-kart-liste]: içindeki .chip[data-sekme] kartları ([data-kart][data-durum]) süzer; [data-liste-ara] adla arar;
+     sayaçlar (.ch-cnt) kendiliğinden; sonuç yoksa [data-kart-bos] görünür. */
+  window.kbKurucu('[data-kart-liste]', function(K){
+    var kartlar = K.querySelectorAll('[data-kart]'), ara = K.querySelector('[data-liste-ara]'), bos = K.querySelector('[data-kart-bos]'), sekme = 'hepsi';
+    var tr = function(s){ return (s || '').toLocaleLowerCase('tr'); };
+    function uygula(){
+      var q = ara ? tr(ara.value.trim()) : '', n = 0;
+      kartlar.forEach(function(k){ var g = (sekme === 'hepsi' || k.dataset.durum === sekme) && (!q || tr(k.textContent).indexOf(q) > -1); k.hidden = !g; if(g) n++; });
+      if(bos) bos.hidden = n > 0;
+      K.querySelectorAll('.chip[data-sekme]').forEach(function(c){ var s = c.dataset.sekme, on = s === sekme; c.classList.toggle('is-on', on); c.setAttribute('aria-selected', on);
+        var cnt = c.querySelector('.ch-cnt'); if(cnt) cnt.textContent = Array.prototype.filter.call(kartlar, function(k){ return s === 'hepsi' || k.dataset.durum === s; }).length; });
+    }
+    K.addEventListener('click', function(e){ var c = e.target.closest('.chip[data-sekme]'); if(c){ sekme = c.dataset.sekme; uygula(); } });
+    if(ara) ara.addEventListener('input', uygula);
+    uygula();
   });
 
   /* ---------------- telefon (ülke kodu + maske) ---------------- */
   var MASKE = { '90':'### ### ## ##', '49':'#### #######', '44':'#### ######', '1':'### ### ####', '994':'## ### ## ##' };
-  document.querySelectorAll('.kb-tel').forEach(function(T){
-    var giris = T.querySelector('input'), ulke = T.querySelector('.kb-secim'), row = T.closest('.frow');
+  window.kbKurucu('.kb-tel', function(T){
+    var giris = T.querySelector(':scope > input') || T.querySelector('input.finput'), ulke = T.querySelector('.kb-secim'), row = T.closest('.frow');
     function kod(){ return (ulke && ulke.dataset.deger) || '90'; }
     function bicim(){
       var m = MASKE[kod()] || '### ### ####', r = giris.value.replace(/\D/g, '').slice(0, (m.match(/#/g) || []).length), o = '', j = 0;
@@ -406,7 +551,7 @@
 
   /* ---------------- e-posta: yazılırken doğrulanır ---------------- */
   var EPOSTA = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-  document.querySelectorAll('input[data-eposta]').forEach(function(i){
+  window.kbKurucu('input[data-eposta]', function(i){
     var row = i.closest('.frow');
     function bak(son){
       var v = i.value.trim(), ok = EPOSTA.test(v);
@@ -420,7 +565,7 @@
 
   /* ---------------- sıralanan liste ----------------
      [data-siralanir] içindeki [data-sira] satırları tutamaçtan (.kb-tutamac) sürüklenir; tutamaç odaktayken ↑/↓ ile taşınır. */
-  document.querySelectorAll('[data-siralanir]').forEach(function(L){
+  window.kbKurucu('[data-siralanir]', function(L){
     var tasinan = null;
     function bitti(){ L.dispatchEvent(new Event('input', { bubbles:true })); }
     L.querySelectorAll('[data-sira]').forEach(function(s){
@@ -444,7 +589,7 @@
   /* ---------------- özellik anahtarı ----------------
      <label class="toggle"><input type="checkbox" data-anahtar="Yorumlar" data-anahtar-etki="haber detayı, canlı anlatım"></label>
      Değişiklik önce/sonra onayıyla uygulanır, hemen yayına yansır, geri alınabilir ve denetim izine yazılır. */
-  document.querySelectorAll('input[data-anahtar]').forEach(function(i){
+  window.kbKurucu('input[data-anahtar]', function(i){
     i.addEventListener('click', function(e){
       e.preventDefault();
       var yeni = !i.checked === false ? true : false; /* tıklamada i.checked yeni değeri gösterir */

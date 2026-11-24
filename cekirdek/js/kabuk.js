@@ -40,6 +40,14 @@
     document.querySelectorAll('[data-izin-yok]').forEach(function(el){
       el.hidden = izinVar(rol, el.getAttribute('data-izin-yok'));
     });
+    /* sayfa düzeyi rol kapısı: rol bu sayfayı göremiyorsa içerik yerine "yetki yok" bandı (403 kalıbı) */
+    var anahtar = document.body.getAttribute('data-sayfa'), sy = anahtar && (P.sayfalar || {})[anahtar], ana = document.getElementById('icerik');
+    if(sy && ana && sy.roller && sy.roller.length){
+      var yok = sy.roller.indexOf(rol) === -1, kapi = document.getElementById('kbKapi');
+      if(yok && !kapi){ kapi = document.createElement('div'); kapi.id = 'kbKapi'; kapi.className = 'pnl-empty kb-kapi'; kapi.innerHTML = '<div class="pe-ico"><i class="fa-solid fa-lock" aria-hidden="true"></i></div><h2>Bu ekranı görme yetkiniz yok</h2><p></p>'; ana.parentNode.insertBefore(kapi, ana); }
+      if(kapi){ kapi.hidden = !yok; var pp = kapi.querySelector('p'); if(pp) pp.textContent = '“' + sy.baslik + '” yalnızca şu rollere açık: ' + sy.roller.map(function(r){ return (ROLLER[r] || {}).ad || r; }).join(', ') + '. Gerekirse yöneticinizden izin isteyin.'; }
+      ana.hidden = yok;
+    }
     /* kayıttan kapatılan modülün kutusu rolden bağımsız gizli kalır (menu_yaz.py) */
     document.querySelectorAll('[data-modul-kapali]').forEach(function(el){ el.hidden = true; });
     /* hiç kalemi kalmayan grubu gizle */
@@ -241,6 +249,9 @@
       var s = document.getElementById('pnlAra'); if(s){ e.preventDefault(); s.focus(); }
     }
   });
+
+  /* çekmece ve sonradan eklenen içerik için (bilesen.js → kbKur) */
+  window.kbRolUygula = function(){ rolUygula(doc.dataset.rol || rolOku()); };
 
   /* ---- rol seçimi ---- */
   document.querySelectorAll('[data-rol-sec]').forEach(function(b){
