@@ -98,6 +98,8 @@ def satir(h, i):
         "satir": kimlik, "durum": h["durum"], "kategori": h["bolum"], "yazar": h.get("yazar", ""), "tur": tur,
         "ara": ara, "baslik": h["baslik"], "href": duz_href(kimlik), "kat": f'{h["bolum"]}' + (f' › {alt}' if alt and alt != h["bolum"] else ""),
         "yayin": zaman, "goruntulenme": gor, "tur-ad": tur, "durum-ad": d_ad,
+        # B4/B6: haberin kullanıldığı yerler (örnek): manşet, Günün 5'i, bülten
+        "yerler": ("manset gunun5" if h["durum"] == "yayinda" and i % 6 == 0 else "bulten" if h["durum"] == "yayinda" and i % 6 == 3 else ""),
         "gorsel": f"../../veri/gorsel/{g}" if g else "",
         "kaynak": "ai" if ai else "editor",
         "kaynak-ad": (f'AI haber havuzu · {ai["kaynak"]} ({ai["grup"]}) · güven %{ai["skor"]} · {ai["onay"]} onayladı' if ai else "Editör girişi"),
@@ -153,13 +155,16 @@ def duzenle_btn(ad, ust, sl, baslik):
     return (f'<button type="button" class="ka-btn" data-sablon-ac="hbKategoriForm" data-baslik-yaz="{e(ad)} · düzenle" '
             f'data-deger-ad="{e(ad)}" data-deger-ust-tur="{"alt" if ust else "ana"}" data-deger-ust="{e(ust)}" data-deger-slug="{e(sl)}" data-deger-seo-baslik="{e(seo_b)}" data-deger-seo-aciklama="{e(seo_a)}" '
             f'aria-label="{e(ad)} düzenle" title="Düzenle"><i class="fa-solid fa-pen" aria-hidden="true"></i></button>')
+def sil_btn(ad, ust, haber, alt):
+    return (f'<button type="button" class="ka-btn danger" data-kat-sil data-ad="{e(ad)}" data-ust="{e(ust)}" data-haber="{haber}" data-alt="{alt}" '
+            f'aria-label="{e(ad)} sil" title="Sil"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>')
 parca = []
 for b_, altlar in agac.items():
-    lis = "".join(f'<li>{e(a_)}<span class="ka-say">{fmt(say_a.get((b_, a_.lower()), 0))}</span>{duzenle_btn(a_, b_, slug.get((b_, a_), tr_slug(a_)), b_)}</li>' for a_ in altlar)
+    lis = "".join(f'<li>{e(a_)}<span class="ka-say">{fmt(say_a.get((b_, a_.lower()), 0))}</span>{duzenle_btn(a_, b_, slug.get((b_, a_), tr_slug(a_)), b_)}{sil_btn(a_, b_, say_a.get((b_, a_.lower()), 0), 0)}</li>' for a_ in altlar)
     ekle = (f'<button type="button" class="ka-btn" data-sablon-ac="hbKategoriForm" data-baslik-yaz="{e(b_)} · yeni alt konu" data-deger-ad="" data-deger-ust-tur="alt" data-deger-ust="{e(b_)}" data-deger-slug="" data-deger-seo-baslik="" data-deger-seo-aciklama="" '
             f'aria-label="{e(b_)} altına alt konu ekle" title="Alt konu ekle"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>')
     parca.append(f'<details class="kat-{RENK[b_]}"{" open" if b_ == "Gündem" else ""}><summary><i class="fa-solid fa-chevron-right" aria-hidden="true"></i><span class="ka-renk"></span>{e(b_)}'
-                 f'<span class="ka-say">{len(altlar)} alt konu · {fmt(say_b.get(b_, 0))} haber</span>{ekle}{duzenle_btn(b_, "", slug[b_], b_)}</summary>'
+                 f'<span class="ka-say">{len(altlar)} alt konu · {fmt(say_b.get(b_, 0))} haber</span>{ekle}{duzenle_btn(b_, "", slug[b_], b_)}{sil_btn(b_, "", say_b.get(b_, 0), len(altlar))}</summary>'
                  + (f"<ul>{lis}</ul>" if lis else "") + "</details>")
 agac_html = "".join(parca)
 ust_secenek = "".join(

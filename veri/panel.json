@@ -408,123 +408,367 @@
     }
   },
   "medya_havuzu": {
-    "_not": "Stok örnek görseller (picsum.photos, Unsplash lisanslı); haber içeriğiyle ilgisizdir. Klasör ve adlar örnek.",
+    "_not": "Stok örnek görseller (picsum.photos, Unsplash lisanslı); haber içeriğiyle ilgisizdir. Etiketler örnektir, görseller temsilîdir (M2).",
     "kok": "veri/gorsel/",
     "kucuk": "veri/gorsel/kucuk/",
     "gorseller": [
       {
         "dosya": "p117.jpg",
         "ad": "Kentsel ulaşım",
-        "klasor": "Stok havuzu",
-        "kaynak": "Unsplash lisanslı",
-        "olcu": "1200×800"
+        "klasor": "Dada Haber",
+        "kaynak": "Dada Haber · telif bizde (örnek)",
+        "olcu": "1200×800",
+        "etiket": {
+          "kategori": "Gündem",
+          "kisiler": [
+            "İstanbul Büyükşehir Belediyesi"
+          ],
+          "etiketler": [
+            "ulaşım",
+            "şehir"
+          ]
+        }
       },
       {
         "dosya": "p122.jpg",
         "ad": "Kıyı ve rüzgâr",
-        "klasor": "Stok havuzu",
-        "kaynak": "Unsplash lisanslı",
-        "olcu": "1200×800"
+        "klasor": "Dada Haber",
+        "kaynak": "Dada Haber · telif bizde (örnek)",
+        "olcu": "1200×800",
+        "etiket": {
+          "kategori": "Keşfet",
+          "kisiler": [],
+          "etiketler": [
+            "rüzgâr",
+            "hava durumu",
+            "sahil"
+          ]
+        }
       },
       {
         "dosya": "p133.jpg",
         "ad": "Gece şehir",
-        "klasor": "Stok havuzu",
-        "kaynak": "Unsplash lisanslı",
-        "olcu": "1200×800"
+        "klasor": "Dada Haber",
+        "kaynak": "Dada Haber · telif bizde (örnek)",
+        "olcu": "1200×800",
+        "etiket": {
+          "kategori": "Gündem",
+          "kisiler": [
+            "İstanbul Büyükşehir Belediyesi"
+          ],
+          "etiketler": [
+            "gece",
+            "şehir",
+            "İstanbul"
+          ]
+        }
       },
       {
         "dosya": "p155.jpg",
         "ad": "Raylı sistem",
-        "klasor": "Stok havuzu",
-        "kaynak": "Unsplash lisanslı",
-        "olcu": "1200×800"
+        "klasor": "Dada Haber",
+        "kaynak": "Dada Haber · telif bizde (örnek)",
+        "olcu": "1200×800",
+        "etiket": {
+          "kategori": "Gündem",
+          "kisiler": [
+            "İstanbul Büyükşehir Belediyesi"
+          ],
+          "etiketler": [
+            "ulaşım",
+            "raylı sistem"
+          ]
+        }
       },
       {
         "dosya": "p158.jpg",
         "ad": "Kalabalık cadde",
-        "klasor": "Stok havuzu",
-        "kaynak": "Unsplash lisanslı",
-        "olcu": "1200×800"
+        "klasor": "Dada Haber",
+        "kaynak": "Dada Haber · telif bizde (örnek)",
+        "olcu": "1200×800",
+        "etiket": {
+          "kategori": "Gündem",
+          "kisiler": [
+            "Recep Tayyip Erdoğan"
+          ],
+          "etiketler": [
+            "miting",
+            "şehir"
+          ]
+        }
       },
       {
         "dosya": "p163.jpg",
         "ad": "Ofis ve masa",
-        "klasor": "Stok havuzu",
-        "kaynak": "Unsplash lisanslı",
-        "olcu": "1200×800"
+        "klasor": "Dada Haber",
+        "kaynak": "Dada Haber · telif bizde (örnek)",
+        "olcu": "1200×800",
+        "etiket": {
+          "kategori": "Finans",
+          "kisiler": [
+            "Çalışma ve Sosyal Güvenlik Bakanlığı"
+          ],
+          "etiketler": [
+            "çalışma hayatı",
+            "ekonomi"
+          ]
+        }
       },
       {
         "dosya": "p164.jpg",
         "ad": "Kitaplar",
-        "klasor": "Stok havuzu",
-        "kaynak": "Unsplash lisanslı",
-        "olcu": "1200×800"
+        "klasor": "Dada Haber",
+        "kaynak": "Dada Haber · telif bizde (örnek)",
+        "olcu": "1200×800",
+        "etiket": {
+          "kategori": "Kampüs",
+          "kisiler": [
+            "Yükseköğretim Kurulu"
+          ],
+          "etiketler": [
+            "eğitim",
+            "kütüphane"
+          ]
+        }
       },
       {
         "dosya": "p178.jpg",
         "ad": "Sisli sokak",
-        "klasor": "Stok havuzu",
-        "kaynak": "Unsplash lisanslı",
-        "olcu": "1200×800"
+        "klasor": "Dada Haber",
+        "kaynak": "Dada Haber · telif bizde (örnek)",
+        "olcu": "1200×800",
+        "etiket": {
+          "kategori": "Keşfet",
+          "kisiler": [],
+          "etiketler": [
+            "sis",
+            "hava durumu"
+          ]
+        }
       },
       {
         "dosya": "p180.jpg",
         "ad": "Kırsal yol",
-        "klasor": "Stok havuzu",
-        "kaynak": "Unsplash lisanslı",
-        "olcu": "1200×800"
+        "klasor": "Dada Haber",
+        "kaynak": "Dada Haber · telif bizde (örnek)",
+        "olcu": "1200×800",
+        "etiket": {
+          "kategori": "Keşfet",
+          "kisiler": [],
+          "etiketler": [
+            "tarım",
+            "yaşam"
+          ]
+        }
       },
       {
         "dosya": "p182.jpg",
         "ad": "Kar ve araç",
-        "klasor": "Stok havuzu",
-        "kaynak": "Unsplash lisanslı",
-        "olcu": "1200×800"
+        "klasor": "Dada Haber",
+        "kaynak": "Dada Haber · telif bizde (örnek)",
+        "olcu": "1200×800",
+        "etiket": {
+          "kategori": "Gündem",
+          "kisiler": [
+            "Afet ve Acil Durum Yönetimi Başkanlığı"
+          ],
+          "etiketler": [
+            "kar",
+            "trafik"
+          ]
+        }
       },
       {
         "dosya": "p183.jpg",
         "ad": "Kış trafiği",
-        "klasor": "Stok havuzu",
-        "kaynak": "Unsplash lisanslı",
-        "olcu": "1200×800"
+        "klasor": "Dada Haber",
+        "kaynak": "Dada Haber · telif bizde (örnek)",
+        "olcu": "1200×800",
+        "etiket": {
+          "kategori": "Gündem",
+          "kisiler": [
+            "Afet ve Acil Durum Yönetimi Başkanlığı",
+            "İstanbul Büyükşehir Belediyesi"
+          ],
+          "etiketler": [
+            "kar",
+            "trafik",
+            "İstanbul"
+          ]
+        }
       },
       {
         "dosya": "p188.jpg",
         "ad": "Kent silueti",
-        "klasor": "Stok havuzu",
-        "kaynak": "Unsplash lisanslı",
-        "olcu": "1200×800"
+        "klasor": "Dada Haber",
+        "kaynak": "Dada Haber · telif bizde (örnek)",
+        "olcu": "1200×800",
+        "etiket": {
+          "kategori": "Finans",
+          "kisiler": [
+            "Türkiye Cumhuriyet Merkez Bankası"
+          ],
+          "etiketler": [
+            "ekonomi",
+            "İstanbul"
+          ]
+        }
       },
       {
         "dosya": "p192.jpg",
         "ad": "Pencere ve ışık",
-        "klasor": "Stok havuzu",
-        "kaynak": "Unsplash lisanslı",
-        "olcu": "1200×800"
+        "klasor": "Dada Haber",
+        "kaynak": "Dada Haber · telif bizde (örnek)",
+        "olcu": "1200×800",
+        "etiket": {
+          "kategori": "Kadın",
+          "kisiler": [],
+          "etiketler": [
+            "yaşam"
+          ]
+        }
       },
       {
         "dosya": "p193.jpg",
         "ad": "Pazar yeri",
-        "klasor": "Stok havuzu",
-        "kaynak": "Unsplash lisanslı",
-        "olcu": "1200×800"
+        "klasor": "Dada Haber",
+        "kaynak": "Dada Haber · telif bizde (örnek)",
+        "olcu": "1200×800",
+        "etiket": {
+          "kategori": "Finans",
+          "kisiler": [
+            "Türkiye İstatistik Kurumu"
+          ],
+          "etiketler": [
+            "enflasyon",
+            "pazar"
+          ]
+        }
       },
       {
         "dosya": "p195.jpg",
         "ad": "Kara ve deniz",
-        "klasor": "Stok havuzu",
-        "kaynak": "Unsplash lisanslı",
-        "olcu": "1200×800"
+        "klasor": "Dada Haber",
+        "kaynak": "Dada Haber · telif bizde (örnek)",
+        "olcu": "1200×800",
+        "etiket": {
+          "kategori": "Savunma",
+          "kisiler": [
+            "Milli Güvenlik Kurulu",
+            "Recep Tayyip Erdoğan",
+            "Türk Silahlı Kuvvetleri"
+          ],
+          "etiketler": [
+            "deniz",
+            "güvenlik"
+          ]
+        }
       },
       {
         "dosya": "p203.jpg",
         "ad": "Sahil ve bisiklet",
-        "klasor": "Stok havuzu",
-        "kaynak": "Unsplash lisanslı",
-        "olcu": "1200×800"
+        "klasor": "Dada Haber",
+        "kaynak": "Dada Haber · telif bizde (örnek)",
+        "olcu": "1200×800",
+        "etiket": {
+          "kategori": "Keşfet",
+          "kisiler": [],
+          "etiketler": [
+            "sahil",
+            "yaşam"
+          ]
+        }
       }
-    ]
+    ],
+    "etiket_havuzu": {
+      "_m2": "Medya havuzunun kendi etiketleri; haber etiketlerinden ayrıdır (Beyar ve Yasin Bey, 24.11.2026).",
+      "kategoriler": [
+        "Gündem",
+        "Spor",
+        "Finans",
+        "Kadın",
+        "Savunma",
+        "Dünya",
+        "Kampüs",
+        "Keşfet"
+      ],
+      "kisiler": [
+        {
+          "ad": "Recep Tayyip Erdoğan",
+          "kisaltma": "RTE",
+          "tur": "Kişi"
+        },
+        {
+          "ad": "Milli Güvenlik Kurulu",
+          "kisaltma": "MGK",
+          "tur": "Kurum"
+        },
+        {
+          "ad": "Türkiye Büyük Millet Meclisi",
+          "kisaltma": "TBMM",
+          "tur": "Kurum"
+        },
+        {
+          "ad": "Türkiye Cumhuriyet Merkez Bankası",
+          "kisaltma": "TCMB",
+          "tur": "Kurum"
+        },
+        {
+          "ad": "Türkiye İstatistik Kurumu",
+          "kisaltma": "TÜİK",
+          "tur": "Kurum"
+        },
+        {
+          "ad": "Çalışma ve Sosyal Güvenlik Bakanlığı",
+          "kisaltma": "ÇSGB",
+          "tur": "Kurum"
+        },
+        {
+          "ad": "İstanbul Büyükşehir Belediyesi",
+          "kisaltma": "İBB",
+          "tur": "Kurum"
+        },
+        {
+          "ad": "Afet ve Acil Durum Yönetimi Başkanlığı",
+          "kisaltma": "AFAD",
+          "tur": "Kurum"
+        },
+        {
+          "ad": "Yükseköğretim Kurulu",
+          "kisaltma": "YÖK",
+          "tur": "Kurum"
+        },
+        {
+          "ad": "Türk Silahlı Kuvvetleri",
+          "kisaltma": "TSK",
+          "tur": "Kurum"
+        }
+      ],
+      "etiketler": [
+        "ulaşım",
+        "raylı sistem",
+        "gece",
+        "şehir",
+        "miting",
+        "ekonomi",
+        "çalışma hayatı",
+        "eğitim",
+        "kütüphane",
+        "hava durumu",
+        "sis",
+        "rüzgâr",
+        "kar",
+        "trafik",
+        "enflasyon",
+        "pazar",
+        "deniz",
+        "güvenlik",
+        "yaşam",
+        "sahil",
+        "İstanbul",
+        "tarım"
+      ]
+    }
   },
   "bana_etkisi_profilleri": {
     "_kaynak": "public site hesabim-tercihler.html ve bana-etkisi.html (okurun seçtiği profil; birden fazla olabilir)",
