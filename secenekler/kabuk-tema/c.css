@@ -8,9 +8,14 @@
   --on-menu-faint:rgba(18,18,18,.42);
   --menu-hair:#ECECEC;
   --menu-hover:rgba(18,18,18,.04);
+  --menu-hover-fg:#121212;
   --menu-active-bg:#FFF4C2;
   --menu-active-fg:#121212;
+  --menu-active-icon:#A37F01;
+  --menu-active-cnt-bg:#FCB623;
+  --menu-active-cnt-fg:#121212;
   --menu-accent:#CC9F01;
+  --btn-bg:#121212; --btn-fg:#FFFFFF; --btn-bg-hover:#242424;
   --sig-filter:brightness(0) opacity(.7);
 }
 .kb-logo{background-image:url("../../tema/logo-tam.png")}

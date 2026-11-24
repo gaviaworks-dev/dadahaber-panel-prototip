@@ -1,2 +1,8 @@
-/* S1 · B — Koyu menü, kehribar yalnızca vurgu, siyah ana düğme (tavsiye; şimdiki tema/dadahaber.css ile aynı) */
+/* S1 · B — Koyu menü, kehribar yalnızca vurgu, siyah ana düğme (arşiv) */
 @import url("../../tema/dadahaber.css");
+:root{
+  --btn-bg:#121212; --btn-fg:#FFFFFF; --btn-bg-hover:#242424;
+  --menu-hover-fg:#FFFFFF;
+  --menu-active-bg:rgba(252,182,35,.14); --menu-active-fg:#FFFFFF; --menu-active-icon:#FCB623;
+  --menu-active-cnt-bg:#FCB623; --menu-active-cnt-fg:#121212;
+}

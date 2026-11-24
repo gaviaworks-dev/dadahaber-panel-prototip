@@ -1,11 +1,2 @@
-/* S1 · A — Koyu menü, kehribar dolu ana düğme (koyu yazı) */
+/* S1 · A — Koyu menü, kehribar dolu ana düğme. SEÇİLDİ (Yasin Bey, 24.11.2026): tema/dadahaber.css ile aynı */
 @import url("../../tema/dadahaber.css");
-:root{
-  --btn-bg:#FCB623;
-  --btn-fg:#121212;
-  --btn-bg-hover:#FFD740;
-  --menu-active-bg:#FCB623;
-  --menu-active-fg:#121212;
-  --menu-accent:#FCB623;
-}
-.sa-mlink.is-active i{color:#121212}

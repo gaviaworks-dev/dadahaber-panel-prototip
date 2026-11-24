@@ -1,0 +1,23 @@
+/* Seçenek sayfalarının ortak düzeni; ürüne girmez. */
+body{background:var(--bg);padding:28px}
+.sc-bas{max-width:1600px;margin:0 auto 22px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+.sc-bas h1{font-size:24px}
+.sc-bas p{margin-top:6px;font-size:14px;color:var(--muted);max-width:820px}
+.sc-izgara{max-width:1600px;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.sc-kart{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--sh-sm);overflow:hidden;display:flex;flex-direction:column}
+.sc-kart.tavsiye{border-color:var(--acc);box-shadow:0 0 0 3px rgba(var(--acc-rgb),.25)}
+.sc-kap{position:relative;aspect-ratio:1440/900;overflow:hidden;border-bottom:1px solid var(--line);background:var(--bg)}
+.sc-kap iframe{position:absolute;top:0;left:0;width:1440px;height:900px;border:0;transform-origin:0 0;pointer-events:none}
+.sc-govde{padding:18px 20px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.sc-ust{display:flex;align-items:center;gap:10px}
+.sc-harf{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-weight:800;background:var(--ink);color:var(--paper)}
+.sc-ust h2{font-size:16px}
+.sc-rozet{margin-left:auto;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--on-acc);background:var(--acc);padding:4px 9px;border-radius:7px}
+.sc-govde p{font-size:13px;color:var(--slate-2)}
+.sc-govde ul{list-style:none;display:flex;flex-direction:column;gap:5px;font-size:13px}
+.sc-govde li{display:flex;gap:8px}
+.sc-govde li i{margin-top:3px;font-size:12px;flex:none}
+.sc-arti i{color:var(--ok)} .sc-eksi i{color:var(--danger)}
+.sc-ac{margin-top:auto;align-self:flex-start}
+@media(max-width:1100px){.sc-izgara{grid-template-columns:minmax(0,1fr)}}
+.sc-rozet-soluk{background:var(--bg);color:var(--muted)}
