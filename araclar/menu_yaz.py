@@ -173,6 +173,11 @@ def kayit_js():
         "medya": veri.get("medya_havuzu", {}),
         "sayfalar": {k: {x: v[x] for x in ("baslik", "ikon", "modul_ad", "hazir", "acik", "roller")} for k, v in SAYFALAR.items()},
         "oturum_sayfalari": OTURUM_SAYFALARI,
+        # görsel alanları ve sosyal platformlar: kırpma penceresi ve sosyal sekme ölçüleri kayıttan okur
+        "gorsel_alanlari": {k: (m.get("ayarlar", {}).get("gorsel_alanlari") or m.get("gorsel_alanlari")) for k, m in moduller.items() if (m.get("ayarlar", {}).get("gorsel_alanlari") or m.get("gorsel_alanlari"))},
+        "sosyal_platformlar": [x for x in moduller.get("sosyal-medya", {}).get("ayarlar", {}).get("platformlar", []) if x.get("acik")] if "sosyal-medya" in acik else [],
+        "sosyal_oranlar": [{"oran": o, "ad": "Sosyal " + o, "px": px} for o, px in moduller.get("sosyal-medya", {}).get("ayarlar", {}).get("oran_olculeri", {}).items()] if "sosyal-medya" in acik else [],
+        "sosyal_oneriler": veri.get("sosyal_hesap_onerileri", {}),
     }
     return ("/* ÜRETİLMİŞ DOSYA — elle değiştirme. Kaynak: moduller.json + veri/panel.json · araclar/menu_yaz.py */\n"
             "window.PANEL = " + json.dumps(js, ensure_ascii=False, indent=1) + ";\n")

@@ -86,11 +86,20 @@
       "id": "ai-havuz", "ad": "AI Haber Havuzu", "cekirdek": false, "acik": true,
       "grup": "ai", "sira": 1, "klasor": "moduller/ai-havuz/",
       "roller": ["super", "gyy", "editor", "kat-ed", "analist"], "bagimli": ["haberler", "entegrasyonlar"],
-      "bilesenler": ["veri-tablosu", "satir-eylemleri", "toplu-islem", "cop-sekmesi", "guven-skoru", "kaynak-teyidi", "saglik-kutusu", "esik-kaydirici"],
+      "bilesenler": ["veri-tablosu", "satir-eylemleri", "toplu-islem", "cop-sekmesi", "guven-skoru", "kaynak-teyidi", "saglik-kutusu", "esik-kaydirici", "yayin-kanallari", "okuma-onayi"],
       "ayarlar": {
         "sekmeler": ["taslak", "yayinlanan", "reddedilen"],
         "satir_etiketleri": ["gorsel-eksik", "otomatik-yayimlandi"],
-        "kaynak_gruplari": [ { "id": "T1", "ad": "Resmî" }, { "id": "T2", "ad": "Kurumsal Basın" }, { "id": "T3", "ad": "Uluslararası Medya" }, { "id": "T4", "ad": "Düşük Öncelik" } ],
+        "_y1": "Yasin Bey 24.11.2026: gruplar serbest (yönetici ekler, adlandırır, kaynak ekler); başlangıçta T1–T4 hazır; her grubun yayın kanalları var. K7'nin yerine geçer.",
+        "yayin_kanallari": [ { "id": "web", "ad": "Web", "ikon": "fa-globe" }, { "id": "uygulama", "ad": "Uygulama", "ikon": "fa-mobile-screen" }, { "id": "sosyal", "ad": "Sosyal Medya", "ikon": "fa-share-nodes" } ],
+        "kaynak_gruplari": [
+          { "id": "T1", "ad": "Resmî",              "kanallar": ["web", "uygulama", "sosyal"] },
+          { "id": "T2", "ad": "Kurumsal Basın",     "kanallar": ["web", "uygulama", "sosyal"] },
+          { "id": "T3", "ad": "Uluslararası Medya", "kanallar": ["web", "uygulama", "sosyal"] },
+          { "id": "T4", "ad": "Düşük Öncelik",      "kanallar": ["sosyal"] }
+        ],
+        "_kanal_notu": "T1–T4'ün başlangıç kanalları öneridir (Yasin Bey'in örneği: düşük öncelikli dijital mecralar yalnızca sosyal); yönetici değiştirir.",
+        "okuma_zorunlulugu": { "_y3": "Yasin Bey 24.11.2026", "acik": true, "roller": ["editor", "kat-ed"] },
         "kaynak_tipleri": ["rss", "scraper", "haber-sitesi", "sosyal-hesap"],
         "medya_izni_kapaliysa": "gorsel-eksik",
         "gosterilen_kaynak_sayisi": 3,
@@ -136,16 +145,23 @@
       "roller": ["super", "gyy", "sosyal", "analist"], "bagimli": ["haberler", "multimedya"],
       "bilesenler": ["sosyal-onizleme", "kirpma", "takvim", "maskeli-alan", "durum-rozeti"],
       "ayarlar": {
+        "_editor": "Gönderi metni araç çubuğu her platformun kendi editörünün yeteneklerini kullanır (Beyar, 24.11.2026). araclar: b-u/i-u Unicode kalın/italik · b/i/u/s/kod/spoiler/alinti/link-metin Telegram'ın gerçek biçimi (MarkdownV2) · emoji · etiket (#, öneri listesiyle) · kisi (@, hesap önerisiyle) · link. kesim: 'daha fazla'dan önce görünen karakter (yaklaşık).",
         "platformlar": [
-          { "id": "x",         "ad": "X",         "acik": true,  "oranlar": ["16:9", "1:1", "serbest"] },
-          { "id": "facebook",  "ad": "Facebook",  "acik": true,  "oranlar": ["1.91:1", "1:1", "serbest"] },
-          { "id": "linkedin",  "ad": "LinkedIn",  "acik": true,  "oranlar": ["1.91:1", "1:1", "serbest"] },
-          { "id": "instagram", "ad": "Instagram", "acik": true,  "oranlar": ["1:1", "4:5", "serbest"] },
-          { "id": "telegram",  "ad": "Telegram",  "acik": true,  "oranlar": ["16:9", "1:1", "serbest"] },
+          { "id": "x",         "ad": "X",         "acik": true,  "oranlar": ["16:9", "1:1", "serbest"],
+            "editor": { "sinir": 280, "link_uzunluk": 23, "araclar": ["b-u", "i-u", "emoji", "etiket", "kisi", "link"], "not": "X biçimlendirme desteklemez: kalın ve italik Unicode harfle · bağlantı 23 karakter sayılır" } },
+          { "id": "facebook",  "ad": "Facebook",  "acik": true,  "oranlar": ["1.91:1", "1:1", "serbest"],
+            "editor": { "sinir": 2000, "araclar": ["b-u", "i-u", "emoji", "etiket", "kisi", "link", "konum"], "not": "Sayfa gönderisinde kalın yok (Unicode harf) · bağlantı önizleme kartı açar · @ ile sayfa ve kişi etiketlenir" } },
+          { "id": "linkedin",  "ad": "LinkedIn",  "acik": true,  "oranlar": ["1.91:1", "1:1", "serbest"],
+            "editor": { "sinir": 3000, "kesim": 210, "araclar": ["b-u", "i-u", "emoji", "etiket", "kisi", "link"], "not": "Kalın ve italik Unicode harfle · ilk ~210 karakter 'daha fazla'dan önce görünür" } },
+          { "id": "instagram", "ad": "Instagram", "acik": true,  "oranlar": ["1:1", "4:5", "serbest"],
+            "editor": { "sinir": 2200, "kesim": 125, "etiket_siniri": 30, "araclar": ["b-u", "i-u", "emoji", "etiket", "kisi", "konum", "gorselde-etiket"], "link_yok": true, "not": "Açıklamadaki bağlantı tıklanmaz (profildeki bağlantı kullanılır) · ilk 125 karakter 'daha fazla'dan önce · en fazla 30 etiket" } },
+          { "id": "telegram",  "ad": "Telegram",  "acik": true,  "oranlar": ["16:9", "1:1", "serbest"],
+            "editor": { "sinir": 1024, "araclar": ["b", "i", "u", "s", "kod", "spoiler", "alinti", "link-metin", "emoji", "etiket"], "not": "Gerçek biçim (MarkdownV2): kalın, italik, altı çizili, üstü çizili, kod, gizli metin · görselli gönderide 1024, görselsiz 4096 karakter" } },
           { "id": "whatsapp",  "ad": "WhatsApp kanalı", "acik": false },
           { "id": "youtube",   "ad": "YouTube",   "acik": false },
           { "id": "tiktok",    "ad": "TikTok",    "acik": false }
-        ]
+        ],
+        "oran_olculeri": { "16:9": [1200, 675], "1:1": [1080, 1080], "4:5": [1080, 1350], "1.91:1": [1200, 628] }
       },
       "sayfalar": [
         { "id": "gonderi",  "baslik": "Gönderi Oluştur", "ikon": "fa-pen-to-square",   "dosya": "moduller/sosyal-medya/gonderi.html",  "hazir": false, "menude": true, "roller": ["super", "gyy", "sosyal"] },

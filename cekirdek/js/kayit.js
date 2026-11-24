@@ -701,5 +701,306 @@ window.PANEL = {
   "oturum.profil": "Profilim",
   "oturum.oturumlar": "Aktif oturumlar",
   "oturum.bildirimler": "Bildirimler"
+ },
+ "gorsel_alanlari": {
+  "haberler": {
+   "kapak": {
+    "_kaynak": "sitenin görünen genişliği (kap 1280px; masaüstü 4 kart; telefon 390 - 2×16)",
+    "web": {
+     "kart": {
+      "oran": "16:10",
+      "px": [
+       308,
+       193
+      ]
+     },
+     "detay": {
+      "oran": "2.4:1",
+      "px": [
+       1280,
+       533
+      ]
+     }
+    },
+    "mobil": {
+     "kart": {
+      "oran": "16:10",
+      "px": [
+       358,
+       224
+      ]
+     }
+    },
+    "mobil_webden_kirpilir": true,
+    "bildirim": {
+     "oran": "2:1"
+    }
+   }
+  }
+ },
+ "sosyal_platformlar": [
+  {
+   "id": "x",
+   "ad": "X",
+   "acik": true,
+   "oranlar": [
+    "16:9",
+    "1:1",
+    "serbest"
+   ],
+   "editor": {
+    "sinir": 280,
+    "link_uzunluk": 23,
+    "araclar": [
+     "b-u",
+     "i-u",
+     "emoji",
+     "etiket",
+     "kisi",
+     "link"
+    ],
+    "not": "X biçimlendirme desteklemez: kalın ve italik Unicode harfle · bağlantı 23 karakter sayılır"
+   }
+  },
+  {
+   "id": "facebook",
+   "ad": "Facebook",
+   "acik": true,
+   "oranlar": [
+    "1.91:1",
+    "1:1",
+    "serbest"
+   ],
+   "editor": {
+    "sinir": 2000,
+    "araclar": [
+     "b-u",
+     "i-u",
+     "emoji",
+     "etiket",
+     "kisi",
+     "link",
+     "konum"
+    ],
+    "not": "Sayfa gönderisinde kalın yok (Unicode harf) · bağlantı önizleme kartı açar · @ ile sayfa ve kişi etiketlenir"
+   }
+  },
+  {
+   "id": "linkedin",
+   "ad": "LinkedIn",
+   "acik": true,
+   "oranlar": [
+    "1.91:1",
+    "1:1",
+    "serbest"
+   ],
+   "editor": {
+    "sinir": 3000,
+    "kesim": 210,
+    "araclar": [
+     "b-u",
+     "i-u",
+     "emoji",
+     "etiket",
+     "kisi",
+     "link"
+    ],
+    "not": "Kalın ve italik Unicode harfle · ilk ~210 karakter 'daha fazla'dan önce görünür"
+   }
+  },
+  {
+   "id": "instagram",
+   "ad": "Instagram",
+   "acik": true,
+   "oranlar": [
+    "1:1",
+    "4:5",
+    "serbest"
+   ],
+   "editor": {
+    "sinir": 2200,
+    "kesim": 125,
+    "etiket_siniri": 30,
+    "araclar": [
+     "b-u",
+     "i-u",
+     "emoji",
+     "etiket",
+     "kisi",
+     "konum",
+     "gorselde-etiket"
+    ],
+    "link_yok": true,
+    "not": "Açıklamadaki bağlantı tıklanmaz (profildeki bağlantı kullanılır) · ilk 125 karakter 'daha fazla'dan önce · en fazla 30 etiket"
+   }
+  },
+  {
+   "id": "telegram",
+   "ad": "Telegram",
+   "acik": true,
+   "oranlar": [
+    "16:9",
+    "1:1",
+    "serbest"
+   ],
+   "editor": {
+    "sinir": 1024,
+    "araclar": [
+     "b",
+     "i",
+     "u",
+     "s",
+     "kod",
+     "spoiler",
+     "alinti",
+     "link-metin",
+     "emoji",
+     "etiket"
+    ],
+    "not": "Gerçek biçim (MarkdownV2): kalın, italik, altı çizili, üstü çizili, kod, gizli metin · görselli gönderide 1024, görselsiz 4096 karakter"
+   }
+  }
+ ],
+ "sosyal_oranlar": [
+  {
+   "oran": "16:9",
+   "ad": "Sosyal 16:9",
+   "px": [
+    1200,
+    675
+   ]
+  },
+  {
+   "oran": "1:1",
+   "ad": "Sosyal 1:1",
+   "px": [
+    1080,
+    1080
+   ]
+  },
+  {
+   "oran": "4:5",
+   "ad": "Sosyal 4:5",
+   "px": [
+    1080,
+    1350
+   ]
+  },
+  {
+   "oran": "1.91:1",
+   "ad": "Sosyal 1.91:1",
+   "px": [
+    1200,
+    628
+   ]
+  }
+ ],
+ "sosyal_oneriler": {
+  "_not": "Örnek. Yazarlar public sözlükten; tutamaçlar örnektir, gerçek hesap değildir. Canlıda öneriler bağlı hesabın platform API'sinden aranır.",
+  "hesaplar": [
+   {
+    "ad": "Dada Haber",
+    "tutamac": "dadahaber",
+    "tur": "Kurum hesabı",
+    "onayli": true
+   },
+   {
+    "ad": "Dada Gastro",
+    "tutamac": "dadagastro",
+    "tur": "Dada Ailesi",
+    "onayli": true
+   },
+   {
+    "ad": "Dada Spiker",
+    "tutamac": "dadaspiker",
+    "tur": "Dada Ailesi",
+    "onayli": false
+   },
+   {
+    "ad": "Dada Fit",
+    "tutamac": "dadafit",
+    "tur": "Dada Ailesi",
+    "onayli": false
+   },
+   {
+    "ad": "Mehmet Koçak",
+    "tutamac": "mehmetkocak_dh",
+    "tur": "Gündem Editörü",
+    "onayli": false
+   },
+   {
+    "ad": "Ayşe Yıldız",
+    "tutamac": "ayseyildiz_dh",
+    "tur": "Haber Müdürü",
+    "onayli": false
+   },
+   {
+    "ad": "Sibel Arslan",
+    "tutamac": "sibelarslan_dh",
+    "tur": "Saha Muhabiri",
+    "onayli": false
+   },
+   {
+    "ad": "Hakan Uysal",
+    "tutamac": "hakanuysal_dh",
+    "tur": "Çalışma Hayatı Muhabiri",
+    "onayli": false
+   },
+   {
+    "ad": "Elif Aras",
+    "tutamac": "elifaras_dh",
+    "tur": "Finans Editörü",
+    "onayli": false
+   },
+   {
+    "ad": "Can Demir",
+    "tutamac": "candemir_dh",
+    "tur": "Piyasa Muhabiri",
+    "onayli": false
+   },
+   {
+    "ad": "Nazlı Öztürk",
+    "tutamac": "nazliozturk_dh",
+    "tur": "Kişisel Finans Muhabiri",
+    "onayli": false
+   },
+   {
+    "ad": "Tolga Bayram",
+    "tutamac": "tolgabayram_dh",
+    "tur": "Enerji Muhabiri",
+    "onayli": false
+   },
+   {
+    "ad": "Burak Tan",
+    "tutamac": "buraktan_dh",
+    "tur": "Spor Editörü",
+    "onayli": false
+   },
+   {
+    "ad": "Murat Tekin",
+    "tutamac": "murattekin_dh",
+    "tur": "Futbol Yorumcusu",
+    "onayli": false
+   }
+  ],
+  "etiketler": [
+   "AsgariÜcret",
+   "Bütçe2027",
+   "Ekonomi",
+   "Gündem",
+   "Emekli",
+   "Memur",
+   "Enflasyon",
+   "SonDakika",
+   "Türkiye",
+   "Çalışma"
+  ],
+  "konumlar": [
+   "İstanbul",
+   "Ankara",
+   "İzmir",
+   "Türkiye",
+   "Çalışma ve Sosyal Güvenlik Bakanlığı, Ankara"
+  ]
  }
 };
