@@ -137,7 +137,17 @@
     var kap = s.closest('[data-sekmeli]') || document;
     kap.querySelectorAll('.sa-form-tab[data-panel]').forEach(function(x){ var on = x === s; x.classList.toggle('is-on', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); });
     kap.querySelectorAll('.sa-form-panel').forEach(function(p){ p.hidden = p.id !== s.getAttribute('data-panel'); });
+    yanDuzen(s.getAttribute('data-panel'));
   });
+  /* sağ sütun sekmeye göre: önizlemesi olan sekmede önizleme en üstte ve yapışkan; data-one-cik kartı kendi sekmesinde üste çıkar */
+  function yanDuzen(pid){
+    var yan = document.querySelector('.side-card'); if(!yan) return;
+    var var_ = false;
+    yan.querySelectorAll('[data-panel-icin]').forEach(function(x){ var on = x.getAttribute('data-panel-icin') === pid; x.hidden = !on; if(on) var_ = true; });
+    yan.querySelectorAll('[data-one-cik]').forEach(function(x){ x.style.order = x.getAttribute('data-one-cik') === pid ? -1 : ''; });
+    yan.classList.toggle('kb-onizlemeli', var_);
+  }
+  var ilkSekme = document.querySelector('[data-sekmeli] > .sa-form-tabs .sa-form-tab.is-on, [data-sekmeli] .sa-form-tab.is-on'); if(ilkSekme) yanDuzen(ilkSekme.getAttribute('data-panel'));
 
   /* ---------------- karakter sayacı: [data-sayac="önerilen|sınır"] ---------------- */
   function sayacGuncelle(el){
@@ -160,7 +170,7 @@
   /* adres addan kendiliğinden üretilir (elle değiştirilmediyse); aynı data-alan'lı önizleme metinleri canlı güncellenir */
   document.addEventListener('input', function(e){
     var el = e.target; if(!el.matches) return;
-    var kok = el.closest('.kb-kap-govde,form,[data-form]') || document;
+    var kok = el.closest('.kb-kap-govde') || document;
     if(el.matches('[data-slug-hedef]')){
       var h = kok.querySelector('#' + el.getAttribute('data-slug-hedef'));
       if(h && !h.dataset.elle){ h.value = window.kbSlug(el.value); h.dispatchEvent(new Event('input', {bubbles:true})); }

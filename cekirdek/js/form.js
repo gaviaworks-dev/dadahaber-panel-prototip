@@ -30,49 +30,76 @@
   var iki = function(n){ return (n < 10 ? '0' : '') + n; };
 
   /* ---------------- tarih-saat seçici ---------------- */
+  var GUNLER = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
   document.querySelectorAll('.kb-tarih-sec').forEach(function(kt){
     var btn = kt.querySelector('.kb-tarih-btn'), menu = kt.querySelector('.kb-tarih-menu'), yazi = kt.querySelector('.kt-deger');
     if(!btn || !menu || !yazi) return;
+    document.body.appendChild(menu);  /* kökte açılır: hiçbir kapsayıcı konumunu ya da kırpmasını bozmaz */
     var d = (kt.dataset.deger || '').match(/(\d{4})-(\d{2})-(\d{2})\s+(\d{2})\.(\d{2})/);
-    var sec = d ? { y:+d[1], a:+d[2] - 1, g:+d[3], s:d[4] + '.' + d[5] } : null;
-    var bugun = { y:2026, a:10, g:23 };
-    var gor = sec ? { y:sec.y, a:sec.a } : { y:bugun.y, a:bugun.a };
+    var sec = d ? { y:+d[1], a:+d[2] - 1, g:+d[3], h:+d[4], m:+d[5] } : null;
+    var bugun = { y:2026, a:10, g:23, h:16, m:5 };
+    var tas = null, gor = null;
     var enAz = kt.dataset.enaz === 'bugun';
-    function yaz(){
-      if(!sec){ yazi.innerHTML = '<span class="kt-bos">' + (kt.dataset.bos || 'Tarih ve saat seçin') + '</span>'; return; }
-      yazi.textContent = iki(sec.g) + '.' + iki(sec.a + 1) + '.' + sec.y + ' ' + sec.s;
-    }
+    function metin(s){ return iki(s.g) + '.' + iki(s.a + 1) + '.' + s.y + ' ' + iki(s.h) + '.' + iki(s.m); }
+    function ozet(s){ var gn = GUNLER[new Date(s.y, s.a, s.g).getDay()]; return gn + ', ' + s.g + ' ' + AYLAR[s.a] + ' · ' + iki(s.h) + '.' + iki(s.m); }
+    function yaz(){ if(!sec){ yazi.innerHTML = '<span class="kt-bos">' + (kt.dataset.bos || 'Tarih ve saat seçin') + '</span>'; return; } yazi.textContent = metin(sec); }
+    function gecmis(y, a, g){ return enAz && (y < bugun.y || (y === bugun.y && (a < bugun.a || (a === bugun.a && g < bugun.g)))); }
     function ciz(){
       var ilk = new Date(gor.y, gor.a, 1), bas = (ilk.getDay() + 6) % 7, gun = new Date(gor.y, gor.a + 1, 0).getDate();
-      var h = '<div class="kt-ay"><button type="button" data-kt="geri" aria-label="Önceki ay"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button><b>' + AYLAR[gor.a] + ' ' + gor.y + '</b><button type="button" data-kt="ileri" aria-label="Sonraki ay"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button></div><div class="kt-gunler">';
+      var h = '<div class="kt-hizli-ust" role="group" aria-label="Hızlı seçim"><button type="button" data-hizli="0,16,5">Şimdi</button><button type="button" data-hizli="0,19,0">Bu akşam 19.00</button><button type="button" data-hizli="1,8,0">Yarın 08.00</button><button type="button" data-hizli="1,12,0">Yarın 12.00</button></div>';
+      h += '<div class="kt-govde"><div class="kt-ay"><button type="button" data-kt="geri" aria-label="Önceki ay"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button><b>' + AYLAR[gor.a] + ' ' + gor.y + '</b><button type="button" data-kt="ileri" aria-label="Sonraki ay"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button></div><div class="kt-gunler">';
       ['Pt','Sa','Ça','Pe','Cu','Ct','Pz'].forEach(function(x){ h += '<span class="kt-bas">' + x + '</span>'; });
       for(var i = 0; i < bas; i++) h += '<span></span>';
       for(var g = 1; g <= gun; g++){
-        var ge = enAz && (gor.y < bugun.y || (gor.y === bugun.y && (gor.a < bugun.a || (gor.a === bugun.a && g < bugun.g))));
-        var c = (gor.y === bugun.y && gor.a === bugun.a && g === bugun.g ? ' is-bugun' : '') + (sec && sec.y === gor.y && sec.a === gor.a && sec.g === g ? ' is-sec' : '');
-        h += '<button type="button" class="' + c.trim() + '" data-gun="' + g + '"' + (ge ? ' disabled' : '') + '>' + g + '</button>';
+        var c = (gor.y === bugun.y && gor.a === bugun.a && g === bugun.g ? ' is-bugun' : '') + (tas && tas.y === gor.y && tas.a === gor.a && tas.g === g ? ' is-sec' : '');
+        h += '<button type="button" class="' + c.trim() + '" data-gun="' + g + '"' + (gecmis(gor.y, gor.a, g) ? ' disabled' : '') + ' aria-label="' + g + ' ' + AYLAR[gor.a] + '">' + g + '</button>';
       }
-      h += '</div><div class="kt-saat"><label for="' + kt.id + 'S">Saat</label><input id="' + kt.id + 'S" inputmode="numeric" maxlength="5" value="' + (sec ? sec.s : '16.05') + '" aria-label="Saat (ss.dd)">'
-        + '<div class="kt-hizli"><button type="button" data-hizli="simdi">Şimdi</button><button type="button" data-hizli="1s">+1 sa</button></div></div>'
-        + '<div class="kt-alt">' + (kt.dataset.temizlenir ? '<button type="button" class="btn btn-ghost btn-sm" data-kt="temizle">Temizle</button>' : '') + '<button type="button" class="btn btn-acc btn-sm" data-kt="tamam">Uygula</button></div>';
+      h += '</div></div><div class="kt-saat"><span>Saat</span>'
+        + '<div class="kt-adim"><button type="button" data-adim="h,-1" aria-label="Saati azalt"><i class="fa-solid fa-minus" aria-hidden="true"></i></button><input inputmode="numeric" maxlength="2" data-kt-alan="h" aria-label="Saat" value="' + iki(tas.h) + '"><button type="button" data-adim="h,1" aria-label="Saati artır"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div>'
+        + '<span class="kt-iki-nokta">.</span>'
+        + '<div class="kt-adim"><button type="button" data-adim="m,-5" aria-label="Dakikayı azalt"><i class="fa-solid fa-minus" aria-hidden="true"></i></button><input inputmode="numeric" maxlength="2" data-kt-alan="m" aria-label="Dakika" value="' + iki(tas.m) + '"><button type="button" data-adim="m,5" aria-label="Dakikayı artır"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div></div>'
+        + '<div class="kt-alt"><span class="kt-ozet">' + ozet(tas) + '<small>' + (kt.dataset.not || 'Türkiye saati') + '</small></span>'
+        + (kt.dataset.temizlenir ? '<button type="button" class="btn btn-ghost btn-sm" data-kt="temizle">Temizle</button>' : '<button type="button" class="btn btn-ghost btn-sm" data-kt="vazgec">Vazgeç</button>')
+        + '<button type="button" class="btn btn-acc btn-sm" data-kt="tamam">Uygula</button></div>';
       menu.innerHTML = h;
     }
-    btn.addEventListener('click', function(){ setTimeout(function(){ if(menu.classList.contains('open')) ciz(); }, 0); });
+    function ozetYaz(){ var o = menu.querySelector('.kt-ozet'); if(o) o.firstChild.nodeValue = ozet(tas); }
+    function kapat(){ if(btn.getAttribute('aria-expanded') === 'true') btn.click(); }
+    window.addEventListener('scroll', function(){ if(menu.classList.contains('open')) kapat(); }, true);
+    btn.addEventListener('click', function(){ setTimeout(function(){
+      if(!menu.classList.contains('open')) return;
+      tas = sec ? { y:sec.y, a:sec.a, g:sec.g, h:sec.h, m:sec.m } : { y:bugun.y, a:bugun.a, g:bugun.g, h:bugun.h, m:bugun.m };
+      gor = { y:tas.y, a:tas.a }; ciz();
+      /* her zaman ekranın içinde: önce düğmenin altı, sığmazsa üstü, o da sığmazsa ekrana sığacak en yakın yer */
+      var b0 = btn.getBoundingClientRect(), h = menu.offsetHeight, w = menu.offsetWidth, ust0 = 72, alt0 = window.innerHeight - 12;
+      var y = b0.bottom + 8;
+      if(y + h > alt0) y = (b0.top - 8 - h >= ust0) ? b0.top - 8 - h : Math.max(ust0, alt0 - h);
+      var x = Math.min(b0.left, window.innerWidth - w - 12);
+      menu.style.position = 'fixed'; menu.style.top = y + 'px'; menu.style.left = Math.max(12, x) + 'px'; menu.style.bottom = 'auto'; menu.style.right = 'auto';
+    }, 0); });
+    menu.addEventListener('input', function(e){
+      var a = e.target.getAttribute('data-kt-alan'); if(!a) return; e.stopPropagation();
+      var v = parseInt(e.target.value.replace(/\D/g, ''), 10); if(isNaN(v)) return;
+      tas[a] = Math.max(0, Math.min(a === 'h' ? 23 : 59, v)); ozetYaz();
+    });
     menu.addEventListener('click', function(e){
       e.stopPropagation();
       var b = e.target.closest('button'); if(!b) return;
-      var saat = menu.querySelector('.kt-saat input');
       if(b.dataset.kt === 'geri'){ gor.a--; if(gor.a < 0){ gor.a = 11; gor.y--; } ciz(); }
       else if(b.dataset.kt === 'ileri'){ gor.a++; if(gor.a > 11){ gor.a = 0; gor.y++; } ciz(); }
-      else if(b.dataset.gun){ var s = saat.value; sec = { y:gor.y, a:gor.a, g:+b.dataset.gun, s:s }; ciz(); }
-      else if(b.dataset.hizli){ sec = { y:2026, a:10, g:23, s:b.dataset.hizli === 'simdi' ? '16.05' : '17.05' }; gor = { y:2026, a:10 }; ciz(); }
-      else if(b.dataset.kt === 'temizle'){ sec = null; yaz(); btn.click(); kt.dispatchEvent(new Event('input', {bubbles:true})); }
-      else if(b.dataset.kt === 'tamam'){
-        var v = saat.value.replace(':', '.'); var m = v.match(/^([01]?\d|2[0-3])\.([0-5]\d)$/);
-        if(!m){ saat.focus(); saat.style.borderColor = 'var(--danger)'; return; }
-        if(!sec) sec = { y:bugun.y, a:bugun.a, g:bugun.g, s:'' };
-        sec.s = iki(+m[1]) + '.' + m[2]; yaz(); btn.click(); kt.dispatchEvent(new Event('input', {bubbles:true}));
+      else if(b.dataset.gun){ tas.y = gor.y; tas.a = gor.a; tas.g = +b.dataset.gun; ciz(); }
+      else if(b.dataset.adim){
+        var p = b.dataset.adim.split(','), k = p[0], s = +p[1];
+        if(k === 'h') tas.h = (tas.h + s + 24) % 24; else tas.m = (Math.round(tas.m / 5) * 5 + s + 60) % 60;
+        var inp = menu.querySelector('[data-kt-alan="' + k + '"]'); if(inp) inp.value = iki(tas[k]); ozetYaz();
       }
+      else if(b.dataset.hizli){
+        var q = b.dataset.hizli.split(',').map(Number), dt = new Date(bugun.y, bugun.a, bugun.g + q[0]);
+        tas = { y:dt.getFullYear(), a:dt.getMonth(), g:dt.getDate(), h:q[1], m:q[2] }; gor = { y:tas.y, a:tas.a }; ciz();
+      }
+      else if(b.dataset.kt === 'vazgec'){ kapat(); }
+      else if(b.dataset.kt === 'temizle'){ sec = null; yaz(); kapat(); kt.dispatchEvent(new Event('input', {bubbles:true})); }
+      else if(b.dataset.kt === 'tamam'){ sec = tas; yaz(); kapat(); kt.dispatchEvent(new Event('input', {bubbles:true})); }
     });
     yaz();
   });
@@ -258,10 +285,81 @@
     });
   });
 
+  /* ---------------- profile göre metin (Bana etkisi) ---------------- */
+  document.querySelectorAll('[data-profil-metin]').forEach(function(PM){
+    function say(){
+      var n = PM.querySelectorAll('[data-pm-kart]:not([hidden])').length, s = PM.querySelector('[data-pm-say]');
+      if(s) s.textContent = n ? n + ' profil için ayrı metin' : 'Yalnızca genel metin';
+    }
+    function ac(id, odak){
+      var k = PM.querySelector('[data-pm-kart="' + id + '"]'), c = PM.querySelector('[data-pm-cip="' + id + '"]'); if(!k || !c) return;
+      k.hidden = false; c.classList.add('is-on'); c.setAttribute('aria-pressed', 'true');
+      var d = c.querySelector('.kb-pm-durum'); if(d) d.className = 'fa-solid fa-check kb-pm-durum';
+      if(odak){ var ta = k.querySelector('textarea'); ta.focus(); }
+      say(); PM.dispatchEvent(new Event('input', {bubbles:true}));
+    }
+    function kapat(id){
+      var k = PM.querySelector('[data-pm-kart="' + id + '"]'), c = PM.querySelector('[data-pm-cip="' + id + '"]'); if(!k || !c) return;
+      k.hidden = true; c.classList.remove('is-on'); c.setAttribute('aria-pressed', 'false');
+      var d = c.querySelector('.kb-pm-durum'); if(d) d.className = 'fa-solid fa-plus kb-pm-durum';
+      say(); PM.dispatchEvent(new Event('input', {bubbles:true}));
+    }
+    PM.addEventListener('click', function(e){
+      var c = e.target.closest('[data-pm-cip]');
+      if(c){ var k = PM.querySelector('[data-pm-kart="' + c.dataset.pmCip + '"]'); if(k && k.hidden) ac(c.dataset.pmCip, true); else if(k) k.querySelector('textarea').focus(); return; }
+      var x = e.target.closest('[data-pm-kaldir]');
+      if(x){ var kk = x.closest('[data-pm-kart]'), id = kk.dataset.pmKart, eski = kk.querySelector('textarea').value; kapat(id); window.kbBildir(kk.querySelector('b').textContent + ' metni kaldırıldı', function(){ ac(id); kk.querySelector('textarea').value = eski; }); return; }
+      if(e.target.closest('[data-pm-oner]')){
+        var n = 0;
+        PM.querySelectorAll('[data-pm-kart]').forEach(function(k){
+          var ta = k.querySelector('textarea');
+          if(!ta.value.trim() && k.dataset.oneri){ ta.value = k.dataset.oneri; ac(k.dataset.pmKart); if(window.kbSayaclar) window.kbSayaclar(k); n++; }
+        });
+        window.kbBildir(n ? n + ' profil için öneri eklendi (AI · prototip); kontrol edip düzeltin' : 'Bütün ilgili profillerin metni zaten dolu');
+      }
+    });
+    say();
+  });
+
+  /* ---------------- sosyal gönderi metni araç çubuğu ----------------
+     X, Instagram, Facebook ve LinkedIn gerçek kalın yazıyı desteklemez: kalın ve italik Unicode harfle yapılır
+     (Türkçe özel harflerin karşılığı yoktur, olduğu gibi kalır). Telegram gerçek biçimi destekler. */
+  function unicodeYap(s, tur){
+    var tabanB = tur === 'b' ? 0x1D5D4 : 0x1D608, rakam = tur === 'b' ? 0x1D7EC : null;
+    return Array.from(s).map(function(c){
+      var k = c.codePointAt(0);
+      if(k >= 65 && k <= 90) return String.fromCodePoint(tabanB + k - 65);
+      if(k >= 97 && k <= 122) return String.fromCodePoint(tabanB + 26 + k - 97);
+      if(rakam && k >= 48 && k <= 57) return String.fromCodePoint(rakam + k - 48);
+      return c;
+    }).join('');
+  }
+  document.querySelectorAll('.kb-sosyal-arac').forEach(function(ar){
+    var ta = ar.parentNode.querySelector('textarea'); if(!ta) return;
+    function ekle(m, sec){
+      var s = ta.selectionStart, e = ta.selectionEnd, v = ta.value;
+      ta.value = v.slice(0, s) + m + v.slice(e); ta.focus();
+      var son = s + m.length; ta.setSelectionRange(sec ? s : son, son);
+      ta.dispatchEvent(new Event('input', {bubbles:true}));
+    }
+    ar.addEventListener('mousedown', function(e){ if(e.target.closest('button')) e.preventDefault(); });
+    ar.addEventListener('click', function(e){
+      var b = e.target.closest('button'); if(!b) return;
+      var k = b.dataset.sa, s = ta.selectionStart, en = ta.selectionEnd, secili = ta.value.slice(s, en);
+      if(k === 'b' || k === 'i'){ if(!secili){ window.kbBildir('Önce metinden bir bölüm seçin'); return; } ekle(unicodeYap(secili, k), true); }
+      else if(k === 'emoji'){ var m = ar.querySelector('.kb-emoji'); m.hidden = !m.hidden; }
+      else if(b.dataset.emoji){ ekle(b.dataset.emoji); ar.querySelector('.kb-emoji').hidden = true; }
+      else if(k === 'etiket') ekle(secili ? '#' + secili.replace(/\s+/g, '') : '#');
+      else if(k === 'kisi') ekle(secili ? '@' + secili.replace(/\s+/g, '') : '@');
+      else if(k === 'link') ekle('https://dadahaber.com/gundem/asgari-ucret-ilk-toplanti');
+    });
+  });
+
+
   /* ---------------- sosyal medya sekmesi ---------------- */
   document.querySelectorAll('.kb-sosyal').forEach(function(S){
-    var metin = S.querySelector('[data-sosyal-metin]'), kart = S.querySelector('.kb-sosyal-kart');
-    var kartMetin = S.querySelector('.ksk-metin'), oranKap = S.querySelector('.kb-oranlar'), kirp = S.querySelector('.kk-cerceve'), kGor = S.querySelector('.ksk-gorsel');
+    var metin = S.querySelector('[data-sosyal-metin]'), kart = document.querySelector('[data-sosyal-onizle]') || S.querySelector('.kb-sosyal-kart');
+    var kartMetin = kart.querySelector('.ksk-metin'), oranKap = S.querySelector('.kb-oranlar'), kirp = S.querySelector('.kk-cerceve'), kGor = kart.querySelector('.ksk-gorsel');
     var sayaclar = S.querySelector('.kb-sayaclar'), hesap = S.querySelector('[data-sosyal-hesap]');
     var veri = {}, aktif = null;
     S.querySelectorAll('.kb-platform').forEach(function(p){ veri[p.dataset.platform] = { metin: p.dataset.metin || '' }; });
@@ -286,8 +384,9 @@
       S.querySelectorAll('.kb-platform').forEach(function(x){ x.classList.toggle('is-on', x === p); x.setAttribute('aria-selected', x === p ? 'true' : 'false'); });
       metin.value = veri[aktif].metin;
       kart.className = 'kb-sosyal-kart p-' + aktif;
-      S.querySelectorAll('[data-sosyal-ad]').forEach(function(el){ el.textContent = p.dataset.ad; });
-      S.querySelectorAll('[data-sosyal-tutamac]').forEach(function(el){ el.textContent = p.dataset.tutamac; });
+      document.querySelectorAll('[data-sosyal-ad-platform]').forEach(function(el){ el.textContent = p.textContent.trim(); });
+      document.querySelectorAll('[data-sosyal-ad]').forEach(function(el){ el.textContent = p.dataset.ad; });
+      document.querySelectorAll('[data-sosyal-tutamac]').forEach(function(el){ el.textContent = p.dataset.tutamac; });
       if(hesap){ var d = p.dataset.hesapDurum; hesap.className = 'pstat ' + (d === 'hata' ? 'warm' : 'ok'); hesap.textContent = d === 'hata' ? 'Bağlantı süresi doldu' : 'Bağlı'; }
       var uy = S.querySelector('[data-sosyal-uyari]'); if(uy) uy.hidden = p.dataset.hesapDurum !== 'hata';
       var oranlar = (p.dataset.oranlar || '').split(','), h = '';
