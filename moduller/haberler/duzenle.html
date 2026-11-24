@@ -7,8 +7,8 @@
 <title>Haber düzenle · Dada Haber Yönetim Paneli</title>
 <link rel="stylesheet" href="../../assets/vendor/fontawesome-6.5.2/css/all.min.css?v=c84e8169">
 <link rel="stylesheet" href="../../tema/dadahaber.css?v=d7460413" data-tema>
-<link rel="stylesheet" href="../../cekirdek/css/kabuk.css?v=be65ed95">
-<link rel="stylesheet" href="../../cekirdek/css/bilesen.css?v=1041f25e">
+<link rel="stylesheet" href="../../cekirdek/css/kabuk.css?v=5178d9e5">
+<link rel="stylesheet" href="../../cekirdek/css/bilesen.css?v=8335dce8">
 <!--P:bas--><script src="../../cekirdek/js/kayit.js?v=954cb4f6"></script><script src="../../cekirdek/js/erken.js?v=2cbfb3f6"></script><!--/P:bas-->
 </head>
 <body data-sayfa="haberler.liste">
@@ -107,13 +107,18 @@
           <div class="frow"><label for="fNeden">Neden önemli? <span class="fdil">TR</span></label>
             <textarea class="ftext" id="fNeden" data-sayac="180|240">Asgari ücret, yaklaşık 7 milyon çalışanın gelirini doğrudan, birçok sosyal ödemeyi ise dolaylı olarak belirliyor.</textarea>
             <div class="char-meter"><span>Sitede açılır kutuda</span><b>0 / 180</b></div></div>
-          <div class="frow two">
-            <div class="frow"><label for="fEtki">Bana etkisi <span class="fdil">TR</span></label>
-              <textarea class="ftext" id="fEtki" data-sayac="180|240">Asgari ücretle ya da ona bağlı bir ödemeyle geçiniyorsan yeni tutar ocak bordrondan itibaren geçerli olacak.</textarea>
+          <div class="frow"><label for="fSonra">Bundan sonra ne olacak? <span class="fdil">TR</span></label>
+            <textarea class="ftext" id="fSonra" data-sayac="180|240">Komisyonun aralık sonuna kadar en az dört kez toplanması, kararın ise yılın son haftasında açıklanması bekleniyor.</textarea>
+            <div class="char-meter"><span>Sitede açılır kutuda</span><b>0 / 180</b></div></div>
+          <div class="kb-profil-metin" data-profil-metin>
+            <div class="kb-pm-ust"><span class="flabel">Bana etkisi <span class="fdil">TR</span></span><span class="kb-pm-say" data-pm-say></span>
+              <button type="button" class="btn btn-ghost btn-sm kb-sag" data-pm-oner><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>Profillere göre öner</button></div>
+            <div class="frow"><label for="fEtki" class="kb-pm-alt">Genel <small>profil seçmemiş okura görünür</small></label>
+              <textarea class="ftext" id="fEtki" rows="2" data-sayac="180|240">Asgari ücretle ya da ona bağlı bir ödemeyle geçiniyorsan yeni tutar ocak bordrondan itibaren geçerli olacak.</textarea>
               <div class="char-meter"><span></span><b>0 / 180</b></div></div>
-            <div class="frow"><label for="fSonra">Bundan sonra ne olacak? <span class="fdil">TR</span></label>
-              <textarea class="ftext" id="fSonra" data-sayac="180|240">Komisyonun aralık sonuna kadar en az dört kez toplanması, kararın ise yılın son haftasında açıklanması bekleniyor.</textarea>
-              <div class="char-meter"><span></span><b>0 / 180</b></div></div>
+            <div class="kb-pm-cipler" role="group" aria-label="Okur profilleri"><button type="button" class="kb-pm-cip" data-pm-cip="ogrenci" aria-pressed="false"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>Öğrenci<i class="fa-solid fa-plus kb-pm-durum" aria-hidden="true"></i></button><button type="button" class="kb-pm-cip is-on" data-pm-cip="calisan" aria-pressed="true"><i class="fa-solid fa-briefcase" aria-hidden="true"></i>Çalışan<i class="fa-solid fa-check kb-pm-durum" aria-hidden="true"></i></button><button type="button" class="kb-pm-cip is-on" data-pm-cip="emekli" aria-pressed="true"><i class="fa-solid fa-person-cane" aria-hidden="true"></i>Emekli<i class="fa-solid fa-check kb-pm-durum" aria-hidden="true"></i></button><button type="button" class="kb-pm-cip" data-pm-cip="ev-sahibi" aria-pressed="false"><i class="fa-solid fa-house" aria-hidden="true"></i>Ev sahibi<i class="fa-solid fa-plus kb-pm-durum" aria-hidden="true"></i></button><button type="button" class="kb-pm-cip" data-pm-cip="kiraci" aria-pressed="false"><i class="fa-solid fa-key" aria-hidden="true"></i>Kiracı<i class="fa-solid fa-plus kb-pm-durum" aria-hidden="true"></i></button><button type="button" class="kb-pm-cip is-on" data-pm-cip="esnaf" aria-pressed="true"><i class="fa-solid fa-store" aria-hidden="true"></i>Esnaf<i class="fa-solid fa-check kb-pm-durum" aria-hidden="true"></i></button></div>
+            <div class="kb-pm-kartlar"><div class="kb-pm-kart" data-pm-kart="ogrenci" data-oneri="Yarı zamanlı ya da stajyer olarak asgari ücret üzerinden çalışıyorsan ücretin ocaktan itibaren yeni tutara göre güncellenir." hidden><div class="kb-pm-bas"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i><b>Öğrenci</b><span class="fdil">TR</span><button type="button" class="ia-btn danger" data-pm-kaldir aria-label="Öğrenci metnini kaldır" title="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="frow"><textarea class="ftext" rows="2" data-sayac="180|240" aria-label="Öğrenci için Bana etkisi" placeholder="Öğrenci bu haberden nasıl etkilenir?"></textarea><div class="char-meter"><span></span><b>0 / 180</b></div></div><input class="finput kb-pm-kaynak" value="" placeholder="Kaynak (isteğe bağlı) · ör. TÜİK · 3 Kasım" aria-label="Öğrenci kaynağı"></div><div class="kb-pm-kart" data-pm-kart="calisan" data-oneri="Asgari ücretle çalışıyorsan yeni tutar ocak bordrondan itibaren geçerli olacak; zamlı ilk maaş şubat başında yatar."><div class="kb-pm-bas"><i class="fa-solid fa-briefcase" aria-hidden="true"></i><b>Çalışan</b><span class="fdil">TR</span><button type="button" class="ia-btn danger" data-pm-kaldir aria-label="Çalışan metnini kaldır" title="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="frow"><textarea class="ftext" rows="2" data-sayac="180|240" aria-label="Çalışan için Bana etkisi" placeholder="Çalışan bu haberden nasıl etkilenir?">Asgari ücretle çalışıyorsan yeni tutar ocak bordrondan itibaren geçerli olacak; zamlı ilk maaş şubat başında yatar.</textarea><div class="char-meter"><span></span><b>0 / 180</b></div></div><input class="finput kb-pm-kaynak" value="Çalışma ve Sosyal Güvenlik Bakanlığı · 22 Kasım" placeholder="Kaynak (isteğe bağlı) · ör. TÜİK · 3 Kasım" aria-label="Çalışan kaynağı"></div><div class="kb-pm-kart" data-pm-kart="emekli" data-oneri="Asgari ücret artışı emekli aylığına doğrudan yansımaz; ancak asgari ücrete bağlı bazı sosyal ödemeler yeni tutara göre hesaplanır."><div class="kb-pm-bas"><i class="fa-solid fa-person-cane" aria-hidden="true"></i><b>Emekli</b><span class="fdil">TR</span><button type="button" class="ia-btn danger" data-pm-kaldir aria-label="Emekli metnini kaldır" title="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="frow"><textarea class="ftext" rows="2" data-sayac="180|240" aria-label="Emekli için Bana etkisi" placeholder="Emekli bu haberden nasıl etkilenir?">Asgari ücret artışı emekli aylığına doğrudan yansımaz; ancak asgari ücrete bağlı bazı sosyal ödemeler yeni tutara göre hesaplanır.</textarea><div class="char-meter"><span></span><b>0 / 180</b></div></div><input class="finput kb-pm-kaynak" value="" placeholder="Kaynak (isteğe bağlı) · ör. TÜİK · 3 Kasım" aria-label="Emekli kaynağı"></div><div class="kb-pm-kart" data-pm-kart="ev-sahibi" data-oneri="Kira artışında sınır 12 aylık TÜFE ortalaması olmaya devam ediyor; asgari ücret kararı bu sınırı etkilemez." hidden><div class="kb-pm-bas"><i class="fa-solid fa-house" aria-hidden="true"></i><b>Ev sahibi</b><span class="fdil">TR</span><button type="button" class="ia-btn danger" data-pm-kaldir aria-label="Ev sahibi metnini kaldır" title="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="frow"><textarea class="ftext" rows="2" data-sayac="180|240" aria-label="Ev sahibi için Bana etkisi" placeholder="Ev sahibi bu haberden nasıl etkilenir?"></textarea><div class="char-meter"><span></span><b>0 / 180</b></div></div><input class="finput kb-pm-kaynak" value="" placeholder="Kaynak (isteğe bağlı) · ör. TÜİK · 3 Kasım" aria-label="Ev sahibi kaynağı"></div><div class="kb-pm-kart" data-pm-kart="kiraci" data-oneri="Asgari ücretteki artış kira artış sınırını değiştirmez; kira artışı 12 aylık TÜFE ortalamasıyla sınırlı kalır." hidden><div class="kb-pm-bas"><i class="fa-solid fa-key" aria-hidden="true"></i><b>Kiracı</b><span class="fdil">TR</span><button type="button" class="ia-btn danger" data-pm-kaldir aria-label="Kiracı metnini kaldır" title="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="frow"><textarea class="ftext" rows="2" data-sayac="180|240" aria-label="Kiracı için Bana etkisi" placeholder="Kiracı bu haberden nasıl etkilenir?"></textarea><div class="char-meter"><span></span><b>0 / 180</b></div></div><input class="finput kb-pm-kaynak" value="" placeholder="Kaynak (isteğe bağlı) · ör. TÜİK · 3 Kasım" aria-label="Kiracı kaynağı"></div><div class="kb-pm-kart" data-pm-kart="esnaf" data-oneri="Asgari ücretli çalışanının ocaktan itibaren işverene maliyeti artacak; asgari ücret desteğinin sürüp sürmeyeceği bütçe görüşmelerinde netleşecek."><div class="kb-pm-bas"><i class="fa-solid fa-store" aria-hidden="true"></i><b>Esnaf</b><span class="fdil">TR</span><button type="button" class="ia-btn danger" data-pm-kaldir aria-label="Esnaf metnini kaldır" title="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="frow"><textarea class="ftext" rows="2" data-sayac="180|240" aria-label="Esnaf için Bana etkisi" placeholder="Esnaf bu haberden nasıl etkilenir?">Asgari ücretli çalışanının ocaktan itibaren işverene maliyeti artacak; asgari ücret desteğinin sürüp sürmeyeceği bütçe görüşmelerinde netleşecek.</textarea><div class="char-meter"><span></span><b>0 / 180</b></div></div><input class="finput kb-pm-kaynak" value="2027 Bütçe teklifi" placeholder="Kaynak (isteğe bağlı) · ör. TÜİK · 3 Kasım" aria-label="Esnaf kaynağı"></div></div>
+            <p class="fhint">Okur Hesabım'da profil seçtiyse sitede kendi profilinin metni öne çıkar; birden çok profili varsa hepsi sırayla görünür. Metni olan profiller bu haberi Bana Etkisi sayfasındaki kendi sekmesinde görür. Profil listesi sitenin Hesabım > Tercihler listesiyle aynıdır.</p>
           </div>
         </div>
       </div>
@@ -265,23 +270,13 @@
     <!-- ================= BİLDİRİM ================= -->
     <div class="sa-form-panel" id="pBildirim" role="tabpanel" hidden>
       <div class="form-sec">
-        <div class="kb-iki">
+        <div>
           <div class="form-grid">
             <div class="frow"><span class="flabel">Kanallar</span>
               <div class="kb-secenek-grup">
                 <label class="kb-secenek"><input type="checkbox" checked>Telefon bildirimi</label>
                 <label class="kb-secenek"><input type="checkbox" checked>Web bildirimi</label>
               </div><span class="fhint">Mobil uygulama gelene kadar telefon bildirimi web üzerinden gider.</span></div>
-            <div class="frow"><span class="flabel">Kime</span>
-              <div class="kb-secim is-dolu" data-deger="gundem" data-bos="Bütün aboneler">
-                <button type="button" class="kb-secim-btn" data-acilir="bfHedef" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">Gündem takipçileri</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
-                <div class="pnl-menu kb-secim-menu" id="bfHedef"><div class="kb-secim-liste" role="listbox">
-                  <button type="button" data-deger="hepsi" data-ad="Bütün aboneler">Bütün aboneler<span class="ks-alt">184.200</span></button>
-                  <button type="button" data-deger="gundem" data-ad="Gündem takipçileri" class="is-sec">Gündem takipçileri<span class="ks-alt">96.410</span></button>
-                  <button type="button" data-deger="etiket" data-ad="“Asgari Ücret” takipçileri">“Asgari Ücret” takipçileri<span class="ks-alt">12.380</span></button>
-                  <button type="button" data-deger="istanbul" data-ad="İstanbul'daki okurlar">İstanbul'daki okurlar<span class="ks-alt">61.950</span></button>
-                </div></div>
-              </div><span class="fhint">Takip ve konuma göre hedefleme üyelik kararına (B-14) bağlı; sayılar örnek.</span></div>
             <div class="frow"><label for="bBaslik">Bildirim başlığı <span class="zorunlu">*</span><span class="fdil">TR</span></label>
               <input class="finput" id="bBaslik" data-alan="push-baslik" data-sayac="60|65" value="Asgari ücrette ilk toplantı 4 Aralık'ta">
               <div class="kb-cubuk"><span></span></div>
@@ -302,31 +297,6 @@
                   <div class="pnl-menu kb-tarih-menu" id="bTarihMenu" role="dialog" aria-label="Tarih ve saat seç"></div>
                 </div>
               </div></div>
-          </div>
-          <div class="kb-onizle-kap">
-            <div class="kb-onizle-sec" data-segment>
-              <button type="button" class="is-on" data-hedef="onzTel" aria-pressed="true">Telefon</button>
-              <button type="button" data-hedef="onzWeb" aria-pressed="false">Web</button>
-            </div>
-            <div id="onzTel">
-              <div class="kb-telefon"><div class="kb-telefon-ekran">
-                <div class="kt-zaman">16.05</div><div class="kt-tarih">23 Kasım Pazartesi</div>
-                <div class="kb-push">
-                  <span class="kp-ikon kb-logo-isaret"></span>
-                  <div class="kp-ic"><div class="kp-ust"><span>DADA HABER</span><span>şimdi</span></div>
-                    <b data-alan="push-baslik">Asgari ücrette ilk toplantı 4 Aralık'ta</b>
-                    <p data-alan="push-metin">Komisyon taraflarla ilk kez masaya oturuyor; karar yıl sonuna kadar bekleniyor. Yeni ücret ocak bordrosundan geçerli.</p></div>
-                  <span class="kp-resim" style="background-image:url(../../veri/gorsel/kucuk/p203.jpg)"></span>
-                </div>
-              </div></div>
-            </div>
-            <div id="onzWeb" hidden>
-              <div class="kb-web-push">
-                <span class="kp-ikon kb-logo-isaret"></span>
-                <div><b data-alan="push-baslik">Asgari ücrette ilk toplantı 4 Aralık'ta</b><p data-alan="push-metin">Komisyon taraflarla ilk kez masaya oturuyor; karar yıl sonuna kadar bekleniyor. Yeni ücret ocak bordrosundan geçerli.</p><small>dadahaber.com · Chrome</small></div>
-              </div>
-            </div>
-            <p class="kb-onizle-not">Önizleme yaklaşıktır; telefonun ve tarayıcının görünümüne göre değişir.</p>
           </div>
         </div>
       </div>
@@ -365,7 +335,7 @@ Komisyon taraflarla ilk kez masaya oturuyor; karar yıl sonuna kadar bekleniyor.
 https://dadahaber.com/gundem/asgari-ucret-ilk-toplanti"><i class="fa-brands fa-telegram" aria-hidden="true"></i>Telegram<span class="kp-durum"></span></button>
         </div>
 
-        <div class="kb-iki kb-ust-bosluk">
+        <div class="kb-ust-bosluk">
           <div class="form-grid">
             <div class="kb-hesap-kutu">
               <span class="kh-ava kb-logo-isaret"></span>
@@ -374,7 +344,20 @@ https://dadahaber.com/gundem/asgari-ucret-ilk-toplanti"><i class="fa-brands fa-t
             </div>
             <div class="frow" data-sosyal-uyari hidden><div class="kb-hata-not"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Instagram bağlantısının süresi doldu. Gönderi hazırlanabilir ama hesap yeniden bağlanana kadar yayımlanmaz.<a data-hedef="sosyal-medya.hesaplar" href="../../cekirdek/yakinda.html?s=sosyal-medya.hesaplar">Hesabı bağla</a></div></div>
             <div class="frow"><label for="soMetin">Gönderi metni <span class="fdil">TR</span><button type="button" class="btn btn-ghost btn-sm kb-sag" data-sosyal-uret><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>Yeniden üret</button></label>
+              <div class="kb-sosyal-kutu">
+              <div class="kb-sosyal-arac" role="toolbar" aria-label="Gönderi metni biçimi">
+                <button type="button" data-sa="b" title="Kalın (X, Instagram, Facebook, LinkedIn'de Unicode harfle; ç ğ ı ö ş ü değişmez)" aria-label="Kalın"><i class="fa-solid fa-bold" aria-hidden="true"></i></button>
+                <button type="button" data-sa="i" title="İtalik (Unicode harfle)" aria-label="İtalik"><i class="fa-solid fa-italic" aria-hidden="true"></i></button>
+                <span class="kz-ayir"></span>
+                <button type="button" data-sa="emoji" title="Emoji" aria-label="Emoji"><i class="fa-regular fa-face-smile" aria-hidden="true"></i></button>
+                <button type="button" data-sa="etiket" title="Etiket (#)" aria-label="Etiket"><i class="fa-solid fa-hashtag" aria-hidden="true"></i></button>
+                <button type="button" data-sa="kisi" title="Kişi ya da hesap (@)" aria-label="Kişi etiketle"><i class="fa-solid fa-at" aria-hidden="true"></i></button>
+                <button type="button" data-sa="link" title="Haber bağlantısı" aria-label="Haber bağlantısı ekle"><i class="fa-solid fa-link" aria-hidden="true"></i></button>
+                <span class="kb-sa-not">Kalın ve italik Unicode harfle yapılır</span>
+                <div class="kb-emoji" hidden><button type="button" data-emoji="📰" aria-label="📰">📰</button><button type="button" data-emoji="🔴" aria-label="🔴">🔴</button><button type="button" data-emoji="⚡" aria-label="⚡">⚡</button><button type="button" data-emoji="📌" aria-label="📌">📌</button><button type="button" data-emoji="📊" aria-label="📊">📊</button><button type="button" data-emoji="📈" aria-label="📈">📈</button><button type="button" data-emoji="📉" aria-label="📉">📉</button><button type="button" data-emoji="💰" aria-label="💰">💰</button><button type="button" data-emoji="🏛️" aria-label="🏛️">🏛️</button><button type="button" data-emoji="⚽" aria-label="⚽">⚽</button><button type="button" data-emoji="🏀" aria-label="🏀">🏀</button><button type="button" data-emoji="🛡️" aria-label="🛡️">🛡️</button><button type="button" data-emoji="🌍" aria-label="🌍">🌍</button><button type="button" data-emoji="🎓" aria-label="🎓">🎓</button><button type="button" data-emoji="❄️" aria-label="❄️">❄️</button><button type="button" data-emoji="🚗" aria-label="🚗">🚗</button><button type="button" data-emoji="✈️" aria-label="✈️">✈️</button><button type="button" data-emoji="✅" aria-label="✅">✅</button><button type="button" data-emoji="⚠️" aria-label="⚠️">⚠️</button><button type="button" data-emoji="👉" aria-label="👉">👉</button></div>
+              </div>
               <textarea class="ftext" id="soMetin" data-sosyal-metin rows="7"></textarea>
+              </div>
               <div class="kb-cubuk"><span></span></div>
               <div class="char-meter kb-sosyal-say"><span class="kb-sayaclar"></span><b>0 / 280</b></div></div>
             <div class="frow"><span class="flabel">Görsel oranı<span class="fhint kb-sag" data-oran-not></span></span>
@@ -394,8 +377,47 @@ https://dadahaber.com/gundem/asgari-ucret-ilk-toplanti"><i class="fa-brands fa-t
                 </div>
               </div></div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside class="side-card" aria-label="Yayın">
+    <div class="kb-yan-onizle" data-panel-icin="pBildirim" hidden>
+      <section class="pnl-card"><div class="pc-head"><h2 class="pc-title"><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>Bildirim önizlemesi</h2></div>
+      <div class="pc-body">
           <div class="kb-onizle-kap">
-            <div class="kb-sosyal-kart p-x">
+            <div class="kb-onizle-sec" data-segment>
+              <button type="button" class="is-on" data-hedef="onzTel" aria-pressed="true">Telefon</button>
+              <button type="button" data-hedef="onzWeb" aria-pressed="false">Web</button>
+            </div>
+            <div id="onzTel">
+              <div class="kb-telefon"><div class="kb-telefon-ekran">
+                <div class="kt-zaman">16.05</div><div class="kt-tarih">23 Kasım Pazartesi</div>
+                <div class="kb-push">
+                  <span class="kp-ikon kb-logo-isaret"></span>
+                  <div class="kp-ic"><div class="kp-ust"><span>DADA HABER</span><span>şimdi</span></div>
+                    <b data-alan="push-baslik">Asgari ücrette ilk toplantı 4 Aralık'ta</b>
+                    <p data-alan="push-metin">Komisyon taraflarla ilk kez masaya oturuyor; karar yıl sonuna kadar bekleniyor. Yeni ücret ocak bordrosundan geçerli.</p></div>
+                  <span class="kp-resim" style="background-image:url(../../veri/gorsel/kucuk/p203.jpg)"></span>
+                </div>
+              </div></div>
+            </div>
+            <div id="onzWeb" hidden>
+              <div class="kb-web-push">
+                <span class="kp-ikon kb-logo-isaret"></span>
+                <div><b data-alan="push-baslik">Asgari ücrette ilk toplantı 4 Aralık'ta</b><p data-alan="push-metin">Komisyon taraflarla ilk kez masaya oturuyor; karar yıl sonuna kadar bekleniyor. Yeni ücret ocak bordrosundan geçerli.</p><small>dadahaber.com · Chrome</small></div>
+              </div>
+            </div>
+            <p class="kb-onizle-not">Önizleme yaklaşıktır; telefonun ve tarayıcının görünümüne göre değişir.</p>
+          </div>
+      </div></section>
+    </div>
+    <div class="kb-yan-onizle" data-panel-icin="pSosyal" hidden>
+      <section class="pnl-card"><div class="pc-head"><h2 class="pc-title"><i class="fa-solid fa-eye" aria-hidden="true"></i>Canlı önizleme</h2><span class="kb-kap-alt" data-sosyal-ad-platform></span></div>
+      <div class="pc-body">
+          <div class="kb-onizle-kap">
+            <div class="kb-sosyal-kart p-x" data-sosyal-onizle>
               <div class="ksk-tg">
                 <div class="ksk-bas"><span class="kh-ava kb-logo-isaret"></span><div><b><span data-sosyal-ad>Dada Haber</span><i class="fa-solid fa-circle-check" aria-hidden="true"></i></b><span data-sosyal-tutamac>@dadahaber</span> · 1 dk</div><i class="fa-solid fa-ellipsis ksk-noktalar" aria-hidden="true"></i></div>
                 <div class="ksk-metin"></div>
@@ -404,14 +426,10 @@ https://dadahaber.com/gundem/asgari-ucret-ilk-toplanti"><i class="fa-brands fa-t
                 <div class="ksk-eylem"><i class="fa-regular fa-comment" aria-hidden="true"></i><i class="fa-solid fa-retweet" aria-hidden="true"></i><i class="fa-regular fa-heart" aria-hidden="true"></i><i class="fa-solid fa-chart-simple" aria-hidden="true"></i><i class="fa-regular fa-bookmark" aria-hidden="true"></i></div>
               </div>
             </div>
-            <p class="kb-onizle-not">Canlı önizleme · platformun gerçek görünümüne yakındır</p>
+            <p class="kb-onizle-not">Platformun gerçek görünümüne yakındır</p>
           </div>
-        </div>
-      </div>
+      </div></section>
     </div>
-  </section>
-
-  <aside class="side-card" aria-label="Yayın">
     <section class="pnl-card">
       <div class="pc-head"><h2 class="pc-title"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i>Yayın</h2><span class="status-dot" data-state="yayinda" data-yeni-durum="taslak" title="Yayında"></span></div>
       <div class="pc-body sc-stack">
@@ -434,7 +452,7 @@ https://dadahaber.com/gundem/asgari-ucret-ilk-toplanti"><i class="fa-brands fa-t
         <div class="kb-surum" data-yeni-gizle><span><b>Sürüm 4</b> · son değişiklik 23.11.2026 15.20 · Ayşe Yıldız</span><button type="button" class="kb-bag" data-bildir-surum>Sürüm geçmişi ve düzeltmeler</button></div>
       </div>
     </section>
-    <section class="pnl-card">
+    <section class="pnl-card" data-one-cik="pSeo">
       <div class="pc-head"><h2 class="pc-title"><i class="fa-solid fa-gauge" aria-hidden="true"></i>SEO skoru</h2></div>
       <div class="pc-body">
         <p class="fhint" data-yeni-goster hidden>Skor, başlık, spot ve görsel girilince hesaplanır.</p>
@@ -460,7 +478,7 @@ https://dadahaber.com/gundem/asgari-ucret-ilk-toplanti"><i class="fa-brands fa-t
 </main>
 </div>
 <script src="../../cekirdek/js/kabuk.js?v=32860c0c"></script>
-<script src="../../cekirdek/js/bilesen.js?v=1f824c29"></script>
-<script src="../../cekirdek/js/form.js?v=9a1876b3"></script>
+<script src="../../cekirdek/js/bilesen.js?v=f9588f79"></script>
+<script src="../../cekirdek/js/form.js?v=9b3127cf"></script>
 </body>
 </html>

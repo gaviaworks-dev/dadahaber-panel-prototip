@@ -525,5 +525,40 @@
         "olcu": "1200×800"
       }
     ]
+  },
+  "bana_etkisi_profilleri": {
+    "_kaynak": "public site hesabim-tercihler.html ve bana-etkisi.html (okurun seçtiği profil; birden fazla olabilir)",
+    "profiller": [
+      {
+        "id": "ogrenci",
+        "ad": "Öğrenci",
+        "ikon": "fa-graduation-cap"
+      },
+      {
+        "id": "calisan",
+        "ad": "Çalışan",
+        "ikon": "fa-briefcase"
+      },
+      {
+        "id": "emekli",
+        "ad": "Emekli",
+        "ikon": "fa-person-cane"
+      },
+      {
+        "id": "ev-sahibi",
+        "ad": "Ev sahibi",
+        "ikon": "fa-house"
+      },
+      {
+        "id": "kiraci",
+        "ad": "Kiracı",
+        "ikon": "fa-key"
+      },
+      {
+        "id": "esnaf",
+        "ad": "Esnaf",
+        "ikon": "fa-store"
+      }
+    ]
   }
 }
