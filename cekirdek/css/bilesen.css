@@ -695,7 +695,7 @@
 .kb-sosyal-arac>button.is-pasif{color:var(--line-2)}
 .kb-sa-platform{margin-left:auto;font-size:11px;font-weight:700;color:var(--muted);white-space:nowrap}
 .kb-sosyal-say .kb-sayaclar span.over b,.kb-sosyal-say .kb-sayaclar span.over{color:var(--danger)}
-p.kb-sa-not{display:flex;gap:7px;align-items:flex-start;margin:6px 0 0;line-height:1.45}
+p.kb-sa-not{display:flex;gap:7px;align-items:flex-start;margin:0;line-height:1.45}
 p.kb-sa-not i{margin-top:2px;color:var(--info)}
 .kb-sosyal-ek{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .kb-sosyal-ek[hidden],.kb-sosyal-ek [hidden]{display:none}
@@ -1487,3 +1487,76 @@ body.kb-giris-sayfa{min-height:100vh;margin:0;display:grid;grid-template-columns
 [data-liste][data-gorunum="liste"] .kb-takvim{padding-bottom:0}
 @media(max-width:640px){[data-liste] .kb-takvim{padding:10px 12px 0}}
 [data-liste][data-gorunum="izgara"] .rcp-cell > .kb-ava:first-child{margin:12px 0 0 48px} /* görselsiz kartta seçim kutusu avatarın üstüne binmez (d2-sosyal) */
+
+/* ================= LİSTE ARAÇ SATIRI (.filter-bar.kb-arac) · tek satır, sabit yükseklik, asla bölünmez ================= */
+.filter-bar.kb-arac{display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:12px;height:64px;padding:0 22px;border-bottom:1px solid var(--line);min-width:0}
+.kb-arac-sol{display:flex;align-items:center;gap:8px;min-width:0;flex:1 1 auto}
+.kb-arac-sol .chips{flex-wrap:nowrap;overflow:hidden;min-width:0}
+.kb-arac-sag{display:flex;align-items:center;gap:8px;flex:0 1 auto;min-width:0;justify-content:flex-end}
+.kb-arac-sag>*{flex:none}
+.kb-arac .fb-search{flex:0 1 260px;min-width:160px;max-width:300px}
+.kb-arac .chip.kb-cop{margin-left:4px}
+.kb-arac .kb-secim-btn{height:38px;white-space:nowrap}
+.kb-arac .kb-secim .ks-deger{max-width:140px;overflow:hidden;text-overflow:ellipsis}
+.kb-arac-ara-btn{display:none}
+.kb-arac.is-ara-ikon .fb-search{display:none}
+.kb-arac.is-ara-ikon .kb-arac-ara-btn{display:inline-grid}
+.kb-arac.is-ara-ikon.is-ara-acik .fb-search{display:block;flex:1 1 240px}
+.kb-arac.is-ara-ikon.is-ara-acik .kb-arac-ara-btn{display:none}
+.kb-arac.is-ara-ikon.is-ara-acik .kb-arac-sol{display:none}
+.kb-arac-diger,.kb-arac-filtre{position:relative;flex:none}
+.kb-arac-diger>.chip i,.kb-arac-filtre>.chip i{font-size:11px}
+.kb-arac-diger-menu{min-width:200px;max-width:calc(100vw - 32px);left:auto;right:0}
+.kb-arac-diger-menu .chip{display:flex;width:100%;border:none;border-radius:var(--radius-sm);justify-content:space-between;padding:9px 12px}
+.kb-arac-diger-menu .chip.is-on{background:rgba(var(--acc-rgb),.14)}
+.kb-arac-filtre .ch-cnt{background:var(--acc);color:var(--on-acc)}
+.kb-arac-filtre-pen{width:340px;max-width:calc(100vw - 32px);max-height:min(70vh,560px);overflow-y:auto;padding:14px;right:0;left:auto}
+.kb-arac-grup{border:none;margin:0 0 14px;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.kb-arac-grup legend{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;padding:0}
+.kb-arac-grup .kb-secenek{min-height:36px;padding:6px 10px;font-size:12.5px}
+.kb-arac-filtre-alt{position:sticky;bottom:-14px;display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 -14px -14px;padding:10px 14px;background:var(--paper);border-top:1px solid var(--line)}
+/* açık süzgeç şeridi: yalnız süzgeç varken; yoksa yer tutmaz */
+.kb-arac-etiket{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding:8px 22px;border-bottom:1px solid var(--line);background:var(--bg)}
+.kb-arac-etiket[hidden]{display:none}
+.kb-arac-etk{display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 4px 0 10px;border-radius:var(--radius-sm);background:var(--paper);border:1px solid var(--line);font-size:12px;white-space:nowrap;flex:none}
+.kb-arac-etk button{position:relative;width:22px;height:22px;border:none;background:none;border-radius:6px;color:var(--muted);cursor:pointer;display:grid;place-items:center;font-size:10px}
+.kb-arac-etk button::after{content:"";position:absolute;inset:-11px}
+.kb-arac-etk button:hover{color:var(--danger);background:var(--danger-tint)}
+.kb-arac-etiket .kb-bag{flex:none;margin-left:4px;font-size:12.5px}
+@media(max-width:640px){.filter-bar.kb-arac{height:60px;padding:0 12px;gap:8px}.kb-arac .fb-search{min-width:0}.kb-arac-etiket{padding:8px 12px}}
+@media(max-width:1024px){.filter-bar.kb-arac{overflow:visible;padding-left:16px;padding-right:16px}}
+@media(max-width:640px){.kb-arac .fb-search{min-width:0}}
+.kb-arac-aralik{position:relative;flex:none}
+.kb-arac-aralik>.chip b{font-weight:700}
+.kb-arac-aralik-pen{right:0;left:auto;padding:12px;width:max-content;max-width:calc(100vw - 32px)}
+.kb-arac-aralik-pen .kb-aralik{flex-wrap:wrap}
+.kb-arac.is-ikon .kb-arac-sag .kb-arac-yazi{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.kb-arac.is-ikon .kb-arac-sag .chip{padding-left:10px;padding-right:10px}
+.kb-arac.is-ikon,.kb-arac.is-ikon .kb-arac-sol,.kb-arac.is-ikon .kb-arac-sag{gap:6px}
+.kb-arac.is-ikon .chip{padding:7px 10px;gap:5px}
+.kb-arac.is-ikon .kb-arac-sol .chips{display:none}
+.kb-arac.is-ikon .kb-arac-diger-menu{left:0;right:auto}
+.kb-arac-sol .chips{flex:0 0 auto}
+.kb-arac-sol{flex:0 1 auto}
+.kb-arac-sag{flex:1 1 auto}
+
+/* ================= BOŞLUK KURALI (Beyar): ait olduğuna yakın, komşusuna uzak =================
+   Ölçek (çekirdek): --b-1 4 · --b-2 8 · --b-3 12 · --b-4 16 · --b-5 20 · --b-6 24 px. Sayfada elle boşluk yazılmaz.
+   - Form bölümünde (.form-sec) art arda gelen alan grupları arasında belirgin boşluk (--b-5).
+   - İpucu ve açıklama (.fhint, .kb-aciklama) ait olduğu öğenin hemen altında küçük boşlukla (--b-2).
+   - Art arda anahtar satırları (--b-4). Düşük öncelikli (:where) yazıldı: bileşenin kendi bilinçli boşluğu geçerli kalır. */
+:root{--b-1:4px;--b-2:8px;--b-3:12px;--b-4:16px;--b-5:20px;--b-6:24px}
+:where(.form-sec) > :where(* + *){margin-top:var(--b-5)}
+:where(.form-sec) > :where(.form-sec-tt + *){margin-top:0}
+:where(.form-sec) > :where(.toggle-row + .toggle-row){margin-top:var(--b-4)}
+:where(.form-sec, .pc-body, .sa-form-panel, .side-card) > :where(* + .fhint, * + .kb-aciklama){margin-top:var(--b-2)}
+:where(.form-sec) > :where(.fhint + *, .kb-aciklama + *){margin-top:var(--b-5)}
+.fhint.kb-ust-bosluk,.pnl-card + .fhint,.pnl-card + p.fhint{margin-top:var(--b-2)} /* dipnot: ait olduğu kartın hemen altında (boşluk kuralı) */
+:where(.pnl-main, .sa-form-panel, .pc-body, .form-sec, .side-card) > :where(.kb-bant + *){margin-top:var(--b-4)} /* bant altındaki öğe yapışmaz */
+.form-grid > .fhint{margin-top:calc(var(--b-2) - 18px)} /* ızgaradaki ipucu ait olduğu alana yaklaşır */
+.char-meter + :not(.ferr){margin-top:var(--b-2)} /* sayaçtan sonraki öğe sayaca yapışmaz */
+.kb-giris-kart > .fhint{margin-top:calc(var(--b-2) - 16px)}
+:where(.pnl-card) > :where(.kb-bant){margin:var(--b-4) 22px} /* kart içindeki bant kenarlara ve araç satırına yapışmaz */
+@media(max-width:1024px){:where(.pnl-card) > :where(.kb-bant){margin:var(--b-3) 16px}}
+.kb-profil-metin .kb-pm-kaynak{margin-top:var(--b-2)} /* profil metninin kaynak satırı sayaçtan ayrışır */
+.sa-form-tab .ch-cnt{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;margin-left:6px;padding:0 5px;border-radius:var(--radius-sm);background:var(--danger-tint);color:var(--danger);font-size:10.5px;font-weight:800;font-variant-numeric:tabular-nums} /* sekmede sorun sayısı rozeti */

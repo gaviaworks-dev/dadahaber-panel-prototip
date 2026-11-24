@@ -225,6 +225,7 @@
   function kapatHepsi(haric){
     document.querySelectorAll('[data-acilir][aria-expanded="true"]').forEach(function(b){
       if(b === haric) return;
+      var mm = document.getElementById(b.getAttribute('data-acilir')); if(haric && mm && mm.contains(haric)) return; /* iç içe açılır: üst menü açık kalır (araç satırında tarih aralığı) */
       b.setAttribute('aria-expanded', 'false');
       var m = document.getElementById(b.getAttribute('data-acilir')); if(m) m.classList.remove('open');
     });
