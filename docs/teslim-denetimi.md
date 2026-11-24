@@ -41,7 +41,9 @@ Modül: ________ · Teammate: ________ · Tarih: ________
 ## 5 · Form
 - [ ] Telefon ülke kodlu ve maskeli, e-posta yazılırken doğrulanıyor.
 - [ ] Havuzdan gelen değer (şehir, kategori, yazar, etiket, kaynak…) aranabilir listeden seçiliyor; yoksa aynı yerden ekleniyor.
-- [ ] Zorunlu alan doğrulaması, hatalı sekme işareti, kaydet çubuğu ve "kaydedildi" durumu.
+- [ ] **Zorunlu alan ilkesi (CLAUDE.md Tutarlılık):** zorunlu yalnız o olmadan sitede bozuk görünecek ya da yayımlanamayacak alan; taslak için yalnız başlık/ad; sistemin doldurduğu (yazar, adres, yayın zamanı, SEO) ve AI'ın ürettiği alanlar zorunlu değil; editörün dolduracağı zorunlu ≤ 6 (fazlası Beyar'a gerekçeyle); zorunlular ilk sekmede ve formun üst kısmında.
+- [ ] Zorunlu liste **modül kaydında** (`moduller.json` → `ayarlar.zorunlu.<form>` = `{taslak, yayin, sistem}`); sayfada form kabında `data-zorunlu-kayit="modul.form"`, alanlarda `data-alan-id`; sayfada elle `data-zorunlu` ya da yıldız yok.
+- [ ] Zorunlu alan eksikken ana düğme pasif görünür ama tıklanabilir; tıklanınca eksik alan kırmızı çerçeve + neden + kaydırma; taslak düğmesi `data-kaydet-tur="taslak"` yalnız taslak listesini arar. Bildirim düğmelerin üstüne binmez.
 - [ ] Gizli değerler maskeli; yalnızca oluşturma anında açık.
 - [ ] Hassas işlemler e-posta koduyla (K15).
 
@@ -52,6 +54,13 @@ Modül: ________ · Teammate: ________ · Tarih: ________
 - [ ] Onay gereken içerikte okuma onayı bileşeni, rol ayarına göre (Y2, Y3, YS5–YS7).
 - [ ] Sosyal metin platformun kendi editör yetenekleriyle; @ ve # önerileri.
 
+## 5c · Dalga 1'den eklenen kontroller
+- [ ] Listelerde `data-liste-ad="…"` (tekil, küçük harf); metinlerde "haber" sabiti kalmadı.
+- [ ] Onay ve e-posta kodu gereken işlemler pencerede (`data-onay-baslik` zinciri); onay sonrası satır durumu `data-sonra-durum`.
+- [ ] Silinemez satırda `ia-btn kb-kilit disabled` + nedeni bantta; sayfası olmayan kayıtta satır tıklama "görüntüle" eylemini yapar.
+- [ ] Sayfa `body[data-sayfa]` kayıttaki anahtarla; yetkisiz rol "yetki yok" kapısını görür.
+- [ ] Teammate yalnız `menu_yaz.py --yalniz <klasör>` çalıştırdı; ortak dosyaya yazmadı; eksik bileşeni lead'e bildirdi.
+
 ## 6 · Yerleşim ve erişim
 - [ ] Sayfa başlığı, sağ üst eylemler, süzgeç çubuğu, sekmeler, yan panel ve kaydet çubuğu yerinde.
 - [ ] Tek kapat (×); yıkıcı işlem üstüne gelince kırmızı; ikincil kontroller çan gibi tepki veriyor.
@@ -60,3 +69,22 @@ Modül: ________ · Teammate: ________ · Tarih: ________
 - [ ] Tek `<h1>`, seviye atlanmıyor; sayılar eşit genişlikli; tarih biçimi `24.11.2026 14.30`.
 - [ ] Örnek içerik veri sözlüğünden; lorem ipsum, gerçek anahtar ve kişisel veri yok.
 - [ ] Sayfa içi JS hatası yok.
+
+
+---
+
+## Dalga 1 denetim sonucu (24.11.2026)
+
+| Modül | Teammate | Sayfa | Sök-tak / kayıt | JS | Taşma (4 genişlik) | Zorunlu alan ilkesi | Bileşen kaydı |
+|---|---|---|---|---|---|---|---|
+| Kimlik ve Yetki | d1-kimlik | 17 | ✓ | ✓ | ✓ 4 genişlik | ✓ 7 form (`kimlik-yetki.rol`, `.izin-grubu`, `.profil`, `.giris`, `.sifremi-unuttum`, `.yeni-sifre`, `.davet-kabul`) | ✓ |
+| Kullanıcılar | d1-kimlik | 5 | ✓ | ✓ | ✓ 4 genişlik | ✓ 5 form (`kullanicilar.davet`, `.uye`, `.uye-durum`, `.okur`, `.okur-durum`) | ✓ |
+| Denetim İzi | d1-denetim | 4 | ✓ | ✓ | ✓ | ✓ (form yok) | ✓ |
+| Raporlar | d1-denetim | 2 | ✓ | ✓ | ✓ | ✓ `raporlar.disa-aktarim` | ✓ |
+| Yasal Metinler | d1-yasal | 4 | ✓ | ✓ | ✓ 44/44 | ✓ `yasal-metinler.metin` (2 alan) | ✓ |
+| Sayfalar | d1-yasal | 2 | ✓ | ✓ | ✓ | ✓ `sayfalar.sayfa` (2 alan) | ✓ |
+| Entegrasyonlar | d1-entegrasyon | 3 | ✓ | ✓ | ✓ 20/20 | ✓ `entegrasyonlar.ayar`, `.anahtar` (2+2) | ✓ |
+| Sistem Sağlığı | d1-entegrasyon | 2 | ✓ | ✓ | ✓ | ✓ (form yok) | ✓ |
+
+- Lead denetimi: `menu_yaz.py --kontrol` 0 sorun (kırık bağlantı yok); 44 sayfada JS hatası 0; kayıtta 20 formun zorunlu listesi, hiçbirinde 5'ten fazla zorunlu yok; sayfalarda elle `data-zorunlu`/yıldız 0.
+- Bilinçli istisnalar (ekranda nedeni yazıyor): denetim izi ve loglar silinemez (Çöp yok); cron görevleri kodda tanımlı (silinmez); API anahtarı çöpe değil "İptal edildi"ye geçer; yasal metnin eski sürümleri ve onay kayıtları silinemez.

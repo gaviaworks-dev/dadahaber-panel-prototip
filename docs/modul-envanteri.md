@@ -233,29 +233,30 @@ K1, K3, K7 ve K16 Yasin Bey'e de soruldu; cevabı farklı gelirse yalnızca kay�
 | # | Ekran | Tür | İçerik |
 |---|---|---|---|
 | 1 | **Haberler** | L | Durum sekmeleri (Tümü, Yayında, Taslak, Zamanlanmış; sonda Çöp, K11) + sayaç; süzgeç: kategori, alt konu, yazar, tür, dil, tarih; toplu işlem (kategori değiştir, yayından kaldır, çöpe at); satırda görsel, başlık + tür, kategori, yazar, durum, yayın zamanı, görüntülenme, "AI · otomatik yayımlandı" işareti. Sağ üstte: **Kategoriler**, **Etiketler**, **Yeni haber** |
-| 2 | **Haber düzenle** | D | Formun üstünde tek dil seçici. Sekmeler: **Detay** (görsel web + mobil, başlık, spot, Dada Özet 15 sn / 1 dk + 3 madde, Neden önemli / Bana etkisi / Bundan sonra, gövde zengin metin, tür, ana kategori + alt konu (zorunlu; adres ve SEO buna göre) + isteğe bağlı ek kategori ve alt konular (K10), etiketler, kişi/kurum/takım, yazar, kaynaklar, ilgili haberler, Haberi dinle, yorumlar açık/kapalı) · **SEO** (otomatik başlık, açıklama, anahtar kelime, adres; sayaçlar; arama sonucu önizlemesi) · **Bildirim** (başlık ve içerik sayacı, görsel, gönderim zamanı, telefon önizlemesi; telefon ve web) · **Sosyal Medya** (platform sekmeleri, metin, sayaçlar, oran ve kırpma, hesap durumu, hemen/zamanlı, canlı kart). Yan panel: durum, yayın zamanı, manşet ve son dakika işareti, sürüm. Yapışkan kaydet çubuğu |
+| 2 | **Haber düzenle** | D | Formun üstünde tek dil seçici. Sekmeler: **Detay** (görsel web + mobil, başlık, spot, Dada Özet 15 sn / 1 dk + 3 madde, Neden önemli / Bana etkisi / Bundan sonra, gövde zengin metin, tür, ana kategori + alt konu (zorunlu; adres ve SEO buna göre) + isteğe bağlı ek kategori ve alt konular (K10; alt konu çoklu, ilk seçilen ana), yazar, kaynaklar, ilgili haberler, Haberi dinle, yorumlar açık/kapalı) · **SEO** (otomatik başlık, açıklama, anahtar kelime, adres; sayaçlar; arama sonucu önizlemesi) · **Bildirim** (başlık ve içerik sayacı, görsel, gönderim zamanı, telefon önizlemesi; telefon ve web) · **Sosyal Medya** (platform sekmeleri, metin, sayaçlar, oran ve kırpma, hesap durumu, hemen/zamanlı, canlı kart). Yan panel: durum, yayın zamanı, manşet ve son dakika işareti, sürüm. Yapışkan kaydet çubuğu |
 | 3 | Sürüm geçmişi ve düzeltmeler | P | Zaman damgalı sürümler, fark, "neyin, neden değiştiği" notu (sitede düzeltme notu ve "güncellendi" kronolojisi) |
 | 4 | Kategoriler | P (çekmece) | 8 ana başlık + alt konu ağacı (235 alt konu), sıra, ikon, renk değeri, kategori sayfası SEO'su |
 | 5 | Kategori düzenle | P | |
-| 6 | Etiketler ve varlıklar | P (çekmece) | Konu etiketleri, kişi, kurum, takım, şehir, savunma platformu; birleştir |
-| 7 | Etiket / varlık düzenle | P | |
-| 8 | Yazarlar | L | 36 yazar; bölüm, unvan, yazı sayısı, durum |
-| 9 | Yazar düzenle | D | Fotoğraf (1:1, kırpma), ad, unvan, bölüm, kısa biyografi, sosyal bağlantılar, köşe yazarı mı |
-| 10 | Vitrin: manşet | D | Yalnızca manşet (K16): manşet haberleri (5 slayt) + yanındaki 3 kart, sürükle-bırak, canlı önizleme. Ana sayfanın geri kalanı sabit düzende kendiliğinden dolar |
-| 11 | Son Dakika | L | Şerit ve sayfa tek liste; saat, kategori, başlık, durum; sırala, bitir |
-| 12 | Son dakika ekle | P | Hızlı giriş: başlık, kategori, bağlı haber, bildirim gönder |
-| 13 | Canlı anlatımlar | L | Dakika Dakika anlatımları: canlı / sona erdi |
-| 14 | Canlı anlatım masası | D | Satır ekle (saat, metin, medya), kilit an işaretle, sabitle, anlatımı kapat |
-| 15 | Olay dosyaları (Dada Bağlam) | L | Gelişen olay ve dosyalar |
-| 16 | Dosya düzenle | D | Özet, kronoloji, taraflar, dosya sözlüğü, bağlı haberler |
-| 17 | Günün 5'i | D | Günlük beş haber seçimi (sabah/akşam), sıralama, önizleme |
-| 18 | Dada Doğrula incelemeleri | L | |
-| 19 | İnceleme düzenle | D | İddia, karar etiketi, kanıtlar, kaynaklar |
+| 6 | Yazarlar | L | 36 yazar; bölüm, unvan, yazı sayısı, durum |
+| 7 | Yazar düzenle | D | Fotoğraf (1:1, kırpma), ad, unvan, bölüm, kısa biyografi, sosyal bağlantılar, köşe yazarı mı |
+| 8 | Vitrin: manşet | D | Yalnızca manşet (K16): manşet haberleri (5 slayt) + yanındaki 3 kart, sürükle-bırak, canlı önizleme. Ana sayfanın geri kalanı sabit düzende kendiliğinden dolar |
+| 9 | Son Dakika | L | Şerit ve sayfa tek liste; saat, kategori, başlık, durum; sırala, bitir |
+| 10 | Son dakika ekle | P | Hızlı giriş: başlık, kategori, bağlı haber, bildirim gönder |
+| 11 | Canlı anlatımlar | L | Dakika Dakika anlatımları: canlı / sona erdi |
+| 12 | Canlı anlatım masası | D | Satır ekle (saat, metin, medya), kilit an işaretle, sabitle, anlatımı kapat |
+| 13 | Olay dosyaları (Dada Bağlam) | L | Gelişen olay ve dosyalar |
+| 14 | Dosya düzenle | D | Özet, kronoloji, taraflar, dosya sözlüğü, bağlı haberler |
+| 15 | Günün 5'i | D | Günlük beş haber seçimi (sabah/akşam), sıralama, önizleme |
+| 16 | Dada Doğrula incelemeleri | L | |
+| 17 | İnceleme düzenle | D | İddia, karar etiketi, kanıtlar, kaynaklar |
 
 - Köşe yazısı, röportaj, özel haber, araştırma, analiz, Farklı Bakışlar: ayrı ekran değil, Haber düzenle formunda **tür** seçimiyle açılan alanlar (K2).
 - **Bileşenler:** veri tablosu, toplu işlem, sekmeli düzenleme, dil seçici, zengin metin, görsel alanı (web + mobil), kırpma, aranabilir açılır liste, etiket girişi, tarih-saat seçici, sayaçlı alan, SERP önizlemesi, telefon bildirim önizlemesi, sosyal kart önizlemesi, ağaç, sürükle-bırak liste, zaman çizelgesi, fark görünümü, çekmece.
 - **Roller:** SA ● · GYY ● · ED ● · KE ◐ (yalnızca kendi kategorisi) · SM ◐ (okur; Sosyal Medya sekmesini düzenler) · AN ◐ (salt okunur). Vitrin ve Son Dakika: SA, GYY, ED (öneri).
 - **Sitede:** bölüm ve alt konu sayfaları (123), haber detayları, `kose-yazisi.html`, `yazarlar.html`, `yazar.html`, `etiket.html`, `kisi.html`, `son-dakika.html`, `dakika-dakika*.html`, `canli*.html`, `dada-baglam*.html`, `gunun-5-i.html`, `dada-dogrula*.html`, `farkli-bakislar.html`, `dada-ozet.html`, `bugun-ne-oldu.html` ve `guncellenen-haberler.html` (otomatik), `duzeltme-politikasi.html`, ana sayfa manşeti.
+
+- **Beyar, 24.11.2026:** "Etiketler ve varlıklar" ekranları kaldırıldı (etiket havuzu yok, B2; haberde kişi ve kurum alanı yok). Sitedeki kişi ve kurum sayfalarının panel karşılığı açık konu.
+- Alt konu çoklu seçilir, ilk seçilen ana alt konudur (Beyar, 24.11.2026).
 
 ### D3 · Multimedya ve Medya Havuzu
 
@@ -359,7 +360,7 @@ K1, K3, K7 ve K16 Yasin Bey'e de soruldu; cevabı farklı gelirse yalnızca kay�
 - **Roller:** Yorumlar: SA ● · GYY ● · ED ● (yorumları editörler yönetir, K4). Bülten ve push: SA ● · GYY ● · SM ●. Reklam: SA ● · GYY ◐. Geri bildirim: SA, GYY, ED.
 - **Sitede:** haber detayında Yorumlar, `bulten.html`, `bulten-arsivi.html`, Hesabım bülten ve bildirim ayarları, bildirim izni kartı, `reklam.html` (reklam yer tutucuları Beyar kararıyla kaldırıldı, C25), Görüş bildir pencereleri, `iletisim.html`, `kvkk-basvuru.html`.
 
-**Dada Haber toplamı: kayıtta 74 ekran, şimdi üretilecek 68** (D1 1 · D2 19 · D3 14 · D4 16, bunun 6'sı kapalı · D5 8 · D6 5 · D7 11).
+**Dada Haber toplamı: kayıtta 72 ekran, şimdi üretilecek 66** (D1 1 · D2 17 · D3 14 · D4 16, bunun 6'sı kapalı · D5 8 · D6 5 · D7 11).
 
 ---
 
@@ -378,7 +379,7 @@ K1, K3, K7 ve K16 Yasin Bey'e de soruldu; cevabı farklı gelirse yalnızca kay�
 | Farklı Bakışlar | D2 Haber düzenle · tür | kabul (K2) |
 | Bugün Ne Oldu, Güncellenen Haberler, Arşiv, RSS | otomatik (panel ekranı gerekmez) | — |
 | Yazarlar / Sesler | D2 Yazarlar | ad B-05 |
-| Etiket, kişi/kurum sayfası | D2 Etiketler ve varlıklar | var |
+| Etiket, kişi/kurum sayfası | — (panelde karşılığı yok; etiket sayfaları SEO anahtar kelimelerinden beslenir, kişi/kurum sayfaları açık konu) | Beyar 24.11.2026 |
 | Video, Akış, Canlı Yayın | D3 Videolar | Canlı yayın akışı belirsiz |
 | Podcast | D3 Podcast | var |
 | Haber Dinle, Spiker | D3 Sesli haber ve Spiker | PDF'te "sesli haber" var; Spiker yok |
@@ -435,10 +436,10 @@ Alan ve kutu düzeyi gizlenecekler (izin grupları): AI maliyeti ve token, kayna
 | Grup | Ekran |
 |---|---|
 | Çekirdek (K0–K9) | 59 |
-| Dada Haber (D1–D7) | 74 |
-| **Kayıtta toplam** | **133** |
+| Dada Haber (D1–D7) | 72 |
+| **Kayıtta toplam** | **131** |
 | Kayıtta kapalı, şimdi üretilmeyen (anket, sözlük, firma rehberi; K1) | 6 |
-| **Üretilecek** | **127** |
+| **Üretilecek** | **125** |
 | Çalışma sırasıyla öncelikli | Kabuk + D1 Kontrol Paneli (adım 2) · D2 Haberler tamamı (adım 3) · K3 Site Ayarları (adım 4) |
 
 Her ekran masaüstü, tablet ve telefonda üretilecek. Üretilecek ekranların 43'ü açılır pencere, çekmece ya da tek başına durum sayfasıdır (giriş akışı dahil); bunların çoğu ortak bileşenden türer.
@@ -530,7 +531,6 @@ CLAUDE.md "Tutarlılık": aynı yetenek, onu gerektiren her modülde aynı yerde
 | İnfografik | ● | ● açıklama | ● | ● 3:4 | ◐ | ● | ● |
 | Yazar | ● | ● biyografi | — | ● 1:1 | — | — | ● |
 | Kategori, alt konu | ● | ● açıklama | — | ◐ banner | — | — | ● |
-| Etiket, kişi, kurum | ● | ● açıklama | — | ◐ | — | — | ● |
 | Kulüp | ● | ● | — | ● arma | — | — | ● |
 | Takvim kaydı | — | ● | ● | ◐ | ◐ | ◐ | ● |
 | Resmî ilan | ● | ● | ● | — | — | — | ● |
