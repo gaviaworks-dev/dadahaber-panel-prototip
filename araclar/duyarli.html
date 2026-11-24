@@ -24,7 +24,7 @@ async function olc(f, s){
   });
   if(kesik.length) H('kesik-metin', kesik.slice(0, 3).join(' | ') + (kesik.length > 3 ? ' (+' + (kesik.length - 3) + ')' : ''));
   /* üst üste binen düğmeler (aynı kapta) */
-  var dg = Array.prototype.filter.call(main.querySelectorAll('.btn, .ia-btn, .chip'), function(e){ return gor(e) && !e.closest('.pnl-menu, .kb-kaydet, .kb-kap-alt-cubuk') && e.offsetWidth; }).slice(0, 160), binen = 0;
+  var dg = Array.prototype.filter.call(main.querySelectorAll('.btn, .ia-btn, .chip'), function(e){ return gor(e) && !e.closest('.pnl-menu, .kb-kaydet, .kb-kap-alt-cubuk, .sa-modal-ov:not(.open), .kb-cekmece:not(.open), .kb-pencere:not(.open)') && w.getComputedStyle(e).visibility !== 'hidden' && e.offsetWidth; }).slice(0, 160), binen = 0;
   for(var i = 0; i < dg.length; i++){ var a = dg[i].getBoundingClientRect(); for(var j = i + 1; j < dg.length; j++){ if(dg[i].contains(dg[j]) || dg[j].contains(dg[i])) continue; if(kes(a, dg[j].getBoundingClientRect())){ binen++; if(binen === 1) H('binen', dg[i].textContent.trim().slice(0, 18) + ' × ' + dg[j].textContent.trim().slice(0, 18)); } } }
   /* tablo: kabından genişse kap kaymalı */
   Array.prototype.forEach.call(main.querySelectorAll('.ptable-wrap'), function(t){ if(!gor(t)) return; var tb = t.querySelector('table'); if(tb && tb.scrollWidth > t.clientWidth + 2){ var ox = w.getComputedStyle(t).overflowX; if(ox !== 'auto' && ox !== 'scroll') H('tablo', 'kabından taşıyor, kaymıyor'); } });
@@ -74,6 +74,7 @@ async function olc(f, s){
     f.style.cssText = 'width:' + W + 'px;height:800px;border:0';
     var t = setInterval(function(){ try{ var cw = f.contentWindow; if(cw && !cw._dy){ cw._dy = 1; cw.addEventListener('error', function(e){ hat.push(e.message); }); } }catch(x){} }, 3);
     await new Promise(function(res){ f.onload = res; f.src = '../' + s; document.body.appendChild(f); });
+    try{ var st = f.contentDocument.createElement('style'); st.textContent = '*,*::before,*::after{transition:none!important;animation:none!important}'; f.contentDocument.head.appendChild(st); }catch(x){} /* son durum ölçülür (başsız iframe'de geçişler ilerlemez) */
     await bekle(900); clearInterval(t);
     try{ var r = await olc(f, s); if(hat.length) r.hata.unshift('js: ' + hat[0]); SON.push(r); }catch(e){ SON.push({ sayfa:s, w:W, hata:['test: ' + e.message] }); }
     f.remove();
