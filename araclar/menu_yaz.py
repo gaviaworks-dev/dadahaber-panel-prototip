@@ -59,7 +59,7 @@ def hedef_href(anahtar, sayfa_yolu):
         return goreli(s["dosya"], sayfa_yolu)
     return goreli(YAKINDA, sayfa_yolu) + "?s=" + anahtar
 
-OTURUM_HEDEF = {"oturum.profil": "kimlik-yetki.profil", "oturum.oturumlar": "kimlik-yetki.oturumlar", "oturum.cikis": "kimlik-yetki.giris"}
+OTURUM_HEDEF = {"oturum.profil": "kimlik-yetki.profil", "oturum.oturumlar": "kimlik-yetki.oturumlar", "oturum.cikis": "kimlik-yetki.giris", "oturum.bildirimler": "kimlik-yetki.bildirimler"}
 def oturum_href(anahtar, sayfa_yolu):
     """Hesap menüsü ve çıkış: Kimlik ve Yetki sayfaları hazırsa oraya, değilse yapım aşamasına."""
     k = OTURUM_HEDEF.get(anahtar)
@@ -127,7 +127,7 @@ def bildirim_html(sayfa_yolu):
             f'<div class="kb-bld-bas"><b>Bildirimler</b><span class="kb-bld-say">{okunmadi} okunmamış</span>'
             '<button type="button" class="kb-bld-oku" data-bld-oku>Tümünü okundu say</button></div>'
             f'<div class="kb-bld-liste">{"".join(satirlar)}</div>'
-            f'<a class="kb-bld-alt" href="{esc(yakinda)}?s=oturum.bildirimler">Bütün bildirimler<i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>'
+            f'<a class="kb-bld-alt" href="{esc(oturum_href("oturum.bildirimler", sayfa_yolu))}">Bütün bildirimler<i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>'
             '</div></div>')
 
 # ---------------------------------------------------------------- üst bar
@@ -292,8 +292,12 @@ for p, rel in sayfalar():
             continue
         if not ((KOK / rel).parent / h).resolve().exists():
             sorunlar.append(f"{rel}: kırık bağlantı → {h}")
+    # kapalı modülün kendi sayfaları denetlenmez (modül kapalıyken o sayfalara hiçbir yerden ulaşılmaz);
+    # aranan: açık modüllerin ve çekirdeğin sayfalarında kapalı modüle bağlantı. Düz metin (<pre>, kod) sayılmaz.
+    kapali_sayfa = any(rel.startswith(m["klasor"]) for m in moduller.values() if not m.get("acik") and m.get("klasor"))
+    bag = " ".join(re.findall(r'(?:href|src)="([^"]+)"', yeni))
     for anahtar, s in SAYFALAR.items():
-        if not s["acik"] and goreli(s["dosya"], rel) in yeni:
+        if not kapali_sayfa and not s["acik"] and goreli(s["dosya"], rel) in bag:
             sorunlar.append(f"{rel}: kapalı modüle bağlantı → {anahtar}")
     if '"#"' in yeni:
         sorunlar.append(f'{rel}: boş bağlantı href="#"')
