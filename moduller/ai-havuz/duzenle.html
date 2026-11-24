@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>AI haber düzenle · Dada Haber Yönetim Paneli</title>
+<link rel="stylesheet" href="../../assets/vendor/fontawesome-6.5.2/css/all.min.css?v=c84e8169">
+<link rel="stylesheet" href="../../tema/dadahaber.css?v=64b109bb" data-tema>
+<link rel="stylesheet" href="../../cekirdek/css/kabuk.css?v=b916425a">
+<link rel="stylesheet" href="../../cekirdek/css/bilesen.css?v=6f27dde8">
+<!--P:bas--><script src="../../cekirdek/js/kayit.js?v=8198cce9"></script><script src="../../cekirdek/js/erken.js?v=2cbfb3f6"></script><!--/P:bas-->
+</head>
+<body data-sayfa="ai-havuz.duzenle">
+<div class="sa-app">
+<!--P:menu--><nav class="sa-menu" id="saMenu" aria-label="Ana menü"><div class="sa-menu-head"><a class="kb-logo-bag" href="../kontrol-paneli/index.html" aria-label="Dada Haber Yönetim Paneli"><span class="kb-logo"></span><span class="kb-logo-isaret"></span></a></div><div class="sa-mnav"><a class="sa-mlink" href="../kontrol-paneli/index.html" data-sayfa="kontrol-paneli.ana" data-roller="super gyy editor kat-ed sosyal analist" data-tip="Kontrol Paneli"><i class="fa-solid fa-gauge-high" aria-hidden="true"></i><span class="ml-ad">Kontrol Paneli</span></a><div class="sa-mgrp" data-grup="yayin"><button class="sa-msec" type="button" aria-expanded="true">Yayın Merkezi<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="sa-mgrp-list"><div><a class="sa-mlink" href="../haberler/index.html" data-sayfa="haberler.liste" data-roller="super gyy editor kat-ed sosyal analist" data-tip="Haberler"><i class="fa-solid fa-newspaper" aria-hidden="true"></i><span class="ml-ad">Haberler</span></a><a class="sa-mlink" href="../haberler/vitrin.html" data-sayfa="haberler.vitrin" data-roller="super gyy editor" data-tip="Vitrin ve Son Dakika"><i class="fa-solid fa-star" aria-hidden="true"></i><span class="ml-ad">Vitrin ve Son Dakika</span></a><a class="sa-mlink" href="../haberler/canli.html" data-sayfa="haberler.canli" data-roller="super gyy editor kat-ed" data-tip="Canlı Anlatım"><i class="fa-solid fa-tower-broadcast" aria-hidden="true"></i><span class="ml-ad">Canlı Anlatım</span></a><a class="sa-mlink" href="../haberler/dosyalar.html" data-sayfa="haberler.dosyalar" data-roller="super gyy editor" data-tip="Dosyalar ve Formatlar"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span class="ml-ad">Dosyalar ve Formatlar</span></a><a class="sa-mlink" href="../haberler/yazarlar.html" data-sayfa="haberler.yazarlar" data-roller="super gyy editor" data-tip="Yazarlar"><i class="fa-solid fa-pen-nib" aria-hidden="true"></i><span class="ml-ad">Yazarlar</span></a></div></div></div><div class="sa-mgrp" data-grup="ai"><button class="sa-msec" type="button" aria-expanded="true">AI Haber Havuzu<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="sa-mgrp-list"><div><a class="sa-mlink" href="index.html" data-sayfa="ai-havuz.havuz" data-roller="super gyy editor kat-ed analist" data-tip="Haber Havuzu"><i class="fa-solid fa-robot" aria-hidden="true"></i><span class="ml-ad">Haber Havuzu</span><span class="pl-cnt">12</span></a><a class="sa-mlink" href="kaynaklar.html" data-sayfa="ai-havuz.kaynaklar" data-roller="super gyy" data-tip="Kaynaklar"><i class="fa-solid fa-rss" aria-hidden="true"></i><span class="ml-ad">Kaynaklar</span></a><a class="sa-mlink" href="motor.html" data-sayfa="ai-havuz.motor" data-roller="super" data-tip="Kaynak Motoru"><i class="fa-solid fa-gears" aria-hidden="true"></i><span class="ml-ad">Kaynak Motoru</span></a></div></div></div><div class="sa-mgrp" data-grup="medya"><button class="sa-msec" type="button" aria-expanded="true">Multimedya<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="sa-mgrp-list"><div><a class="sa-mlink" href="../multimedya/video.html" data-sayfa="multimedya.video" data-roller="super gyy editor kat-ed" data-tip="Video ve Akış"><i class="fa-solid fa-video" aria-hidden="true"></i><span class="ml-ad">Video ve Akış</span></a><a class="sa-mlink" href="../multimedya/podcast.html" data-sayfa="multimedya.podcast" data-roller="super gyy editor" data-tip="Podcast"><i class="fa-solid fa-podcast" aria-hidden="true"></i><span class="ml-ad">Podcast</span></a><a class="sa-mlink" href="../multimedya/sesli.html" data-sayfa="multimedya.sesli" data-roller="super gyy editor" data-tip="Sesli Haber ve Spiker"><i class="fa-solid fa-headphones" aria-hidden="true"></i><span class="ml-ad">Sesli Haber ve Spiker</span></a><a class="sa-mlink" href="../multimedya/galeri.html" data-sayfa="multimedya.galeri" data-roller="super gyy editor kat-ed" data-tip="Galeri ve İnfografik"><i class="fa-solid fa-images" aria-hidden="true"></i><span class="ml-ad">Galeri ve İnfografik</span></a><a class="sa-mlink" href="../multimedya/havuz.html" data-sayfa="multimedya.havuz" data-roller="super gyy editor kat-ed sosyal" data-tip="Medya Havuzu"><i class="fa-solid fa-photo-film" aria-hidden="true"></i><span class="ml-ad">Medya Havuzu</span></a></div></div></div><div class="sa-mgrp" data-grup="dikey"><button class="sa-msec" type="button" aria-expanded="true">Özel Widgetlar<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="sa-mgrp-list"><div><a class="sa-mlink" href="../../cekirdek/yakinda.html?s=ozel-dikeyler.spor" data-sayfa="ozel-dikeyler.spor" data-roller="super gyy kat-ed" data-tip="Spor"><i class="fa-solid fa-futbol" aria-hidden="true"></i><span class="ml-ad">Spor</span></a><a class="sa-mlink" href="../../cekirdek/yakinda.html?s=ozel-dikeyler.takvimler" data-sayfa="ozel-dikeyler.takvimler" data-roller="super gyy editor" data-tip="Takvimler"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i><span class="ml-ad">Takvimler</span></a><a class="sa-mlink" href="../../cekirdek/yakinda.html?s=ozel-dikeyler.veri" data-sayfa="ozel-dikeyler.veri" data-roller="super gyy" data-tip="Veri Bantları"><i class="fa-solid fa-chart-line" aria-hidden="true"></i><span class="ml-ad">Veri Bantları</span></a><a class="sa-mlink" href="../../cekirdek/yakinda.html?s=ozel-dikeyler.ilanlar" data-sayfa="ozel-dikeyler.ilanlar" data-roller="super gyy" data-tip="Resmî İlanlar"><i class="fa-solid fa-bullhorn" aria-hidden="true"></i><span class="ml-ad">Resmî İlanlar</span></a></div></div></div><div class="sa-mgrp" data-grup="sosyal"><button class="sa-msec" type="button" aria-expanded="true">Sosyal Medya<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="sa-mgrp-list"><div><a class="sa-mlink" href="../sosyal-medya/gonderi.html" data-sayfa="sosyal-medya.gonderi" data-roller="super gyy sosyal" data-tip="Gönderi Oluştur"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i><span class="ml-ad">Gönderi Oluştur</span></a><a class="sa-mlink" href="../sosyal-medya/takvim.html" data-sayfa="sosyal-medya.takvim" data-roller="super gyy sosyal analist" data-tip="Yayın Takvimi"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i><span class="ml-ad">Yayın Takvimi</span><span class="pl-cnt">1</span></a><a class="sa-mlink" href="../sosyal-medya/hesaplar.html" data-sayfa="sosyal-medya.hesaplar" data-roller="super gyy sosyal" data-tip="Hesaplar"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i><span class="ml-ad">Hesaplar</span></a></div></div></div><div class="sa-mgrp" data-grup="etkilesim"><button class="sa-msec" type="button" aria-expanded="true">Etkileşim<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="sa-mgrp-list"><div><a class="sa-mlink" href="../../cekirdek/yakinda.html?s=etkilesim.yorumlar" data-sayfa="etkilesim.yorumlar" data-roller="super gyy editor" data-tip="Yorumlar"><i class="fa-solid fa-comments" aria-hidden="true"></i><span class="ml-ad">Yorumlar</span><span class="pl-cnt">5</span></a><a class="sa-mlink" href="../../cekirdek/yakinda.html?s=etkilesim.bulten" data-sayfa="etkilesim.bulten" data-roller="super gyy sosyal" data-tip="Bülten"><i class="fa-solid fa-envelope-open-text" aria-hidden="true"></i><span class="ml-ad">Bülten</span></a><a class="sa-mlink" href="../../cekirdek/yakinda.html?s=etkilesim.push" data-sayfa="etkilesim.push" data-roller="super gyy sosyal" data-tip="Push Bildirimleri"><i class="fa-solid fa-bell" aria-hidden="true"></i><span class="ml-ad">Push Bildirimleri</span></a><a class="sa-mlink" href="../../cekirdek/yakinda.html?s=etkilesim.reklam" data-sayfa="etkilesim.reklam" data-roller="super gyy" data-tip="Reklam Alanları"><i class="fa-solid fa-rectangle-ad" aria-hidden="true"></i><span class="ml-ad">Reklam Alanları</span></a><a class="sa-mlink" href="../../cekirdek/yakinda.html?s=etkilesim.geri" data-sayfa="etkilesim.geri" data-roller="super gyy editor" data-tip="Okur Geri Bildirimleri"><i class="fa-solid fa-inbox" aria-hidden="true"></i><span class="ml-ad">Okur Geri Bildirimleri</span></a></div></div></div><div class="sa-mgrp" data-grup="sistem"><button class="sa-msec" type="button" aria-expanded="true">Sistem<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="sa-mgrp-list"><div><a class="sa-mlink" href="../../cekirdek/kullanicilar/index.html" data-sayfa="kullanicilar.liste" data-roller="super gyy" data-tip="Kullanıcılar"><i class="fa-solid fa-users" aria-hidden="true"></i><span class="ml-ad">Kullanıcılar</span></a><a class="sa-mlink" href="../../cekirdek/kimlik-yetki/index.html" data-sayfa="kimlik-yetki.roller" data-roller="super gyy" data-tip="Roller ve Yetki"><i class="fa-solid fa-user-shield" aria-hidden="true"></i><span class="ml-ad">Roller ve Yetki</span></a><a class="sa-mlink" href="../../cekirdek/site-ayarlari/index.html" data-sayfa="site-ayarlari.ayarlar" data-roller="super gyy" data-tip="Site Ayarları"><i class="fa-solid fa-sliders" aria-hidden="true"></i><span class="ml-ad">Site Ayarları</span></a><a class="sa-mlink" href="../../cekirdek/entegrasyonlar/index.html" data-sayfa="entegrasyonlar.liste" data-roller="super" data-tip="Entegrasyonlar"><i class="fa-solid fa-plug" aria-hidden="true"></i><span class="ml-ad">Entegrasyonlar</span></a><a class="sa-mlink" href="../../cekirdek/yasal-metinler/index.html" data-sayfa="yasal-metinler.liste" data-roller="super gyy" data-tip="Yasal Metinler"><i class="fa-solid fa-file-contract" aria-hidden="true"></i><span class="ml-ad">Yasal Metinler</span></a><a class="sa-mlink" href="../../cekirdek/sayfalar/index.html" data-sayfa="sayfalar.liste" data-roller="super gyy" data-tip="Sayfalar"><i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="ml-ad">Sayfalar</span></a><a class="sa-mlink" href="../../cekirdek/raporlar/index.html" data-sayfa="raporlar.liste" data-roller="super gyy editor kat-ed sosyal analist" data-tip="Raporlar"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i><span class="ml-ad">Raporlar</span></a><a class="sa-mlink" href="../../cekirdek/denetim-izi/index.html" data-sayfa="denetim-izi.liste" data-roller="super gyy analist" data-tip="Denetim İzi"><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i><span class="ml-ad">Denetim İzi</span></a><a class="sa-mlink" href="../../cekirdek/sistem-sagligi/index.html" data-sayfa="sistem-sagligi.ana" data-roller="super" data-tip="Sistem Sağlığı"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i><span class="ml-ad">Sistem Sağlığı</span></a></div></div></div></div><div class="sa-menu-foot"><a class="sa-mlink" href="../../cekirdek/kimlik-yetki/giris.html" data-tip="Çıkış"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i><span class="ml-ad">Çıkış</span></a><a class="sa-sig" href="https://gaviaworks.com" target="_blank" rel="noopener" aria-label="Gaviaworks" data-tip="Gaviaworks"><img src="../../assets/gavia-isaret.png" alt=""></a></div></nav><button class="sa-divider" id="saDivider" type="button" aria-controls="saMenu" aria-label="Menüyü daralt"><span class="sa-grip" aria-hidden="true"></span></button><!--/P:menu-->
+<div class="pnl-overlay" id="pnlOverlay"></div>
+<!--P:ust--><header class="pnl-top"><button class="pnl-burger" id="pnlBurger" type="button" aria-label="Menüyü aç"><i class="fa-solid fa-bars" aria-hidden="true"></i></button><div class="pnl-search" role="search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><label class="sr-only" for="pnlAra">Panelde ara</label><input id="pnlAra" type="search" placeholder="Haber, kişi, kaynak ya da ekran ara…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="araSonuc"><kbd>⌘K</kbd><div class="pnl-menu kb-ara-sonuc" id="araSonuc" role="listbox" aria-label="Arama sonuçları"></div></div><div class="pnl-top-tools"><div class="kb-rol"><button class="kb-rol-btn" type="button" data-acilir="rolMenu" aria-expanded="false" aria-haspopup="true"><i class="fa-solid fa-masks-theater" aria-hidden="true"></i><span class="kr-etk">Rol</span><span class="kr-ad" id="krAd">Süper Admin</span></button><div class="pnl-menu" id="rolMenu" role="menu"><div class="pmenu-head"><b>Prototip rol değiştirici</b><span>Seçilen rolün gördüğü menü ve kutular</span></div><button type="button" data-rol-sec="super"><i class="fa-solid fa-user-tag" aria-hidden="true"></i>Süper Admin</button><button type="button" data-rol-sec="editor"><i class="fa-solid fa-user-tag" aria-hidden="true"></i>Editör</button></div></div><a class="pnl-bell kb-site" href="https://gaviaworks-dev.github.io/dadahaber-prototip/index.html" target="_blank" rel="noopener" data-tip="Siteyi görüntüle" aria-label="Siteyi görüntüle"><i class="fa-solid fa-globe" aria-hidden="true"></i></a><div class="kb-bld-kap"><button class="pnl-bell" type="button" data-acilir="bildirimMenu" aria-expanded="false" aria-haspopup="true" data-tip="Bildirimler" aria-label="Bildirimler"><i class="fa-solid fa-bell" aria-hidden="true"></i><span class="pb-dot"></span></button><div class="pnl-menu kb-bildirim" id="bildirimMenu" role="menu"><div class="kb-bld-bas"><b>Bildirimler</b><span class="kb-bld-say">4 okunmamış</span><button type="button" class="kb-bld-oku" data-bld-oku>Tümünü okundu say</button></div><div class="kb-bld-liste"><a class="kb-bld is-yeni" href="../haberler/vitrin.html" data-roller="super gyy editor"><span class="kb-bld-ico warm"><i class="fa-solid fa-bolt" aria-hidden="true"></i></span><span class="kb-bld-yazi"><b>Son dakika yayımlandı</b><span>İstanbul Valiliği: okullar 24 Kasım&#x27;da da tatil</span></span><span class="kb-bld-saat">16.05</span></a><a class="kb-bld is-yeni" href="index.html" data-roller="super gyy editor kat-ed analist"><span class="kb-bld-ico acc"><i class="fa-solid fa-robot" aria-hidden="true"></i></span><span class="kb-bld-yazi"><b>12 AI taslağı onay bekliyor</b><span>3&#x27;ü görsel eksik · en yüksek güven %94</span></span><span class="kb-bld-saat">15.58</span></a><a class="kb-bld is-yeni" href="../sosyal-medya/hesaplar.html" data-roller="super gyy sosyal"><span class="kb-bld-ico warm"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></span><span class="kb-bld-yazi"><b>Instagram bağlantısının süresi doldu</b><span>17.00 gönderisi bekletiliyor; hesabı yeniden bağlayın</span></span><span class="kb-bld-saat">15.30</span></a><a class="kb-bld is-yeni" href="../../cekirdek/yakinda.html?s=etkilesim.yorumlar" data-roller="super gyy editor"><span class="kb-bld-ico acc"><i class="fa-solid fa-comments" aria-hidden="true"></i></span><span class="kb-bld-yazi"><b>5 yorum onay bekliyor</b><span>En eskisi 42 dakika önce geldi</span></span><span class="kb-bld-saat">15.22</span></a><a class="kb-bld" href="../../cekirdek/yakinda.html?s=etkilesim.geri" data-roller="super gyy editor"><span class="kb-bld-ico info"><i class="fa-solid fa-flag" aria-hidden="true"></i></span><span class="kb-bld-yazi"><b>Okurdan düzeltme bildirimi</b><span>&quot;Asgari ücret nasıl belirleniyor?&quot; haberinde tarih</span></span><span class="kb-bld-saat">14.48</span></a><a class="kb-bld" href="motor.html" data-roller="super"><span class="kb-bld-ico ok"><i class="fa-solid fa-gears" aria-hidden="true"></i></span><span class="kb-bld-yazi"><b>Kaynak taraması tamamlandı</b><span>14.00 çalışması: 18 kaynak, 42 yeni içerik</span></span><span class="kb-bld-saat">14.00</span></a></div><a class="kb-bld-alt" href="../../cekirdek/yakinda.html?s=oturum.bildirimler">Bütün bildirimler<i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></div><div class="kb-hesap"><button class="pnl-me" type="button" data-acilir="hesapMenu" aria-expanded="false" aria-haspopup="true"><span class="pm-ava" id="pmAva">SA</span><span class="pm-id"><span class="pm-name" id="pmName">Selin Aydemir</span><span class="pm-role" id="pmRole">Süper Admin</span></span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="pnl-menu" id="hesapMenu" role="menu"><div class="pmenu-head"><b id="pmMenuAd">Selin Aydemir</b><span id="pmMenuEposta">selin.aydemir@dadahaber.ornek</span></div><a href="../../cekirdek/kimlik-yetki/profil.html"><i class="fa-solid fa-user" aria-hidden="true"></i>Profilim</a><a href="../../cekirdek/kimlik-yetki/oturumlar.html"><i class="fa-solid fa-laptop" aria-hidden="true"></i>Aktif oturumlar</a><a class="kb-yalniz-tel" href="https://gaviaworks-dev.github.io/dadahaber-prototip/index.html" target="_blank" rel="noopener"><i class="fa-solid fa-globe" aria-hidden="true"></i>Siteyi görüntüle</a><div class="pmenu-div"></div><a class="danger" href="../../cekirdek/kimlik-yetki/giris.html"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>Çıkış</a></div></div></div></header><!--/P:ust-->
+
+<!-- AI HABER DÜZENLE: Haber düzenle formunun aynısı (zorunlu kayıt haberler.haber) + AI kaynağı şeridi (güven, çekilme, kaynak, model,
+     kanallar: Editör görür, değiştiremez YS3) + kaynak teyidi (K8) + görsel durumu (YS1) + "Onayla ve Yayınla" okuma onayıyla (Y2, YS5).
+     Üç örnek kayıt ?id= ile: kirpildi (varsayılan), eksik, temiz (yalnız sosyal kanal, YS2). -->
+<main class="pnl-main" id="icerik">
+  <div class="pnl-page-head">
+    <div>
+      <h1>AI haber düzenle</h1>
+      <div class="ph-sub" data-kayit-icin="kirpildi">Gündem › İstanbul · Meteoroloji Genel Müdürlüğü (T1) · 23.11.2026 15.58&#x27;de çekildi · onay bekliyor</div><div class="ph-sub" data-kayit-icin="eksik">Dünya › Avrupa · Reuters (T3) · 23.11.2026 15.52&#x27;de çekildi · onay bekliyor</div><div class="ph-sub" data-kayit-icin="temiz">Finans › Enerji · @ekonomi_gundem (X) (T4) · 23.11.2026 09.04&#x27;de çekildi · onay bekliyor</div>
+    </div>
+    <div class="ph-actions">
+      <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.havuz" href="index.html"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Haber havuzuna dön</a>
+      <a class="btn btn-ghost btn-sm" data-kayit-icin="kirpildi" href="https://www.mgm.gov.tr" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>Kaynak haberini aç</a><a class="btn btn-ghost btn-sm" data-kayit-icin="eksik" href="https://www.reuters.com/world" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>Kaynak haberini aç</a><a class="btn btn-ghost btn-sm" data-kayit-icin="temiz" href="https://x.com/ekonomi_gundem" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>Kaynak haberini aç</a>
+    </div>
+  </div>
+
+  <div class="kb-bant bilgi dash-row" data-roller="editor kat-ed"><i class="fa-solid fa-book-open-reader" aria-hidden="true"></i><span><b>Okumadan onay yok.</b> “Onayla ve Yayınla” Detay sekmesini sonuna kadar okuyunca açılır; kaydet çubuğundaki düğmede ilerleme görünür. Diğer sekmelere girmek zorunlu değil (Y2, YS5).</span></div>
+  <section class="pnl-card dash-row" data-kayit-icin="kirpildi" aria-label="AI kaynağı">
+    <div class="pc-head"><h2 class="pc-title"><i class="fa-solid fa-robot" aria-hidden="true"></i>AI kaynağı</h2><span class="kb-guven k-lg" data-guven="91" data-esik="85"></span></div>
+    <div class="pc-body">
+      <div class="form-grid kb-iki-sutun">
+        <div class="sa-durum">
+          <div><span>Durum</span><b><span class="pstat wait">Onay bekliyor</span></b></div>
+          <div><span>Çekilme</span><b>23.11.2026 15.58</b></div>
+          <div><span>1. kaynak</span><b>Meteoroloji Genel Müdürlüğü · T1</b></div>
+          <div><span>Kaynak adresi</span><b><a class="kb-bag" href="https://www.mgm.gov.tr" target="_blank" rel="noopener">mgm.gov.tr/rss</a></b></div>
+        </div>
+        <div class="sa-durum">
+          <div><span>AI modeli</span><b>Claude Haiku 4.5</b></div>
+          <div><span>Görsel</span><b><span class="pstat info">AI kırparak temizledi</span></b></div>
+          <div><span>Kaynak sayısı</span><b>3</b></div>
+          <div data-izin="ai-maliyet"><span>İşleme maliyeti</span><b>$0,021 · 2.140 token</b></div>
+        </div>
+      </div>
+      <div class="frow kb-ust-bosluk"><span class="flabel">Yayın kanalları</span>
+        <div data-roller="super gyy"><div class="kb-kanallar" role="group" aria-label="Yayın kanalları"><label class="kb-kanal"><input type="checkbox" value="web" checked><span><i class="fa-solid fa-globe" aria-hidden="true"></i>Web</span></label><label class="kb-kanal"><input type="checkbox" value="uygulama" checked><span><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>Uygulama</span></label><label class="kb-kanal"><input type="checkbox" value="sosyal" checked><span><i class="fa-solid fa-share-nodes" aria-hidden="true"></i>Sosyal Medya</span></label></div></div>
+        <div data-roller="editor kat-ed analist sosyal"><div class="kb-kanallar is-salt" role="group" aria-label="Yayın kanalları"><label class="kb-kanal"><input type="checkbox" value="web" checked disabled><span><i class="fa-solid fa-globe" aria-hidden="true"></i>Web</span></label><label class="kb-kanal"><input type="checkbox" value="uygulama" checked disabled><span><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>Uygulama</span></label><label class="kb-kanal"><input type="checkbox" value="sosyal" checked disabled><span><i class="fa-solid fa-share-nodes" aria-hidden="true"></i>Sosyal Medya</span></label></div></div>
+        <span class="kb-kanal-kaynak"><i class="fa-solid fa-lock" aria-hidden="true"></i>1. kaynağın grubundan: T1 · Resmî<span data-roller="editor kat-ed analist sosyal"> · Editör kanalları değiştiremez (YS3)</span><span data-roller="super gyy"> · bu haberde değiştirirseniz denetim izine yazılır (YS3)</span></span></div>
+    </div>
+  </section>
+  <section class="pnl-card dash-row" data-kayit-icin="eksik" aria-label="AI kaynağı">
+    <div class="pc-head"><h2 class="pc-title"><i class="fa-solid fa-robot" aria-hidden="true"></i>AI kaynağı</h2><span class="kb-guven k-lg" data-guven="78" data-esik="85"></span></div>
+    <div class="pc-body">
+      <div class="form-grid kb-iki-sutun">
+        <div class="sa-durum">
+          <div><span>Durum</span><b><span class="pstat warm">Görsel eksik</span></b></div>
+          <div><span>Çekilme</span><b>23.11.2026 15.52</b></div>
+          <div><span>1. kaynak</span><b>Reuters · T3</b></div>
+          <div><span>Kaynak adresi</span><b><a class="kb-bag" href="https://www.reuters.com/world" target="_blank" rel="noopener">reuters.com/world</a></b></div>
+        </div>
+        <div class="sa-durum">
+          <div><span>AI modeli</span><b>Claude Haiku 4.5</b></div>
+          <div><span>Görsel</span><b><span class="pstat warm">Görsel eksik</span></b></div>
+          <div><span>Kaynak sayısı</span><b>3</b></div>
+          <div data-izin="ai-maliyet"><span>İşleme maliyeti</span><b>$0,021 · 2.140 token</b></div>
+        </div>
+      </div>
+      <div class="frow kb-ust-bosluk"><span class="flabel">Yayın kanalları</span>
+        <div data-roller="super gyy"><div class="kb-kanallar" role="group" aria-label="Yayın kanalları"><label class="kb-kanal"><input type="checkbox" value="web" checked><span><i class="fa-solid fa-globe" aria-hidden="true"></i>Web</span></label><label class="kb-kanal"><input type="checkbox" value="uygulama" checked><span><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>Uygulama</span></label><label class="kb-kanal"><input type="checkbox" value="sosyal" checked><span><i class="fa-solid fa-share-nodes" aria-hidden="true"></i>Sosyal Medya</span></label></div></div>
+        <div data-roller="editor kat-ed analist sosyal"><div class="kb-kanallar is-salt" role="group" aria-label="Yayın kanalları"><label class="kb-kanal"><input type="checkbox" value="web" checked disabled><span><i class="fa-solid fa-globe" aria-hidden="true"></i>Web</span></label><label class="kb-kanal"><input type="checkbox" value="uygulama" checked disabled><span><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>Uygulama</span></label><label class="kb-kanal"><input type="checkbox" value="sosyal" checked disabled><span><i class="fa-solid fa-share-nodes" aria-hidden="true"></i>Sosyal Medya</span></label></div></div>
+        <span class="kb-kanal-kaynak"><i class="fa-solid fa-lock" aria-hidden="true"></i>1. kaynağın grubundan: T3 · Uluslararası Medya<span data-roller="editor kat-ed analist sosyal"> · Editör kanalları değiştiremez (YS3)</span><span data-roller="super gyy"> · bu haberde değiştirirseniz denetim izine yazılır (YS3)</span></span></div>
+    </div>
+  </section>
+  <section class="pnl-card dash-row" data-kayit-icin="temiz" aria-label="AI kaynağı">
+    <div class="pc-head"><h2 class="pc-title"><i class="fa-solid fa-robot" aria-hidden="true"></i>AI kaynağı</h2><span class="kb-guven k-lg" data-guven="62" data-esik="85"></span></div>
+    <div class="pc-body">
+      <div class="form-grid kb-iki-sutun">
+        <div class="sa-durum">
+          <div><span>Durum</span><b><span class="pstat wait">Onay bekliyor</span></b></div>
+          <div><span>Çekilme</span><b>23.11.2026 09.04</b></div>
+          <div><span>1. kaynak</span><b>@ekonomi_gundem (X) · T4</b></div>
+          <div><span>Kaynak adresi</span><b><a class="kb-bag" href="https://x.com/ekonomi_gundem" target="_blank" rel="noopener">x.com/ekonomi_gundem</a></b></div>
+        </div>
+        <div class="sa-durum">
+          <div><span>AI modeli</span><b>Claude Haiku 4.5</b></div>
+          <div><span>Görsel</span><b><span class="pstat ok">Temiz</span></b></div>
+          <div><span>Kaynak sayısı</span><b>1 · tek kaynak</b></div>
+          <div data-izin="ai-maliyet"><span>İşleme maliyeti</span><b>$0,021 · 2.140 token</b></div>
+        </div>
+      </div>
+      <div class="frow kb-ust-bosluk"><span class="flabel">Yayın kanalları</span>
+        <div data-roller="super gyy"><div class="kb-kanallar" role="group" aria-label="Yayın kanalları"><label class="kb-kanal"><input type="checkbox" value="web"><span><i class="fa-solid fa-globe" aria-hidden="true"></i>Web</span></label><label class="kb-kanal"><input type="checkbox" value="uygulama"><span><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>Uygulama</span></label><label class="kb-kanal"><input type="checkbox" value="sosyal" checked><span><i class="fa-solid fa-share-nodes" aria-hidden="true"></i>Sosyal Medya</span></label></div></div>
+        <div data-roller="editor kat-ed analist sosyal"><div class="kb-kanallar is-salt" role="group" aria-label="Yayın kanalları"><label class="kb-kanal"><input type="checkbox" value="web" disabled><span><i class="fa-solid fa-globe" aria-hidden="true"></i>Web</span></label><label class="kb-kanal"><input type="checkbox" value="uygulama" disabled><span><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>Uygulama</span></label><label class="kb-kanal"><input type="checkbox" value="sosyal" checked disabled><span><i class="fa-solid fa-share-nodes" aria-hidden="true"></i>Sosyal Medya</span></label></div></div>
+        <span class="kb-kanal-kaynak"><i class="fa-solid fa-lock" aria-hidden="true"></i>1. kaynağın grubundan: T4 · Düşük Öncelik · gönderi bağlantısız (YS2)<span data-roller="editor kat-ed analist sosyal"> · Editör kanalları değiştiremez (YS3)</span><span data-roller="super gyy"> · bu haberde değiştirirseniz denetim izine yazılır (YS3)</span></span></div>
+    </div>
+  </section>
+
+  <div class="form-layout">
+  <section class="pnl-card" id="aiForm" data-form data-sekmeli data-zorunlu-kayit="haberler.haber" aria-label="AI haber formu">
+    <div class="kb-form-bas">
+      <div class="kb-dil" role="group" aria-label="İçerik dili">
+        <button type="button" class="is-on" aria-pressed="true">TR · Türkçe</button>
+        <button type="button" disabled title="Çeviri ekranları sonraki aşamada">EN<span class="kd-etk">Sonraki aşama</span></button>
+        <button type="button" disabled title="Çeviri ekranları sonraki aşamada">AR<span class="kd-etk">Sonraki aşama</span></button>
+        <button type="button" disabled title="Çeviri ekranları sonraki aşamada">DE<span class="kd-etk">Sonraki aşama</span></button>
+      </div>
+      <span class="kfb-not"><i class="fa-solid fa-language" aria-hidden="true"></i>Dil seçici bütün sekmelerdeki metin alanlarını birlikte değiştirir; görsel, yazar ve kategori bütün dillerde ortaktır. AI çevirisi denetimsiz yayımlanmaz.</span>
+    </div>
+
+    <div class="sa-form-tabs" role="tablist" aria-label="Düzenleme sekmeleri">
+      <button type="button" class="sa-form-tab is-on" role="tab" aria-selected="true" data-panel="pDetay"><i class="fa-solid fa-file-lines" aria-hidden="true"></i>Detay</button>
+      <button type="button" class="sa-form-tab has-ai" role="tab" aria-selected="false" data-panel="pSeo"><i class="fa-solid fa-magnifying-glass-chart" aria-hidden="true"></i>SEO</button>
+      <button type="button" class="sa-form-tab has-ai" role="tab" aria-selected="false" data-panel="pBildirim" data-modul="etkilesim"><i class="fa-solid fa-bell" aria-hidden="true"></i>Bildirim</button>
+      <button type="button" class="sa-form-tab has-ai" role="tab" aria-selected="false" data-panel="pSosyal" data-modul="sosyal-medya"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i>Sosyal Medya</button>
+    </div>
+
+    <!-- ================= DETAY (okunacak sekme, YS5) ================= -->
+    <div class="sa-form-panel" id="pDetay" role="tabpanel">
+     <div data-kayit-icin="kirpildi" data-kayit-varsayilan="kirpildi">
+      <div class="form-sec">
+        <div class="form-grid">
+          <div class="frow"><label for="aiBaslik-kirpildi">Başlık</label>
+            <input class="finput kb-buyuk" id="aiBaslik-kirpildi" data-alan-id="baslik" data-sayac="70|90" value="Meteoroloji&#x27;den Marmara için turuncu kod kar uyarısı">
+            <div class="char-meter"><span>Sitede başlık; SEO başlığı buradan üretilir</span><b>0 / 70</b></div>
+            <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Başlık zorunlu.</div></div>
+          <div class="frow"><label for="aiSpot-kirpildi">Spot</label>
+            <textarea class="ftext" id="aiSpot-kirpildi" data-alan-id="spot" data-sayac="220|280">Meteoroloji Genel Müdürlüğü, Marmara Bölgesi için 24 Kasım sabahından itibaren kuvvetli kar yağışı uyarısı yaptı. İstanbul&#x27;un kuzey ilçelerinde kar kalınlığının yer yer 15 santimetreyi bulması bekleniyor.</textarea>
+            <div class="char-meter"><span>Başlığın altındaki giriş cümlesi</span><b>0 / 220</b></div>
+            <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Spot zorunlu.</div></div>
+        </div>
+      </div>
+      <div class="kb-ai-adim" data-ai-adim data-ai-kaynak="#aiBaslik-kirpildi,#aiSpot-kirpildi" data-yeni-goster hidden>
+        <div class="kaa-bas"><span class="kaa-ikon"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i></span>
+          <div><b>Gerisini AI ile üret</b><span data-ai-durum>Başlığı ve spotu yazın; işaretli bölümler bunlardan üretilir. Üretilen her bölüm “AI önerisi” etiketiyle gelir, gözden geçirip düzeltirsiniz.</span></div></div>
+        <div class="kaa-secim" role="group" aria-label="Üretilecek bölümler">
+          <label class="kb-secenek"><input type="checkbox" value="ozet" checked>Dada Özet ve Bana etkisi</label>
+          <label class="kb-secenek"><input type="checkbox" value="sinif" checked>Kategori ve alt konular</label>
+          <label class="kb-secenek"><input type="checkbox" value="seo" checked>SEO</label>
+          <label class="kb-secenek" data-modul="etkilesim"><input type="checkbox" value="bildirim" checked>Bildirim metni</label>
+          <label class="kb-secenek" data-modul="sosyal-medya"><input type="checkbox" value="sosyal" checked>Sosyal medya metinleri</label>
+          <label class="kb-secenek"><input type="checkbox" value="metin">Haber metni taslağı</label>
+        </div>
+        <div class="kaa-alt"><button type="button" class="btn btn-acc btn-sm" data-ai-uret disabled><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>Gerisini üret</button><span class="fhint" data-ai-neden>Önce başlık ve spot</span></div>
+      </div>
+      <div class="form-sec">
+        <div class="form-sec-tt"><i class="fa-solid fa-sitemap" aria-hidden="true"></i>Sınıflandırma<span class="fs-ek">AI önerisi · gözden geçirin</span></div>
+        <div class="form-grid">
+          <div class="frow two">
+            <div class="frow"><span class="flabel">Ana kategori</span>
+              <div class="kb-secim is-dolu" id="aiKat-kirpildi" data-alan-id="kategori" data-deger="Gündem" data-bos="Kategori seçin">
+                <button type="button" class="kb-secim-btn" data-acilir="aiKatM-kirpildi" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">Gündem</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                <div class="pnl-menu kb-secim-menu" id="aiKatM-kirpildi"><div class="kb-secim-ara"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input type="search" placeholder="Kategori ara" aria-label="Kategori ara"></div>
+                  <div class="kb-secim-liste" role="listbox"><button type="button" data-deger="Gündem" data-ad="Gündem" class="is-sec">Gündem<span class="ks-alt">15 alt konu</span></button><button type="button" data-deger="Spor" data-ad="Spor">Spor<span class="ks-alt">17 alt konu</span></button><button type="button" data-deger="Finans" data-ad="Finans">Finans<span class="ks-alt">15 alt konu</span></button><button type="button" data-deger="Kadın" data-ad="Kadın">Kadın<span class="ks-alt">13 alt konu</span></button><button type="button" data-deger="Savunma" data-ad="Savunma">Savunma<span class="ks-alt">18 alt konu</span></button><button type="button" data-deger="Dünya" data-ad="Dünya">Dünya<span class="ks-alt">14 alt konu</span></button><button type="button" data-deger="Kampüs" data-ad="Kampüs">Kampüs<span class="ks-alt">11 alt konu</span></button><button type="button" data-deger="Keşfet" data-ad="Keşfet">Keşfet<span class="ks-alt">20 alt konu</span></button><button type="button" data-deger="Köşe" data-ad="Köşe">Köşe<span class="ks-alt">0 alt konu</span></button></div><div class="kb-secim-bos" hidden>Bu adla kategori yok.</div></div>
+              </div>
+              <span class="fhint">Adres ve SEO ana kategoriye göre kurulur.</span>
+              <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Ana kategori zorunlu.</div></div>
+            <div class="frow"><span class="flabel">Alt konular</span>
+              <div class="kb-cip-girdi" data-alan-id="alt-konu" data-birincil data-havuz-kapali data-ana-kaynak="#aiKat-kirpildi" data-havuz="[&quot;Siyaset&quot;, &quot;Türkiye&quot;, &quot;Toplum&quot;, &quot;Hukuk&quot;, &quot;Güvenlik&quot;, &quot;Eğitim&quot;, &quot;Çevre&quot;, &quot;Afet&quot;, &quot;Yerel Haberler&quot;, &quot;İstanbul&quot;, &quot;Ankara&quot;, &quot;İzmir&quot;, &quot;Özel Haber&quot;, &quot;Araştırma&quot;, &quot;Gündem Analizi&quot;]" data-alt-harita="{&quot;Gündem&quot;: [&quot;Siyaset&quot;, &quot;Türkiye&quot;, &quot;Toplum&quot;, &quot;Hukuk&quot;, &quot;Güvenlik&quot;, &quot;Eğitim&quot;, &quot;Çevre&quot;, &quot;Afet&quot;, &quot;Yerel Haberler&quot;, &quot;İstanbul&quot;, &quot;Ankara&quot;, &quot;İzmir&quot;, &quot;Özel Haber&quot;, &quot;Araştırma&quot;, &quot;Gündem Analizi&quot;], &quot;Spor&quot;: [&quot;Futbol&quot;, &quot;Basketbol&quot;, &quot;Voleybol&quot;, &quot;Motor Sporları&quot;, &quot;Bisiklet&quot;, &quot;Tenis&quot;, &quot;Atletizm&quot;, &quot;Olimpiyatlar&quot;, &quot;E-Spor&quot;, &quot;Transfer&quot;, &quot;Millî Takım&quot;, &quot;Galatasaray&quot;, &quot;Fenerbahçe&quot;, &quot;Beşiktaş&quot;, &quot;Trabzonspor&quot;, &quot;Süper Lig&quot;, &quot;Avrupa Ligleri&quot;], &quot;Finans&quot;: [&quot;Türkiye Ekonomisi&quot;, &quot;Dünya Ekonomisi&quot;, &quot;Bankacılık&quot;, &quot;Kişisel Finans&quot;, &quot;Enflasyon&quot;, &quot;Ekonomi Analizi&quot;, &quot;İş Dünyası&quot;, &quot;Şirketler&quot;, &quot;Girişimcilik&quot;, &quot;Çalışma Hayatı&quot;, &quot;Enerji&quot;, &quot;Tarım&quot;, &quot;Sanayi&quot;, &quot;Gayrimenkul&quot;, &quot;Otomotiv&quot;], &quot;Kadın&quot;: [&quot;Kadın Gündemi&quot;, &quot;Kadın Hakları&quot;, &quot;Toplumsal Cinsiyet&quot;, &quot;Kadın ve Hukuk&quot;, &quot;Kadın ve Çalışma Hayatı&quot;, &quot;Başarı Hikâyeleri&quot;, &quot;Kadın Sağlığı&quot;, &quot;Anne ve Çocuk&quot;, &quot;Beslenme&quot;, &quot;Ruh Sağlığı&quot;, &quot;Moda&quot;, &quot;Güzellik&quot;, &quot;Ev ve Yaşam&quot;], &quot;Savunma&quot;: [&quot;Savunma Sanayii&quot;, &quot;Millî Projeler&quot;, &quot;İHA ve SİHA&quot;, &quot;Hava Platformları&quot;, &quot;Deniz Platformları&quot;, &quot;Kara Sistemleri&quot;, &quot;Füze ve Roket Sistemleri&quot;, &quot;Millî Güvenlik&quot;, &quot;Askerî Operasyonlar&quot;, &quot;Sınır Güvenliği&quot;, &quot;Terörle Mücadele&quot;, &quot;Uluslararası Güvenlik&quot;, &quot;NATO&quot;, &quot;Savunma Teknolojileri&quot;, &quot;İhracat ve Anlaşmalar&quot;, &quot;Savunma Analizi&quot;, &quot;Uzman Görüşleri&quot;, &quot;Savunma Videoları&quot;], &quot;Dünya&quot;: [&quot;Avrupa&quot;, &quot;Orta Doğu&quot;, &quot;Amerika&quot;, &quot;Asya Pasifik&quot;, &quot;Afrika&quot;, &quot;Balkanlar&quot;, &quot;Kafkasya&quot;, &quot;Türk Dünyası&quot;, &quot;Diplomasi&quot;, &quot;Küresel Siyaset&quot;, &quot;Savaş ve Çatışmalar&quot;, &quot;Göç&quot;, &quot;Uluslararası Kuruluşlar&quot;, &quot;Dünya Analizi&quot;], &quot;Kampüs&quot;: [&quot;Eğitim ve Sınavlar&quot;, &quot;YKS&quot;, &quot;KPSS&quot;, &quot;ALES ve YDS&quot;, &quot;Üniversiteler&quot;, &quot;Burslar&quot;, &quot;Yurtlar&quot;, &quot;Öğrenci Toplulukları&quot;, &quot;Staj&quot;, &quot;Kariyer&quot;, &quot;Gençlerin Gündemi&quot;], &quot;Keşfet&quot;: [&quot;Teknoloji&quot;, &quot;Yapay Zekâ&quot;, &quot;Bilim&quot;, &quot;Uzay&quot;, &quot;Siber Güvenlik&quot;, &quot;Oyun&quot;, &quot;Gelecek&quot;, &quot;İklim&quot;, &quot;Sağlık&quot;, &quot;Halk Sağlığı&quot;, &quot;Otomobil&quot;, &quot;Seyahat&quot;, &quot;Gastronomi&quot;, &quot;Kültür ve Yaşam&quot;, &quot;Sinema&quot;, &quot;Dizi&quot;, &quot;Müzik&quot;, &quot;Kitap&quot;, &quot;Tiyatro&quot;, &quot;Sergi&quot;], &quot;Köşe&quot;: []}"><span class="kb-cip" data-deger="İstanbul"><span>İstanbul</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="Afet"><span>Afet</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><input type="text" placeholder="Alt konu ara" aria-label="Alt konu ara"><div class="pnl-menu kb-cip-oneri"></div></div>
+              <span class="fhint">Birden fazla seçilebilir; <b>ilk seçilen ana alt konudur</b>.</span></div>
+          </div>
+          <div class="frow two">
+            <div class="frow"><span class="flabel">Yazar</span>
+              <div class="kb-secim is-dolu" data-alan-id="yazar" data-deger="Dada Haber" data-bos="Yazar seçin">
+                <button type="button" class="kb-secim-btn" data-acilir="aiYazar-kirpildi" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">Dada Haber</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                <div class="pnl-menu kb-secim-menu" id="aiYazar-kirpildi"><div class="kb-secim-ara"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input type="search" placeholder="Yazar ara" aria-label="Yazar ara"></div>
+                  <div class="kb-secim-liste" role="listbox"><button type="button" data-deger="Dada Haber" data-ad="Dada Haber" class="is-sec">Dada Haber<span class="ks-alt">AI haberlerinde varsayılan imza</span></button><div class="ks-grup">Gündem</div><button type="button" data-deger="Mehmet Koçak" data-ad="Mehmet Koçak">Mehmet Koçak</button><button type="button" data-deger="Ayşe Yıldız" data-ad="Ayşe Yıldız">Ayşe Yıldız</button><button type="button" data-deger="Sibel Arslan" data-ad="Sibel Arslan">Sibel Arslan</button><button type="button" data-deger="Hakan Uysal" data-ad="Hakan Uysal">Hakan Uysal</button><div class="ks-grup">Finans</div><button type="button" data-deger="Elif Aras" data-ad="Elif Aras">Elif Aras</button><button type="button" data-deger="Can Demir" data-ad="Can Demir">Can Demir</button><button type="button" data-deger="Nazlı Öztürk" data-ad="Nazlı Öztürk">Nazlı Öztürk</button><button type="button" data-deger="Tolga Bayram" data-ad="Tolga Bayram">Tolga Bayram</button><div class="ks-grup">Spor</div><button type="button" data-deger="Burak Tan" data-ad="Burak Tan">Burak Tan</button><button type="button" data-deger="Murat Tekin" data-ad="Murat Tekin">Murat Tekin</button><button type="button" data-deger="Gizem Aktaş" data-ad="Gizem Aktaş">Gizem Aktaş</button><button type="button" data-deger="Emre Sönmez" data-ad="Emre Sönmez">Emre Sönmez</button><div class="ks-grup">Dünya</div><button type="button" data-deger="Zeynep Ak" data-ad="Zeynep Ak">Zeynep Ak</button><button type="button" data-deger="Kaan Yücel" data-ad="Kaan Yücel">Kaan Yücel</button><button type="button" data-deger="Hande Polat" data-ad="Hande Polat">Hande Polat</button><button type="button" data-deger="Merve Çınar" data-ad="Merve Çınar">Merve Çınar</button><div class="ks-grup">Kadın</div><button type="button" data-deger="Deniz Kara" data-ad="Deniz Kara">Deniz Kara</button><button type="button" data-deger="Gülşen Ateş" data-ad="Gülşen Ateş">Gülşen Ateş</button><button type="button" data-deger="Burcu Yaman" data-ad="Burcu Yaman">Burcu Yaman</button><button type="button" data-deger="Seda Uslu" data-ad="Seda Uslu">Seda Uslu</button><div class="ks-grup">Savunma</div><button type="button" data-deger="Mert Yalın" data-ad="Mert Yalın">Mert Yalın</button><button type="button" data-deger="Tarık Bulut" data-ad="Tarık Bulut">Tarık Bulut</button><button type="button" data-deger="Onur Kaya" data-ad="Onur Kaya">Onur Kaya</button><button type="button" data-deger="Arda Kılınç" data-ad="Arda Kılınç">Arda Kılınç</button><div class="ks-grup">Kampüs</div><button type="button" data-deger="Selin Koç" data-ad="Selin Koç">Selin Koç</button><button type="button" data-deger="Ece Demirel" data-ad="Ece Demirel">Ece Demirel</button><button type="button" data-deger="Aslı Gür" data-ad="Aslı Gür">Aslı Gür</button><button type="button" data-deger="Sevgi Tarhan" data-ad="Sevgi Tarhan">Sevgi Tarhan</button><div class="ks-grup">Keşfet</div><button type="button" data-deger="Ozan Er" data-ad="Ozan Er">Ozan Er</button><button type="button" data-deger="İrem Su" data-ad="İrem Su">İrem Su</button><button type="button" data-deger="Nilay Ersoy" data-ad="Nilay Ersoy">Nilay Ersoy</button><button type="button" data-deger="Kerem Aksoy" data-ad="Kerem Aksoy">Kerem Aksoy</button><div class="ks-grup">Köşe</div><button type="button" data-deger="Aylin Sezer" data-ad="Aylin Sezer">Aylin Sezer</button><button type="button" data-deger="Leyla Sarıgül" data-ad="Leyla Sarıgül">Leyla Sarıgül</button><button type="button" data-deger="Pınar Okyay" data-ad="Pınar Okyay">Pınar Okyay</button><button type="button" data-deger="Füsun Erdem" data-ad="Füsun Erdem">Füsun Erdem</button></div><div class="kb-secim-bos" hidden>Bu adla yazar yok.</div></div>
+              </div><span class="fhint">Onaylayan editör denetim izinde ve sürüm geçmişinde görünür.</span></div>
+            <div class="frow"><span class="flabel">Tür</span>
+              <div class="kb-secim is-dolu" data-deger="Haber" data-bos="Haber">
+                <button type="button" class="kb-secim-btn" data-acilir="aiTur-kirpildi" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">Haber</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                <div class="pnl-menu kb-secim-menu" id="aiTur-kirpildi"><div class="kb-secim-liste" role="listbox"><button type="button" data-deger="Haber" data-ad="Haber" class="is-sec">Haber</button><button type="button" data-deger="Köşe yazısı" data-ad="Köşe yazısı">Köşe yazısı</button><button type="button" data-deger="Video" data-ad="Video">Video</button><button type="button" data-deger="Sesli haber" data-ad="Sesli haber">Sesli haber</button><button type="button" data-deger="Galeri" data-ad="Galeri">Galeri</button><button type="button" data-deger="İnfografik" data-ad="İnfografik">İnfografik</button><button type="button" data-deger="Podcast" data-ad="Podcast">Podcast</button><button type="button" data-deger="Canlı anlatım" data-ad="Canlı anlatım">Canlı anlatım</button><button type="button" data-deger="Dosya" data-ad="Dosya">Dosya</button><button type="button" data-deger="Dada Doğrula" data-ad="Dada Doğrula">Dada Doğrula</button><button type="button" data-deger="Resmî ilan" data-ad="Resmî ilan">Resmî ilan</button></div></div>
+              </div></div>
+          </div>
+        </div>
+      </div>
+      <div class="form-sec" id="aiKapak-kirpildi" data-alan-id="kapak" data-zorunlu-metin="Kapak görseli yükleyin ya da havuzdan seçin" data-gorsel-alan="haberler.kapak" data-gorsel-ad="Kapak görseli" data-kirp-sonra>
+        <div class="form-sec-tt"><i class="fa-solid fa-image" aria-hidden="true"></i>Kapak görseli<span class="fs-ek">Kaynak: Meteoroloji Genel Müdürlüğü · AI kırparak temizledi</span></div>
+        <div class="kb-bant bilgi"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i><span><b>AI kırparak temizledi.</b> Kaynak görselin sağ alt köşesindeki ajans damgası kırpılarak çıkarıldı; kırpılmış hali kullanılıyor. Otomatik yayına girebilir (YS1).</span></div><div class="form-grid kb-iki-sutun kb-alt-bosluk"><div class="kb-gorsel-kucuk"><span class="kg-resim r-kart" style="background-image:url(../../veri/gorsel/p183.jpg)"></span><div><b>Aslı · kaynaktan</b><span>1600×1067 · sağ altta damga</span></div></div><div class="kb-gorsel-kucuk"><span class="kg-resim r-kart" style="background-image:url(../../veri/gorsel/p183.jpg);background-position:50% 40%"></span><div><b>Kırpılmış hali</b><span>1440×960 · damga dışarıda kaldı</span></div></div></div>
+        <div class="kb-yukle" data-gorsel-bos hidden><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i><b>Kapak görselini sürükleyin ya da seçin</b><span>Web görseli yüklenince mobil görsel ondan otomatik kırpılır · önerilen en az 1280×533</span><span class="kg-acts"><button type="button" class="btn btn-acc btn-sm" data-medya-sec data-medya-ara="AB Brüksel"><i class="fa-solid fa-photo-film" aria-hidden="true"></i>Havuzdan seç</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle><i class="fa-solid fa-upload" aria-hidden="true"></i>Bilgisayardan yükle</button></span></div>
+        
+        <div class="kb-gorsel" data-gorsel-dolu>
+          <div class="kg-bolum">
+            <div class="kg-bas"><i class="fa-solid fa-desktop" aria-hidden="true"></i>Web</div>
+            <div class="kg-ikili">
+              <div class="kg-resim r-detay" data-gorsel-hedef="web" data-kirp-oran="web.detay" style="background-image:url(../../veri/gorsel/p183.jpg);background-position:50% 40%"><span class="kg-odak" style="left:50%;top:40%"></span><span class="kg-etk">Detay · 2.4:1</span></div>
+              <div class="kg-resim r-kart" data-gorsel-hedef="web" data-kirp-oran="web.kart" style="background-image:url(../../veri/gorsel/p183.jpg);background-position:50% 40%"><span class="kg-etk">Kart · 16:10</span></div>
+            </div>
+            <div class="kg-olcu">Önerilen: detay <b>1280×533</b>, kart <b>308×193</b> (sitenin görünen genişliği). <span data-gorsel-bilgi>Kırpılmış: 1440×960 JPG</span></div>
+            <div class="kg-acts">
+              <button type="button" class="btn btn-ghost btn-sm" data-kirp-ac><i class="fa-solid fa-crop-simple" aria-hidden="true"></i>Kırp ve odak</button>
+              <button type="button" class="btn btn-ghost btn-sm" data-medya-sec><i class="fa-solid fa-photo-film" aria-hidden="true"></i>Havuzdan seç</button>
+              <button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle><i class="fa-solid fa-upload" aria-hidden="true"></i>Yükle</button>
+              <button type="button" class="btn btn-ghost btn-sm danger" data-gorsel-kaldir><i class="fa-solid fa-trash" aria-hidden="true"></i>Kaldır</button>
+            </div>
+          </div>
+          <div class="kg-bolum">
+            <div class="kg-bas"><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>Mobil<span class="kg-oto"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Webden kırpıldı</span></div>
+            <div class="kg-resim r-kart" data-gorsel-hedef="mobil" data-kirp-oran="mobil.kart" style="background-image:url(../../veri/gorsel/p183.jpg);background-position:50% 40%"><span class="kg-odak" style="left:50%;top:40%"></span><span class="kg-etk">Mobil kart · 16:10</span></div>
+            <div class="kg-olcu">Önerilen: <b>358×224</b> (sitenin telefon görünümü). Aynı odak noktası kullanılır.</div>
+            <div class="kg-acts">
+              <button type="button" class="btn btn-ghost btn-sm" data-kirp-ac="mobil.kart"><i class="fa-solid fa-crop-simple" aria-hidden="true"></i>Kırp</button>
+              <button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle data-gorsel-kapsam="mobil"><i class="fa-solid fa-upload" aria-hidden="true"></i>Ayrı görsel yükle</button>
+              <button type="button" class="btn btn-ghost btn-sm" data-gorsel-webe-don hidden><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Webden kırpılana dön</button>
+            </div>
+          </div>
+        </div>
+        <div class="frow kb-ust-bosluk"><label for="aiAlt-kirpildi">Görsel altyazısı ve kaynağı</label>
+          <input class="finput" id="aiAlt-kirpildi" data-sayac="120|160" value="Marmara&#x27;da kar yağışı, arşiv · Fotoğraf: Meteoroloji Genel Müdürlüğü">
+          <div class="char-meter"><span>Görselin altında ve erişilebilirlik metninde</span><b>0 / 120</b></div></div>
+      </div>
+
+      <div class="form-sec">
+        <div class="form-sec-tt"><i class="fa-solid fa-align-left" aria-hidden="true"></i>Haber metni<span class="fs-ek">AI kaynaklardan yazdı · okuyup düzeltin</span></div>
+        <div class="kb-editor" data-editor-ad="Haber metni" data-editor-medya>
+          <div class="kz-alan ke-alan" data-alan-id="metin" data-zorunlu-metin="Haber metnini yazın"><p>Meteoroloji Genel Müdürlüğü, Marmara Bölgesi için 24 Kasım Salı sabahından itibaren geçerli turuncu kodlu kar yağışı uyarısı yayımladı. Uyarıya göre İstanbul'un kuzey ilçeleri ile Kırklareli, Tekirdağ ve Kocaeli'nin yüksek kesimlerinde kar kalınlığı yer yer 15 santimetreyi bulabilir.</p><p>Yağışın gece saatlerinde kuzeydoğudan gelen soğuk hava ile birlikte etkisini artırması bekleniyor. Meteoroloji, rüzgârın yer yer saatte 60 kilometreye ulaşabileceğini ve görüş mesafesinin düşebileceğini belirtti.</p><h2>Ulaşım ve okullar</h2><p>İstanbul Valiliği, ulaşımda aksama yaşanabileceğini, sürücülerin zorunlu olmadıkça özel araçla yola çıkmamasını istedi. Toplu taşıma seferleri gece yarısına kadar uzatıldı; okulların durumuna ilişkin kararın akşam saatlerinde açıklanması bekleniyor.</p><p>AFAD, olası afet durumlarına karşı ekiplerin hazır beklediğini açıkladı. Uyarı 25 Kasım akşamına kadar geçerli; uzmanlar yağışın hafta sonuna doğru yerini soğuk ve kuru havaya bırakmasını bekliyor.</p></div>
+          <div class="kz-alt"><span data-kz-say></span><span>Sitede “Haberi dinle” bu metinden okunur</span></div>
+        </div>
+      </div>
+
+      <div class="form-sec">
+        <div class="form-sec-tt"><i class="fa-solid fa-bolt" aria-hidden="true"></i>Dada Özet<span class="fs-ek">Sitede 15 sn · 1 dk · tam metin katmanları</span></div>
+        <div class="form-grid">
+          <div class="frow"><span class="flabel">Üç maddede özet</span><div class="kb-madde"><div class="km-satir"><span class="km-no">1</span><input value="Marmara için 24 Kasım sabahından itibaren turuncu kod kar uyarısı var." aria-label="Özet maddesi 1"></div><div class="km-satir"><span class="km-no">2</span><input value="İstanbul&#x27;un kuzeyinde kar kalınlığı 15 santimetreyi bulabilir." aria-label="Özet maddesi 2"></div><div class="km-satir"><span class="km-no">3</span><input value="Toplu taşıma seferleri gece yarısına kadar uzatıldı." aria-label="Özet maddesi 3"></div></div></div>
+          <div class="frow"><label for="aiNeden-kirpildi">Neden önemli?</label>
+            <textarea class="ftext" id="aiNeden-kirpildi" data-sayac="180|240">Turuncu kod, günlük yaşamı ve ulaşımı aksatabilecek tehlikeli hava anlamına geliyor.</textarea>
+            <div class="char-meter"><span>Sitede açılır kutuda</span><b>0 / 180</b></div></div>
+          <div class="frow"><label for="aiSonra-kirpildi">Bundan sonra ne olacak?</label>
+            <textarea class="ftext" id="aiSonra-kirpildi" data-sayac="180|240">Valiliğin okullar için kararı akşam saatlerinde açıklanacak; uyarı 25 Kasım akşamına kadar geçerli.</textarea>
+            <div class="char-meter"><span>Sitede açılır kutuda</span><b>0 / 180</b></div></div>
+          <div class="kb-profil-metin" data-profil-metin>
+            <div class="kb-pm-ust"><span class="flabel">Bana etkisi</span><span class="kb-pm-say" data-pm-say></span>
+              <button type="button" class="btn btn-ghost btn-sm kb-sag" data-pm-oner><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>Profillere göre öner</button></div>
+            <div class="frow"><label for="aiEtki" class="kb-pm-alt">Genel <small>profil seçmemiş okura görünür</small></label>
+              <textarea class="ftext" id="aiEtki" rows="2" data-sayac="180|240">İstanbul&#x27;un kuzeyinde yaşıyor ya da oraya gidiyorsan salı sabahı ulaşıma ek süre ayır; toplu taşıma gece yarısına kadar çalışıyor.</textarea>
+              <div class="char-meter"><span></span><b>0 / 180</b></div></div>
+            <div class="kb-pm-cipler" role="group" aria-label="Okur profilleri"><button type="button" class="kb-pm-cip is-on" data-pm-cip="ogrenci" aria-pressed="true"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>Öğrenci<i class="fa-solid fa-check kb-pm-durum" aria-hidden="true"></i></button><button type="button" class="kb-pm-cip is-on" data-pm-cip="calisan" aria-pressed="true"><i class="fa-solid fa-briefcase" aria-hidden="true"></i>Çalışan<i class="fa-solid fa-check kb-pm-durum" aria-hidden="true"></i></button><button type="button" class="kb-pm-cip" data-pm-cip="emekli" aria-pressed="false"><i class="fa-solid fa-person-cane" aria-hidden="true"></i>Emekli<i class="fa-solid fa-plus kb-pm-durum" aria-hidden="true"></i></button><button type="button" class="kb-pm-cip" data-pm-cip="ev-sahibi" aria-pressed="false"><i class="fa-solid fa-house" aria-hidden="true"></i>Ev sahibi<i class="fa-solid fa-plus kb-pm-durum" aria-hidden="true"></i></button><button type="button" class="kb-pm-cip" data-pm-cip="kiraci" aria-pressed="false"><i class="fa-solid fa-key" aria-hidden="true"></i>Kiracı<i class="fa-solid fa-plus kb-pm-durum" aria-hidden="true"></i></button><button type="button" class="kb-pm-cip is-on" data-pm-cip="esnaf" aria-pressed="true"><i class="fa-solid fa-store" aria-hidden="true"></i>Esnaf<i class="fa-solid fa-check kb-pm-durum" aria-hidden="true"></i></button></div>
+            <div class="kb-pm-kartlar"><div class="kb-pm-kart" data-pm-kart="ogrenci" data-oneri="Okulların durumu akşam açıklanacak; valiliğin duyurusunu bekle, servis saatleri değişebilir."><div class="kb-pm-bas"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i><b>Öğrenci</b><button type="button" class="ia-btn danger" data-pm-kaldir aria-label="Öğrenci metnini kaldır" title="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="frow"><textarea class="ftext" rows="2" data-sayac="180|240" aria-label="Öğrenci için Bana etkisi" placeholder="Öğrenci bu haberden nasıl etkilenir?">Okulların durumu akşam açıklanacak; valiliğin duyurusunu bekle, servis saatleri değişebilir.</textarea><div class="char-meter"><span></span><b>0 / 180</b></div></div><input class="finput kb-pm-kaynak" value="" placeholder="Kaynak (isteğe bağlı) · ör. TÜİK · 3 Kasım" aria-label="Öğrenci kaynağı"></div><div class="kb-pm-kart" data-pm-kart="calisan" data-oneri="Salı sabahı işe gidişte ek süre ayır; toplu taşıma seferleri gece yarısına kadar uzatıldı."><div class="kb-pm-bas"><i class="fa-solid fa-briefcase" aria-hidden="true"></i><b>Çalışan</b><button type="button" class="ia-btn danger" data-pm-kaldir aria-label="Çalışan metnini kaldır" title="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="frow"><textarea class="ftext" rows="2" data-sayac="180|240" aria-label="Çalışan için Bana etkisi" placeholder="Çalışan bu haberden nasıl etkilenir?">Salı sabahı işe gidişte ek süre ayır; toplu taşıma seferleri gece yarısına kadar uzatıldı.</textarea><div class="char-meter"><span></span><b>0 / 180</b></div></div><input class="finput kb-pm-kaynak" value="" placeholder="Kaynak (isteğe bağlı) · ör. TÜİK · 3 Kasım" aria-label="Çalışan kaynağı"></div><div class="kb-pm-kart" data-pm-kart="emekli" data-oneri="Bu profil için öneri üretilmedi; kendi metninizi yazın." hidden><div class="kb-pm-bas"><i class="fa-solid fa-person-cane" aria-hidden="true"></i><b>Emekli</b><button type="button" class="ia-btn danger" data-pm-kaldir aria-label="Emekli metnini kaldır" title="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="frow"><textarea class="ftext" rows="2" data-sayac="180|240" aria-label="Emekli için Bana etkisi" placeholder="Emekli bu haberden nasıl etkilenir?"></textarea><div class="char-meter"><span></span><b>0 / 180</b></div></div><input class="finput kb-pm-kaynak" value="" placeholder="Kaynak (isteğe bağlı) · ör. TÜİK · 3 Kasım" aria-label="Emekli kaynağı"></div><div class="kb-pm-kart" data-pm-kart="ev-sahibi" data-oneri="Bu profil için öneri üretilmedi; kendi metninizi yazın." hidden><div class="kb-pm-bas"><i class="fa-solid fa-house" aria-hidden="true"></i><b>Ev sahibi</b><button type="button" class="ia-btn danger" data-pm-kaldir aria-label="Ev sahibi metnini kaldır" title="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="frow"><textarea class="ftext" rows="2" data-sayac="180|240" aria-label="Ev sahibi için Bana etkisi" placeholder="Ev sahibi bu haberden nasıl etkilenir?"></textarea><div class="char-meter"><span></span><b>0 / 180</b></div></div><input class="finput kb-pm-kaynak" value="" placeholder="Kaynak (isteğe bağlı) · ör. TÜİK · 3 Kasım" aria-label="Ev sahibi kaynağı"></div><div class="kb-pm-kart" data-pm-kart="kiraci" data-oneri="Bu profil için öneri üretilmedi; kendi metninizi yazın." hidden><div class="kb-pm-bas"><i class="fa-solid fa-key" aria-hidden="true"></i><b>Kiracı</b><button type="button" class="ia-btn danger" data-pm-kaldir aria-label="Kiracı metnini kaldır" title="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="frow"><textarea class="ftext" rows="2" data-sayac="180|240" aria-label="Kiracı için Bana etkisi" placeholder="Kiracı bu haberden nasıl etkilenir?"></textarea><div class="char-meter"><span></span><b>0 / 180</b></div></div><input class="finput kb-pm-kaynak" value="" placeholder="Kaynak (isteğe bağlı) · ör. TÜİK · 3 Kasım" aria-label="Kiracı kaynağı"></div><div class="kb-pm-kart" data-pm-kart="esnaf" data-oneri="Kar nedeniyle salı sabahı müşteri ve tedarik trafiği yavaşlayabilir; teslimat saatlerini buna göre planla."><div class="kb-pm-bas"><i class="fa-solid fa-store" aria-hidden="true"></i><b>Esnaf</b><button type="button" class="ia-btn danger" data-pm-kaldir aria-label="Esnaf metnini kaldır" title="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="frow"><textarea class="ftext" rows="2" data-sayac="180|240" aria-label="Esnaf için Bana etkisi" placeholder="Esnaf bu haberden nasıl etkilenir?">Kar nedeniyle salı sabahı müşteri ve tedarik trafiği yavaşlayabilir; teslimat saatlerini buna göre planla.</textarea><div class="char-meter"><span></span><b>0 / 180</b></div></div><input class="finput kb-pm-kaynak" value="" placeholder="Kaynak (isteğe bağlı) · ör. TÜİK · 3 Kasım" aria-label="Esnaf kaynağı"></div></div>
+            <p class="fhint">Okur Hesabım'da profil seçtiyse sitede kendi profilinin metni öne çıkar. Profil listesi sitenin Hesabım > Tercihler listesiyle aynıdır.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-sec">
+        <div class="form-sec-tt"><i class="fa-solid fa-link" aria-hidden="true"></i>Kaynaklar<span class="fs-ek">Sitede haberin sonunda; teyit sayısı gösterilmez</span></div>
+        <div class="kb-madde" data-satir-liste data-siralanir data-satir-ad="Kaynak" data-satir-alan1="Kaynak adı (kurum, belge)" data-satir-alan2="Açıklama, tarih ya da bağlantı">
+          <div class="km-satir" data-sira><button type="button" class="kb-tutamac" aria-label="Sırayı değiştir (sürükleyin ya da ok tuşları)"><i class="fa-solid fa-grip-vertical" aria-hidden="true"></i></button><span class="km-yazi">Meteoroloji Genel Müdürlüğü<small>Turuncu kod uyarısı · 23 Kasım 2026 15.40</small></span><button type="button" class="ia-btn" data-satir-duzenle aria-label="Kaynağı düzenle"><i class="fa-solid fa-pen" aria-hidden="true"></i></button><button type="button" class="ia-btn danger" data-satir-sil aria-label="Kaynağı kaldır"><i class="fa-solid fa-trash" aria-hidden="true"></i></button></div><div class="km-satir" data-sira><button type="button" class="kb-tutamac" aria-label="Sırayı değiştir (sürükleyin ya da ok tuşları)"><i class="fa-solid fa-grip-vertical" aria-hidden="true"></i></button><span class="km-yazi">İstanbul Valiliği<small>Ulaşım ve toplu taşıma duyurusu · 23 Kasım 2026</small></span><button type="button" class="ia-btn" data-satir-duzenle aria-label="Kaynağı düzenle"><i class="fa-solid fa-pen" aria-hidden="true"></i></button><button type="button" class="ia-btn danger" data-satir-sil aria-label="Kaynağı kaldır"><i class="fa-solid fa-trash" aria-hidden="true"></i></button></div><div class="km-satir" data-sira><button type="button" class="kb-tutamac" aria-label="Sırayı değiştir (sürükleyin ya da ok tuşları)"><i class="fa-solid fa-grip-vertical" aria-hidden="true"></i></button><span class="km-yazi">AFAD<small>Hazırlık açıklaması · 23 Kasım 2026</small></span><button type="button" class="ia-btn" data-satir-duzenle aria-label="Kaynağı düzenle"><i class="fa-solid fa-pen" aria-hidden="true"></i></button><button type="button" class="ia-btn danger" data-satir-sil aria-label="Kaynağı kaldır"><i class="fa-solid fa-trash" aria-hidden="true"></i></button></div>
+          <button type="button" class="kb-ekle-btn" data-satir-ekle><i class="fa-solid fa-plus" aria-hidden="true"></i>Kaynak ekle</button>
+        </div>
+      </div>
+      <div class="form-sec">
+        <div class="form-sec-tt"><i class="fa-solid fa-list-check" aria-hidden="true"></i>Kaynak teyidi<span class="fs-ek">1., 2., 3. kaynak · aynı haberin iki kez çekilmediğini de gösterir (K8)</span></div>
+        <div class="kb-teyit">
+          <div class="kb-teyit-ozet"><span class="kb-teyit-durum"><i class="fa-solid fa-circle-check" aria-hidden="true"></i>3 kaynak · 2 bağımsız teyit</span><span class="kb-teyit-not">Aynı olay iki kez çekilmedi; kanallar 1. kaynağın grubundan (YS4)</span></div>
+          <ol class="kb-teyit-liste"><li class="kb-teyit-kaynak is-ana"><span class="kb-teyit-no">1</span><div class="kb-teyit-ad"><b>Meteoroloji Genel Müdürlüğü</b><span>T1 · Resmî · 23.11.2026 15.40</span></div><span class="pstat ok">Ana kaynak</span><a class="ia-btn" href="https://mgm.gov.tr/rss" target="_blank" rel="noopener" aria-label="Kaynağı aç: Meteoroloji Genel Müdürlüğü" title="Kaynağı aç"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></li><li class="kb-teyit-kaynak"><span class="kb-teyit-no">2</span><div class="kb-teyit-ad"><b>Anadolu Ajansı</b><span>T2 · Kurumsal Basın · 23.11.2026 15.46</span></div><span class="pstat ok">Teyit</span><a class="ia-btn" href="https://aa.com.tr/tr/rss/default?cat=guncel" target="_blank" rel="noopener" aria-label="Kaynağı aç: Anadolu Ajansı" title="Kaynağı aç"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></li><li class="kb-teyit-kaynak"><span class="kb-teyit-no">3</span><div class="kb-teyit-ad"><b>Demirören Haber Ajansı (DHA)</b><span>T2 · Kurumsal Basın · 23.11.2026 15.51</span></div><span class="pstat ok">Teyit</span><a class="ia-btn" href="https://dha.com.tr/rss" target="_blank" rel="noopener" aria-label="Kaynağı aç: Demirören Haber Ajansı (DHA)" title="Kaynağı aç"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></li></ol>
+          <div class="kb-teyit-alt"><h3>Alternatif kaynaklar</h3><ul><li><i class="fa-solid fa-link" aria-hidden="true"></i><a class="kb-bag" href="https://www.iha.com.tr" target="_blank" rel="noopener">İHA · aynı olay</a><span>15.55</span></li><li><i class="fa-solid fa-link" aria-hidden="true"></i><a class="kb-bag" href="https://x.com/istanbulvalilik" target="_blank" rel="noopener">İstanbul Valiliği (X) · ulaşım duyurusu</a><span>15.57</span></li></ul></div>
+        </div>
+      </div>
+     </div>
+     <div data-kayit-icin="eksik">
+      <div class="form-sec">
+        <div class="form-grid">
+          <div class="frow"><label for="aiBaslik-eksik">Başlık</label>
+            <input class="finput kb-buyuk" id="aiBaslik-eksik" data-alan-id="baslik" data-sayac="70|90" value="AB genişleme toplantısında Türkiye&#x27;nin üyelik süreci de konuşuldu">
+            <div class="char-meter"><span>Sitede başlık; SEO başlığı buradan üretilir</span><b>0 / 70</b></div>
+            <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Başlık zorunlu.</div></div>
+          <div class="frow"><label for="aiSpot-eksik">Spot</label>
+            <textarea class="ftext" id="aiSpot-eksik" data-alan-id="spot" data-sayac="220|280">AB dışişleri bakanları Brüksel&#x27;de genişleme gündemini ele aldı. Toplantıda Türkiye ile katılım müzakerelerinin durumu ve gümrük birliğinin güncellenmesi de değerlendirildi.</textarea>
+            <div class="char-meter"><span>Başlığın altındaki giriş cümlesi</span><b>0 / 220</b></div>
+            <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Spot zorunlu.</div></div>
+        </div>
+      </div>
+      <div class="form-sec">
+        <div class="form-sec-tt"><i class="fa-solid fa-sitemap" aria-hidden="true"></i>Sınıflandırma<span class="fs-ek">AI önerisi · gözden geçirin</span></div>
+        <div class="form-grid">
+          <div class="frow two">
+            <div class="frow"><span class="flabel">Ana kategori</span>
+              <div class="kb-secim is-dolu" id="aiKat-eksik" data-alan-id="kategori" data-deger="Dünya" data-bos="Kategori seçin">
+                <button type="button" class="kb-secim-btn" data-acilir="aiKatM-eksik" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">Dünya</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                <div class="pnl-menu kb-secim-menu" id="aiKatM-eksik"><div class="kb-secim-ara"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input type="search" placeholder="Kategori ara" aria-label="Kategori ara"></div>
+                  <div class="kb-secim-liste" role="listbox"><button type="button" data-deger="Gündem" data-ad="Gündem">Gündem<span class="ks-alt">15 alt konu</span></button><button type="button" data-deger="Spor" data-ad="Spor">Spor<span class="ks-alt">17 alt konu</span></button><button type="button" data-deger="Finans" data-ad="Finans">Finans<span class="ks-alt">15 alt konu</span></button><button type="button" data-deger="Kadın" data-ad="Kadın">Kadın<span class="ks-alt">13 alt konu</span></button><button type="button" data-deger="Savunma" data-ad="Savunma">Savunma<span class="ks-alt">18 alt konu</span></button><button type="button" data-deger="Dünya" data-ad="Dünya" class="is-sec">Dünya<span class="ks-alt">14 alt konu</span></button><button type="button" data-deger="Kampüs" data-ad="Kampüs">Kampüs<span class="ks-alt">11 alt konu</span></button><button type="button" data-deger="Keşfet" data-ad="Keşfet">Keşfet<span class="ks-alt">20 alt konu</span></button><button type="button" data-deger="Köşe" data-ad="Köşe">Köşe<span class="ks-alt">0 alt konu</span></button></div><div class="kb-secim-bos" hidden>Bu adla kategori yok.</div></div>
+              </div>
+              <span class="fhint">Adres ve SEO ana kategoriye göre kurulur.</span>
+              <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Ana kategori zorunlu.</div></div>
+            <div class="frow"><span class="flabel">Alt konular</span>
+              <div class="kb-cip-girdi" data-alan-id="alt-konu" data-birincil data-havuz-kapali data-ana-kaynak="#aiKat-eksik" data-havuz="[&quot;Avrupa&quot;, &quot;Orta Doğu&quot;, &quot;Amerika&quot;, &quot;Asya Pasifik&quot;, &quot;Afrika&quot;, &quot;Balkanlar&quot;, &quot;Kafkasya&quot;, &quot;Türk Dünyası&quot;, &quot;Diplomasi&quot;, &quot;Küresel Siyaset&quot;, &quot;Savaş ve Çatışmalar&quot;, &quot;Göç&quot;, &quot;Uluslararası Kuruluşlar&quot;, &quot;Dünya Analizi&quot;]" data-alt-harita="{&quot;Gündem&quot;: [&quot;Siyaset&quot;, &quot;Türkiye&quot;, &quot;Toplum&quot;, &quot;Hukuk&quot;, &quot;Güvenlik&quot;, &quot;Eğitim&quot;, &quot;Çevre&quot;, &quot;Afet&quot;, &quot;Yerel Haberler&quot;, &quot;İstanbul&quot;, &quot;Ankara&quot;, &quot;İzmir&quot;, &quot;Özel Haber&quot;, &quot;Araştırma&quot;, &quot;Gündem Analizi&quot;], &quot;Spor&quot;: [&quot;Futbol&quot;, &quot;Basketbol&quot;, &quot;Voleybol&quot;, &quot;Motor Sporları&quot;, &quot;Bisiklet&quot;, &quot;Tenis&quot;, &quot;Atletizm&quot;, &quot;Olimpiyatlar&quot;, &quot;E-Spor&quot;, &quot;Transfer&quot;, &quot;Millî Takım&quot;, &quot;Galatasaray&quot;, &quot;Fenerbahçe&quot;, &quot;Beşiktaş&quot;, &quot;Trabzonspor&quot;, &quot;Süper Lig&quot;, &quot;Avrupa Ligleri&quot;], &quot;Finans&quot;: [&quot;Türkiye Ekonomisi&quot;, &quot;Dünya Ekonomisi&quot;, &quot;Bankacılık&quot;, &quot;Kişisel Finans&quot;, &quot;Enflasyon&quot;, &quot;Ekonomi Analizi&quot;, &quot;İş Dünyası&quot;, &quot;Şirketler&quot;, &quot;Girişimcilik&quot;, &quot;Çalışma Hayatı&quot;, &quot;Enerji&quot;, &quot;Tarım&quot;, &quot;Sanayi&quot;, &quot;Gayrimenkul&quot;, &quot;Otomotiv&quot;], &quot;Kadın&quot;: [&quot;Kadın Gündemi&quot;, &quot;Kadın Hakları&quot;, &quot;Toplumsal Cinsiyet&quot;, &quot;Kadın ve Hukuk&quot;, &quot;Kadın ve Çalışma Hayatı&quot;, &quot;Başarı Hikâyeleri&quot;, &quot;Kadın Sağlığı&quot;, &quot;Anne ve Çocuk&quot;, &quot;Beslenme&quot;, &quot;Ruh Sağlığı&quot;, &quot;Moda&quot;, &quot;Güzellik&quot;, &quot;Ev ve Yaşam&quot;], &quot;Savunma&quot;: [&quot;Savunma Sanayii&quot;, &quot;Millî Projeler&quot;, &quot;İHA ve SİHA&quot;, &quot;Hava Platformları&quot;, &quot;Deniz Platformları&quot;, &quot;Kara Sistemleri&quot;, &quot;Füze ve Roket Sistemleri&quot;, &quot;Millî Güvenlik&quot;, &quot;Askerî Operasyonlar&quot;, &quot;Sınır Güvenliği&quot;, &quot;Terörle Mücadele&quot;, &quot;Uluslararası Güvenlik&quot;, &quot;NATO&quot;, &quot;Savunma Teknolojileri&quot;, &quot;İhracat ve Anlaşmalar&quot;, &quot;Savunma Analizi&quot;, &quot;Uzman Görüşleri&quot;, &quot;Savunma Videoları&quot;], &quot;Dünya&quot;: [&quot;Avrupa&quot;, &quot;Orta Doğu&quot;, &quot;Amerika&quot;, &quot;Asya Pasifik&quot;, &quot;Afrika&quot;, &quot;Balkanlar&quot;, &quot;Kafkasya&quot;, &quot;Türk Dünyası&quot;, &quot;Diplomasi&quot;, &quot;Küresel Siyaset&quot;, &quot;Savaş ve Çatışmalar&quot;, &quot;Göç&quot;, &quot;Uluslararası Kuruluşlar&quot;, &quot;Dünya Analizi&quot;], &quot;Kampüs&quot;: [&quot;Eğitim ve Sınavlar&quot;, &quot;YKS&quot;, &quot;KPSS&quot;, &quot;ALES ve YDS&quot;, &quot;Üniversiteler&quot;, &quot;Burslar&quot;, &quot;Yurtlar&quot;, &quot;Öğrenci Toplulukları&quot;, &quot;Staj&quot;, &quot;Kariyer&quot;, &quot;Gençlerin Gündemi&quot;], &quot;Keşfet&quot;: [&quot;Teknoloji&quot;, &quot;Yapay Zekâ&quot;, &quot;Bilim&quot;, &quot;Uzay&quot;, &quot;Siber Güvenlik&quot;, &quot;Oyun&quot;, &quot;Gelecek&quot;, &quot;İklim&quot;, &quot;Sağlık&quot;, &quot;Halk Sağlığı&quot;, &quot;Otomobil&quot;, &quot;Seyahat&quot;, &quot;Gastronomi&quot;, &quot;Kültür ve Yaşam&quot;, &quot;Sinema&quot;, &quot;Dizi&quot;, &quot;Müzik&quot;, &quot;Kitap&quot;, &quot;Tiyatro&quot;, &quot;Sergi&quot;], &quot;Köşe&quot;: []}"><span class="kb-cip" data-deger="Avrupa"><span>Avrupa</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="Diplomasi"><span>Diplomasi</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><input type="text" placeholder="Alt konu ara" aria-label="Alt konu ara"><div class="pnl-menu kb-cip-oneri"></div></div>
+              <span class="fhint">Birden fazla seçilebilir; <b>ilk seçilen ana alt konudur</b>.</span></div>
+          </div>
+          <div class="frow two">
+            <div class="frow"><span class="flabel">Yazar</span>
+              <div class="kb-secim is-dolu" data-alan-id="yazar" data-deger="Dada Haber" data-bos="Yazar seçin">
+                <button type="button" class="kb-secim-btn" data-acilir="aiYazar-eksik" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">Dada Haber</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                <div class="pnl-menu kb-secim-menu" id="aiYazar-eksik"><div class="kb-secim-ara"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input type="search" placeholder="Yazar ara" aria-label="Yazar ara"></div>
+                  <div class="kb-secim-liste" role="listbox"><button type="button" data-deger="Dada Haber" data-ad="Dada Haber" class="is-sec">Dada Haber<span class="ks-alt">AI haberlerinde varsayılan imza</span></button><div class="ks-grup">Gündem</div><button type="button" data-deger="Mehmet Koçak" data-ad="Mehmet Koçak">Mehmet Koçak</button><button type="button" data-deger="Ayşe Yıldız" data-ad="Ayşe Yıldız">Ayşe Yıldız</button><button type="button" data-deger="Sibel Arslan" data-ad="Sibel Arslan">Sibel Arslan</button><button type="button" data-deger="Hakan Uysal" data-ad="Hakan Uysal">Hakan Uysal</button><div class="ks-grup">Finans</div><button type="button" data-deger="Elif Aras" data-ad="Elif Aras">Elif Aras</button><button type="button" data-deger="Can Demir" data-ad="Can Demir">Can Demir</button><button type="button" data-deger="Nazlı Öztürk" data-ad="Nazlı Öztürk">Nazlı Öztürk</button><button type="button" data-deger="Tolga Bayram" data-ad="Tolga Bayram">Tolga Bayram</button><div class="ks-grup">Spor</div><button type="button" data-deger="Burak Tan" data-ad="Burak Tan">Burak Tan</button><button type="button" data-deger="Murat Tekin" data-ad="Murat Tekin">Murat Tekin</button><button type="button" data-deger="Gizem Aktaş" data-ad="Gizem Aktaş">Gizem Aktaş</button><button type="button" data-deger="Emre Sönmez" data-ad="Emre Sönmez">Emre Sönmez</button><div class="ks-grup">Dünya</div><button type="button" data-deger="Zeynep Ak" data-ad="Zeynep Ak">Zeynep Ak</button><button type="button" data-deger="Kaan Yücel" data-ad="Kaan Yücel">Kaan Yücel</button><button type="button" data-deger="Hande Polat" data-ad="Hande Polat">Hande Polat</button><button type="button" data-deger="Merve Çınar" data-ad="Merve Çınar">Merve Çınar</button><div class="ks-grup">Kadın</div><button type="button" data-deger="Deniz Kara" data-ad="Deniz Kara">Deniz Kara</button><button type="button" data-deger="Gülşen Ateş" data-ad="Gülşen Ateş">Gülşen Ateş</button><button type="button" data-deger="Burcu Yaman" data-ad="Burcu Yaman">Burcu Yaman</button><button type="button" data-deger="Seda Uslu" data-ad="Seda Uslu">Seda Uslu</button><div class="ks-grup">Savunma</div><button type="button" data-deger="Mert Yalın" data-ad="Mert Yalın">Mert Yalın</button><button type="button" data-deger="Tarık Bulut" data-ad="Tarık Bulut">Tarık Bulut</button><button type="button" data-deger="Onur Kaya" data-ad="Onur Kaya">Onur Kaya</button><button type="button" data-deger="Arda Kılınç" data-ad="Arda Kılınç">Arda Kılınç</button><div class="ks-grup">Kampüs</div><button type="button" data-deger="Selin Koç" data-ad="Selin Koç">Selin Koç</button><button type="button" data-deger="Ece Demirel" data-ad="Ece Demirel">Ece Demirel</button><button type="button" data-deger="Aslı Gür" data-ad="Aslı Gür">Aslı Gür</button><button type="button" data-deger="Sevgi Tarhan" data-ad="Sevgi Tarhan">Sevgi Tarhan</button><div class="ks-grup">Keşfet</div><button type="button" data-deger="Ozan Er" data-ad="Ozan Er">Ozan Er</button><button type="button" data-deger="İrem Su" data-ad="İrem Su">İrem Su</button><button type="button" data-deger="Nilay Ersoy" data-ad="Nilay Ersoy">Nilay Ersoy</button><button type="button" data-deger="Kerem Aksoy" data-ad="Kerem Aksoy">Kerem Aksoy</button><div class="ks-grup">Köşe</div><button type="button" data-deger="Aylin Sezer" data-ad="Aylin Sezer">Aylin Sezer</button><button type="button" data-deger="Leyla Sarıgül" data-ad="Leyla Sarıgül">Leyla Sarıgül</button><button type="button" data-deger="Pınar Okyay" data-ad="Pınar Okyay">Pınar Okyay</button><button type="button" data-deger="Füsun Erdem" data-ad="Füsun Erdem">Füsun Erdem</button></div><div class="kb-secim-bos" hidden>Bu adla yazar yok.</div></div>
+              </div><span class="fhint">Onaylayan editör denetim izinde ve sürüm geçmişinde görünür.</span></div>
+            <div class="frow"><span class="flabel">Tür</span>
+              <div class="kb-secim is-dolu" data-deger="Haber" data-bos="Haber">
+                <button type="button" class="kb-secim-btn" data-acilir="aiTur-eksik" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">Haber</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                <div class="pnl-menu kb-secim-menu" id="aiTur-eksik"><div class="kb-secim-liste" role="listbox"><button type="button" data-deger="Haber" data-ad="Haber" class="is-sec">Haber</button><button type="button" data-deger="Köşe yazısı" data-ad="Köşe yazısı">Köşe yazısı</button><button type="button" data-deger="Video" data-ad="Video">Video</button><button type="button" data-deger="Sesli haber" data-ad="Sesli haber">Sesli haber</button><button type="button" data-deger="Galeri" data-ad="Galeri">Galeri</button><button type="button" data-deger="İnfografik" data-ad="İnfografik">İnfografik</button><button type="button" data-deger="Podcast" data-ad="Podcast">Podcast</button><button type="button" data-deger="Canlı anlatım" data-ad="Canlı anlatım">Canlı anlatım</button><button type="button" data-deger="Dosya" data-ad="Dosya">Dosya</button><button type="button" data-deger="Dada Doğrula" data-ad="Dada Doğrula">Dada Doğrula</button><button type="button" data-deger="Resmî ilan" data-ad="Resmî ilan">Resmî ilan</button></div></div>
+              </div></div>
+          </div>
+        </div>
+      </div>
+      <div class="form-sec" id="aiKapak-eksik" data-alan-id="kapak" data-zorunlu-metin="Kapak görseli yükleyin ya da havuzdan seçin" data-gorsel-alan="haberler.kapak" data-gorsel-ad="Kapak görseli" data-kirp-sonra>
+        <div class="form-sec-tt"><i class="fa-solid fa-image" aria-hidden="true"></i>Kapak görseli<span class="fs-ek">Kaynak: Reuters · Görsel eksik</span></div>
+        <div class="kb-bant tehlike"><i class="fa-solid fa-image" aria-hidden="true"></i><span><b>Görsel eksik.</b> Kaynağın görselinde Reuters logosu var ve AI temizleyemedi; görsel kullanılmadı. Havuzdan seçin ya da yükleyin. Görseli eksik haber hiçbir zaman otomatik yayımlanmaz (YS1).</span></div>
+        <div class="kb-yukle" data-gorsel-bos><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i><b>Kapak görselini sürükleyin ya da seçin</b><span>Web görseli yüklenince mobil görsel ondan otomatik kırpılır · önerilen en az 1280×533</span><span class="kg-acts"><button type="button" class="btn btn-acc btn-sm" data-medya-sec data-medya-ara="AB Brüksel"><i class="fa-solid fa-photo-film" aria-hidden="true"></i>Havuzdan seç</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle><i class="fa-solid fa-upload" aria-hidden="true"></i>Bilgisayardan yükle</button></span></div>
+        <p class="fhint">AI önerisi: havuzda “AB”, “Brüksel” ve “Dışişleri” etiketli 6 görsel var. <button type="button" class="kb-bag" data-medya-sec data-medya-ara="AB Brüksel">Önerileri havuzda aç</button></p>
+        <div class="kb-gorsel" data-gorsel-dolu hidden>
+          <div class="kg-bolum">
+            <div class="kg-bas"><i class="fa-solid fa-desktop" aria-hidden="true"></i>Web</div>
+            <div class="kg-ikili">
+              <div class="kg-resim r-detay" data-gorsel-hedef="web" data-kirp-oran="web.detay" style=""><span class="kg-etk">Detay · 2.4:1</span></div>
+              <div class="kg-resim r-kart" data-gorsel-hedef="web" data-kirp-oran="web.kart" style=""><span class="kg-etk">Kart · 16:10</span></div>
+            </div>
+            <div class="kg-olcu">Önerilen: detay <b>1280×533</b>, kart <b>308×193</b> (sitenin görünen genişliği). <span data-gorsel-bilgi></span></div>
+            <div class="kg-acts">
+              <button type="button" class="btn btn-ghost btn-sm" data-kirp-ac><i class="fa-solid fa-crop-simple" aria-hidden="true"></i>Kırp ve odak</button>
+              <button type="button" class="btn btn-ghost btn-sm" data-medya-sec><i class="fa-solid fa-photo-film" aria-hidden="true"></i>Havuzdan seç</button>
+              <button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle><i class="fa-solid fa-upload" aria-hidden="true"></i>Yükle</button>
+              <button type="button" class="btn btn-ghost btn-sm danger" data-gorsel-kaldir><i class="fa-solid fa-trash" aria-hidden="true"></i>Kaldır</button>
+            </div>
+          </div>
+          <div class="kg-bolum">
+            <div class="kg-bas"><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>Mobil<span class="kg-oto"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Webden kırpıldı</span></div>
+            <div class="kg-resim r-kart" data-gorsel-hedef="mobil" data-kirp-oran="mobil.kart" style=""><span class="kg-etk">Mobil kart · 16:10</span></div>
+            <div class="kg-olcu">Önerilen: <b>358×224</b> (sitenin telefon görünümü). Aynı odak noktası kullanılır.</div>
+            <div class="kg-acts">
+              <button type="button" class="btn btn-ghost btn-sm" data-kirp-ac="mobil.kart"><i class="fa-solid fa-crop-simple" aria-hidden="true"></i>Kırp</button>
+              <button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle data-gorsel-kapsam="mobil"><i class="fa-solid fa-upload" aria-hidden="true"></i>Ayrı görsel yükle</button>
+              <button type="button" class="btn btn-ghost btn-sm" data-gorsel-webe-don hidden><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Webden kırpılana dön</button>
+            </div>
+          </div>
+        </div>
+        <div class="frow kb-ust-bosluk"><label for="aiAlt-eksik">Görsel altyazısı ve kaynağı</label>
+          <input class="finput" id="aiAlt-eksik" data-sayac="120|160" value="">
+          <div class="char-meter"><span>Görselin altında ve erişilebilirlik metninde</span><b>0 / 120</b></div></div>
+      </div>
+
+      <div class="form-sec">
+        <div class="form-sec-tt"><i class="fa-solid fa-align-left" aria-hidden="true"></i>Haber metni<span class="fs-ek">AI kaynaklardan yazdı · okuyup düzeltin</span></div>
+        <div class="kb-editor" data-editor-ad="Haber metni" data-editor-medya>
+          <div class="kz-alan ke-alan" data-alan-id="metin" data-zorunlu-metin="Haber metnini yazın"><p>Avrupa Birliği dışişleri bakanları, Brüksel'de yapılan toplantıda birliğin genişleme gündemini ele aldı. Toplantıda Batı Balkan ülkeleri, Ukrayna ve Moldova'nın yanı sıra Türkiye ile katılım müzakerelerinin durumu da değerlendirildi.</p><p>Reuters'ın aktardığına göre bakanlar, Türkiye ile ilişkilerde gümrük birliğinin güncellenmesi ve vize kolaylığı başlıklarında somut adım atılması gerektiği görüşünde birleşti. Katılım müzakerelerinde yeni fasıl açılmasına ilişkin bir karar alınmadı.</p><h2>Sonraki adım</h2><p>Genişleme raporunun aralık ayındaki zirvede liderlerin önüne gelmesi bekleniyor. Türkiye Dışişleri Bakanlığı toplantıya ilişkin henüz açıklama yapmadı.</p></div>
+          <div class="kz-alt"><span data-kz-say></span><span>Sitede “Haberi dinle” bu metinden okunur</span></div>
+        </div>
+      </div>
+
+      <div class="form-sec">
+        <div class="form-sec-tt"><i class="fa-solid fa-bolt" aria-hidden="true"></i>Dada Özet<span class="fs-ek">Sitede 15 sn · 1 dk · tam metin katmanları</span></div>
+        <div class="form-grid">
+          <div class="frow"><span class="flabel">Üç maddede özet</span><div class="kb-madde"><div class="km-satir"><span class="km-no">1</span><input value="AB bakanları Brüksel&#x27;de genişleme gündemini ele aldı." aria-label="Özet maddesi 1"></div><div class="km-satir"><span class="km-no">2</span><input value="Türkiye ile gümrük birliği ve vize kolaylığı konuşuldu." aria-label="Özet maddesi 2"></div><div class="km-satir"><span class="km-no">3</span><input value="Yeni fasıl açılmasına ilişkin karar alınmadı." aria-label="Özet maddesi 3"></div></div></div>
+          <div class="frow"><label for="aiNeden-eksik">Neden önemli?</label>
+            <textarea class="ftext" id="aiNeden-eksik" data-sayac="180|240">Gümrük birliğinin güncellenmesi Türkiye&#x27;nin AB ile ticaretini doğrudan etkiliyor.</textarea>
+            <div class="char-meter"><span>Sitede açılır kutuda</span><b>0 / 180</b></div></div>
+          <div class="frow"><label for="aiSonra-eksik">Bundan sonra ne olacak?</label>
+            <textarea class="ftext" id="aiSonra-eksik" data-sayac="180|240">Genişleme raporu aralıktaki liderler zirvesinde ele alınacak.</textarea>
+            <div class="char-meter"><span>Sitede açılır kutuda</span><b>0 / 180</b></div></div>
+        </div>
+      </div>
+
+      <div class="form-sec">
+        <div class="form-sec-tt"><i class="fa-solid fa-link" aria-hidden="true"></i>Kaynaklar<span class="fs-ek">Sitede haberin sonunda; teyit sayısı gösterilmez</span></div>
+        <div class="kb-madde" data-satir-liste data-siralanir data-satir-ad="Kaynak" data-satir-alan1="Kaynak adı (kurum, belge)" data-satir-alan2="Açıklama, tarih ya da bağlantı">
+          <div class="km-satir" data-sira><button type="button" class="kb-tutamac" aria-label="Sırayı değiştir (sürükleyin ya da ok tuşları)"><i class="fa-solid fa-grip-vertical" aria-hidden="true"></i></button><span class="km-yazi">Reuters<small>AB dışişleri bakanları toplantısı · 23 Kasım 2026</small></span><button type="button" class="ia-btn" data-satir-duzenle aria-label="Kaynağı düzenle"><i class="fa-solid fa-pen" aria-hidden="true"></i></button><button type="button" class="ia-btn danger" data-satir-sil aria-label="Kaynağı kaldır"><i class="fa-solid fa-trash" aria-hidden="true"></i></button></div><div class="km-satir" data-sira><button type="button" class="kb-tutamac" aria-label="Sırayı değiştir (sürükleyin ya da ok tuşları)"><i class="fa-solid fa-grip-vertical" aria-hidden="true"></i></button><span class="km-yazi">Associated Press<small>Genişleme gündemi · 23 Kasım 2026</small></span><button type="button" class="ia-btn" data-satir-duzenle aria-label="Kaynağı düzenle"><i class="fa-solid fa-pen" aria-hidden="true"></i></button><button type="button" class="ia-btn danger" data-satir-sil aria-label="Kaynağı kaldır"><i class="fa-solid fa-trash" aria-hidden="true"></i></button></div>
+          <button type="button" class="kb-ekle-btn" data-satir-ekle><i class="fa-solid fa-plus" aria-hidden="true"></i>Kaynak ekle</button>
+        </div>
+      </div>
+      <div class="form-sec">
+        <div class="form-sec-tt"><i class="fa-solid fa-list-check" aria-hidden="true"></i>Kaynak teyidi<span class="fs-ek">1., 2., 3. kaynak · aynı haberin iki kez çekilmediğini de gösterir (K8)</span></div>
+        <div class="kb-teyit">
+          <div class="kb-teyit-ozet"><span class="kb-teyit-durum"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>3 kaynak · 1 bağımsız teyit · 1 çelişki</span><span class="kb-teyit-not">3. kaynakta toplantı günü farklı; yayımlamadan önce kontrol edin</span></div>
+          <ol class="kb-teyit-liste"><li class="kb-teyit-kaynak is-ana"><span class="kb-teyit-no">1</span><div class="kb-teyit-ad"><b>Reuters</b><span>T3 · Uluslararası Medya · 23.11.2026 15.30</span></div><span class="pstat ok">Ana kaynak</span><a class="ia-btn" href="https://reuters.com/world" target="_blank" rel="noopener" aria-label="Kaynağı aç: Reuters" title="Kaynağı aç"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></li><li class="kb-teyit-kaynak"><span class="kb-teyit-no">2</span><div class="kb-teyit-ad"><b>Associated Press</b><span>T3 · Uluslararası Medya · 23.11.2026 15.38</span></div><span class="pstat ok">Teyit</span><a class="ia-btn" href="https://apnews.com/hub/world-news" target="_blank" rel="noopener" aria-label="Kaynağı aç: Associated Press" title="Kaynağı aç"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></li><li class="kb-teyit-kaynak is-celiski"><span class="kb-teyit-no">3</span><div class="kb-teyit-ad"><b>Anadolu Ajansı</b><span>T2 · Kurumsal Basın · 23.11.2026 15.44 · toplantı günü farklı</span></div><span class="pstat warm">Çelişki</span><a class="ia-btn" href="https://aa.com.tr/tr/rss/default?cat=guncel" target="_blank" rel="noopener" aria-label="Kaynağı aç: Anadolu Ajansı" title="Kaynağı aç"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></li></ol>
+          <div class="kb-teyit-alt"><h3>Alternatif kaynaklar</h3><ul><li><i class="fa-solid fa-link" aria-hidden="true"></i><a class="kb-bag" href="https://www.afp.com" target="_blank" rel="noopener">AFP · aynı olay</a><span>15.49</span></li><li><i class="fa-solid fa-link" aria-hidden="true"></i><a class="kb-bag" href="https://www.consilium.europa.eu" target="_blank" rel="noopener">AB Konseyi basın bülteni</a><span>15.20</span></li></ul></div>
+        </div>
+      </div>
+     </div>
+     <div data-kayit-icin="temiz">
+      <div class="form-sec">
+        <div class="form-grid">
+          <div class="frow"><label for="aiBaslik-temiz">Başlık</label>
+            <input class="finput kb-buyuk" id="aiBaslik-temiz" data-alan-id="baslik" data-sayac="70|90" value="Benzinde indirim beklentisi: pompaya yansıması hafta sonunu bulabilir">
+            <div class="char-meter"><span>Sitede başlık; SEO başlığı buradan üretilir</span><b>0 / 70</b></div>
+            <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Başlık zorunlu.</div></div>
+          <div class="frow"><label for="aiSpot-temiz">Spot</label>
+            <textarea class="ftext" id="aiSpot-temiz" data-alan-id="spot" data-sayac="220|280">Brent petroldeki düşüşün ardından benzinde litre başına indirim bekleniyor. Sektör kaynaklarına dayanan paylaşıma göre indirimin pompaya yansıması hafta sonunu bulabilir.</textarea>
+            <div class="char-meter"><span>Başlığın altındaki giriş cümlesi</span><b>0 / 220</b></div>
+            <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Spot zorunlu.</div></div>
+        </div>
+      </div>
+      <div class="form-sec">
+        <div class="form-sec-tt"><i class="fa-solid fa-sitemap" aria-hidden="true"></i>Sınıflandırma<span class="fs-ek">AI önerisi · gözden geçirin</span></div>
+        <div class="form-grid">
+          <div class="frow two">
+            <div class="frow"><span class="flabel">Ana kategori</span>
+              <div class="kb-secim is-dolu" id="aiKat-temiz" data-alan-id="kategori" data-deger="Finans" data-bos="Kategori seçin">
+                <button type="button" class="kb-secim-btn" data-acilir="aiKatM-temiz" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">Finans</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                <div class="pnl-menu kb-secim-menu" id="aiKatM-temiz"><div class="kb-secim-ara"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input type="search" placeholder="Kategori ara" aria-label="Kategori ara"></div>
+                  <div class="kb-secim-liste" role="listbox"><button type="button" data-deger="Gündem" data-ad="Gündem">Gündem<span class="ks-alt">15 alt konu</span></button><button type="button" data-deger="Spor" data-ad="Spor">Spor<span class="ks-alt">17 alt konu</span></button><button type="button" data-deger="Finans" data-ad="Finans" class="is-sec">Finans<span class="ks-alt">15 alt konu</span></button><button type="button" data-deger="Kadın" data-ad="Kadın">Kadın<span class="ks-alt">13 alt konu</span></button><button type="button" data-deger="Savunma" data-ad="Savunma">Savunma<span class="ks-alt">18 alt konu</span></button><button type="button" data-deger="Dünya" data-ad="Dünya">Dünya<span class="ks-alt">14 alt konu</span></button><button type="button" data-deger="Kampüs" data-ad="Kampüs">Kampüs<span class="ks-alt">11 alt konu</span></button><button type="button" data-deger="Keşfet" data-ad="Keşfet">Keşfet<span class="ks-alt">20 alt konu</span></button><button type="button" data-deger="Köşe" data-ad="Köşe">Köşe<span class="ks-alt">0 alt konu</span></button></div><div class="kb-secim-bos" hidden>Bu adla kategori yok.</div></div>
+              </div>
+              <span class="fhint">Adres ve SEO ana kategoriye göre kurulur.</span>
+              <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Ana kategori zorunlu.</div></div>
+            <div class="frow"><span class="flabel">Alt konular</span>
+              <div class="kb-cip-girdi" data-alan-id="alt-konu" data-birincil data-havuz-kapali data-ana-kaynak="#aiKat-temiz" data-havuz="[&quot;Türkiye Ekonomisi&quot;, &quot;Dünya Ekonomisi&quot;, &quot;Bankacılık&quot;, &quot;Kişisel Finans&quot;, &quot;Enflasyon&quot;, &quot;Ekonomi Analizi&quot;, &quot;İş Dünyası&quot;, &quot;Şirketler&quot;, &quot;Girişimcilik&quot;, &quot;Çalışma Hayatı&quot;, &quot;Enerji&quot;, &quot;Tarım&quot;, &quot;Sanayi&quot;, &quot;Gayrimenkul&quot;, &quot;Otomotiv&quot;]" data-alt-harita="{&quot;Gündem&quot;: [&quot;Siyaset&quot;, &quot;Türkiye&quot;, &quot;Toplum&quot;, &quot;Hukuk&quot;, &quot;Güvenlik&quot;, &quot;Eğitim&quot;, &quot;Çevre&quot;, &quot;Afet&quot;, &quot;Yerel Haberler&quot;, &quot;İstanbul&quot;, &quot;Ankara&quot;, &quot;İzmir&quot;, &quot;Özel Haber&quot;, &quot;Araştırma&quot;, &quot;Gündem Analizi&quot;], &quot;Spor&quot;: [&quot;Futbol&quot;, &quot;Basketbol&quot;, &quot;Voleybol&quot;, &quot;Motor Sporları&quot;, &quot;Bisiklet&quot;, &quot;Tenis&quot;, &quot;Atletizm&quot;, &quot;Olimpiyatlar&quot;, &quot;E-Spor&quot;, &quot;Transfer&quot;, &quot;Millî Takım&quot;, &quot;Galatasaray&quot;, &quot;Fenerbahçe&quot;, &quot;Beşiktaş&quot;, &quot;Trabzonspor&quot;, &quot;Süper Lig&quot;, &quot;Avrupa Ligleri&quot;], &quot;Finans&quot;: [&quot;Türkiye Ekonomisi&quot;, &quot;Dünya Ekonomisi&quot;, &quot;Bankacılık&quot;, &quot;Kişisel Finans&quot;, &quot;Enflasyon&quot;, &quot;Ekonomi Analizi&quot;, &quot;İş Dünyası&quot;, &quot;Şirketler&quot;, &quot;Girişimcilik&quot;, &quot;Çalışma Hayatı&quot;, &quot;Enerji&quot;, &quot;Tarım&quot;, &quot;Sanayi&quot;, &quot;Gayrimenkul&quot;, &quot;Otomotiv&quot;], &quot;Kadın&quot;: [&quot;Kadın Gündemi&quot;, &quot;Kadın Hakları&quot;, &quot;Toplumsal Cinsiyet&quot;, &quot;Kadın ve Hukuk&quot;, &quot;Kadın ve Çalışma Hayatı&quot;, &quot;Başarı Hikâyeleri&quot;, &quot;Kadın Sağlığı&quot;, &quot;Anne ve Çocuk&quot;, &quot;Beslenme&quot;, &quot;Ruh Sağlığı&quot;, &quot;Moda&quot;, &quot;Güzellik&quot;, &quot;Ev ve Yaşam&quot;], &quot;Savunma&quot;: [&quot;Savunma Sanayii&quot;, &quot;Millî Projeler&quot;, &quot;İHA ve SİHA&quot;, &quot;Hava Platformları&quot;, &quot;Deniz Platformları&quot;, &quot;Kara Sistemleri&quot;, &quot;Füze ve Roket Sistemleri&quot;, &quot;Millî Güvenlik&quot;, &quot;Askerî Operasyonlar&quot;, &quot;Sınır Güvenliği&quot;, &quot;Terörle Mücadele&quot;, &quot;Uluslararası Güvenlik&quot;, &quot;NATO&quot;, &quot;Savunma Teknolojileri&quot;, &quot;İhracat ve Anlaşmalar&quot;, &quot;Savunma Analizi&quot;, &quot;Uzman Görüşleri&quot;, &quot;Savunma Videoları&quot;], &quot;Dünya&quot;: [&quot;Avrupa&quot;, &quot;Orta Doğu&quot;, &quot;Amerika&quot;, &quot;Asya Pasifik&quot;, &quot;Afrika&quot;, &quot;Balkanlar&quot;, &quot;Kafkasya&quot;, &quot;Türk Dünyası&quot;, &quot;Diplomasi&quot;, &quot;Küresel Siyaset&quot;, &quot;Savaş ve Çatışmalar&quot;, &quot;Göç&quot;, &quot;Uluslararası Kuruluşlar&quot;, &quot;Dünya Analizi&quot;], &quot;Kampüs&quot;: [&quot;Eğitim ve Sınavlar&quot;, &quot;YKS&quot;, &quot;KPSS&quot;, &quot;ALES ve YDS&quot;, &quot;Üniversiteler&quot;, &quot;Burslar&quot;, &quot;Yurtlar&quot;, &quot;Öğrenci Toplulukları&quot;, &quot;Staj&quot;, &quot;Kariyer&quot;, &quot;Gençlerin Gündemi&quot;], &quot;Keşfet&quot;: [&quot;Teknoloji&quot;, &quot;Yapay Zekâ&quot;, &quot;Bilim&quot;, &quot;Uzay&quot;, &quot;Siber Güvenlik&quot;, &quot;Oyun&quot;, &quot;Gelecek&quot;, &quot;İklim&quot;, &quot;Sağlık&quot;, &quot;Halk Sağlığı&quot;, &quot;Otomobil&quot;, &quot;Seyahat&quot;, &quot;Gastronomi&quot;, &quot;Kültür ve Yaşam&quot;, &quot;Sinema&quot;, &quot;Dizi&quot;, &quot;Müzik&quot;, &quot;Kitap&quot;, &quot;Tiyatro&quot;, &quot;Sergi&quot;], &quot;Köşe&quot;: []}"><span class="kb-cip" data-deger="Enerji"><span>Enerji</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><input type="text" placeholder="Alt konu ara" aria-label="Alt konu ara"><div class="pnl-menu kb-cip-oneri"></div></div>
+              <span class="fhint">Birden fazla seçilebilir; <b>ilk seçilen ana alt konudur</b>.</span></div>
+          </div>
+          <div class="frow two">
+            <div class="frow"><span class="flabel">Yazar</span>
+              <div class="kb-secim is-dolu" data-alan-id="yazar" data-deger="Dada Haber" data-bos="Yazar seçin">
+                <button type="button" class="kb-secim-btn" data-acilir="aiYazar-temiz" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">Dada Haber</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                <div class="pnl-menu kb-secim-menu" id="aiYazar-temiz"><div class="kb-secim-ara"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input type="search" placeholder="Yazar ara" aria-label="Yazar ara"></div>
+                  <div class="kb-secim-liste" role="listbox"><button type="button" data-deger="Dada Haber" data-ad="Dada Haber" class="is-sec">Dada Haber<span class="ks-alt">AI haberlerinde varsayılan imza</span></button><div class="ks-grup">Gündem</div><button type="button" data-deger="Mehmet Koçak" data-ad="Mehmet Koçak">Mehmet Koçak</button><button type="button" data-deger="Ayşe Yıldız" data-ad="Ayşe Yıldız">Ayşe Yıldız</button><button type="button" data-deger="Sibel Arslan" data-ad="Sibel Arslan">Sibel Arslan</button><button type="button" data-deger="Hakan Uysal" data-ad="Hakan Uysal">Hakan Uysal</button><div class="ks-grup">Finans</div><button type="button" data-deger="Elif Aras" data-ad="Elif Aras">Elif Aras</button><button type="button" data-deger="Can Demir" data-ad="Can Demir">Can Demir</button><button type="button" data-deger="Nazlı Öztürk" data-ad="Nazlı Öztürk">Nazlı Öztürk</button><button type="button" data-deger="Tolga Bayram" data-ad="Tolga Bayram">Tolga Bayram</button><div class="ks-grup">Spor</div><button type="button" data-deger="Burak Tan" data-ad="Burak Tan">Burak Tan</button><button type="button" data-deger="Murat Tekin" data-ad="Murat Tekin">Murat Tekin</button><button type="button" data-deger="Gizem Aktaş" data-ad="Gizem Aktaş">Gizem Aktaş</button><button type="button" data-deger="Emre Sönmez" data-ad="Emre Sönmez">Emre Sönmez</button><div class="ks-grup">Dünya</div><button type="button" data-deger="Zeynep Ak" data-ad="Zeynep Ak">Zeynep Ak</button><button type="button" data-deger="Kaan Yücel" data-ad="Kaan Yücel">Kaan Yücel</button><button type="button" data-deger="Hande Polat" data-ad="Hande Polat">Hande Polat</button><button type="button" data-deger="Merve Çınar" data-ad="Merve Çınar">Merve Çınar</button><div class="ks-grup">Kadın</div><button type="button" data-deger="Deniz Kara" data-ad="Deniz Kara">Deniz Kara</button><button type="button" data-deger="Gülşen Ateş" data-ad="Gülşen Ateş">Gülşen Ateş</button><button type="button" data-deger="Burcu Yaman" data-ad="Burcu Yaman">Burcu Yaman</button><button type="button" data-deger="Seda Uslu" data-ad="Seda Uslu">Seda Uslu</button><div class="ks-grup">Savunma</div><button type="button" data-deger="Mert Yalın" data-ad="Mert Yalın">Mert Yalın</button><button type="button" data-deger="Tarık Bulut" data-ad="Tarık Bulut">Tarık Bulut</button><button type="button" data-deger="Onur Kaya" data-ad="Onur Kaya">Onur Kaya</button><button type="button" data-deger="Arda Kılınç" data-ad="Arda Kılınç">Arda Kılınç</button><div class="ks-grup">Kampüs</div><button type="button" data-deger="Selin Koç" data-ad="Selin Koç">Selin Koç</button><button type="button" data-deger="Ece Demirel" data-ad="Ece Demirel">Ece Demirel</button><button type="button" data-deger="Aslı Gür" data-ad="Aslı Gür">Aslı Gür</button><button type="button" data-deger="Sevgi Tarhan" data-ad="Sevgi Tarhan">Sevgi Tarhan</button><div class="ks-grup">Keşfet</div><button type="button" data-deger="Ozan Er" data-ad="Ozan Er">Ozan Er</button><button type="button" data-deger="İrem Su" data-ad="İrem Su">İrem Su</button><button type="button" data-deger="Nilay Ersoy" data-ad="Nilay Ersoy">Nilay Ersoy</button><button type="button" data-deger="Kerem Aksoy" data-ad="Kerem Aksoy">Kerem Aksoy</button><div class="ks-grup">Köşe</div><button type="button" data-deger="Aylin Sezer" data-ad="Aylin Sezer">Aylin Sezer</button><button type="button" data-deger="Leyla Sarıgül" data-ad="Leyla Sarıgül">Leyla Sarıgül</button><button type="button" data-deger="Pınar Okyay" data-ad="Pınar Okyay">Pınar Okyay</button><button type="button" data-deger="Füsun Erdem" data-ad="Füsun Erdem">Füsun Erdem</button></div><div class="kb-secim-bos" hidden>Bu adla yazar yok.</div></div>
+              </div><span class="fhint">Onaylayan editör denetim izinde ve sürüm geçmişinde görünür.</span></div>
+            <div class="frow"><span class="flabel">Tür</span>
+              <div class="kb-secim is-dolu" data-deger="Haber" data-bos="Haber">
+                <button type="button" class="kb-secim-btn" data-acilir="aiTur-temiz" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">Haber</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                <div class="pnl-menu kb-secim-menu" id="aiTur-temiz"><div class="kb-secim-liste" role="listbox"><button type="button" data-deger="Haber" data-ad="Haber" class="is-sec">Haber</button><button type="button" data-deger="Köşe yazısı" data-ad="Köşe yazısı">Köşe yazısı</button><button type="button" data-deger="Video" data-ad="Video">Video</button><button type="button" data-deger="Sesli haber" data-ad="Sesli haber">Sesli haber</button><button type="button" data-deger="Galeri" data-ad="Galeri">Galeri</button><button type="button" data-deger="İnfografik" data-ad="İnfografik">İnfografik</button><button type="button" data-deger="Podcast" data-ad="Podcast">Podcast</button><button type="button" data-deger="Canlı anlatım" data-ad="Canlı anlatım">Canlı anlatım</button><button type="button" data-deger="Dosya" data-ad="Dosya">Dosya</button><button type="button" data-deger="Dada Doğrula" data-ad="Dada Doğrula">Dada Doğrula</button><button type="button" data-deger="Resmî ilan" data-ad="Resmî ilan">Resmî ilan</button></div></div>
+              </div></div>
+          </div>
+        </div>
+      </div>
+      <div class="form-sec" id="aiKapak-temiz" data-alan-id="kapak" data-zorunlu-metin="Kapak görseli yükleyin ya da havuzdan seçin" data-gorsel-alan="haberler.kapak" data-gorsel-ad="Kapak görseli" data-kirp-sonra>
+        <div class="form-sec-tt"><i class="fa-solid fa-image" aria-hidden="true"></i>Kapak görseli<span class="fs-ek">Kaynak: @ekonomi_gundem (X) · Temiz</span></div>
+        <div class="kb-bant tamam"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span><b>Temiz görsel.</b> Logo ya da damga bulunmadı; görsel aynen kullanılıyor (YS1).</span></div>
+        <div class="kb-yukle" data-gorsel-bos hidden><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i><b>Kapak görselini sürükleyin ya da seçin</b><span>Web görseli yüklenince mobil görsel ondan otomatik kırpılır · önerilen en az 1280×533</span><span class="kg-acts"><button type="button" class="btn btn-acc btn-sm" data-medya-sec data-medya-ara="AB Brüksel"><i class="fa-solid fa-photo-film" aria-hidden="true"></i>Havuzdan seç</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle><i class="fa-solid fa-upload" aria-hidden="true"></i>Bilgisayardan yükle</button></span></div>
+        
+        <div class="kb-gorsel" data-gorsel-dolu>
+          <div class="kg-bolum">
+            <div class="kg-bas"><i class="fa-solid fa-desktop" aria-hidden="true"></i>Web</div>
+            <div class="kg-ikili">
+              <div class="kg-resim r-detay" data-gorsel-hedef="web" data-kirp-oran="web.detay" style="background-image:url(../../veri/gorsel/p192.jpg);background-position:50% 50%"><span class="kg-odak" style="left:50%;top:50%"></span><span class="kg-etk">Detay · 2.4:1</span></div>
+              <div class="kg-resim r-kart" data-gorsel-hedef="web" data-kirp-oran="web.kart" style="background-image:url(../../veri/gorsel/p192.jpg);background-position:50% 50%"><span class="kg-etk">Kart · 16:10</span></div>
+            </div>
+            <div class="kg-olcu">Önerilen: detay <b>1280×533</b>, kart <b>308×193</b> (sitenin görünen genişliği). <span data-gorsel-bilgi>Kaynaktan: 1280×853 JPG</span></div>
+            <div class="kg-acts">
+              <button type="button" class="btn btn-ghost btn-sm" data-kirp-ac><i class="fa-solid fa-crop-simple" aria-hidden="true"></i>Kırp ve odak</button>
+              <button type="button" class="btn btn-ghost btn-sm" data-medya-sec><i class="fa-solid fa-photo-film" aria-hidden="true"></i>Havuzdan seç</button>
+              <button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle><i class="fa-solid fa-upload" aria-hidden="true"></i>Yükle</button>
+              <button type="button" class="btn btn-ghost btn-sm danger" data-gorsel-kaldir><i class="fa-solid fa-trash" aria-hidden="true"></i>Kaldır</button>
+            </div>
+          </div>
+          <div class="kg-bolum">
+            <div class="kg-bas"><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>Mobil<span class="kg-oto"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Webden kırpıldı</span></div>
+            <div class="kg-resim r-kart" data-gorsel-hedef="mobil" data-kirp-oran="mobil.kart" style="background-image:url(../../veri/gorsel/p192.jpg);background-position:50% 50%"><span class="kg-odak" style="left:50%;top:50%"></span><span class="kg-etk">Mobil kart · 16:10</span></div>
+            <div class="kg-olcu">Önerilen: <b>358×224</b> (sitenin telefon görünümü). Aynı odak noktası kullanılır.</div>
+            <div class="kg-acts">
+              <button type="button" class="btn btn-ghost btn-sm" data-kirp-ac="mobil.kart"><i class="fa-solid fa-crop-simple" aria-hidden="true"></i>Kırp</button>
+              <button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle data-gorsel-kapsam="mobil"><i class="fa-solid fa-upload" aria-hidden="true"></i>Ayrı görsel yükle</button>
+              <button type="button" class="btn btn-ghost btn-sm" data-gorsel-webe-don hidden><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Webden kırpılana dön</button>
+            </div>
+          </div>
+        </div>
+        <div class="frow kb-ust-bosluk"><label for="aiAlt-temiz">Görsel altyazısı ve kaynağı</label>
+          <input class="finput" id="aiAlt-temiz" data-sayac="120|160" value="Marmara&#x27;da kar yağışı, arşiv · Fotoğraf: @ekonomi_gundem (X)">
+          <div class="char-meter"><span>Görselin altında ve erişilebilirlik metninde</span><b>0 / 120</b></div></div>
+      </div>
+
+      <div class="form-sec">
+        <div class="form-sec-tt"><i class="fa-solid fa-align-left" aria-hidden="true"></i>Haber metni<span class="fs-ek">AI kaynaklardan yazdı · okuyup düzeltin</span></div>
+        <div class="kb-editor" data-editor-ad="Haber metni" data-editor-medya>
+          <div class="kz-alan ke-alan" data-alan-id="metin" data-zorunlu-metin="Haber metnini yazın"><p>Brent petrol fiyatlarındaki son düşüşün ardından benzinde indirim beklentisi oluştu. @ekonomi_gundem hesabının sektör kaynaklarına dayandırdığı paylaşıma göre indirimin litre başına 1 lira civarında olması ve pompaya hafta sonu yansıması bekleniyor.</p><p>İndirime ilişkin dağıtım şirketlerinden ya da EPDK'dan resmî bir açıklama yapılmadı. Akaryakıt fiyatları, ürün fiyatları ve döviz kurundaki değişime göre belirleniyor.</p></div>
+          <div class="kz-alt"><span data-kz-say></span><span>Sitede “Haberi dinle” bu metinden okunur</span></div>
+        </div>
+      </div>
+
+      <div class="form-sec">
+        <div class="form-sec-tt"><i class="fa-solid fa-bolt" aria-hidden="true"></i>Dada Özet<span class="fs-ek">Sitede 15 sn · 1 dk · tam metin katmanları</span></div>
+        <div class="form-grid">
+          <div class="frow"><span class="flabel">Üç maddede özet</span><div class="kb-madde"><div class="km-satir"><span class="km-no">1</span><input value="Benzinde litre başına 1 lira civarında indirim bekleniyor." aria-label="Özet maddesi 1"></div><div class="km-satir"><span class="km-no">2</span><input value="İndirimin hafta sonu pompaya yansıması bekleniyor." aria-label="Özet maddesi 2"></div><div class="km-satir"><span class="km-no">3</span><input value="Resmî açıklama henüz yok." aria-label="Özet maddesi 3"></div></div></div>
+          <div class="frow"><label for="aiNeden-temiz">Neden önemli?</label>
+            <textarea class="ftext" id="aiNeden-temiz" data-sayac="180|240">Akaryakıt fiyatı ulaşım ve gıda fiyatlarını dolaylı olarak etkiliyor.</textarea>
+            <div class="char-meter"><span>Sitede açılır kutuda</span><b>0 / 180</b></div></div>
+          <div class="frow"><label for="aiSonra-temiz">Bundan sonra ne olacak?</label>
+            <textarea class="ftext" id="aiSonra-temiz" data-sayac="180|240">Dağıtım şirketlerinin fiyat listesi hafta sonundan önce netleşecek.</textarea>
+            <div class="char-meter"><span>Sitede açılır kutuda</span><b>0 / 180</b></div></div>
+        </div>
+      </div>
+
+      <div class="form-sec">
+        <div class="form-sec-tt"><i class="fa-solid fa-link" aria-hidden="true"></i>Kaynaklar<span class="fs-ek">Sitede haberin sonunda; teyit sayısı gösterilmez</span></div>
+        <div class="kb-madde" data-satir-liste data-siralanir data-satir-ad="Kaynak" data-satir-alan1="Kaynak adı (kurum, belge)" data-satir-alan2="Açıklama, tarih ya da bağlantı">
+          <div class="km-satir" data-sira><button type="button" class="kb-tutamac" aria-label="Sırayı değiştir (sürükleyin ya da ok tuşları)"><i class="fa-solid fa-grip-vertical" aria-hidden="true"></i></button><span class="km-yazi">@ekonomi_gundem (X)<small>Paylaşım · 23 Kasım 2026 09.00</small></span><button type="button" class="ia-btn" data-satir-duzenle aria-label="Kaynağı düzenle"><i class="fa-solid fa-pen" aria-hidden="true"></i></button><button type="button" class="ia-btn danger" data-satir-sil aria-label="Kaynağı kaldır"><i class="fa-solid fa-trash" aria-hidden="true"></i></button></div>
+          <button type="button" class="kb-ekle-btn" data-satir-ekle><i class="fa-solid fa-plus" aria-hidden="true"></i>Kaynak ekle</button>
+        </div>
+      </div>
+      <div class="form-sec">
+        <div class="form-sec-tt"><i class="fa-solid fa-list-check" aria-hidden="true"></i>Kaynak teyidi<span class="fs-ek">1., 2., 3. kaynak · aynı haberin iki kez çekilmediğini de gösterir (K8)</span></div>
+        <div class="kb-teyit">
+          <div class="kb-teyit-ozet"><span class="kb-teyit-durum"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>1 kaynak · teyit yok</span><span class="kb-teyit-not">Aynı olayı veren başka kaynak bulunamadı; tek kaynaklı haber otomatik yayına girmez</span></div>
+          <ol class="kb-teyit-liste"><li class="kb-teyit-kaynak is-ana"><span class="kb-teyit-no">1</span><div class="kb-teyit-ad"><b>@ekonomi_gundem (X)</b><span>T4 · Düşük Öncelik · 23.11.2026 09.00</span></div><span class="pstat wait">Ana kaynak</span><a class="ia-btn" href="https://x.com/ekonomi_gundem" target="_blank" rel="noopener" aria-label="Kaynağı aç: @ekonomi_gundem (X)" title="Kaynağı aç"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></li></ol>
+          <div class="kb-teyit-alt"><h3>Alternatif kaynaklar</h3><ul><li><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>Aynı olayı veren başka kaynak bulunamadı.</span><span>—</span></li></ul></div>
+        </div>
+      </div>
+     </div>
+
+      <div class="form-sec">
+        <div class="form-sec-tt"><i class="fa-solid fa-comments" aria-hidden="true"></i>Okur etkileşimi</div>
+        <div class="form-grid">
+          <div class="toggle-row"><span>Yorumlar açık<small>Yorumları editörler yönetir</small></span><label class="toggle"><input type="checkbox" checked aria-label="Yorumlar açık"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
+          <div class="toggle-row"><span>Haberi dinle<small>Metin tarayıcının sesiyle okunur</small></span><label class="toggle"><input type="checkbox" checked aria-label="Haberi dinle"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= SEO ================= -->
+    <div class="sa-form-panel is-ai" id="pSeo" role="tabpanel" data-ai-grup="seo" hidden>
+      <div class="form-sec" data-kayit-icin="kirpildi">
+        <div class="form-sec-tt"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>Otomatik üretildi<span class="kb-ai-oneri"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>AI önerisi · onay bekliyor<button type="button" data-ai-onayla>Onayla</button></span><span class="fs-ek"><button type="button" class="btn btn-ghost btn-sm" data-seo-uret><i class="fa-solid fa-rotate" aria-hidden="true"></i>Başlıktan yeniden üret</button></span></div>
+        <div class="form-grid">
+          <div class="frow"><label for="sBaslik-kirpildi">SEO başlığı</label>
+            <input class="finput" id="sBaslik-kirpildi" data-alan="seo-baslik-kirpildi" data-sayac="60|70" value="Marmara&#x27;ya turuncu kod: İstanbul&#x27;da kar uyarısı | Dada Haber">
+            <div class="char-meter"><span>Arama sonucunda görünen başlık · 50–60 karakter önerilir</span><b>0 / 60</b></div></div>
+          <div class="frow"><label for="sAciklama-kirpildi">SEO açıklaması</label>
+            <textarea class="ftext" id="sAciklama-kirpildi" data-alan="seo-aciklama-kirpildi" data-sayac="155|170">Meteoroloji, Marmara için 24 Kasım sabahından itibaren turuncu kod kar uyarısı yaptı. İstanbul&#x27;un kuzeyinde kar 15 santimetreyi bulabilir.</textarea>
+            <div class="char-meter"><span>Arama sonucunda başlığın altında · 120–155 karakter önerilir</span><b>0 / 155</b></div></div>
+          <div class="frow"><label for="sSlug-kirpildi">Adres</label>
+            <div class="slug-wrap"><span class="slug-pre">dadahaber.com/gundem/</span><input class="finput" id="sSlug-kirpildi" data-alan="slug-kirpildi" value="meteorolojiden-marmara-icin-turuncu-kod-kar-uyarisi"></div>
+            <span class="fhint">Yayımlandıktan sonra değiştirilirse eski adres yeniye yönlendirilir.</span></div>
+          <div class="frow"><span class="flabel">Anahtar kelimeler</span>
+            <div class="kb-cip-girdi" data-serbest><span class="kb-cip" data-deger="marmara kar uyarısı"><span>marmara kar uyarısı</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="turuncu kod"><span>turuncu kod</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="istanbul kar"><span>istanbul kar</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><input type="text" placeholder="Yazın; Enter ya da virgülle ekleyin" aria-label="Anahtar kelime ekle"><div class="pnl-menu kb-cip-oneri"></div></div></div>
+          <div class="frow"><span class="flabel">Arama sonucu önizlemesi</span>
+            <div class="serp"><div class="serp-url"><span class="serp-fav kb-logo-isaret"></span><span>dadahaber.com › gundem › <span data-alan="slug-kirpildi">meteorolojiden-marmara-icin-turuncu-kod-kar-uyarisi</span></span></div>
+              <div class="serp-title" data-alan="seo-baslik-kirpildi">Marmara&#x27;ya turuncu kod: İstanbul&#x27;da kar uyarısı | Dada Haber</div>
+              <div class="serp-desc" data-alan="seo-aciklama-kirpildi">Meteoroloji, Marmara için 24 Kasım sabahından itibaren turuncu kod kar uyarısı yaptı. İstanbul&#x27;un kuzeyinde kar 15 santimetreyi bulabilir.</div></div></div>
+          <div class="toggle-row"><span>Google Haberler ve Discover'a uygun<small>NewsArticle şeması ve büyük görsel önizlemesi açık</small></span><label class="toggle"><input type="checkbox" checked aria-label="Google Haberler uygunluğu"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
+        </div>
+      </div>
+      <div class="form-sec" data-kayit-icin="eksik">
+        <div class="form-sec-tt"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>Otomatik üretildi<span class="kb-ai-oneri"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>AI önerisi · onay bekliyor<button type="button" data-ai-onayla>Onayla</button></span><span class="fs-ek"><button type="button" class="btn btn-ghost btn-sm" data-seo-uret><i class="fa-solid fa-rotate" aria-hidden="true"></i>Başlıktan yeniden üret</button></span></div>
+        <div class="form-grid">
+          <div class="frow"><label for="sBaslik-eksik">SEO başlığı</label>
+            <input class="finput" id="sBaslik-eksik" data-alan="seo-baslik-eksik" data-sayac="60|70" value="AB genişleme toplantısında Türkiye de konuşuldu | Dada Haber">
+            <div class="char-meter"><span>Arama sonucunda görünen başlık · 50–60 karakter önerilir</span><b>0 / 60</b></div></div>
+          <div class="frow"><label for="sAciklama-eksik">SEO açıklaması</label>
+            <textarea class="ftext" id="sAciklama-eksik" data-alan="seo-aciklama-eksik" data-sayac="155|170">AB dışişleri bakanları Brüksel&#x27;de genişlemeyi ele aldı; Türkiye ile gümrük birliği ve vize kolaylığı da gündemdeydi.</textarea>
+            <div class="char-meter"><span>Arama sonucunda başlığın altında · 120–155 karakter önerilir</span><b>0 / 155</b></div></div>
+          <div class="frow"><label for="sSlug-eksik">Adres</label>
+            <div class="slug-wrap"><span class="slug-pre">dadahaber.com/dunya/</span><input class="finput" id="sSlug-eksik" data-alan="slug-eksik" value="ab-genisleme-toplantisinda-turkiyenin-uyelik-sureci-de-konusuldu"></div>
+            <span class="fhint">Yayımlandıktan sonra değiştirilirse eski adres yeniye yönlendirilir.</span></div>
+          <div class="frow"><span class="flabel">Anahtar kelimeler</span>
+            <div class="kb-cip-girdi" data-serbest><span class="kb-cip" data-deger="ab genişleme"><span>ab genişleme</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="türkiye ab üyelik"><span>türkiye ab üyelik</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="gümrük birliği"><span>gümrük birliği</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><input type="text" placeholder="Yazın; Enter ya da virgülle ekleyin" aria-label="Anahtar kelime ekle"><div class="pnl-menu kb-cip-oneri"></div></div></div>
+          <div class="frow"><span class="flabel">Arama sonucu önizlemesi</span>
+            <div class="serp"><div class="serp-url"><span class="serp-fav kb-logo-isaret"></span><span>dadahaber.com › dunya › <span data-alan="slug-eksik">ab-genisleme-toplantisinda-turkiyenin-uyelik-sureci-de-konusuldu</span></span></div>
+              <div class="serp-title" data-alan="seo-baslik-eksik">AB genişleme toplantısında Türkiye de konuşuldu | Dada Haber</div>
+              <div class="serp-desc" data-alan="seo-aciklama-eksik">AB dışişleri bakanları Brüksel&#x27;de genişlemeyi ele aldı; Türkiye ile gümrük birliği ve vize kolaylığı da gündemdeydi.</div></div></div>
+          <div class="toggle-row"><span>Google Haberler ve Discover'a uygun<small>NewsArticle şeması ve büyük görsel önizlemesi açık</small></span><label class="toggle"><input type="checkbox" checked aria-label="Google Haberler uygunluğu"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
+        </div>
+      </div>
+      <div class="form-sec" data-kayit-icin="temiz"><div class="kb-bant bilgi"><i class="fa-solid fa-link-slash" aria-hidden="true"></i><span><b>Yalnız Sosyal Medya kanalı.</b> Bu haber 1. kaynağın grubu (T4) gereği yalnız sosyal medyada yayımlanır; sitede sayfa açılmaz, SEO uygulanmaz (YS2). Kanalı Süper Admin ya da Genel Yayın Yönetmeni değiştirirse SEO otomatik üretilir.</span></div></div>
+    </div>
+
+    <!-- ================= BİLDİRİM ================= -->
+    <div class="sa-form-panel is-ai" id="pBildirim" role="tabpanel" data-ai-grup="bildirim" hidden>
+      <div class="form-sec" data-kayit-icin="kirpildi">
+        <div class="form-sec-tt"><i class="fa-solid fa-bell" aria-hidden="true"></i>Bildirim<span class="kb-ai-oneri"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>AI önerisi · onay bekliyor<button type="button" data-ai-onayla>Onayla</button></span></div>
+        <div class="form-grid">
+          <div class="frow"><span class="flabel">Kanallar</span>
+            <div class="kb-secenek-grup"><label class="kb-secenek"><input type="checkbox">Telefon bildirimi</label><label class="kb-secenek"><input type="checkbox">Web bildirimi</label></div>
+            <span class="fhint">AI haberlerinde bildirim varsayılan olarak kapalıdır; editör isterse işaretler.</span></div>
+          <div class="frow"><label for="bBaslik-kirpildi">Bildirim başlığı</label>
+            <input class="finput" id="bBaslik-kirpildi" data-alan="push-baslik-kirpildi" data-sayac="60|65" value="Marmara&#x27;ya turuncu kod kar uyarısı">
+            <div class="kb-cubuk"><span></span></div>
+            <div class="char-meter"><span>Telefonda kalın satır · 60 karaktere kadar tam görünür</span><b>0 / 60</b></div></div>
+          <div class="frow"><label for="bIcerik-kirpildi">Bildirim metni</label>
+            <textarea class="ftext" id="bIcerik-kirpildi" data-alan="push-metin-kirpildi" data-sayac="150|178">İstanbul&#x27;un kuzeyinde kar 15 santimetreyi bulabilir; toplu taşıma gece yarısına kadar uzatıldı.</textarea>
+            <div class="kb-cubuk"><span></span></div>
+            <div class="char-meter"><span>Kilit ekranında 3 satıra kadar · 150 karakter önerilir</span><b>0 / 150</b></div></div>
+          <div class="toggle-row"><span>Bildirim görseli<small>Kapak görselinin mobil kırpımı kullanılır (2:1)</small></span><label class="toggle"><input type="checkbox" checked aria-label="Bildirim görseli"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
+          <div class="frow"><span class="flabel">Ne zaman</span>
+            <div class="kb-secenek-grup"><label class="kb-secenek"><input type="radio" name="bZaman-kirpildi" checked>Onaylanınca hemen</label><label class="kb-secenek"><input type="radio" name="bZaman-kirpildi" data-ac="bZamanSec-kirpildi">Zamanla</label></div>
+            <div id="bZamanSec-kirpildi" hidden>
+              <div class="kb-tarih-sec" id="bTarih-kirpildi" data-deger="2026-11-23 18.30" data-enaz="bugun">
+                <button type="button" class="kb-tarih-btn" data-acilir="bTarihMenu-kirpildi" aria-expanded="false" aria-haspopup="dialog"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i><span class="kt-deger"></span></button>
+                <div class="pnl-menu kb-tarih-menu" id="bTarihMenu-kirpildi" role="dialog" aria-label="Tarih ve saat seç"></div>
+              </div>
+            </div></div>
+        </div>
+      </div>
+      <div class="form-sec" data-kayit-icin="eksik">
+        <div class="form-sec-tt"><i class="fa-solid fa-bell" aria-hidden="true"></i>Bildirim<span class="kb-ai-oneri"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>AI önerisi · onay bekliyor<button type="button" data-ai-onayla>Onayla</button></span></div>
+        <div class="form-grid">
+          <div class="frow"><span class="flabel">Kanallar</span>
+            <div class="kb-secenek-grup"><label class="kb-secenek"><input type="checkbox">Telefon bildirimi</label><label class="kb-secenek"><input type="checkbox">Web bildirimi</label></div>
+            <span class="fhint">AI haberlerinde bildirim varsayılan olarak kapalıdır; editör isterse işaretler.</span></div>
+          <div class="frow"><label for="bBaslik-eksik">Bildirim başlığı</label>
+            <input class="finput" id="bBaslik-eksik" data-alan="push-baslik-eksik" data-sayac="60|65" value="AB genişleme toplantısında Türkiye de konuşuldu">
+            <div class="kb-cubuk"><span></span></div>
+            <div class="char-meter"><span>Telefonda kalın satır · 60 karaktere kadar tam görünür</span><b>0 / 60</b></div></div>
+          <div class="frow"><label for="bIcerik-eksik">Bildirim metni</label>
+            <textarea class="ftext" id="bIcerik-eksik" data-alan="push-metin-eksik" data-sayac="150|178">Gümrük birliği ve vize kolaylığı gündemdeydi; yeni fasıl açılmasına karar çıkmadı.</textarea>
+            <div class="kb-cubuk"><span></span></div>
+            <div class="char-meter"><span>Kilit ekranında 3 satıra kadar · 150 karakter önerilir</span><b>0 / 150</b></div></div>
+          <div class="toggle-row"><span>Bildirim görseli<small>Kapak görselinin mobil kırpımı kullanılır (2:1)</small></span><label class="toggle"><input type="checkbox" aria-label="Bildirim görseli"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
+          <div class="frow"><span class="flabel">Ne zaman</span>
+            <div class="kb-secenek-grup"><label class="kb-secenek"><input type="radio" name="bZaman-eksik" checked>Onaylanınca hemen</label><label class="kb-secenek"><input type="radio" name="bZaman-eksik" data-ac="bZamanSec-eksik">Zamanla</label></div>
+            <div id="bZamanSec-eksik" hidden>
+              <div class="kb-tarih-sec" id="bTarih-eksik" data-deger="2026-11-23 18.30" data-enaz="bugun">
+                <button type="button" class="kb-tarih-btn" data-acilir="bTarihMenu-eksik" aria-expanded="false" aria-haspopup="dialog"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i><span class="kt-deger"></span></button>
+                <div class="pnl-menu kb-tarih-menu" id="bTarihMenu-eksik" role="dialog" aria-label="Tarih ve saat seç"></div>
+              </div>
+            </div></div>
+        </div>
+      </div>
+      <div class="form-sec" data-kayit-icin="temiz"><div class="kb-bant bilgi"><i class="fa-solid fa-bell-slash" aria-hidden="true"></i><span><b>Bildirim gönderilmez.</b> Yalnız Sosyal Medya kanalına giden haberde telefon ve web bildirimi yoktur (YS2).</span></div></div>
+    </div>
+
+    <!-- ================= SOSYAL MEDYA ================= -->
+    <div class="sa-form-panel is-ai" id="pSosyal" role="tabpanel" data-ai-grup="sosyal" hidden>
+      <div class="form-sec" data-kayit-icin="eksik"><div class="kb-bant uyari"><i class="fa-solid fa-image" aria-hidden="true"></i><span><b>Görsel seçilince sosyal kartlar üretilir.</b> Bu haberin görseli eksik (YS1); Detay sekmesinde havuzdan seçtiğiniz görselle platform metinleri ve kırpımlar burada hazırlanır.</span></div></div>
+      <div class="form-sec" data-kayit-icin="temiz"><div class="kb-bant bilgi"><i class="fa-solid fa-link-slash" aria-hidden="true"></i><span><b>Bağlantısız gönderi (YS2).</b> Bu haber yalnız Sosyal Medya kanalına gider: metin ve görsel kendi başına durur, haber gönderinin içinde özetlenir, sitede sayfa açılmaz. Gönderi onaydan sonra <a class="kb-bag" data-modul="sosyal-medya" data-hedef="sosyal-medya.gonderi" href="../sosyal-medya/gonderi.html">Gönderi Oluştur</a> ekranında bu haberle açılır.</span></div></div>
+      <div class="form-sec kb-sosyal" data-kayit-icin="kirpildi">
+        <div class="kb-platformlar" role="tablist" aria-label="Platformlar">
+          <button type="button" class="kb-platform is-on" role="tab" data-platform="x" data-ad="Dada Haber" data-tutamac="@dadahaber" data-sinir="280" data-link-uzunluk="23" data-hesap-durum="ok" data-oranlar="16:9=1200×675,1:1=1080×1080,serbest" data-metin="Meteoroloji&#x27;den Marmara için turuncu kod: İstanbul&#x27;un kuzeyinde kar 15 santimetreyi bulabilir. Toplu taşıma gece yarısına kadar uzatıldı.
+
+https://dadahaber.com/gundem/meteorolojiden-marmara-icin-turuncu-kod-kar-uyarisi
+
+#kar #İstanbul"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i>X<span class="kp-durum"></span></button>
+          <button type="button" class="kb-platform" role="tab" data-platform="facebook" data-ad="Dada Haber" data-tutamac="Facebook sayfası" data-sinir="2000" data-hesap-durum="ok" data-oranlar="1.91:1=1200×628,1:1=1080×1080,serbest" data-metin="Meteoroloji Genel Müdürlüğü, Marmara Bölgesi için 24 Kasım sabahından itibaren turuncu kodlu kar uyarısı yaptı. İstanbul&#x27;un kuzey ilçelerinde kar kalınlığı yer yer 15 santimetreyi bulabilir.
+
+Salı sabahı ulaşıma ek süre ayırın; toplu taşıma seferleri gece yarısına kadar uzatıldı.
+
+https://dadahaber.com/gundem/meteorolojiden-marmara-icin-turuncu-kod-kar-uyarisi"><i class="fa-brands fa-facebook" aria-hidden="true"></i>Facebook<span class="kp-durum"></span></button>
+          <button type="button" class="kb-platform" role="tab" data-platform="linkedin" data-ad="Dada Haber" data-tutamac="Medya · 12.400 takipçi" data-sinir="3000" data-hesap-durum="ok" data-oranlar="1.91:1=1200×628,1:1=1080×1080,serbest" data-metin="Marmara için turuncu kod: kar yağışının salı sabahı ulaşımı etkilemesi bekleniyor.
+
+İşverenler için not: İstanbul Valiliği zorunlu olmadıkça özel araçla yola çıkılmamasını istiyor; esnek çalışma planı yapmak için iyi bir gün.
+
+https://dadahaber.com/gundem/meteorolojiden-marmara-icin-turuncu-kod-kar-uyarisi
+
+#kar #istanbul"><i class="fa-brands fa-linkedin" aria-hidden="true"></i>LinkedIn<span class="kp-durum"></span></button>
+          <button type="button" class="kb-platform" role="tab" data-platform="instagram" data-ad="dadahaber" data-tutamac="İstanbul" data-sinir="2200" data-hesap-durum="hata" data-oranlar="1:1=1080×1080,4:5=1080×1350,serbest" data-metin="Marmara&#x27;ya turuncu kod ❄️ İstanbul&#x27;un kuzeyinde kar 15 santimetreyi bulabilir; toplu taşıma gece yarısına kadar uzatıldı.
+
+Ayrıntılar profildeki bağlantıda.
+
+#kar #istanbul #marmara #dadahaber"><i class="fa-brands fa-instagram" aria-hidden="true"></i>Instagram<span class="kp-durum hata"></span></button>
+          <button type="button" class="kb-platform" role="tab" data-platform="telegram" data-ad="Dada Haber" data-tutamac="kanal · 48.200 abone" data-sinir="4096" data-hesap-durum="ok" data-oranlar="16:9=1200×675,1:1=1080×1080,serbest" data-metin="❄️ Marmara için turuncu kod kar uyarısı
+
+İstanbul&#x27;un kuzeyinde kar 15 santimetreyi bulabilir; toplu taşıma gece yarısına kadar uzatıldı.
+
+https://dadahaber.com/gundem/meteorolojiden-marmara-icin-turuncu-kod-kar-uyarisi"><i class="fa-brands fa-telegram" aria-hidden="true"></i>Telegram<span class="kp-durum"></span></button>
+        </div>
+
+        <div class="kb-ust-bosluk">
+          <div class="form-grid">
+            <div class="kb-hesap-kutu">
+              <span class="kh-ava kb-logo-isaret"></span>
+              <div><b data-sosyal-ad>Dada Haber</b><span data-sosyal-tutamac>@dadahaber</span></div>
+              <span class="pstat ok" data-sosyal-hesap>Bağlı</span>
+            </div>
+            <div class="frow" data-sosyal-uyari hidden><div class="kb-hata-not"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Instagram bağlantısının süresi doldu. Gönderi hazırlanabilir ama hesap yeniden bağlanana kadar yayımlanmaz.<a data-hedef="sosyal-medya.hesaplar" href="../sosyal-medya/hesaplar.html">Hesabı bağla</a></div></div>
+            <div class="frow"><label for="soMetin">Gönderi metni<button type="button" class="btn btn-ghost btn-sm kb-sag" data-sosyal-uret><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>Yeniden üret</button></label>
+              <div class="kb-sosyal-kutu">
+              <div class="kb-sosyal-arac" role="toolbar" aria-label="Gönderi metni biçimi" data-sosyal-arac></div>
+              <textarea class="ftext" id="soMetin" data-sosyal-metin data-oneri rows="7"></textarea>
+              </div>
+              <div class="kb-cubuk"><span></span></div>
+              <div class="char-meter kb-sosyal-say"><span class="kb-sayaclar"></span><b>0 / 280</b></div>
+              <p class="fhint kb-sa-not" data-sosyal-not></p></div>
+            <div class="kb-sosyal-ek" data-sosyal-ek hidden>
+              <div class="frow" data-sosyal-ek-alan="konum"><label for="soKonum">Konum</label><input class="finput" id="soKonum" data-oneri="konum" placeholder="Konum ara: İstanbul, Ankara…" autocomplete="off"><span class="fhint">Platformun kendi konum etiketi; gönderinin üstünde görünür</span></div>
+              <div class="frow" data-sosyal-ek-alan="gorselde-etiket"><label for="soGorselEt">Görselde etiketlenecek hesaplar</label><input class="finput" id="soGorselEt" data-oneri placeholder="@ yazın: hesap ara" autocomplete="off"><span class="fhint">Instagram'ın "kişileri etiketle" özelliği; hesap görselin üstünde etiket olarak görünür</span></div>
+            </div>
+            <div class="frow"><span class="flabel">Görsel oranı<span class="fhint kb-sag" data-oran-not></span></span>
+              <div class="kb-oranlar"></div>
+              <div class="kb-kirp-alan"><span class="kk-resim" style="background-image:url(../../veri/gorsel/p183.jpg)"></span><span class="kk-cerceve" data-kirp-izle="sosyal.16:9" style="background-image:url(../../veri/gorsel/p183.jpg);background-position:50% 40%"></span></div>
+              <span class="fhint">Kapak görselinin odak noktasına göre otomatik kırpıldı. <button type="button" class="kb-bag" data-kirp-ac="sosyal.16:9" data-kirp-alan="#aiKapak-kirpildi">Kırpmayı düzenle</button></span></div>
+            <div class="frow"><span class="flabel">Yayın</span>
+              <div class="kb-secenek-grup">
+                <label class="kb-secenek"><input type="radio" name="soZaman" checked>Kaydedince hemen</label>
+                <label class="kb-secenek"><input type="radio" name="soZaman" data-ac="soZamanSec">Zamanla</label>
+                <label class="kb-secenek"><input type="radio" name="soZaman">Bu platformda paylaşma</label>
+              </div>
+              <div id="soZamanSec" hidden>
+                <div class="kb-tarih-sec" id="soTarih" data-deger="2026-11-23 17.00" data-enaz="bugun">
+                  <button type="button" class="kb-tarih-btn" data-acilir="soTarihMenu" aria-expanded="false" aria-haspopup="dialog"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i><span class="kt-deger"></span></button>
+                  <div class="pnl-menu kb-tarih-menu" id="soTarihMenu" role="dialog" aria-label="Tarih ve saat seç"></div>
+                </div>
+              </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside class="side-card" aria-label="Yayın">
+    <div class="kb-yan-onizle" data-panel-icin="pBildirim" hidden>
+      <section class="pnl-card" data-kayit-icin="kirpildi"><div class="pc-head"><h2 class="pc-title"><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>Bildirim önizlemesi</h2></div>
+      <div class="pc-body"><div class="kb-onizle-kap">
+        <div class="kb-onizle-sec" data-segment><button type="button" class="is-on" data-hedef="onzTel-kirpildi" aria-pressed="true">Telefon</button><button type="button" data-hedef="onzWeb-kirpildi" aria-pressed="false">Web</button></div>
+        <div id="onzTel-kirpildi"><div class="kb-telefon"><div class="kb-telefon-ekran">
+          <div class="kt-zaman">16.05</div><div class="kt-tarih">23 Kasım Pazartesi</div>
+          <div class="kb-push"><span class="kp-ikon kb-logo-isaret"></span><div class="kp-ic"><div class="kp-ust"><span>DADA HABER</span><span>şimdi</span></div><b data-alan="push-baslik-kirpildi">Marmara&#x27;ya turuncu kod kar uyarısı</b><p data-alan="push-metin-kirpildi">İstanbul&#x27;un kuzeyinde kar 15 santimetreyi bulabilir; toplu taşıma gece yarısına kadar uzatıldı.</p></div><span class="kp-resim" style="background-image:url(../../veri/gorsel/kucuk/p183.jpg)"></span></div>
+        </div></div></div>
+        <div id="onzWeb-kirpildi" hidden><div class="kb-web-push"><span class="kp-ikon kb-logo-isaret"></span><div><b data-alan="push-baslik-kirpildi">Marmara&#x27;ya turuncu kod kar uyarısı</b><p data-alan="push-metin-kirpildi">İstanbul&#x27;un kuzeyinde kar 15 santimetreyi bulabilir; toplu taşıma gece yarısına kadar uzatıldı.</p><small>dadahaber.com · Chrome</small></div></div></div>
+        <p class="kb-onizle-not">Önizleme yaklaşıktır; telefonun ve tarayıcının görünümüne göre değişir.</p>
+      </div></div></section>
+      <section class="pnl-card" data-kayit-icin="eksik"><div class="pc-head"><h2 class="pc-title"><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>Bildirim önizlemesi</h2></div>
+      <div class="pc-body"><div class="kb-onizle-kap">
+        <div class="kb-onizle-sec" data-segment><button type="button" class="is-on" data-hedef="onzTel-eksik" aria-pressed="true">Telefon</button><button type="button" data-hedef="onzWeb-eksik" aria-pressed="false">Web</button></div>
+        <div id="onzTel-eksik"><div class="kb-telefon"><div class="kb-telefon-ekran">
+          <div class="kt-zaman">16.05</div><div class="kt-tarih">23 Kasım Pazartesi</div>
+          <div class="kb-push"><span class="kp-ikon kb-logo-isaret"></span><div class="kp-ic"><div class="kp-ust"><span>DADA HABER</span><span>şimdi</span></div><b data-alan="push-baslik-eksik">AB genişleme toplantısında Türkiye de konuşuldu</b><p data-alan="push-metin-eksik">Gümrük birliği ve vize kolaylığı gündemdeydi; yeni fasıl açılmasına karar çıkmadı.</p></div></div>
+        </div></div></div>
+        <div id="onzWeb-eksik" hidden><div class="kb-web-push"><span class="kp-ikon kb-logo-isaret"></span><div><b data-alan="push-baslik-eksik">AB genişleme toplantısında Türkiye de konuşuldu</b><p data-alan="push-metin-eksik">Gümrük birliği ve vize kolaylığı gündemdeydi; yeni fasıl açılmasına karar çıkmadı.</p><small>dadahaber.com · Chrome</small></div></div></div>
+        <p class="kb-onizle-not">Önizleme yaklaşıktır; telefonun ve tarayıcının görünümüne göre değişir.</p>
+      </div></div></section>
+    </div>
+    <div class="kb-yan-onizle" data-panel-icin="pSosyal" hidden>
+      <section class="pnl-card" data-kayit-icin="kirpildi"><div class="pc-head"><h2 class="pc-title"><i class="fa-solid fa-eye" aria-hidden="true"></i>Canlı önizleme</h2><span class="kb-kap-alt" data-sosyal-ad-platform></span></div>
+      <div class="pc-body">
+          <div class="kb-onizle-kap">
+            <div class="kb-sosyal-kart p-x" data-sosyal-onizle>
+              <div class="ksk-tg">
+                <div class="ksk-bas"><span class="kh-ava kb-logo-isaret"></span><div><b><span data-sosyal-ad>Dada Haber</span><i class="fa-solid fa-circle-check" aria-hidden="true"></i></b><span data-sosyal-tutamac>@dadahaber</span> · 1 dk</div><i class="fa-solid fa-ellipsis ksk-noktalar" aria-hidden="true"></i></div>
+                <div class="ksk-metin"></div>
+                <div class="ksk-gorsel" style="background-image:url(../../veri/gorsel/p183.jpg);background-position:50% 40%"></div>
+                <div class="ksk-kart-alt">dadahaber.com · Meteoroloji'den Marmara için turuncu kod kar uyarısı</div>
+                <div class="ksk-eylem"><i class="fa-regular fa-comment" aria-hidden="true"></i><i class="fa-solid fa-retweet" aria-hidden="true"></i><i class="fa-regular fa-heart" aria-hidden="true"></i><i class="fa-solid fa-chart-simple" aria-hidden="true"></i><i class="fa-regular fa-bookmark" aria-hidden="true"></i></div>
+              </div>
+            </div>
+            <p class="kb-onizle-not">Platformun gerçek görünümüne yakındır</p>
+          </div>
+      </div></section>
+    </div>
+    <section class="pnl-card">
+      <div class="pc-head"><h2 class="pc-title"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i>Yayın</h2><span class="status-dot" data-state="taslak" title="Taslak"></span></div>
+      <div class="pc-body sc-stack">
+        <div class="sc-field"><span class="flabel">Durum</span><b>Taslak · onay bekliyor</b></div>
+        <div class="sc-field"><span class="flabel">Yayın zamanı</span>
+          <div class="kb-tarih-sec" id="aiTarih" data-deger="" data-bos="Onaylanınca o anın saati" data-temizlenir="1">
+            <button type="button" class="kb-tarih-btn" data-acilir="aiTarihMenu" aria-expanded="false" aria-haspopup="dialog"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i><span class="kt-deger"></span></button>
+            <div class="pnl-menu kb-tarih-menu" id="aiTarihMenu" role="dialog" aria-label="Tarih ve saat seç"></div>
+          </div></div>
+        <div class="toggle-row"><span>Manşette<small>Vitrinden sıralanır</small></span><label class="toggle"><input type="checkbox" aria-label="Manşette"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
+        <div class="toggle-row"><span>Son dakika<small>Şeritte ve sayfada görünür</small></span><label class="toggle"><input type="checkbox" aria-label="Son dakika"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
+        <div class="kb-surum"><span><b>AI taslağı</b> · ilk sürüm · henüz insan düzenlemesi yok</span></div>
+      </div>
+    </section>
+  </aside>
+  </div>
+
+  <div class="kb-kaydet" data-form-icin="aiForm">
+    <div class="kk-durum"><i class="fa-solid fa-circle-dot" aria-hidden="true"></i><span>AI taslağı · henüz onaylanmadı</span></div>
+    <div class="kk-sag">
+      <button type="button" class="btn btn-ghost btn-sm danger" data-pencere="aiReddet"><i class="fa-solid fa-ban" aria-hidden="true"></i>Reddet</button>
+      <button type="button" class="btn btn-ghost btn-sm" data-kaydet data-kaydet-tur="taslak" data-kaydet-metin="Taslak olarak kaydedildi" data-bildir="Taslak kaydedildi; havuzda onay bekliyor"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>Taslak kaydet</button>
+      <div class="kb-okuma-onay" data-okuma-hedef="#pDetay" data-okuma-roller="editor kat-ed" data-okuma-sure="3"><button type="button" class="btn btn-acc btn-sm" data-okuma-btn data-kaydet data-kaydet-metin="Onaylandı ve yayımlandı" data-bildir="Haber onaylandı ve yayımlandı; 1. kaynağın grubundaki kanallarda görünür"><i class="fa-solid fa-check" aria-hidden="true"></i>Onayla ve Yayınla</button><span class="ko-neden"></span></div>
+    </div>
+  </div>
+</main>
+</div>
+<template id="aiReddet" data-baslik="Haberi reddet" data-alt="Neden seçin · reddedilen haber Reddedilen sekmesine geçer, oradan taslağa geri alınabilir" data-zorunlu-kayit="ai-havuz.reddet">
+  <div class="kb-fs">
+    <div class="frow"><span class="flabel">Neden</span>
+      <div class="kb-kart-sec" data-alan-id="neden" data-zorunlu-metin="Reddetme nedenini seçin"><label class="kb-secenek kb-secenek-kart"><input type="radio" name="redNeden" value="tekrar"><span><b>Tekrar</b><small>Aynı olay daha önce yayımlandı ya da havuzda var</small></span></label><label class="kb-secenek kb-secenek-kart"><input type="radio" name="redNeden" value="teyitsiz"><span><b>Teyitsiz</b><small>Bağımsız ikinci kaynak yok ya da kaynaklar çelişiyor</small></span></label><label class="kb-secenek kb-secenek-kart"><input type="radio" name="redNeden" value="hatali"><span><b>Hatalı bilgi</b><small>Kaynakta olmayan ya da yanlış aktarılmış bilgi</small></span></label><label class="kb-secenek kb-secenek-kart"><input type="radio" name="redNeden" value="guncel-degil"><span><b>Güncelliğini yitirdi</b><small>Olay eski ya da gelişme geride kaldı</small></span></label><label class="kb-secenek kb-secenek-kart"><input type="radio" name="redNeden" value="kapsam"><span><b>Kapsam dışı</b><small>Yayın politikasına uymuyor (reklam, magazin vb.)</small></span></label><label class="kb-secenek kb-secenek-kart"><input type="radio" name="redNeden" value="diger"><span><b>Diğer</b><small>Açıklamaya yazın</small></span></label></div>
+      <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Reddetme nedenini seçin.</div></div>
+    <div class="frow"><label for="redNot">Açıklama</label>
+      <textarea class="ftext" id="redNot" rows="3" data-sayac="200|280" placeholder="İsteğe bağlı · ör. aynı olay 15.42'de Sibel Arslan imzasıyla yayımlandı"></textarea>
+      <div class="char-meter"><span>Reddedilen sekmesinde ve denetim izinde görünür</span><b>0 / 200</b></div></div>
+    <div class="toggle-row"><span>Bu kaynaktan benzerlerini daha düşük öncelikle getir<small>Neden “Tekrar” ya da “Kapsam dışı” ise AI aynı türdeki içeriğe daha düşük güven verir</small></span><label class="toggle"><input type="checkbox" aria-label="Benzerlerini daha düşük öncelikle getir"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
+  </div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-danger btn-sm" data-dogrula=".kb-pencere .kb-kap-govde" data-sonra-kapat data-onay-baslik="Haber reddedilsin mi?" data-onay-metin="Haber yayımlanmaz ve Reddedilen sekmesine geçer; oradan taslağa geri alınabilir. Neden ve işlem denetim izine yazılır." data-onay-evet="Reddet" data-onay-tehlike data-onay-ikon="fa-ban" data-sonra-durum="reddedilen" data-sonra-durum-ad="Reddedildi" data-sonra-durum-sinif="off" data-bildir-sonra="Haber reddedildi; Reddedilen sekmesinde"><i class="fa-solid fa-ban" aria-hidden="true"></i>Reddet</button></div>
+</template>
+<script src="../../cekirdek/js/kabuk.js?v=4a1fba0b"></script>
+<script src="../../cekirdek/js/bilesen.js?v=deb60002"></script>
+<script src="../../cekirdek/js/form.js?v=3e61bbbf"></script>
+<script src="../../cekirdek/js/alan.js?v=563cb5a5"></script>
+<script src="../../cekirdek/js/kirp.js?v=7e601950"></script>
+<script src="../../assets/vendor/tiptap-2.27.3/tiptap.min.js?v=cfbc905d"></script>
+<script src="../../cekirdek/js/editor.js?v=d7e6c511"></script>
+</body>
+</html>

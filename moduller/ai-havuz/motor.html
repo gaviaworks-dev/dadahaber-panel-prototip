@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Kaynak Motoru · Dada Haber Yönetim Paneli</title>
+<link rel="stylesheet" href="../../assets/vendor/fontawesome-6.5.2/css/all.min.css?v=c84e8169">
+<link rel="stylesheet" href="../../tema/dadahaber.css?v=64b109bb" data-tema>
+<link rel="stylesheet" href="../../cekirdek/css/kabuk.css?v=b916425a">
+<link rel="stylesheet" href="../../cekirdek/css/bilesen.css?v=6f27dde8">
+<!--P:bas--><script src="../../cekirdek/js/kayit.js?v=8198cce9"></script><script src="../../cekirdek/js/erken.js?v=2cbfb3f6"></script><!--/P:bas-->
+</head>
+<body data-sayfa="ai-havuz.motor">
+<div class="sa-app">
+<!--P:menu--><nav class="sa-menu" id="saMenu" aria-label="Ana menü"><div class="sa-menu-head"><a class="kb-logo-bag" href="../kontrol-paneli/index.html" aria-label="Dada Haber Yönetim Paneli"><span class="kb-logo"></span><span class="kb-logo-isaret"></span></a></div><div class="sa-mnav"><a class="sa-mlink" href="../kontrol-paneli/index.html" data-sayfa="kontrol-paneli.ana" data-roller="super gyy editor kat-ed sosyal analist" data-tip="Kontrol Paneli"><i class="fa-solid fa-gauge-high" aria-hidden="true"></i><span class="ml-ad">Kontrol Paneli</span></a><div class="sa-mgrp" data-grup="yayin"><button class="sa-msec" type="button" aria-expanded="true">Yayın Merkezi<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="sa-mgrp-list"><div><a class="sa-mlink" href="../haberler/index.html" data-sayfa="haberler.liste" data-roller="super gyy editor kat-ed sosyal analist" data-tip="Haberler"><i class="fa-solid fa-newspaper" aria-hidden="true"></i><span class="ml-ad">Haberler</span></a><a class="sa-mlink" href="../haberler/vitrin.html" data-sayfa="haberler.vitrin" data-roller="super gyy editor" data-tip="Vitrin ve Son Dakika"><i class="fa-solid fa-star" aria-hidden="true"></i><span class="ml-ad">Vitrin ve Son Dakika</span></a><a class="sa-mlink" href="../haberler/canli.html" data-sayfa="haberler.canli" data-roller="super gyy editor kat-ed" data-tip="Canlı Anlatım"><i class="fa-solid fa-tower-broadcast" aria-hidden="true"></i><span class="ml-ad">Canlı Anlatım</span></a><a class="sa-mlink" href="../haberler/dosyalar.html" data-sayfa="haberler.dosyalar" data-roller="super gyy editor" data-tip="Dosyalar ve Formatlar"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span class="ml-ad">Dosyalar ve Formatlar</span></a><a class="sa-mlink" href="../haberler/yazarlar.html" data-sayfa="haberler.yazarlar" data-roller="super gyy editor" data-tip="Yazarlar"><i class="fa-solid fa-pen-nib" aria-hidden="true"></i><span class="ml-ad">Yazarlar</span></a></div></div></div><div class="sa-mgrp" data-grup="ai"><button class="sa-msec" type="button" aria-expanded="true">AI Haber Havuzu<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="sa-mgrp-list"><div><a class="sa-mlink" href="index.html" data-sayfa="ai-havuz.havuz" data-roller="super gyy editor kat-ed analist" data-tip="Haber Havuzu"><i class="fa-solid fa-robot" aria-hidden="true"></i><span class="ml-ad">Haber Havuzu</span><span class="pl-cnt">12</span></a><a class="sa-mlink" href="kaynaklar.html" data-sayfa="ai-havuz.kaynaklar" data-roller="super gyy" data-tip="Kaynaklar"><i class="fa-solid fa-rss" aria-hidden="true"></i><span class="ml-ad">Kaynaklar</span></a><a class="sa-mlink" href="motor.html" data-sayfa="ai-havuz.motor" data-roller="super" data-tip="Kaynak Motoru"><i class="fa-solid fa-gears" aria-hidden="true"></i><span class="ml-ad">Kaynak Motoru</span></a></div></div></div><div class="sa-mgrp" data-grup="medya"><button class="sa-msec" type="button" aria-expanded="true">Multimedya<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="sa-mgrp-list"><div><a class="sa-mlink" href="../multimedya/video.html" data-sayfa="multimedya.video" data-roller="super gyy editor kat-ed" data-tip="Video ve Akış"><i class="fa-solid fa-video" aria-hidden="true"></i><span class="ml-ad">Video ve Akış</span></a><a class="sa-mlink" href="../multimedya/podcast.html" data-sayfa="multimedya.podcast" data-roller="super gyy editor" data-tip="Podcast"><i class="fa-solid fa-podcast" aria-hidden="true"></i><span class="ml-ad">Podcast</span></a><a class="sa-mlink" href="../multimedya/sesli.html" data-sayfa="multimedya.sesli" data-roller="super gyy editor" data-tip="Sesli Haber ve Spiker"><i class="fa-solid fa-headphones" aria-hidden="true"></i><span class="ml-ad">Sesli Haber ve Spiker</span></a><a class="sa-mlink" href="../multimedya/galeri.html" data-sayfa="multimedya.galeri" data-roller="super gyy editor kat-ed" data-tip="Galeri ve İnfografik"><i class="fa-solid fa-images" aria-hidden="true"></i><span class="ml-ad">Galeri ve İnfografik</span></a><a class="sa-mlink" href="../multimedya/havuz.html" data-sayfa="multimedya.havuz" data-roller="super gyy editor kat-ed sosyal" data-tip="Medya Havuzu"><i class="fa-solid fa-photo-film" aria-hidden="true"></i><span class="ml-ad">Medya Havuzu</span></a></div></div></div><div class="sa-mgrp" data-grup="dikey"><button class="sa-msec" type="button" aria-expanded="true">Özel Widgetlar<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="sa-mgrp-list"><div><a class="sa-mlink" href="../../cekirdek/yakinda.html?s=ozel-dikeyler.spor" data-sayfa="ozel-dikeyler.spor" data-roller="super gyy kat-ed" data-tip="Spor"><i class="fa-solid fa-futbol" aria-hidden="true"></i><span class="ml-ad">Spor</span></a><a class="sa-mlink" href="../../cekirdek/yakinda.html?s=ozel-dikeyler.takvimler" data-sayfa="ozel-dikeyler.takvimler" data-roller="super gyy editor" data-tip="Takvimler"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i><span class="ml-ad">Takvimler</span></a><a class="sa-mlink" href="../../cekirdek/yakinda.html?s=ozel-dikeyler.veri" data-sayfa="ozel-dikeyler.veri" data-roller="super gyy" data-tip="Veri Bantları"><i class="fa-solid fa-chart-line" aria-hidden="true"></i><span class="ml-ad">Veri Bantları</span></a><a class="sa-mlink" href="../../cekirdek/yakinda.html?s=ozel-dikeyler.ilanlar" data-sayfa="ozel-dikeyler.ilanlar" data-roller="super gyy" data-tip="Resmî İlanlar"><i class="fa-solid fa-bullhorn" aria-hidden="true"></i><span class="ml-ad">Resmî İlanlar</span></a></div></div></div><div class="sa-mgrp" data-grup="sosyal"><button class="sa-msec" type="button" aria-expanded="true">Sosyal Medya<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="sa-mgrp-list"><div><a class="sa-mlink" href="../sosyal-medya/gonderi.html" data-sayfa="sosyal-medya.gonderi" data-roller="super gyy sosyal" data-tip="Gönderi Oluştur"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i><span class="ml-ad">Gönderi Oluştur</span></a><a class="sa-mlink" href="../sosyal-medya/takvim.html" data-sayfa="sosyal-medya.takvim" data-roller="super gyy sosyal analist" data-tip="Yayın Takvimi"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i><span class="ml-ad">Yayın Takvimi</span><span class="pl-cnt">1</span></a><a class="sa-mlink" href="../sosyal-medya/hesaplar.html" data-sayfa="sosyal-medya.hesaplar" data-roller="super gyy sosyal" data-tip="Hesaplar"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i><span class="ml-ad">Hesaplar</span></a></div></div></div><div class="sa-mgrp" data-grup="etkilesim"><button class="sa-msec" type="button" aria-expanded="true">Etkileşim<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="sa-mgrp-list"><div><a class="sa-mlink" href="../../cekirdek/yakinda.html?s=etkilesim.yorumlar" data-sayfa="etkilesim.yorumlar" data-roller="super gyy editor" data-tip="Yorumlar"><i class="fa-solid fa-comments" aria-hidden="true"></i><span class="ml-ad">Yorumlar</span><span class="pl-cnt">5</span></a><a class="sa-mlink" href="../../cekirdek/yakinda.html?s=etkilesim.bulten" data-sayfa="etkilesim.bulten" data-roller="super gyy sosyal" data-tip="Bülten"><i class="fa-solid fa-envelope-open-text" aria-hidden="true"></i><span class="ml-ad">Bülten</span></a><a class="sa-mlink" href="../../cekirdek/yakinda.html?s=etkilesim.push" data-sayfa="etkilesim.push" data-roller="super gyy sosyal" data-tip="Push Bildirimleri"><i class="fa-solid fa-bell" aria-hidden="true"></i><span class="ml-ad">Push Bildirimleri</span></a><a class="sa-mlink" href="../../cekirdek/yakinda.html?s=etkilesim.reklam" data-sayfa="etkilesim.reklam" data-roller="super gyy" data-tip="Reklam Alanları"><i class="fa-solid fa-rectangle-ad" aria-hidden="true"></i><span class="ml-ad">Reklam Alanları</span></a><a class="sa-mlink" href="../../cekirdek/yakinda.html?s=etkilesim.geri" data-sayfa="etkilesim.geri" data-roller="super gyy editor" data-tip="Okur Geri Bildirimleri"><i class="fa-solid fa-inbox" aria-hidden="true"></i><span class="ml-ad">Okur Geri Bildirimleri</span></a></div></div></div><div class="sa-mgrp" data-grup="sistem"><button class="sa-msec" type="button" aria-expanded="true">Sistem<i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="sa-mgrp-list"><div><a class="sa-mlink" href="../../cekirdek/kullanicilar/index.html" data-sayfa="kullanicilar.liste" data-roller="super gyy" data-tip="Kullanıcılar"><i class="fa-solid fa-users" aria-hidden="true"></i><span class="ml-ad">Kullanıcılar</span></a><a class="sa-mlink" href="../../cekirdek/kimlik-yetki/index.html" data-sayfa="kimlik-yetki.roller" data-roller="super gyy" data-tip="Roller ve Yetki"><i class="fa-solid fa-user-shield" aria-hidden="true"></i><span class="ml-ad">Roller ve Yetki</span></a><a class="sa-mlink" href="../../cekirdek/site-ayarlari/index.html" data-sayfa="site-ayarlari.ayarlar" data-roller="super gyy" data-tip="Site Ayarları"><i class="fa-solid fa-sliders" aria-hidden="true"></i><span class="ml-ad">Site Ayarları</span></a><a class="sa-mlink" href="../../cekirdek/entegrasyonlar/index.html" data-sayfa="entegrasyonlar.liste" data-roller="super" data-tip="Entegrasyonlar"><i class="fa-solid fa-plug" aria-hidden="true"></i><span class="ml-ad">Entegrasyonlar</span></a><a class="sa-mlink" href="../../cekirdek/yasal-metinler/index.html" data-sayfa="yasal-metinler.liste" data-roller="super gyy" data-tip="Yasal Metinler"><i class="fa-solid fa-file-contract" aria-hidden="true"></i><span class="ml-ad">Yasal Metinler</span></a><a class="sa-mlink" href="../../cekirdek/sayfalar/index.html" data-sayfa="sayfalar.liste" data-roller="super gyy" data-tip="Sayfalar"><i class="fa-solid fa-file-lines" aria-hidden="true"></i><span class="ml-ad">Sayfalar</span></a><a class="sa-mlink" href="../../cekirdek/raporlar/index.html" data-sayfa="raporlar.liste" data-roller="super gyy editor kat-ed sosyal analist" data-tip="Raporlar"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i><span class="ml-ad">Raporlar</span></a><a class="sa-mlink" href="../../cekirdek/denetim-izi/index.html" data-sayfa="denetim-izi.liste" data-roller="super gyy analist" data-tip="Denetim İzi"><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i><span class="ml-ad">Denetim İzi</span></a><a class="sa-mlink" href="../../cekirdek/sistem-sagligi/index.html" data-sayfa="sistem-sagligi.ana" data-roller="super" data-tip="Sistem Sağlığı"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i><span class="ml-ad">Sistem Sağlığı</span></a></div></div></div></div><div class="sa-menu-foot"><a class="sa-mlink" href="../../cekirdek/kimlik-yetki/giris.html" data-tip="Çıkış"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i><span class="ml-ad">Çıkış</span></a><a class="sa-sig" href="https://gaviaworks.com" target="_blank" rel="noopener" aria-label="Gaviaworks" data-tip="Gaviaworks"><img src="../../assets/gavia-isaret.png" alt=""></a></div></nav><button class="sa-divider" id="saDivider" type="button" aria-controls="saMenu" aria-label="Menüyü daralt"><span class="sa-grip" aria-hidden="true"></span></button><!--/P:menu-->
+<div class="pnl-overlay" id="pnlOverlay"></div>
+<!--P:ust--><header class="pnl-top"><button class="pnl-burger" id="pnlBurger" type="button" aria-label="Menüyü aç"><i class="fa-solid fa-bars" aria-hidden="true"></i></button><div class="pnl-search" role="search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><label class="sr-only" for="pnlAra">Panelde ara</label><input id="pnlAra" type="search" placeholder="Haber, kişi, kaynak ya da ekran ara…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="araSonuc"><kbd>⌘K</kbd><div class="pnl-menu kb-ara-sonuc" id="araSonuc" role="listbox" aria-label="Arama sonuçları"></div></div><div class="pnl-top-tools"><div class="kb-rol"><button class="kb-rol-btn" type="button" data-acilir="rolMenu" aria-expanded="false" aria-haspopup="true"><i class="fa-solid fa-masks-theater" aria-hidden="true"></i><span class="kr-etk">Rol</span><span class="kr-ad" id="krAd">Süper Admin</span></button><div class="pnl-menu" id="rolMenu" role="menu"><div class="pmenu-head"><b>Prototip rol değiştirici</b><span>Seçilen rolün gördüğü menü ve kutular</span></div><button type="button" data-rol-sec="super"><i class="fa-solid fa-user-tag" aria-hidden="true"></i>Süper Admin</button><button type="button" data-rol-sec="editor"><i class="fa-solid fa-user-tag" aria-hidden="true"></i>Editör</button></div></div><a class="pnl-bell kb-site" href="https://gaviaworks-dev.github.io/dadahaber-prototip/index.html" target="_blank" rel="noopener" data-tip="Siteyi görüntüle" aria-label="Siteyi görüntüle"><i class="fa-solid fa-globe" aria-hidden="true"></i></a><div class="kb-bld-kap"><button class="pnl-bell" type="button" data-acilir="bildirimMenu" aria-expanded="false" aria-haspopup="true" data-tip="Bildirimler" aria-label="Bildirimler"><i class="fa-solid fa-bell" aria-hidden="true"></i><span class="pb-dot"></span></button><div class="pnl-menu kb-bildirim" id="bildirimMenu" role="menu"><div class="kb-bld-bas"><b>Bildirimler</b><span class="kb-bld-say">4 okunmamış</span><button type="button" class="kb-bld-oku" data-bld-oku>Tümünü okundu say</button></div><div class="kb-bld-liste"><a class="kb-bld is-yeni" href="../haberler/vitrin.html" data-roller="super gyy editor"><span class="kb-bld-ico warm"><i class="fa-solid fa-bolt" aria-hidden="true"></i></span><span class="kb-bld-yazi"><b>Son dakika yayımlandı</b><span>İstanbul Valiliği: okullar 24 Kasım&#x27;da da tatil</span></span><span class="kb-bld-saat">16.05</span></a><a class="kb-bld is-yeni" href="index.html" data-roller="super gyy editor kat-ed analist"><span class="kb-bld-ico acc"><i class="fa-solid fa-robot" aria-hidden="true"></i></span><span class="kb-bld-yazi"><b>12 AI taslağı onay bekliyor</b><span>3&#x27;ü görsel eksik · en yüksek güven %94</span></span><span class="kb-bld-saat">15.58</span></a><a class="kb-bld is-yeni" href="../sosyal-medya/hesaplar.html" data-roller="super gyy sosyal"><span class="kb-bld-ico warm"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></span><span class="kb-bld-yazi"><b>Instagram bağlantısının süresi doldu</b><span>17.00 gönderisi bekletiliyor; hesabı yeniden bağlayın</span></span><span class="kb-bld-saat">15.30</span></a><a class="kb-bld is-yeni" href="../../cekirdek/yakinda.html?s=etkilesim.yorumlar" data-roller="super gyy editor"><span class="kb-bld-ico acc"><i class="fa-solid fa-comments" aria-hidden="true"></i></span><span class="kb-bld-yazi"><b>5 yorum onay bekliyor</b><span>En eskisi 42 dakika önce geldi</span></span><span class="kb-bld-saat">15.22</span></a><a class="kb-bld" href="../../cekirdek/yakinda.html?s=etkilesim.geri" data-roller="super gyy editor"><span class="kb-bld-ico info"><i class="fa-solid fa-flag" aria-hidden="true"></i></span><span class="kb-bld-yazi"><b>Okurdan düzeltme bildirimi</b><span>&quot;Asgari ücret nasıl belirleniyor?&quot; haberinde tarih</span></span><span class="kb-bld-saat">14.48</span></a><a class="kb-bld" href="motor.html" data-roller="super"><span class="kb-bld-ico ok"><i class="fa-solid fa-gears" aria-hidden="true"></i></span><span class="kb-bld-yazi"><b>Kaynak taraması tamamlandı</b><span>14.00 çalışması: 18 kaynak, 42 yeni içerik</span></span><span class="kb-bld-saat">14.00</span></a></div><a class="kb-bld-alt" href="../../cekirdek/yakinda.html?s=oturum.bildirimler">Bütün bildirimler<i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></div><div class="kb-hesap"><button class="pnl-me" type="button" data-acilir="hesapMenu" aria-expanded="false" aria-haspopup="true"><span class="pm-ava" id="pmAva">SA</span><span class="pm-id"><span class="pm-name" id="pmName">Selin Aydemir</span><span class="pm-role" id="pmRole">Süper Admin</span></span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="pnl-menu" id="hesapMenu" role="menu"><div class="pmenu-head"><b id="pmMenuAd">Selin Aydemir</b><span id="pmMenuEposta">selin.aydemir@dadahaber.ornek</span></div><a href="../../cekirdek/kimlik-yetki/profil.html"><i class="fa-solid fa-user" aria-hidden="true"></i>Profilim</a><a href="../../cekirdek/kimlik-yetki/oturumlar.html"><i class="fa-solid fa-laptop" aria-hidden="true"></i>Aktif oturumlar</a><a class="kb-yalniz-tel" href="https://gaviaworks-dev.github.io/dadahaber-prototip/index.html" target="_blank" rel="noopener"><i class="fa-solid fa-globe" aria-hidden="true"></i>Siteyi görüntüle</a><div class="pmenu-div"></div><a class="danger" href="../../cekirdek/kimlik-yetki/giris.html"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>Çıkış</a></div></div></div></header><!--/P:ust-->
+
+<!-- KAYNAK MOTORU (Y1): Milli Müdafaa "Frekans" ekranı yapısında (referans-06). Her satır bir kaynak grubu: ad, örnek, sıklık, kaynaklar,
+     yayın kanalları, aylık tahmin (maliyet yalnız ai-maliyet izniyle), etkin anahtarı. İçinde kaynak olan grup taşınarak silinir (B1). -->
+<main class="pnl-main" id="icerik">
+  <div class="pnl-page-head">
+    <div>
+      <h1>Kaynak Motoru</h1>
+      <div class="ph-sub">Kaynak grupları ve çekim sıklığı · tarama her 10 dakikada çalışır; grubun süresi dolmuşsa kaynakları çekilir · sıklık ve kanallar “Düzenle”den</div>
+    </div>
+    <div class="ph-actions">
+      <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.cron" href="cron.html"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i>Hat sağlığı</a>
+      <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.kaynaklar" href="kaynaklar.html"><i class="fa-solid fa-rss" aria-hidden="true"></i>Kaynaklar</a>
+      <button type="button" class="btn btn-acc btn-sm" data-tanim="mtYeni"><i class="fa-solid fa-plus" aria-hidden="true"></i>Yeni grup</button>
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card" data-izin="ai-maliyet">
+      <div class="kpi-ico"><i class="fa-solid fa-coins" aria-hidden="true"></i></div>
+      <div><div class="kpi-num">$55,81</div><div class="kpi-lbl">Aylık tahmini maliyet</div>
+      <div class="kpi-delta flat"><i class="fa-solid fa-turkish-lira-sign" aria-hidden="true"></i>~₺2.204 · içerik başı $0,0195</div></div>
+    </div>
+    <div class="kpi-card info">
+      <div class="kpi-ico"><i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i></div>
+      <div><div class="kpi-num">12.660</div><div class="kpi-lbl">Aylık çekim</div>
+      <div class="kpi-delta flat"><i class="fa-solid fa-layer-group" aria-hidden="true"></i>4 etkin grup</div></div>
+    </div>
+    <div class="kpi-card ok">
+      <div class="kpi-ico"><i class="fa-solid fa-microchip" aria-hidden="true"></i></div>
+      <div><div class="kpi-num">2.862</div><div class="kpi-lbl">Aylık işlenecek içerik</div>
+      <div class="kpi-delta flat"><i class="fa-solid fa-filter" aria-hidden="true"></i>tekrarlar elendikten sonra</div></div>
+    </div>
+    <div class="kpi-card warm">
+      <div class="kpi-ico"><i class="fa-solid fa-rss" aria-hidden="true"></i></div>
+      <div><div class="kpi-num">18 / 22</div><div class="kpi-lbl">Etkin kaynak</div>
+      <div class="kpi-delta down"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>1'i hata veriyor</div></div>
+    </div>
+  </div>
+
+  <section class="pnl-card" id="mtListe" data-liste data-liste-ad="grup" data-sayfa-boy="25" data-liste-cop-not="Grup çekilmez ve Çöp sekmesine taşınır" aria-labelledby="mtListeBas">
+    <h2 class="sr-only" id="mtListeBas">Kaynak grupları</h2>
+    <div class="kb-liste-ust">
+      <div class="chips" role="tablist" aria-label="Duruma göre">
+        <button type="button" class="chip is-on" role="tab" aria-selected="true" data-sekme="hepsi">Tümü<span class="ch-cnt">0</span></button>
+        <button type="button" class="chip" role="tab" aria-selected="false" data-sekme="aktif">Etkin<span class="ch-cnt">0</span></button>
+        <button type="button" class="chip" role="tab" aria-selected="false" data-sekme="kapali">Kapalı<span class="ch-cnt">0</span></button>
+      </div>
+      <button type="button" class="chip kb-cop" role="tab" aria-selected="false" data-sekme="cop"><i class="fa-solid fa-trash" aria-hidden="true"></i>Çöp<span class="ch-cnt">0</span></button>
+    </div>
+    <div class="filter-bar">
+      <div class="fb-search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <label class="sr-only" for="mtAra">Gruplarda ara</label>
+        <input id="mtAra" type="search" data-liste-ara placeholder="Grup ya da kaynak adı ara" autocomplete="off">
+      </div>
+      <button type="button" class="kb-suz-temizle" data-suz-temizle hidden>Süzgeçleri temizle</button>
+    </div>
+    <div class="ptable-wrap">
+      <table class="ptable">
+        <thead><tr>
+          <th class="kb-ana">Grup</th><th>Sıklık</th><th class="say kb-gizle-m">Kaynak</th><th class="kb-gizle-m">Kanallar</th><th class="kb-gizle-t">Aylık tahmin</th><th>Etkin</th><th><span class="sr-only">İşlemler</span></th>
+        </tr></thead>
+        <tbody data-satirlar><tr data-satir="grp-T1" data-durum="aktif" data-ara="T1 Resmî örn. Resmî Gazete, bakanlıklar, valilikler Resmî Gazete İletişim Başkanlığı Millî Eğitim Bakanlığı İstanbul Valiliği Savunma Sanayii Başkanlığı T.C. Ticaret Bakanlığı Meteoroloji Genel Müdürlüğü AFAD" data-baslik="T1 · Resmî"><td class="kb-ana"><div class="rcp-id"><div class="rcp-name">T1 · Resmî</div><div class="rcp-by">örn. Resmî Gazete, bakanlıklar, valilikler</div></div></td><td><span class="kb-tarih">2 saatte bir</span></td><td class="say kb-gizle-m"><button type="button" class="kb-bag" data-tanim="mtGor-T1">7 / 8 kaynak göster</button></td><td class="kb-gizle-m"><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></td><td class="kb-gizle-t"><div class="rcp-id"><div class="rcp-name">2.520 çekim</div><div class="rcp-by">756 içerik<span data-izin="ai-maliyet"> · $14,74</span></div></div></td><td><div class="toggle-row"><label class="toggle"><input type="checkbox" checked data-anahtar="T1 · Resmî grubu" data-anahtar-etki="7 kaynak çekilmez, yeni AI taslağı gelmez" aria-label="T1 grubu etkin"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div></td><td><div class="row-acts"><button type="button" class="ia-btn" data-tanim="mtGor-T1" aria-label="Görüntüle" title="Görüntüle"><i class="fa-solid fa-eye" aria-hidden="true"></i></button><button type="button" class="ia-btn" data-tanim="mtDz-T1" aria-label="Düzenle" title="Düzenle"><i class="fa-solid fa-pen" aria-hidden="true"></i></button><button type="button" class="ia-btn danger" data-tasi-sil data-tasi-ad="T1 · Resmî" data-tasi-sayi="8" data-tasi-birim="kaynak" data-tasi-birim-cogul="kaynaklar" data-tasi-ikon="fa-rss" data-tasi-soru="Kaynaklar hangi gruba taşınsın?" data-tasi-hedefler="T2 · Kurumsal Basın|T3 · Uluslararası Medya|T4 · Düşük Öncelik" data-tasi-not="Taşınan kaynaklar yeni grubun sıklığı ve kanallarıyla çekilir. “T1 · Resmî” çöpe gider ve oradan geri alınabilir; işlem denetim izine yazılır." data-sonra-kaldir aria-label="Grubu sil" title="Grubu sil"><i class="fa-solid fa-trash" aria-hidden="true"></i></button><button type="button" class="ia-btn" data-diger aria-haspopup="true" aria-expanded="false" aria-label="Diğer işlemler" title="Diğer"><i class="fa-solid fa-ellipsis" aria-hidden="true"></i></button></div></td></tr><tr data-satir="grp-T2" data-durum="aktif" data-ara="T2 Kurumsal Basın örn. Anadolu Ajansı, DHA, İHA, KAP Anadolu Ajansı Demirören Haber Ajansı (DHA) İhlas Haber Ajansı (İHA) ASELSAN Basın Odası Kamuyu Aydınlatma Platformu (KAP)" data-baslik="T2 · Kurumsal Basın"><td class="kb-ana"><div class="rcp-id"><div class="rcp-name">T2 · Kurumsal Basın</div><div class="rcp-by">örn. Anadolu Ajansı, DHA, İHA, KAP</div></div></td><td><span class="kb-tarih">30 dakikada bir</span></td><td class="say kb-gizle-m"><button type="button" class="kb-bag" data-tanim="mtGor-T2">5 / 5 kaynak göster</button></td><td class="kb-gizle-m"><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></td><td class="kb-gizle-t"><div class="rcp-id"><div class="rcp-name">7.200 çekim</div><div class="rcp-by">1.440 içerik<span data-izin="ai-maliyet"> · $28,08</span></div></div></td><td><div class="toggle-row"><label class="toggle"><input type="checkbox" checked data-anahtar="T2 · Kurumsal Basın grubu" data-anahtar-etki="5 kaynak çekilmez, yeni AI taslağı gelmez" aria-label="T2 grubu etkin"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div></td><td><div class="row-acts"><button type="button" class="ia-btn" data-tanim="mtGor-T2" aria-label="Görüntüle" title="Görüntüle"><i class="fa-solid fa-eye" aria-hidden="true"></i></button><button type="button" class="ia-btn" data-tanim="mtDz-T2" aria-label="Düzenle" title="Düzenle"><i class="fa-solid fa-pen" aria-hidden="true"></i></button><button type="button" class="ia-btn danger" data-tasi-sil data-tasi-ad="T2 · Kurumsal Basın" data-tasi-sayi="5" data-tasi-birim="kaynak" data-tasi-birim-cogul="kaynaklar" data-tasi-ikon="fa-rss" data-tasi-soru="Kaynaklar hangi gruba taşınsın?" data-tasi-hedefler="T1 · Resmî|T3 · Uluslararası Medya|T4 · Düşük Öncelik" data-tasi-not="Taşınan kaynaklar yeni grubun sıklığı ve kanallarıyla çekilir. “T2 · Kurumsal Basın” çöpe gider ve oradan geri alınabilir; işlem denetim izine yazılır." data-sonra-kaldir aria-label="Grubu sil" title="Grubu sil"><i class="fa-solid fa-trash" aria-hidden="true"></i></button><button type="button" class="ia-btn" data-diger aria-haspopup="true" aria-expanded="false" aria-label="Diğer işlemler" title="Diğer"><i class="fa-solid fa-ellipsis" aria-hidden="true"></i></button></div></td></tr><tr data-satir="grp-T3" data-durum="aktif" data-ara="T3 Uluslararası Medya örn. Reuters, AP, AFP, BBC Türkçe Reuters Associated Press AFP BBC Türkçe Defense News" data-baslik="T3 · Uluslararası Medya"><td class="kb-ana"><div class="rcp-id"><div class="rcp-name">T3 · Uluslararası Medya</div><div class="rcp-by">örn. Reuters, AP, AFP, BBC Türkçe</div></div></td><td><span class="kb-tarih">1 saatte bir</span></td><td class="say kb-gizle-m"><button type="button" class="kb-bag" data-tanim="mtGor-T3">4 / 5 kaynak göster</button></td><td class="kb-gizle-m"><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></td><td class="kb-gizle-t"><div class="rcp-id"><div class="rcp-name">2.880 çekim</div><div class="rcp-by">576 içerik<span data-izin="ai-maliyet"> · $11,23</span></div></div></td><td><div class="toggle-row"><label class="toggle"><input type="checkbox" checked data-anahtar="T3 · Uluslararası Medya grubu" data-anahtar-etki="4 kaynak çekilmez, yeni AI taslağı gelmez" aria-label="T3 grubu etkin"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div></td><td><div class="row-acts"><button type="button" class="ia-btn" data-tanim="mtGor-T3" aria-label="Görüntüle" title="Görüntüle"><i class="fa-solid fa-eye" aria-hidden="true"></i></button><button type="button" class="ia-btn" data-tanim="mtDz-T3" aria-label="Düzenle" title="Düzenle"><i class="fa-solid fa-pen" aria-hidden="true"></i></button><button type="button" class="ia-btn danger" data-tasi-sil data-tasi-ad="T3 · Uluslararası Medya" data-tasi-sayi="5" data-tasi-birim="kaynak" data-tasi-birim-cogul="kaynaklar" data-tasi-ikon="fa-rss" data-tasi-soru="Kaynaklar hangi gruba taşınsın?" data-tasi-hedefler="T1 · Resmî|T2 · Kurumsal Basın|T4 · Düşük Öncelik" data-tasi-not="Taşınan kaynaklar yeni grubun sıklığı ve kanallarıyla çekilir. “T3 · Uluslararası Medya” çöpe gider ve oradan geri alınabilir; işlem denetim izine yazılır." data-sonra-kaldir aria-label="Grubu sil" title="Grubu sil"><i class="fa-solid fa-trash" aria-hidden="true"></i></button><button type="button" class="ia-btn" data-diger aria-haspopup="true" aria-expanded="false" aria-label="Diğer işlemler" title="Diğer"><i class="fa-solid fa-ellipsis" aria-hidden="true"></i></button></div></td></tr><tr data-satir="grp-T4" data-durum="aktif" data-ara="T4 Düşük Öncelik örn. sosyal medya hesapları, küçük haber siteleri @ekonomi_gundem (X) Teknoloji Gündemi Marmara Yerel Haber Kampüs Postası" data-baslik="T4 · Düşük Öncelik"><td class="kb-ana"><div class="rcp-id"><div class="rcp-name">T4 · Düşük Öncelik</div><div class="rcp-by">örn. sosyal medya hesapları, küçük haber siteleri</div></div></td><td><span class="kb-tarih">1 günde bir</span></td><td class="say kb-gizle-m"><button type="button" class="kb-bag" data-tanim="mtGor-T4">2 / 4 kaynak göster</button></td><td class="kb-gizle-m"><span class="kb-kanal-ikon" title="Sosyal Medya" aria-label="Yayın kanalları: Sosyal Medya"><i class="fa-solid fa-globe" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></td><td class="kb-gizle-t"><div class="rcp-id"><div class="rcp-name">60 çekim</div><div class="rcp-by">90 içerik<span data-izin="ai-maliyet"> · $1,75</span></div></div></td><td><div class="toggle-row"><label class="toggle"><input type="checkbox" checked data-anahtar="T4 · Düşük Öncelik grubu" data-anahtar-etki="2 kaynak çekilmez, yeni AI taslağı gelmez" aria-label="T4 grubu etkin"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div></td><td><div class="row-acts"><button type="button" class="ia-btn" data-tanim="mtGor-T4" aria-label="Görüntüle" title="Görüntüle"><i class="fa-solid fa-eye" aria-hidden="true"></i></button><button type="button" class="ia-btn" data-tanim="mtDz-T4" aria-label="Düzenle" title="Düzenle"><i class="fa-solid fa-pen" aria-hidden="true"></i></button><button type="button" class="ia-btn danger" data-tasi-sil data-tasi-ad="T4 · Düşük Öncelik" data-tasi-sayi="4" data-tasi-birim="kaynak" data-tasi-birim-cogul="kaynaklar" data-tasi-ikon="fa-rss" data-tasi-soru="Kaynaklar hangi gruba taşınsın?" data-tasi-hedefler="T1 · Resmî|T2 · Kurumsal Basın|T3 · Uluslararası Medya" data-tasi-not="Taşınan kaynaklar yeni grubun sıklığı ve kanallarıyla çekilir. “T4 · Düşük Öncelik” çöpe gider ve oradan geri alınabilir; işlem denetim izine yazılır." data-sonra-kaldir aria-label="Grubu sil" title="Grubu sil"><i class="fa-solid fa-trash" aria-hidden="true"></i></button><button type="button" class="ia-btn" data-diger aria-haspopup="true" aria-expanded="false" aria-label="Diğer işlemler" title="Diğer"><i class="fa-solid fa-ellipsis" aria-hidden="true"></i></button></div></td></tr><tr data-satir="grp-AJ" data-durum="cop" data-onceki="aktif" data-ara="Ajans (deneme)" data-baslik="AJ · Ajans (deneme)"><td class="kb-ana"><div class="rcp-id"><div class="rcp-name">Ajans (deneme)</div><div class="rcp-by">örn. AA, DHA, İHA birlikte</div></div></td><td><span class="kb-tarih muted">15 dakikada bir</span></td><td class="say kb-gizle-m">0 / 0</td><td class="kb-gizle-m"><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></td><td class="kb-gizle-t">—</td><td><span class="pstat off">Çöpte</span></td><td><div class="row-acts"><button type="button" class="ia-btn kb-kilit" disabled aria-label="Görüntüle: kilitli" title="Çöpteki grup görüntülenmez; önce geri alın"><i class="fa-solid fa-lock" aria-hidden="true"></i></button><button type="button" class="ia-btn kb-kilit" disabled aria-label="Düzenle: kilitli" title="Çöpteki grup düzenlenmez; önce geri alın"><i class="fa-solid fa-lock" aria-hidden="true"></i></button><button type="button" class="ia-btn danger" data-sil aria-label="Çöpe taşı" title="Çöpe taşı"><i class="fa-solid fa-trash" aria-hidden="true"></i></button><button type="button" class="ia-btn" data-diger aria-haspopup="true" aria-expanded="false" aria-label="Diğer işlemler" title="Diğer"><i class="fa-solid fa-ellipsis" aria-hidden="true"></i></button></div></td></tr></tbody>
+        <tbody>
+          <tr class="kb-bos-satir" hidden><td colspan="7"><div class="pnl-empty">
+            <div class="pe-ico"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></div>
+            <h2>Bu süzgeçlerle sonuç yok</h2>
+            <p>Arama metnini kısaltmayı ya da süzgeçleri kaldırmayı deneyin.</p>
+            <button type="button" class="pe-tag" data-suz-temizle><i class="fa-solid fa-filter-circle-xmark" aria-hidden="true"></i>Süzgeçleri temizle</button>
+          </div></td></tr>
+        </tbody>
+        <tbody data-durum-goster="yukleniyor" hidden>
+          <tr class="kb-iskelet"><td><div class="rcp-id"><span></span></div></td><td><span></span></td><td class="kb-gizle-m"><span></span></td><td class="kb-gizle-m"><span></span></td><td class="kb-gizle-t"><span></span></td><td><span></span></td><td></td></tr><tr class="kb-iskelet"><td><div class="rcp-id"><span></span></div></td><td><span></span></td><td class="kb-gizle-m"><span></span></td><td class="kb-gizle-m"><span></span></td><td class="kb-gizle-t"><span></span></td><td><span></span></td><td></td></tr><tr class="kb-iskelet"><td><div class="rcp-id"><span></span></div></td><td><span></span></td><td class="kb-gizle-m"><span></span></td><td class="kb-gizle-m"><span></span></td><td class="kb-gizle-t"><span></span></td><td><span></span></td><td></td></tr><tr class="kb-iskelet"><td><div class="rcp-id"><span></span></div></td><td><span></span></td><td class="kb-gizle-m"><span></span></td><td class="kb-gizle-m"><span></span></td><td class="kb-gizle-t"><span></span></td><td><span></span></td><td></td></tr>
+        </tbody>
+        <tbody data-durum-goster="hata" hidden>
+          <tr><td colspan="7"><div class="pnl-empty kb-hata">
+            <div class="pe-ico"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></div>
+            <h2>Gruplar yüklenemedi</h2>
+            <p>Sunucuya ulaşılamadı. Bağlantınızı kontrol edip yeniden deneyin.</p>
+            <a class="pe-tag" href="motor.html"><i class="fa-solid fa-rotate-right" aria-hidden="true"></i>Yeniden dene</a>
+          </div></td></tr>
+        </tbody>
+        <tbody data-durum-goster="bos" hidden>
+          <tr><td colspan="7"><div class="pnl-empty">
+            <div class="pe-ico"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></div>
+            <h2>Henüz kaynak grubu yok</h2>
+            <p>İlk grubu ekleyin; kaynaklar gruplara bağlanır, sıklık ve yayın kanalları gruptan gelir.</p>
+            <button type="button" class="pe-tag" data-tanim="mtYeni"><i class="fa-solid fa-plus" aria-hidden="true"></i>Yeni grup</button>
+          </div></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pager"><div class="pager-info">—</div></div>
+
+    <div class="pnl-menu kb-diger-menu" role="menu">
+      <div class="kb-dm-grup" data-durum-icin="aktif kapali">Çekim</div>
+      <button type="button" data-durum-icin="aktif" data-onay-baslik="Grup şimdi taransın mı?" data-onay-metin="Sıklığı beklemeden gruptaki etkin kaynaklar hemen çekilir; yeni içerik AI taslağı olarak havuza düşer ve AI maliyeti oluşur. Denetim izine yazılır." data-onay-evet="Şimdi tara" data-onay-ikon="fa-rotate" data-bildir-sonra="Grup kuyruğa alındı; birkaç saniye içinde çekilir"><i class="fa-solid fa-rotate" aria-hidden="true"></i>Şimdi tara</button>
+      <button type="button" data-durum-icin="aktif kapali" data-bildir="Havuz bu gruba süzülerek açılır (prototip)"><i class="fa-solid fa-robot" aria-hidden="true"></i>Bu grubun haberleri</button>
+      <button type="button" data-durum-icin="aktif kapali" data-bildir="Denetim izi bu gruba süzülerek açılır (prototip)"><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i>Denetim izinde gör</button>
+      <button type="button" data-durum-icin="cop" data-geri-al><i class="fa-solid fa-rotate-left" aria-hidden="true"></i>Çöpten geri al</button>
+      <button type="button" class="danger" data-durum-icin="cop" data-kalici-sil><i class="fa-solid fa-trash-can" aria-hidden="true"></i>Kalıcı olarak sil</button>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<template id="mtYeni" data-baslik="Yeni kaynak grubu" data-alt="Ad, sıklık ve yayın kanalları · kaynakları şimdi ya da sonra ekleyin" data-zorunlu-kayit="ai-havuz.grup">
+  <div class="kb-fs">
+    <div class="frow"><label for="mtAd-yeni">Grup adı</label>
+      <input class="finput" id="mtAd-yeni" data-alan-id="ad" data-sayac="30|40" value="" placeholder="ör. Ajans, Düşük öncelikli dijital mecralar">
+      <div class="char-meter"><span>Havuzda ve kaynak teyidinde görünür</span><b>0 / 30</b></div>
+      <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Grup adı zorunlu.</div></div>
+    <div class="frow"><label for="mtOrnek-yeni">Örnek açıklaması</label>
+      <input class="finput" id="mtOrnek-yeni" data-sayac="60|80" value="" placeholder="ör. örn. Anadolu Ajansı, DHA, İHA">
+      <div class="char-meter"><span>Listede adın altında</span><b>0 / 60</b></div></div>
+    <div class="frow"><span class="flabel">Çekim sıklığı</span>
+      <div class="frow two">
+        <input class="finput" id="mtSik-yeni" data-alan-id="siklik" inputmode="numeric" value="" aria-label="Çekim sıklığı sayısı" placeholder="ör. 2" data-zorunlu-metin="Çekim sıklığını yazın">
+        <div class="kb-secim is-dolu" data-deger="saat" data-bos="Birim"><button type="button" class="kb-secim-btn" data-acilir="mtBirim-yeni" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">saat</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="pnl-menu kb-secim-menu" id="mtBirim-yeni"><div class="kb-secim-liste" role="listbox"><button type="button" data-deger="dakika" data-ad="dakika">dakika</button><button type="button" data-deger="saat" data-ad="saat" class="is-sec">saat</button><button type="button" data-deger="gün" data-ad="gün">gün</button></div></div></div>
+      </div>
+      <span class="fhint">Tarama her 10 dakikada çalışır; grubun son çekiminden bu yana süre dolmuşsa gruptaki kaynaklar çekilir.</span>
+      <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Çekim sıklığını yazın.</div></div>
+    <div class="frow"><span class="flabel">Yayın kanalları</span>
+      <div class="kb-kanallar" role="group" aria-label="Yayın kanalları"><label class="kb-kanal"><input type="checkbox" value="web" checked><span><i class="fa-solid fa-globe" aria-hidden="true"></i>Web</span></label><label class="kb-kanal"><input type="checkbox" value="uygulama" checked><span><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>Uygulama</span></label><label class="kb-kanal"><input type="checkbox" value="sosyal" checked><span><i class="fa-solid fa-share-nodes" aria-hidden="true"></i>Sosyal Medya</span></label></div>
+      <p class="fhint" data-kanal-uyari hidden>Hiçbir kanal seçili değil: bu gruptan gelen haberler yayımlanmaz.</p>
+      <span class="fhint">Bu gruptan gelen haber yalnız işaretli kanallarda yayımlanır; yalnız Sosyal Medya'ya giden gönderi bağlantısızdır (YS2). Kaynakları farklı gruplardan olan haberin kanallarını 1. kaynağın grubu belirler (YS4).</span></div>
+    <div class="frow"><span class="flabel">Kaynaklar</span>
+      <div class="kb-cip-girdi" data-havuz-kapali data-havuz='[&quot;Resmî Gazete&quot;, &quot;İletişim Başkanlığı&quot;, &quot;Millî Eğitim Bakanlığı&quot;, &quot;İstanbul Valiliği&quot;, &quot;Savunma Sanayii Başkanlığı&quot;, &quot;T.C. Ticaret Bakanlığı&quot;, &quot;Meteoroloji Genel Müdürlüğü&quot;, &quot;AFAD&quot;, &quot;Anadolu Ajansı&quot;, &quot;Demirören Haber Ajansı (DHA)&quot;, &quot;İhlas Haber Ajansı (İHA)&quot;, &quot;ASELSAN Basın Odası&quot;, &quot;Kamuyu Aydınlatma Platformu (KAP)&quot;, &quot;Reuters&quot;, &quot;Associated Press&quot;, &quot;AFP&quot;, &quot;BBC Türkçe&quot;, &quot;Defense News&quot;, &quot;@ekonomi_gundem (X)&quot;, &quot;Teknoloji Gündemi&quot;, &quot;Marmara Yerel Haber&quot;, &quot;Kampüs Postası&quot;]'><input type="text" placeholder="Kaynak ara" aria-label="Kaynak ara"><div class="pnl-menu kb-cip-oneri"></div></div>
+      <span class="fhint">Çıkarılan kaynak grupsuz kalır ve çekilmez. Listede olmayan kaynak <a class="kb-bag" data-hedef="ai-havuz.kaynaklar" href="kaynaklar.html">Kaynaklar</a> ekranında eklenir.</span></div>
+    <div class="toggle-row"><span>Etkin<small>Kapalıyken gruptaki kaynakların hiçbiri çekilmez</small></span><label class="toggle"><input type="checkbox" checked aria-label="Grup etkin"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
+  </div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtEklendi" data-bildir-sonra="Grup eklendi; denetim izine yazıldı"><i class="fa-solid fa-plus" aria-hidden="true"></i>Grubu ekle</button></div>
+</template>
+<template id="mtEklendi" data-baslik="Grup eklendi" data-alt="Listede en alta eklendi">
+  <div class="pnl-empty"><div class="pe-ico"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></div><h2>Grup eklendi</h2><p>Kaynakları gruba bağlayın; grup ancak içinde etkin kaynak varsa çekilir. Sıklık ve kanallar bu gruptan gelen her haberde geçerli olur.</p></div>
+  <div class="kb-kap-alt-cubuk"><a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.kaynaklar" href="kaynaklar.html"><i class="fa-solid fa-rss" aria-hidden="true"></i>Kaynaklara git</a><button type="button" class="btn btn-acc btn-sm" data-kapat><i class="fa-solid fa-check" aria-hidden="true"></i>Tamam</button></div>
+</template>
+<template id="mtGor-T1" data-baslik="T1 · Resmî" data-alt="örn. Resmî Gazete, bakanlıklar, valilikler">
+  <div class="kb-fs"><div class="kb-fs-tt">Grup</div><div class="sa-durum">
+    <div><span>Çekim sıklığı</span><b>2 saatte bir</b></div>
+    <div><span>Yayın kanalları</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+    <div><span>Etkin kaynak</span><b>7 / 8</b></div>
+    <div><span>Aylık tahmin</span><b>2.520 çekim · 756 içerik<span data-izin="ai-maliyet"> · $14,74</span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Kaynaklar · 8</div><div class="kb-madde"><div class="km-satir"><span class="km-yazi">Resmî Gazete<small>Kazıyıcı (scraper) · resmigazete.gov.tr</small></span><span class="pstat ok">Etkin</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-resmi-gazete" aria-label="Resmî Gazete ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div><div class="km-satir"><span class="km-yazi">İletişim Başkanlığı<small>RSS · iletisim.gov.tr/rss</small></span><span class="pstat ok">Etkin</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-iletisim" aria-label="İletişim Başkanlığı ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div><div class="km-satir"><span class="km-yazi">Millî Eğitim Bakanlığı<small>Haber sitesi · meb.gov.tr/haberler</small></span><span class="pstat ok">Etkin</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-meb" aria-label="Millî Eğitim Bakanlığı ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div><div class="km-satir"><span class="km-yazi">İstanbul Valiliği<small>Sosyal medya hesabı · x.com/istanbulvalilik</small></span><span class="pstat ok">Etkin</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-ist-valilik" aria-label="İstanbul Valiliği ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div><div class="km-satir"><span class="km-yazi">Savunma Sanayii Başkanlığı<small>RSS · ssb.gov.tr/rss</small></span><span class="pstat ok">Etkin</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-ssb" aria-label="Savunma Sanayii Başkanlığı ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div><div class="km-satir"><span class="km-yazi">T.C. Ticaret Bakanlığı<small>Kazıyıcı (scraper) · ticaret.gov.tr/haberler</small></span><span class="pstat ok">Etkin</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-ticaret" aria-label="T.C. Ticaret Bakanlığı ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div><div class="km-satir"><span class="km-yazi">Meteoroloji Genel Müdürlüğü<small>RSS · mgm.gov.tr/rss</small></span><span class="pstat ok">Etkin</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-mgm" aria-label="Meteoroloji Genel Müdürlüğü ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div><div class="km-satir"><span class="km-yazi">AFAD<small>Sosyal medya hesabı · x.com/AFADBaskanlik</small></span><span class="pstat off">Pasif</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-afad" aria-label="AFAD ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div></div>
+    <p class="fhint">Kaynak eklemek ve düzenlemek için <a class="kb-bag" data-hedef="ai-havuz.kaynaklar" href="kaynaklar.html">Kaynaklar</a>; gruba bağlamak için “Düzenle”.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtDz-T1"><i class="fa-solid fa-pen" aria-hidden="true"></i>Düzenle</button></div>
+</template>
+<template id="kyGorM-resmi-gazete" data-baslik="Resmî Gazete" data-alt="Kazıyıcı (scraper) · T1 · Resmî">
+  
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat ok">Etkin</span></b></div>
+    <div><span>Grup</span><b>T1 · Resmî</b></div>
+    <div><span>Tip</span><b>Kazıyıcı (scraper)</b></div>
+    <div><span>Adres</span><b>resmigazete.gov.tr</b></div>
+    <div><span>Son çekim</span><b>16.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%100</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>212 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 3 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">16.00.03</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">resmi-gazete</span><span>4 yeni içerik, 0 tekrar elendi</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.30.05</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">resmi-gazete</span><span>1 yeni içerik</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.00.03</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">resmi-gazete</span><span>Değişiklik yok</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T1"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="kyGorM-iletisim" data-baslik="İletişim Başkanlığı" data-alt="RSS · T1 · Resmî">
+  
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat ok">Etkin</span></b></div>
+    <div><span>Grup</span><b>T1 · Resmî</b></div>
+    <div><span>Tip</span><b>RSS</b></div>
+    <div><span>Adres</span><b>iletisim.gov.tr/rss</b></div>
+    <div><span>Son çekim</span><b>16.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%100</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>96 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 4 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">16.00.01</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">iletisim</span><span>6 yeni içerik, 3 tekrar elendi</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.30.05</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">iletisim</span><span>2 yeni içerik</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.00.03</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">iletisim</span><span>Değişiklik yok</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T1"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="kyGorM-meb" data-baslik="Millî Eğitim Bakanlığı" data-alt="Haber sitesi · T1 · Resmî">
+  
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat ok">Etkin</span></b></div>
+    <div><span>Grup</span><b>T1 · Resmî</b></div>
+    <div><span>Tip</span><b>Haber sitesi</b></div>
+    <div><span>Adres</span><b>meb.gov.tr/haberler</b></div>
+    <div><span>Son çekim</span><b>16.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%98</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>64 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 7 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">16.00.04</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">meb</span><span>4 yeni içerik, 2 tekrar elendi</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.30.01</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">meb</span><span>2 yeni içerik</span></span><span class="kl-satir uyari"><span class="kl-zaman">15.00.03</span><span class="kl-seviye">uyarı</span><span class="kl-kaynak">meb</span><span>Yavaş yanıt (4,2 sn)</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T1"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="kyGorM-ist-valilik" data-baslik="İstanbul Valiliği" data-alt="Sosyal medya hesabı · T1 · Resmî">
+  
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat ok">Etkin</span></b></div>
+    <div><span>Grup</span><b>T1 · Resmî</b></div>
+    <div><span>Tip</span><b>Sosyal medya hesabı</b></div>
+    <div><span>Adres</span><b>x.com/istanbulvalilik</b></div>
+    <div><span>Son çekim</span><b>16.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%100</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>41 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 8 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">16.00.08</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">ist-valilik</span><span>4 yeni içerik, 1 tekrar elendi</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.30.03</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">ist-valilik</span><span>3 yeni içerik</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.00.03</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">ist-valilik</span><span>Değişiklik yok</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T1"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="kyGorM-ssb" data-baslik="Savunma Sanayii Başkanlığı" data-alt="RSS · T1 · Resmî">
+  
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat ok">Etkin</span></b></div>
+    <div><span>Grup</span><b>T1 · Resmî</b></div>
+    <div><span>Tip</span><b>RSS</b></div>
+    <div><span>Adres</span><b>ssb.gov.tr/rss</b></div>
+    <div><span>Son çekim</span><b>16.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%100</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>38 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 5 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">16.00.08</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">ssb</span><span>3 yeni içerik, 2 tekrar elendi</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.30.05</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">ssb</span><span>3 yeni içerik</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.00.03</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">ssb</span><span>Değişiklik yok</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T1"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="kyGorM-ticaret" data-baslik="T.C. Ticaret Bakanlığı" data-alt="Kazıyıcı (scraper) · T1 · Resmî">
+  
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat ok">Etkin</span></b></div>
+    <div><span>Grup</span><b>T1 · Resmî</b></div>
+    <div><span>Tip</span><b>Kazıyıcı (scraper)</b></div>
+    <div><span>Adres</span><b>ticaret.gov.tr/haberler</b></div>
+    <div><span>Son çekim</span><b>16.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%96</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>52 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 7 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">16.00.04</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">ticaret</span><span>4 yeni içerik, 2 tekrar elendi</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.30.01</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">ticaret</span><span>2 yeni içerik</span></span><span class="kl-satir uyari"><span class="kl-zaman">15.00.03</span><span class="kl-seviye">uyarı</span><span class="kl-kaynak">ticaret</span><span>Yavaş yanıt (4,2 sn)</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T1"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="kyGorM-mgm" data-baslik="Meteoroloji Genel Müdürlüğü" data-alt="RSS · T1 · Resmî">
+  
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat ok">Etkin</span></b></div>
+    <div><span>Grup</span><b>T1 · Resmî</b></div>
+    <div><span>Tip</span><b>RSS</b></div>
+    <div><span>Adres</span><b>mgm.gov.tr/rss</b></div>
+    <div><span>Son çekim</span><b>16.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%100</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>57 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 6 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">16.00.00</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">mgm</span><span>4 yeni içerik, 3 tekrar elendi</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.30.06</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">mgm</span><span>1 yeni içerik</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.00.03</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">mgm</span><span>Değişiklik yok</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T1"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="kyGorM-afad" data-baslik="AFAD" data-alt="Sosyal medya hesabı · T1 · Resmî">
+  <div class="kb-bant bilgi"><i class="fa-solid fa-circle-pause" aria-hidden="true"></i><span><b>Pasif kaynak.</b> 18.11.2026&#x27;da pasifleştirildi · Selin Aydemir. Çekilmez; eski haberlerdeki teyit kayıtları durur.</span></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat off">Pasif</span></b></div>
+    <div><span>Grup</span><b>T1 · Resmî</b></div>
+    <div><span>Tip</span><b>Sosyal medya hesabı</b></div>
+    <div><span>Adres</span><b>x.com/AFADBaskanlik</b></div>
+    <div><span>Son çekim</span><b>18.11 09.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%0</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>0 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 7 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">18.11 · 09.00.00</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">afad</span><span>Kaynak pasifleştirildi; çekim durdu</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T1"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="mtDz-T1" data-baslik="T1 · Resmî · düzenle" data-alt="Değişiklik sonraki taramada geçerli olur; denetim izine önceki ve sonraki haliyle yazılır" data-zorunlu-kayit="ai-havuz.grup">
+  <div class="kb-fs">
+    <div class="frow"><label for="mtAd-T1">Grup adı</label>
+      <input class="finput" id="mtAd-T1" data-alan-id="ad" data-sayac="30|40" value="Resmî" placeholder="ör. Ajans, Düşük öncelikli dijital mecralar">
+      <div class="char-meter"><span>Havuzda ve kaynak teyidinde görünür</span><b>0 / 30</b></div>
+      <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Grup adı zorunlu.</div></div>
+    <div class="frow"><label for="mtOrnek-T1">Örnek açıklaması</label>
+      <input class="finput" id="mtOrnek-T1" data-sayac="60|80" value="örn. Resmî Gazete, bakanlıklar, valilikler" placeholder="ör. örn. Anadolu Ajansı, DHA, İHA">
+      <div class="char-meter"><span>Listede adın altında</span><b>0 / 60</b></div></div>
+    <div class="frow"><span class="flabel">Çekim sıklığı</span>
+      <div class="frow two">
+        <input class="finput" id="mtSik-T1" data-alan-id="siklik" inputmode="numeric" value="2" aria-label="Çekim sıklığı sayısı" placeholder="ör. 2" data-zorunlu-metin="Çekim sıklığını yazın">
+        <div class="kb-secim is-dolu" data-deger="saat" data-bos="Birim"><button type="button" class="kb-secim-btn" data-acilir="mtBirim-T1" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">saat</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="pnl-menu kb-secim-menu" id="mtBirim-T1"><div class="kb-secim-liste" role="listbox"><button type="button" data-deger="dakika" data-ad="dakika">dakika</button><button type="button" data-deger="saat" data-ad="saat" class="is-sec">saat</button><button type="button" data-deger="gün" data-ad="gün">gün</button></div></div></div>
+      </div>
+      <span class="fhint">Tarama her 10 dakikada çalışır; grubun son çekiminden bu yana süre dolmuşsa gruptaki kaynaklar çekilir.</span>
+      <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Çekim sıklığını yazın.</div></div>
+    <div class="frow"><span class="flabel">Yayın kanalları</span>
+      <div class="kb-kanallar" role="group" aria-label="Yayın kanalları"><label class="kb-kanal"><input type="checkbox" value="web" checked><span><i class="fa-solid fa-globe" aria-hidden="true"></i>Web</span></label><label class="kb-kanal"><input type="checkbox" value="uygulama" checked><span><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>Uygulama</span></label><label class="kb-kanal"><input type="checkbox" value="sosyal" checked><span><i class="fa-solid fa-share-nodes" aria-hidden="true"></i>Sosyal Medya</span></label></div>
+      <p class="fhint" data-kanal-uyari hidden>Hiçbir kanal seçili değil: bu gruptan gelen haberler yayımlanmaz.</p>
+      <span class="fhint">Bu gruptan gelen haber yalnız işaretli kanallarda yayımlanır; yalnız Sosyal Medya'ya giden gönderi bağlantısızdır (YS2). Kaynakları farklı gruplardan olan haberin kanallarını 1. kaynağın grubu belirler (YS4).</span></div>
+    <div class="frow"><span class="flabel">Kaynaklar</span>
+      <div class="kb-cip-girdi" data-havuz-kapali data-havuz='[&quot;Resmî Gazete&quot;, &quot;İletişim Başkanlığı&quot;, &quot;Millî Eğitim Bakanlığı&quot;, &quot;İstanbul Valiliği&quot;, &quot;Savunma Sanayii Başkanlığı&quot;, &quot;T.C. Ticaret Bakanlığı&quot;, &quot;Meteoroloji Genel Müdürlüğü&quot;, &quot;AFAD&quot;, &quot;Anadolu Ajansı&quot;, &quot;Demirören Haber Ajansı (DHA)&quot;, &quot;İhlas Haber Ajansı (İHA)&quot;, &quot;ASELSAN Basın Odası&quot;, &quot;Kamuyu Aydınlatma Platformu (KAP)&quot;, &quot;Reuters&quot;, &quot;Associated Press&quot;, &quot;AFP&quot;, &quot;BBC Türkçe&quot;, &quot;Defense News&quot;, &quot;@ekonomi_gundem (X)&quot;, &quot;Teknoloji Gündemi&quot;, &quot;Marmara Yerel Haber&quot;, &quot;Kampüs Postası&quot;]'><span class="kb-cip" data-deger="Resmî Gazete"><span>Resmî Gazete</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="İletişim Başkanlığı"><span>İletişim Başkanlığı</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="Millî Eğitim Bakanlığı"><span>Millî Eğitim Bakanlığı</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="İstanbul Valiliği"><span>İstanbul Valiliği</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="Savunma Sanayii Başkanlığı"><span>Savunma Sanayii Başkanlığı</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="T.C. Ticaret Bakanlığı"><span>T.C. Ticaret Bakanlığı</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="Meteoroloji Genel Müdürlüğü"><span>Meteoroloji Genel Müdürlüğü</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="AFAD"><span>AFAD</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><input type="text" placeholder="Kaynak ara" aria-label="Kaynak ara"><div class="pnl-menu kb-cip-oneri"></div></div>
+      <span class="fhint">Çıkarılan kaynak grupsuz kalır ve çekilmez. Listede olmayan kaynak <a class="kb-bag" data-hedef="ai-havuz.kaynaklar" href="kaynaklar.html">Kaynaklar</a> ekranında eklenir.</span></div>
+    <div class="toggle-row"><span>Etkin<small>Kapalıyken gruptaki kaynakların hiçbiri çekilmez</small></span><label class="toggle"><input type="checkbox" checked aria-label="Grup etkin"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
+  </div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-ghost btn-sm danger kb-sol" data-tasi-sil data-tasi-ad="T1 · Resmî" data-tasi-sayi="8" data-tasi-birim="kaynak" data-tasi-birim-cogul="kaynaklar" data-tasi-ikon="fa-rss" data-tasi-soru="Kaynaklar hangi gruba taşınsın?" data-tasi-hedefler="T2 · Kurumsal Basın|T3 · Uluslararası Medya|T4 · Düşük Öncelik" data-tasi-not="Taşınan kaynaklar yeni grubun sıklığı ve kanallarıyla çekilir. “T1 · Resmî” çöpe gider ve oradan geri alınabilir; işlem denetim izine yazılır."><i class="fa-solid fa-trash" aria-hidden="true"></i>Grubu sil</button><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T1" data-bildir-sonra="Grup kaydedildi; önceki hal denetim izinde"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>Kaydet</button></div>
+</template>
+<template id="mtGor-T2" data-baslik="T2 · Kurumsal Basın" data-alt="örn. Anadolu Ajansı, DHA, İHA, KAP">
+  <div class="kb-fs"><div class="kb-fs-tt">Grup</div><div class="sa-durum">
+    <div><span>Çekim sıklığı</span><b>30 dakikada bir</b></div>
+    <div><span>Yayın kanalları</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+    <div><span>Etkin kaynak</span><b>5 / 5</b></div>
+    <div><span>Aylık tahmin</span><b>7.200 çekim · 1.440 içerik<span data-izin="ai-maliyet"> · $28,08</span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Kaynaklar · 5</div><div class="kb-madde"><div class="km-satir"><span class="km-yazi">Anadolu Ajansı<small>RSS · aa.com.tr/tr/rss/default?cat=guncel</small></span><span class="pstat ok">Etkin</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-aa" aria-label="Anadolu Ajansı ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div><div class="km-satir"><span class="km-yazi">Demirören Haber Ajansı (DHA)<small>RSS · dha.com.tr/rss</small></span><span class="pstat ok">Etkin</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-dha" aria-label="Demirören Haber Ajansı (DHA) ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div><div class="km-satir"><span class="km-yazi">İhlas Haber Ajansı (İHA)<small>RSS · iha.com.tr/rss</small></span><span class="pstat ok">Etkin</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-iha" aria-label="İhlas Haber Ajansı (İHA) ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div><div class="km-satir"><span class="km-yazi">ASELSAN Basın Odası<small>Haber sitesi · aselsan.com/tr/haberler</small></span><span class="pstat ok">Etkin</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-aselsan" aria-label="ASELSAN Basın Odası ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div><div class="km-satir"><span class="km-yazi">Kamuyu Aydınlatma Platformu (KAP)<small>Kazıyıcı (scraper) · kap.org.tr/tr/bildirim-sorgu</small></span><span class="pstat ok">Etkin</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-kap" aria-label="Kamuyu Aydınlatma Platformu (KAP) ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div></div>
+    <p class="fhint">Kaynak eklemek ve düzenlemek için <a class="kb-bag" data-hedef="ai-havuz.kaynaklar" href="kaynaklar.html">Kaynaklar</a>; gruba bağlamak için “Düzenle”.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtDz-T2"><i class="fa-solid fa-pen" aria-hidden="true"></i>Düzenle</button></div>
+</template>
+<template id="kyGorM-aa" data-baslik="Anadolu Ajansı" data-alt="RSS · T2 · Kurumsal Basın">
+  
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat ok">Etkin</span></b></div>
+    <div><span>Grup</span><b>T2 · Kurumsal Basın</b></div>
+    <div><span>Tip</span><b>RSS</b></div>
+    <div><span>Adres</span><b>aa.com.tr/tr/rss/default?cat=guncel</b></div>
+    <div><span>Son çekim</span><b>16.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%99</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>1.840 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 5 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">16.00.05</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">aa</span><span>6 yeni içerik, 2 tekrar elendi</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.30.00</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">aa</span><span>3 yeni içerik</span></span><span class="kl-satir uyari"><span class="kl-zaman">15.00.03</span><span class="kl-seviye">uyarı</span><span class="kl-kaynak">aa</span><span>Yavaş yanıt (4,2 sn)</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T2"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="kyGorM-dha" data-baslik="Demirören Haber Ajansı (DHA)" data-alt="RSS · T2 · Kurumsal Basın">
+  
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat ok">Etkin</span></b></div>
+    <div><span>Grup</span><b>T2 · Kurumsal Basın</b></div>
+    <div><span>Tip</span><b>RSS</b></div>
+    <div><span>Adres</span><b>dha.com.tr/rss</b></div>
+    <div><span>Son çekim</span><b>16.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%100</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>1.215 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 7 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">16.00.01</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">dha</span><span>5 yeni içerik, 0 tekrar elendi</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.30.00</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">dha</span><span>2 yeni içerik</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.00.03</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">dha</span><span>Değişiklik yok</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T2"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="kyGorM-iha" data-baslik="İhlas Haber Ajansı (İHA)" data-alt="RSS · T2 · Kurumsal Basın">
+  
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat ok">Etkin</span></b></div>
+    <div><span>Grup</span><b>T2 · Kurumsal Basın</b></div>
+    <div><span>Tip</span><b>RSS</b></div>
+    <div><span>Adres</span><b>iha.com.tr/rss</b></div>
+    <div><span>Son çekim</span><b>16.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%97</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>1.102 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 3 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">16.00.06</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">iha</span><span>6 yeni içerik, 0 tekrar elendi</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.30.03</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">iha</span><span>1 yeni içerik</span></span><span class="kl-satir uyari"><span class="kl-zaman">15.00.03</span><span class="kl-seviye">uyarı</span><span class="kl-kaynak">iha</span><span>Yavaş yanıt (4,2 sn)</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T2"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="kyGorM-aselsan" data-baslik="ASELSAN Basın Odası" data-alt="Haber sitesi · T2 · Kurumsal Basın">
+  
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat ok">Etkin</span></b></div>
+    <div><span>Grup</span><b>T2 · Kurumsal Basın</b></div>
+    <div><span>Tip</span><b>Haber sitesi</b></div>
+    <div><span>Adres</span><b>aselsan.com/tr/haberler</b></div>
+    <div><span>Son çekim</span><b>15.30</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%100</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>22 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 4 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">15.30.01</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">aselsan</span><span>6 yeni içerik, 3 tekrar elendi</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.30.05</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">aselsan</span><span>2 yeni içerik</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.00.03</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">aselsan</span><span>Değişiklik yok</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T2"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="kyGorM-kap" data-baslik="Kamuyu Aydınlatma Platformu (KAP)" data-alt="Kazıyıcı (scraper) · T2 · Kurumsal Basın">
+  
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat ok">Etkin</span></b></div>
+    <div><span>Grup</span><b>T2 · Kurumsal Basın</b></div>
+    <div><span>Tip</span><b>Kazıyıcı (scraper)</b></div>
+    <div><span>Adres</span><b>kap.org.tr/tr/bildirim-sorgu</b></div>
+    <div><span>Son çekim</span><b>16.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%94</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>436 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 6 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">16.00.06</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">kap</span><span>5 yeni içerik, 1 tekrar elendi</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.30.05</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">kap</span><span>1 yeni içerik</span></span><span class="kl-satir uyari"><span class="kl-zaman">15.00.03</span><span class="kl-seviye">uyarı</span><span class="kl-kaynak">kap</span><span>Yavaş yanıt (4,2 sn)</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T2"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="mtDz-T2" data-baslik="T2 · Kurumsal Basın · düzenle" data-alt="Değişiklik sonraki taramada geçerli olur; denetim izine önceki ve sonraki haliyle yazılır" data-zorunlu-kayit="ai-havuz.grup">
+  <div class="kb-fs">
+    <div class="frow"><label for="mtAd-T2">Grup adı</label>
+      <input class="finput" id="mtAd-T2" data-alan-id="ad" data-sayac="30|40" value="Kurumsal Basın" placeholder="ör. Ajans, Düşük öncelikli dijital mecralar">
+      <div class="char-meter"><span>Havuzda ve kaynak teyidinde görünür</span><b>0 / 30</b></div>
+      <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Grup adı zorunlu.</div></div>
+    <div class="frow"><label for="mtOrnek-T2">Örnek açıklaması</label>
+      <input class="finput" id="mtOrnek-T2" data-sayac="60|80" value="örn. Anadolu Ajansı, DHA, İHA, KAP" placeholder="ör. örn. Anadolu Ajansı, DHA, İHA">
+      <div class="char-meter"><span>Listede adın altında</span><b>0 / 60</b></div></div>
+    <div class="frow"><span class="flabel">Çekim sıklığı</span>
+      <div class="frow two">
+        <input class="finput" id="mtSik-T2" data-alan-id="siklik" inputmode="numeric" value="30" aria-label="Çekim sıklığı sayısı" placeholder="ör. 2" data-zorunlu-metin="Çekim sıklığını yazın">
+        <div class="kb-secim is-dolu" data-deger="dakika" data-bos="Birim"><button type="button" class="kb-secim-btn" data-acilir="mtBirim-T2" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">dakika</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="pnl-menu kb-secim-menu" id="mtBirim-T2"><div class="kb-secim-liste" role="listbox"><button type="button" data-deger="dakika" data-ad="dakika" class="is-sec">dakika</button><button type="button" data-deger="saat" data-ad="saat">saat</button><button type="button" data-deger="gün" data-ad="gün">gün</button></div></div></div>
+      </div>
+      <span class="fhint">Tarama her 10 dakikada çalışır; grubun son çekiminden bu yana süre dolmuşsa gruptaki kaynaklar çekilir.</span>
+      <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Çekim sıklığını yazın.</div></div>
+    <div class="frow"><span class="flabel">Yayın kanalları</span>
+      <div class="kb-kanallar" role="group" aria-label="Yayın kanalları"><label class="kb-kanal"><input type="checkbox" value="web" checked><span><i class="fa-solid fa-globe" aria-hidden="true"></i>Web</span></label><label class="kb-kanal"><input type="checkbox" value="uygulama" checked><span><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>Uygulama</span></label><label class="kb-kanal"><input type="checkbox" value="sosyal" checked><span><i class="fa-solid fa-share-nodes" aria-hidden="true"></i>Sosyal Medya</span></label></div>
+      <p class="fhint" data-kanal-uyari hidden>Hiçbir kanal seçili değil: bu gruptan gelen haberler yayımlanmaz.</p>
+      <span class="fhint">Bu gruptan gelen haber yalnız işaretli kanallarda yayımlanır; yalnız Sosyal Medya'ya giden gönderi bağlantısızdır (YS2). Kaynakları farklı gruplardan olan haberin kanallarını 1. kaynağın grubu belirler (YS4).</span></div>
+    <div class="frow"><span class="flabel">Kaynaklar</span>
+      <div class="kb-cip-girdi" data-havuz-kapali data-havuz='[&quot;Resmî Gazete&quot;, &quot;İletişim Başkanlığı&quot;, &quot;Millî Eğitim Bakanlığı&quot;, &quot;İstanbul Valiliği&quot;, &quot;Savunma Sanayii Başkanlığı&quot;, &quot;T.C. Ticaret Bakanlığı&quot;, &quot;Meteoroloji Genel Müdürlüğü&quot;, &quot;AFAD&quot;, &quot;Anadolu Ajansı&quot;, &quot;Demirören Haber Ajansı (DHA)&quot;, &quot;İhlas Haber Ajansı (İHA)&quot;, &quot;ASELSAN Basın Odası&quot;, &quot;Kamuyu Aydınlatma Platformu (KAP)&quot;, &quot;Reuters&quot;, &quot;Associated Press&quot;, &quot;AFP&quot;, &quot;BBC Türkçe&quot;, &quot;Defense News&quot;, &quot;@ekonomi_gundem (X)&quot;, &quot;Teknoloji Gündemi&quot;, &quot;Marmara Yerel Haber&quot;, &quot;Kampüs Postası&quot;]'><span class="kb-cip" data-deger="Anadolu Ajansı"><span>Anadolu Ajansı</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="Demirören Haber Ajansı (DHA)"><span>Demirören Haber Ajansı (DHA)</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="İhlas Haber Ajansı (İHA)"><span>İhlas Haber Ajansı (İHA)</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="ASELSAN Basın Odası"><span>ASELSAN Basın Odası</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="Kamuyu Aydınlatma Platformu (KAP)"><span>Kamuyu Aydınlatma Platformu (KAP)</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><input type="text" placeholder="Kaynak ara" aria-label="Kaynak ara"><div class="pnl-menu kb-cip-oneri"></div></div>
+      <span class="fhint">Çıkarılan kaynak grupsuz kalır ve çekilmez. Listede olmayan kaynak <a class="kb-bag" data-hedef="ai-havuz.kaynaklar" href="kaynaklar.html">Kaynaklar</a> ekranında eklenir.</span></div>
+    <div class="toggle-row"><span>Etkin<small>Kapalıyken gruptaki kaynakların hiçbiri çekilmez</small></span><label class="toggle"><input type="checkbox" checked aria-label="Grup etkin"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
+  </div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-ghost btn-sm danger kb-sol" data-tasi-sil data-tasi-ad="T2 · Kurumsal Basın" data-tasi-sayi="5" data-tasi-birim="kaynak" data-tasi-birim-cogul="kaynaklar" data-tasi-ikon="fa-rss" data-tasi-soru="Kaynaklar hangi gruba taşınsın?" data-tasi-hedefler="T1 · Resmî|T3 · Uluslararası Medya|T4 · Düşük Öncelik" data-tasi-not="Taşınan kaynaklar yeni grubun sıklığı ve kanallarıyla çekilir. “T2 · Kurumsal Basın” çöpe gider ve oradan geri alınabilir; işlem denetim izine yazılır."><i class="fa-solid fa-trash" aria-hidden="true"></i>Grubu sil</button><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T2" data-bildir-sonra="Grup kaydedildi; önceki hal denetim izinde"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>Kaydet</button></div>
+</template>
+<template id="mtGor-T3" data-baslik="T3 · Uluslararası Medya" data-alt="örn. Reuters, AP, AFP, BBC Türkçe">
+  <div class="kb-fs"><div class="kb-fs-tt">Grup</div><div class="sa-durum">
+    <div><span>Çekim sıklığı</span><b>1 saatte bir</b></div>
+    <div><span>Yayın kanalları</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+    <div><span>Etkin kaynak</span><b>4 / 5</b></div>
+    <div><span>Aylık tahmin</span><b>2.880 çekim · 576 içerik<span data-izin="ai-maliyet"> · $11,23</span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Kaynaklar · 5</div><div class="kb-madde"><div class="km-satir"><span class="km-yazi">Reuters<small>RSS · reuters.com/world</small></span><span class="pstat ok">Etkin</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-reuters" aria-label="Reuters ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div><div class="km-satir"><span class="km-yazi">Associated Press<small>RSS · apnews.com/hub/world-news</small></span><span class="pstat ok">Etkin</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-ap" aria-label="Associated Press ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div><div class="km-satir"><span class="km-yazi">AFP<small>RSS · afp.com/en/news-hub</small></span><span class="pstat ok">Etkin</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-afp" aria-label="AFP ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div><div class="km-satir"><span class="km-yazi">BBC Türkçe<small>RSS · bbc.com/turkce</small></span><span class="pstat off">Pasif</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-bbc" aria-label="BBC Türkçe ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div><div class="km-satir"><span class="km-yazi">Defense News<small>RSS · defensenews.com/arc/outboundfeeds/rss</small></span><span class="pstat warm">Hata</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-defense-news" aria-label="Defense News ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div></div>
+    <p class="fhint">Kaynak eklemek ve düzenlemek için <a class="kb-bag" data-hedef="ai-havuz.kaynaklar" href="kaynaklar.html">Kaynaklar</a>; gruba bağlamak için “Düzenle”.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtDz-T3"><i class="fa-solid fa-pen" aria-hidden="true"></i>Düzenle</button></div>
+</template>
+<template id="kyGorM-reuters" data-baslik="Reuters" data-alt="RSS · T3 · Uluslararası Medya">
+  
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat ok">Etkin</span></b></div>
+    <div><span>Grup</span><b>T3 · Uluslararası Medya</b></div>
+    <div><span>Tip</span><b>RSS</b></div>
+    <div><span>Adres</span><b>reuters.com/world</b></div>
+    <div><span>Son çekim</span><b>16.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%100</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>388 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 4 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">16.00.07</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">reuters</span><span>4 yeni içerik, 3 tekrar elendi</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.30.00</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">reuters</span><span>2 yeni içerik</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.00.03</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">reuters</span><span>Değişiklik yok</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T3"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="kyGorM-ap" data-baslik="Associated Press" data-alt="RSS · T3 · Uluslararası Medya">
+  
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat ok">Etkin</span></b></div>
+    <div><span>Grup</span><b>T3 · Uluslararası Medya</b></div>
+    <div><span>Tip</span><b>RSS</b></div>
+    <div><span>Adres</span><b>apnews.com/hub/world-news</b></div>
+    <div><span>Son çekim</span><b>16.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%100</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>341 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 7 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">16.00.07</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">ap</span><span>3 yeni içerik, 0 tekrar elendi</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.30.02</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">ap</span><span>2 yeni içerik</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.00.03</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">ap</span><span>Değişiklik yok</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T3"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="kyGorM-afp" data-baslik="AFP" data-alt="RSS · T3 · Uluslararası Medya">
+  
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat ok">Etkin</span></b></div>
+    <div><span>Grup</span><b>T3 · Uluslararası Medya</b></div>
+    <div><span>Tip</span><b>RSS</b></div>
+    <div><span>Adres</span><b>afp.com/en/news-hub</b></div>
+    <div><span>Son çekim</span><b>16.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%99</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>276 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 6 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">16.00.03</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">afp</span><span>5 yeni içerik, 3 tekrar elendi</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.30.03</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">afp</span><span>1 yeni içerik</span></span><span class="kl-satir uyari"><span class="kl-zaman">15.00.03</span><span class="kl-seviye">uyarı</span><span class="kl-kaynak">afp</span><span>Yavaş yanıt (4,2 sn)</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T3"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="kyGorM-bbc" data-baslik="BBC Türkçe" data-alt="RSS · T3 · Uluslararası Medya">
+  <div class="kb-bant bilgi"><i class="fa-solid fa-circle-pause" aria-hidden="true"></i><span><b>Pasif kaynak.</b> 02.11.2026&#x27;da pasifleştirildi · Selin Aydemir. Çekilmez; eski haberlerdeki teyit kayıtları durur.</span></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat off">Pasif</span></b></div>
+    <div><span>Grup</span><b>T3 · Uluslararası Medya</b></div>
+    <div><span>Tip</span><b>RSS</b></div>
+    <div><span>Adres</span><b>bbc.com/turkce</b></div>
+    <div><span>Son çekim</span><b>02.11 10.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%0</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>0 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 7 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">02.11 · 10.00.00</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">bbc</span><span>Kaynak pasifleştirildi; çekim durdu</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T3"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="kyGorM-defense-news" data-baslik="Defense News" data-alt="RSS · T3 · Uluslararası Medya">
+  <div class="kb-bant tehlike"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i><span><b>Son çekimler başarısız.</b> 403 Forbidden · 14.20&#x27;den beri 11 deneme. Kaynak sitesi erişimi engelliyor olabilir; adres değiştiyse düzenleyin. Bu sürede grup teyidi diğer kaynaklarla yapılır.</span></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat warm">Hata</span></b></div>
+    <div><span>Grup</span><b>T3 · Uluslararası Medya</b></div>
+    <div><span>Tip</span><b>RSS</b></div>
+    <div><span>Adres</span><b>defensenews.com/arc/outboundfeeds/rss</b></div>
+    <div><span>Son çekim</span><b>14.20</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%26</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>48 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Web · Uygulama · Sosyal Medya" aria-label="Yayın kanalları: Web · Uygulama · Sosyal Medya"><i class="fa-solid fa-globe is-on" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen is-on" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 3 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir hata"><span class="kl-zaman">14.20.04</span><span class="kl-seviye">hata</span><span class="kl-kaynak">defense-news</span><span>403 Forbidden · 3. deneme · sonraki deneme 16.30</span></span><span class="kl-satir hata"><span class="kl-zaman">13.20.02</span><span class="kl-seviye">hata</span><span class="kl-kaynak">defense-news</span><span>403 Forbidden</span></span><span class="kl-satir bilgi"><span class="kl-zaman">12.20.11</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">defense-news</span><span>4 yeni içerik, 2 tekrar elendi</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T3"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="mtDz-T3" data-baslik="T3 · Uluslararası Medya · düzenle" data-alt="Değişiklik sonraki taramada geçerli olur; denetim izine önceki ve sonraki haliyle yazılır" data-zorunlu-kayit="ai-havuz.grup">
+  <div class="kb-fs">
+    <div class="frow"><label for="mtAd-T3">Grup adı</label>
+      <input class="finput" id="mtAd-T3" data-alan-id="ad" data-sayac="30|40" value="Uluslararası Medya" placeholder="ör. Ajans, Düşük öncelikli dijital mecralar">
+      <div class="char-meter"><span>Havuzda ve kaynak teyidinde görünür</span><b>0 / 30</b></div>
+      <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Grup adı zorunlu.</div></div>
+    <div class="frow"><label for="mtOrnek-T3">Örnek açıklaması</label>
+      <input class="finput" id="mtOrnek-T3" data-sayac="60|80" value="örn. Reuters, AP, AFP, BBC Türkçe" placeholder="ör. örn. Anadolu Ajansı, DHA, İHA">
+      <div class="char-meter"><span>Listede adın altında</span><b>0 / 60</b></div></div>
+    <div class="frow"><span class="flabel">Çekim sıklığı</span>
+      <div class="frow two">
+        <input class="finput" id="mtSik-T3" data-alan-id="siklik" inputmode="numeric" value="1" aria-label="Çekim sıklığı sayısı" placeholder="ör. 2" data-zorunlu-metin="Çekim sıklığını yazın">
+        <div class="kb-secim is-dolu" data-deger="saat" data-bos="Birim"><button type="button" class="kb-secim-btn" data-acilir="mtBirim-T3" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">saat</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="pnl-menu kb-secim-menu" id="mtBirim-T3"><div class="kb-secim-liste" role="listbox"><button type="button" data-deger="dakika" data-ad="dakika">dakika</button><button type="button" data-deger="saat" data-ad="saat" class="is-sec">saat</button><button type="button" data-deger="gün" data-ad="gün">gün</button></div></div></div>
+      </div>
+      <span class="fhint">Tarama her 10 dakikada çalışır; grubun son çekiminden bu yana süre dolmuşsa gruptaki kaynaklar çekilir.</span>
+      <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Çekim sıklığını yazın.</div></div>
+    <div class="frow"><span class="flabel">Yayın kanalları</span>
+      <div class="kb-kanallar" role="group" aria-label="Yayın kanalları"><label class="kb-kanal"><input type="checkbox" value="web" checked><span><i class="fa-solid fa-globe" aria-hidden="true"></i>Web</span></label><label class="kb-kanal"><input type="checkbox" value="uygulama" checked><span><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>Uygulama</span></label><label class="kb-kanal"><input type="checkbox" value="sosyal" checked><span><i class="fa-solid fa-share-nodes" aria-hidden="true"></i>Sosyal Medya</span></label></div>
+      <p class="fhint" data-kanal-uyari hidden>Hiçbir kanal seçili değil: bu gruptan gelen haberler yayımlanmaz.</p>
+      <span class="fhint">Bu gruptan gelen haber yalnız işaretli kanallarda yayımlanır; yalnız Sosyal Medya'ya giden gönderi bağlantısızdır (YS2). Kaynakları farklı gruplardan olan haberin kanallarını 1. kaynağın grubu belirler (YS4).</span></div>
+    <div class="frow"><span class="flabel">Kaynaklar</span>
+      <div class="kb-cip-girdi" data-havuz-kapali data-havuz='[&quot;Resmî Gazete&quot;, &quot;İletişim Başkanlığı&quot;, &quot;Millî Eğitim Bakanlığı&quot;, &quot;İstanbul Valiliği&quot;, &quot;Savunma Sanayii Başkanlığı&quot;, &quot;T.C. Ticaret Bakanlığı&quot;, &quot;Meteoroloji Genel Müdürlüğü&quot;, &quot;AFAD&quot;, &quot;Anadolu Ajansı&quot;, &quot;Demirören Haber Ajansı (DHA)&quot;, &quot;İhlas Haber Ajansı (İHA)&quot;, &quot;ASELSAN Basın Odası&quot;, &quot;Kamuyu Aydınlatma Platformu (KAP)&quot;, &quot;Reuters&quot;, &quot;Associated Press&quot;, &quot;AFP&quot;, &quot;BBC Türkçe&quot;, &quot;Defense News&quot;, &quot;@ekonomi_gundem (X)&quot;, &quot;Teknoloji Gündemi&quot;, &quot;Marmara Yerel Haber&quot;, &quot;Kampüs Postası&quot;]'><span class="kb-cip" data-deger="Reuters"><span>Reuters</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="Associated Press"><span>Associated Press</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="AFP"><span>AFP</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="BBC Türkçe"><span>BBC Türkçe</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="Defense News"><span>Defense News</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><input type="text" placeholder="Kaynak ara" aria-label="Kaynak ara"><div class="pnl-menu kb-cip-oneri"></div></div>
+      <span class="fhint">Çıkarılan kaynak grupsuz kalır ve çekilmez. Listede olmayan kaynak <a class="kb-bag" data-hedef="ai-havuz.kaynaklar" href="kaynaklar.html">Kaynaklar</a> ekranında eklenir.</span></div>
+    <div class="toggle-row"><span>Etkin<small>Kapalıyken gruptaki kaynakların hiçbiri çekilmez</small></span><label class="toggle"><input type="checkbox" checked aria-label="Grup etkin"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
+  </div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-ghost btn-sm danger kb-sol" data-tasi-sil data-tasi-ad="T3 · Uluslararası Medya" data-tasi-sayi="5" data-tasi-birim="kaynak" data-tasi-birim-cogul="kaynaklar" data-tasi-ikon="fa-rss" data-tasi-soru="Kaynaklar hangi gruba taşınsın?" data-tasi-hedefler="T1 · Resmî|T2 · Kurumsal Basın|T4 · Düşük Öncelik" data-tasi-not="Taşınan kaynaklar yeni grubun sıklığı ve kanallarıyla çekilir. “T3 · Uluslararası Medya” çöpe gider ve oradan geri alınabilir; işlem denetim izine yazılır."><i class="fa-solid fa-trash" aria-hidden="true"></i>Grubu sil</button><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T3" data-bildir-sonra="Grup kaydedildi; önceki hal denetim izinde"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>Kaydet</button></div>
+</template>
+<template id="mtGor-T4" data-baslik="T4 · Düşük Öncelik" data-alt="örn. sosyal medya hesapları, küçük haber siteleri">
+  <div class="kb-fs"><div class="kb-fs-tt">Grup</div><div class="sa-durum">
+    <div><span>Çekim sıklığı</span><b>1 günde bir</b></div>
+    <div><span>Yayın kanalları</span><b><span class="kb-kanal-ikon" title="Sosyal Medya" aria-label="Yayın kanalları: Sosyal Medya"><i class="fa-solid fa-globe" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+    <div><span>Etkin kaynak</span><b>2 / 4</b></div>
+    <div><span>Aylık tahmin</span><b>60 çekim · 90 içerik<span data-izin="ai-maliyet"> · $1,75</span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Kaynaklar · 4</div><div class="kb-madde"><div class="km-satir"><span class="km-yazi">@ekonomi_gundem (X)<small>Sosyal medya hesabı · x.com/ekonomi_gundem</small></span><span class="pstat ok">Etkin</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-ekonomi-gundem" aria-label="@ekonomi_gundem (X) ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div><div class="km-satir"><span class="km-yazi">Teknoloji Gündemi<small>Haber sitesi · teknolojigundemi.ornek/feed</small></span><span class="pstat ok">Etkin</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-tekno-gundem" aria-label="Teknoloji Gündemi ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div><div class="km-satir"><span class="km-yazi">Marmara Yerel Haber<small>Haber sitesi · marmarayerel.ornek</small></span><span class="pstat off">Pasif</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-marmara-yerel" aria-label="Marmara Yerel Haber ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div><div class="km-satir"><span class="km-yazi">Kampüs Postası<small>RSS · kampuspostasi.ornek/rss</small></span><span class="pstat off">Pasif</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-kampus-postasi" aria-label="Kampüs Postası ayrıntısı" title="Ayrıntı"><i class="fa-solid fa-eye" aria-hidden="true"></i></button></div></div>
+    <p class="fhint">Kaynak eklemek ve düzenlemek için <a class="kb-bag" data-hedef="ai-havuz.kaynaklar" href="kaynaklar.html">Kaynaklar</a>; gruba bağlamak için “Düzenle”.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtDz-T4"><i class="fa-solid fa-pen" aria-hidden="true"></i>Düzenle</button></div>
+</template>
+<template id="kyGorM-ekonomi-gundem" data-baslik="@ekonomi_gundem (X)" data-alt="Sosyal medya hesabı · T4 · Düşük Öncelik">
+  
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat ok">Etkin</span></b></div>
+    <div><span>Grup</span><b>T4 · Düşük Öncelik</b></div>
+    <div><span>Tip</span><b>Sosyal medya hesabı</b></div>
+    <div><span>Adres</span><b>x.com/ekonomi_gundem</b></div>
+    <div><span>Son çekim</span><b>09.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%100</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>30 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Sosyal Medya" aria-label="Yayın kanalları: Sosyal Medya"><i class="fa-solid fa-globe" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 4 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">09.00.01</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">ekonomi-gundem</span><span>6 yeni içerik, 3 tekrar elendi</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.30.05</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">ekonomi-gundem</span><span>2 yeni içerik</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.00.03</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">ekonomi-gundem</span><span>Değişiklik yok</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T4"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="kyGorM-tekno-gundem" data-baslik="Teknoloji Gündemi" data-alt="Haber sitesi · T4 · Düşük Öncelik">
+  
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat ok">Etkin</span></b></div>
+    <div><span>Grup</span><b>T4 · Düşük Öncelik</b></div>
+    <div><span>Tip</span><b>Haber sitesi</b></div>
+    <div><span>Adres</span><b>teknolojigundemi.ornek/feed</b></div>
+    <div><span>Son çekim</span><b>09.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%92</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>27 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Sosyal Medya" aria-label="Yayın kanalları: Sosyal Medya"><i class="fa-solid fa-globe" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 8 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">09.00.08</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">tekno-gundem</span><span>4 yeni içerik, 1 tekrar elendi</span></span><span class="kl-satir bilgi"><span class="kl-zaman">15.30.03</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">tekno-gundem</span><span>3 yeni içerik</span></span><span class="kl-satir uyari"><span class="kl-zaman">15.00.03</span><span class="kl-seviye">uyarı</span><span class="kl-kaynak">tekno-gundem</span><span>Yavaş yanıt (4,2 sn)</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T4"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="kyGorM-marmara-yerel" data-baslik="Marmara Yerel Haber" data-alt="Haber sitesi · T4 · Düşük Öncelik">
+  <div class="kb-bant bilgi"><i class="fa-solid fa-circle-pause" aria-hidden="true"></i><span><b>Pasif kaynak.</b> 12.11.2026&#x27;da pasifleştirildi · Selin Aydemir. Çekilmez; eski haberlerdeki teyit kayıtları durur.</span></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat off">Pasif</span></b></div>
+    <div><span>Grup</span><b>T4 · Düşük Öncelik</b></div>
+    <div><span>Tip</span><b>Haber sitesi</b></div>
+    <div><span>Adres</span><b>marmarayerel.ornek</b></div>
+    <div><span>Son çekim</span><b>12.11 09.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%0</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>0 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Sosyal Medya" aria-label="Yayın kanalları: Sosyal Medya"><i class="fa-solid fa-globe" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 4 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">12.11 · 09.00.00</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">marmara-yerel</span><span>Kaynak pasifleştirildi; çekim durdu</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T4"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="kyGorM-kampus-postasi" data-baslik="Kampüs Postası" data-alt="RSS · T4 · Düşük Öncelik">
+  <div class="kb-bant bilgi"><i class="fa-solid fa-circle-pause" aria-hidden="true"></i><span><b>Pasif kaynak.</b> 05.11.2026&#x27;da pasifleştirildi · Selin Aydemir. Çekilmez; eski haberlerdeki teyit kayıtları durur.</span></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
+    <div><span>Durum</span><b><span class="pstat off">Pasif</span></b></div>
+    <div><span>Grup</span><b>T4 · Düşük Öncelik</b></div>
+    <div><span>Tip</span><b>RSS</b></div>
+    <div><span>Adres</span><b>kampuspostasi.ornek/rss</b></div>
+    <div><span>Son çekim</span><b>05.11 09.00</b></div>
+    <div><span>Başarı · son 24 saat</span><b>%0</b></div>
+    <div><span>Havuza düşen · 30 gün</span><b>0 içerik</b></div>
+    <div><span>Yayın kanalları (gruptan)</span><b><span class="kb-kanal-ikon" title="Sosyal Medya" aria-label="Yayın kanalları: Sosyal Medya"><i class="fa-solid fa-globe" aria-hidden="true"></i><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i><i class="fa-solid fa-share-nodes is-on" aria-hidden="true"></i></span></b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta 5 görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log"><span class="kl-satir bilgi"><span class="kl-zaman">05.11 · 09.00.00</span><span class="kl-seviye">bilgi</span><span class="kl-kaynak">kampus-postasi</span><span>Kaynak pasifleştirildi; çekim durdu</span></span></pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T4"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Gruba dön</button></div>
+</template>
+<template id="mtDz-T4" data-baslik="T4 · Düşük Öncelik · düzenle" data-alt="Değişiklik sonraki taramada geçerli olur; denetim izine önceki ve sonraki haliyle yazılır" data-zorunlu-kayit="ai-havuz.grup">
+  <div class="kb-fs">
+    <div class="frow"><label for="mtAd-T4">Grup adı</label>
+      <input class="finput" id="mtAd-T4" data-alan-id="ad" data-sayac="30|40" value="Düşük Öncelik" placeholder="ör. Ajans, Düşük öncelikli dijital mecralar">
+      <div class="char-meter"><span>Havuzda ve kaynak teyidinde görünür</span><b>0 / 30</b></div>
+      <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Grup adı zorunlu.</div></div>
+    <div class="frow"><label for="mtOrnek-T4">Örnek açıklaması</label>
+      <input class="finput" id="mtOrnek-T4" data-sayac="60|80" value="örn. sosyal medya hesapları, küçük haber siteleri" placeholder="ör. örn. Anadolu Ajansı, DHA, İHA">
+      <div class="char-meter"><span>Listede adın altında</span><b>0 / 60</b></div></div>
+    <div class="frow"><span class="flabel">Çekim sıklığı</span>
+      <div class="frow two">
+        <input class="finput" id="mtSik-T4" data-alan-id="siklik" inputmode="numeric" value="1" aria-label="Çekim sıklığı sayısı" placeholder="ör. 2" data-zorunlu-metin="Çekim sıklığını yazın">
+        <div class="kb-secim is-dolu" data-deger="gün" data-bos="Birim"><button type="button" class="kb-secim-btn" data-acilir="mtBirim-T4" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">gün</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button><div class="pnl-menu kb-secim-menu" id="mtBirim-T4"><div class="kb-secim-liste" role="listbox"><button type="button" data-deger="dakika" data-ad="dakika">dakika</button><button type="button" data-deger="saat" data-ad="saat">saat</button><button type="button" data-deger="gün" data-ad="gün" class="is-sec">gün</button></div></div></div>
+      </div>
+      <span class="fhint">Tarama her 10 dakikada çalışır; grubun son çekiminden bu yana süre dolmuşsa gruptaki kaynaklar çekilir.</span>
+      <div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Çekim sıklığını yazın.</div></div>
+    <div class="frow"><span class="flabel">Yayın kanalları</span>
+      <div class="kb-kanallar" role="group" aria-label="Yayın kanalları"><label class="kb-kanal"><input type="checkbox" value="web"><span><i class="fa-solid fa-globe" aria-hidden="true"></i>Web</span></label><label class="kb-kanal"><input type="checkbox" value="uygulama"><span><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>Uygulama</span></label><label class="kb-kanal"><input type="checkbox" value="sosyal" checked><span><i class="fa-solid fa-share-nodes" aria-hidden="true"></i>Sosyal Medya</span></label></div>
+      <p class="fhint" data-kanal-uyari hidden>Hiçbir kanal seçili değil: bu gruptan gelen haberler yayımlanmaz.</p>
+      <span class="fhint">Bu gruptan gelen haber yalnız işaretli kanallarda yayımlanır; yalnız Sosyal Medya'ya giden gönderi bağlantısızdır (YS2). Kaynakları farklı gruplardan olan haberin kanallarını 1. kaynağın grubu belirler (YS4).</span></div>
+    <div class="frow"><span class="flabel">Kaynaklar</span>
+      <div class="kb-cip-girdi" data-havuz-kapali data-havuz='[&quot;Resmî Gazete&quot;, &quot;İletişim Başkanlığı&quot;, &quot;Millî Eğitim Bakanlığı&quot;, &quot;İstanbul Valiliği&quot;, &quot;Savunma Sanayii Başkanlığı&quot;, &quot;T.C. Ticaret Bakanlığı&quot;, &quot;Meteoroloji Genel Müdürlüğü&quot;, &quot;AFAD&quot;, &quot;Anadolu Ajansı&quot;, &quot;Demirören Haber Ajansı (DHA)&quot;, &quot;İhlas Haber Ajansı (İHA)&quot;, &quot;ASELSAN Basın Odası&quot;, &quot;Kamuyu Aydınlatma Platformu (KAP)&quot;, &quot;Reuters&quot;, &quot;Associated Press&quot;, &quot;AFP&quot;, &quot;BBC Türkçe&quot;, &quot;Defense News&quot;, &quot;@ekonomi_gundem (X)&quot;, &quot;Teknoloji Gündemi&quot;, &quot;Marmara Yerel Haber&quot;, &quot;Kampüs Postası&quot;]'><span class="kb-cip" data-deger="@ekonomi_gundem (X)"><span>@ekonomi_gundem (X)</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="Teknoloji Gündemi"><span>Teknoloji Gündemi</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="Marmara Yerel Haber"><span>Marmara Yerel Haber</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><span class="kb-cip" data-deger="Kampüs Postası"><span>Kampüs Postası</span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></span><input type="text" placeholder="Kaynak ara" aria-label="Kaynak ara"><div class="pnl-menu kb-cip-oneri"></div></div>
+      <span class="fhint">Çıkarılan kaynak grupsuz kalır ve çekilmez. Listede olmayan kaynak <a class="kb-bag" data-hedef="ai-havuz.kaynaklar" href="kaynaklar.html">Kaynaklar</a> ekranında eklenir.</span></div>
+    <div class="toggle-row"><span>Etkin<small>Kapalıyken gruptaki kaynakların hiçbiri çekilmez</small></span><label class="toggle"><input type="checkbox" checked aria-label="Grup etkin"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
+  </div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-ghost btn-sm danger kb-sol" data-tasi-sil data-tasi-ad="T4 · Düşük Öncelik" data-tasi-sayi="4" data-tasi-birim="kaynak" data-tasi-birim-cogul="kaynaklar" data-tasi-ikon="fa-rss" data-tasi-soru="Kaynaklar hangi gruba taşınsın?" data-tasi-hedefler="T1 · Resmî|T2 · Kurumsal Basın|T3 · Uluslararası Medya" data-tasi-not="Taşınan kaynaklar yeni grubun sıklığı ve kanallarıyla çekilir. “T4 · Düşük Öncelik” çöpe gider ve oradan geri alınabilir; işlem denetim izine yazılır."><i class="fa-solid fa-trash" aria-hidden="true"></i>Grubu sil</button><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-T4" data-bildir-sonra="Grup kaydedildi; önceki hal denetim izinde"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>Kaydet</button></div>
+</template>
+<script src="../../cekirdek/js/kabuk.js?v=4a1fba0b"></script>
+<script src="../../cekirdek/js/bilesen.js?v=deb60002"></script>
+<script src="../../cekirdek/js/form.js?v=3e61bbbf"></script>
+<script src="../../cekirdek/js/alan.js?v=563cb5a5"></script>
+<script src="../../cekirdek/js/kirp.js?v=7e601950"></script>
+</body>
+</html>
