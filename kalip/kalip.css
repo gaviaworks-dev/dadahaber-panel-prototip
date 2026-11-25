@@ -16,6 +16,7 @@ body.kp-sunum{background:var(--bg)}
 .kp-bas .ph-sub{line-height:var(--lh-body)}
 
 /* üst kontrol alanı: 1 şerit (+ Bunu Seç, sayaç, Hepsini Yan Yana Gör) · 2 mecra + güvenli alan · 3 sekmeler · 4 süsleme; yapışkan */
+body{overflow-anchor:none} /* kontrol alanı küçülünce tarayıcı kaydırmayı geri çekmesin (titreme) */
 .kp-kontrol{position:sticky;top:0;z-index:30;display:flex;flex-direction:column;gap:8px;padding:6px 0 0;background:var(--bg)}
 .kp-k-satir{display:flex;align-items:center;gap:12px;min-width:0}
 .kp-k-serit{align-items:stretch}
@@ -78,14 +79,17 @@ body.kp-sunum{background:var(--bg)}
 .kp-sira{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start;justify-content:center}
 .kp-sekil-kap{--h:clamp(280px,calc(100vh - 412px),620px);margin:0;display:flex;flex-direction:column;gap:8px;width:calc(var(--h) * .8);max-width:100%}
 .kp-sekil-kap:has(> [data-bicim="uzun"]){width:calc(var(--h) * .5625)}
-.kp-sekil-kap:has(> [data-bicim="yatay"]){width:min(calc((100% - 24px) / 2 + 0px),calc(var(--h) * 1.91));flex:1 1 0}
+.kp-sekil-kap:has(> [data-bicim="yatay"]){width:min(calc((100% - 24px) / 2),calc(var(--h) * 1.91),640px);flex:0 1 auto}
 .kp-sekil-kap .fhint{line-height:var(--lh-body);text-align:center}
 /* akış: 3×3 profil ızgarası + açılan gönderi + hikâye; 1440×900'de kaydırmadan sığar */
 .kp-akis-duzen{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start;justify-content:center}
 .kp-akis-duzen>.kp-sekil-kap{--h:clamp(280px,calc(100vh - 412px),640px)}
-.kp-akis-sekil{width:calc(var(--h) * .8)}
+.kp-akis-sekil{width:min(100%,760px)}
+.kp-akis-sekil:has([data-bicim="yatay"]){width:100%}
+.kp-akis-sekil:has([data-bicim="uzun"]){width:min(100%,640px)}
 .kp-akis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;width:100%}
 .kp-akis .kp-tuval{border-radius:0}
+.kp-tuval{outline:1px solid var(--line);outline-offset:-1px} /* beyaz zeminli kartın kenarı sayfada kaybolmasın */
 
 /* yan yana görünüm: aynı sekme bütün alternatifler için; ızgara alta sarar, yarım kart yok */
 #kpSahne[data-hepsi] .kp-tek{display:none}

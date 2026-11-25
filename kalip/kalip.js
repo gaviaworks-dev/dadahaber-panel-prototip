@@ -96,9 +96,9 @@
   function aracYaz(){
     each(S.querySelectorAll('[data-kp-mecra]'), function(b){ var on = b.dataset.kpMecra === D.mecra; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
     var gv = S.querySelector('input[data-kp="guvenli"]'), gl = document.getElementById('kpGuvAnahtar');
-    var anlamli = D.mecra === 'dikey' || DIKEY_SEKME.indexOf(D.sekme) > -1;
+    var P0 = document.getElementById('kpT-' + D.sekme), anlamli = !!(P0 && Array.prototype.some.call(P0.querySelectorAll('.kp-tuval[data-bicim="uzun"]'), function(t){ return !t.closest('[hidden]'); }));
     if(gv){ gv.checked = D.guvenli; gv.disabled = !anlamli; }
-    if(gl){ gl.classList.toggle('is-pasif', !anlamli); if(anlamli) gl.removeAttribute('title'); else gl.title = 'Yalnız dikey 9:16 kalıplarda: Dikey 9:16 mecrasını ya da Hikâye ve Reels sekmesini açın'; }
+    if(gl){ gl.classList.toggle('is-pasif', !anlamli); if(anlamli) gl.removeAttribute('title'); else gl.title = 'Bu görünümde 9:16 kart yok: Dikey 9:16 mecrası ya da Hikâye ve Reels sekmesi'; }
     each(S.querySelectorAll('[data-kp-acilir]'), function(dd){
       var g = dd.dataset.kpAcilir, sec = g === 'kat' ? D.kat : D.orn[D.alt][g], ad = '';
       each(dd.querySelectorAll('[data-kp-sec]'), function(b){
@@ -144,9 +144,16 @@
     }
   });
   /* yapışkan kompakt hal: sayfa kayınca şerit küçülür; mecra, sekmeler ve süsleme görünür kalır */
-  var kompaktEsik = 0;
+  /* eşik gecikmeli: küçülme kontrol alanının boyunu azaltır, tarayıcı kaydırmayı o kadar geri çeker; çıkış eşiği bu farkın altında
+     olmazsa açık/kompakt arasında sonsuz gidip gelir (sayfa titrer) */
+  var kompaktEsik = 0, kompaktFark = 0;
   function kompakt(){ if(!kontrol) return;
-    var k = window.scrollY > kompaktEsik; if(k !== kontrol.classList.contains('is-kompakt')) kontrol.classList.toggle('is-kompakt', k); }
+    var acik = kontrol.classList.contains('is-kompakt'), y = window.scrollY;
+    if(getComputedStyle(kontrol).position !== 'sticky'){ if(acik) kontrol.classList.remove('is-kompakt'); return; } /* dar ekranda yapışkan değil: küçülme yalnız içeriği zıplatır */
+    var k = acik ? y > Math.max(0, kompaktEsik - kompaktFark - 40) : y > kompaktEsik;
+    if(k === acik) return;
+    var h0 = kontrol.offsetHeight; kontrol.classList.toggle('is-kompakt', k);
+    if(k) kompaktFark = Math.max(kompaktFark, h0 - kontrol.offsetHeight); }
   window.addEventListener('scroll', kompakt, { passive: true });
   if(kontrol) kompaktEsik = kontrol.getBoundingClientRect().top + window.scrollY + 8;
   serit.addEventListener('keydown', function(e){
@@ -199,4 +206,23 @@
   window.addEventListener('resize', function(){ clearTimeout(sigdir._z); sigdir._z = setTimeout(function(){ sigdir(); }, 120); });
   ciz();
   (function(){ var b = serit.querySelector('.kp-serit-oge.is-on'); if(b && b.offsetLeft + b.offsetWidth > serit.clientWidth) serit.scrollLeft = b.offsetLeft - 12; })();
+})();
+/* Açılır listeler: bu sayfa kabuk.js'i yüklemez; çekirdekteki aç/kapa davranışının aynısı (data-acilir → .pnl-menu.open) */
+(function(){
+  function kapat(haric){
+    document.querySelectorAll('[data-acilir][aria-expanded="true"]').forEach(function(b){
+      if(b === haric) return; b.setAttribute('aria-expanded', 'false');
+      var m = document.getElementById(b.getAttribute('data-acilir')); if(m) m.classList.remove('open');
+    });
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-acilir]');
+    if(b){
+      var m = document.getElementById(b.getAttribute('data-acilir')), ac = b.getAttribute('aria-expanded') !== 'true';
+      kapat(b); b.setAttribute('aria-expanded', ac ? 'true' : 'false'); if(m) m.classList.toggle('open', ac);
+      return;
+    }
+    if(!e.target.closest('.pnl-menu')) kapat();
+  }, true);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') kapat(); });
 })();

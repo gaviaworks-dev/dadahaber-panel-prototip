@@ -341,7 +341,7 @@ def diger(alt, tip, slot, bicim="kare", mecrali=False):
 def tek_icerik(sk, alt="a"):
     """tekli görünümde bir sekmenin tuvalleri (alternatiften bağımsız; iskeleti kalip.js değiştirir)"""
     if sk == "akis":
-        return f'<div class="kp-akis" aria-label="Profil akışı">{"".join(tuval(alt, a["tip"], sabit=a) for a in AKIS)}</div>'
+        return f'<div class="kp-akis" aria-label="Profil akışı">{"".join(tuval(alt, a["tip"], sabit=a, mecrali=True) for a in AKIS)}</div>'
     if sk == "haber":
         return ('<div class="kp-sira">' + sekil(tuval(alt, "haber", "haber_koyu", mecrali=True), "Koyu fotoğraf")
                 + sekil(tuval(alt, "haber", "haber_acik", mecrali=True), "Açık fotoğraf") + diger(alt, "haber", "haber_koyu", mecrali=True) + '</div>')
@@ -465,8 +465,7 @@ def sayfa():
         if s in ("durum", "kisi"):
             ic_ = f'<div class="kp-tek kp-orn kp-dis-kap" {orn0}>{dis_bolum(s)}</div>'
         elif s == "akis":
-            ic_ = (f'<div class="kp-tek kp-orn kp-akis-duzen" {orn0}>{sekil(tek_icerik(s), "Profil ızgarası", " kp-akis-sekil")}'
-                   f'{sekil(tuval("a", "haber", sabit=AKIS[0]), "Açılan gönderi")}{sekil(tuval("a", "hikaye", sabit=AKIS[2], bicim="uzun"), "Aynı haber hikâyede")}</div>')
+            ic_ = f'<div class="kp-tek kp-orn kp-akis-duzen" {orn0}><div class="kp-akis-sekil">{tek_icerik(s)}</div></div>'
         else:
             ic_ = f'<div class="kp-tek kp-orn" {orn0}>{tek_icerik(s)}</div>'
         paneller += (f'    <div class="sa-form-panel" id="kpT-{s}" role="tabpanel" data-sekme="{s}"{"" if i == 0 else " hidden"}>\n      {ic_}\n'

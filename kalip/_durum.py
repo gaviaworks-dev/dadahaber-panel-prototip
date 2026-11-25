@@ -459,14 +459,14 @@ def tuval(alt, d):
 
 def kart(alt, d):
     ek = '<span class="pstat info kd-ek">Ek</span>' if d.get("ek") else ""
-    neden = f'<span class="kd-neden"><b>Neden ekledik:</b> {e(d["neden"])}</span>' if d.get("neden") else ""
+    neden = ""
     return (f'<figure class="kp-sekil-kap kd-kap" data-durum="{d["id"]}">{tuval(alt, d)}'
             f'<figcaption class="kd-yazi"><b class="kd-ad">{e(d["ad"])}{ek}</b><span class="fhint">{e(d["ne"])}</span>{neden}</figcaption></figure>')
 
 
 def oneri():
     def liste(o, sinif):
-        return f'<ul class="kd-oneri-liste {sinif}">' + "".join(f'<li><b>{e(DD[k]["ad"])}</b><span>{e(n)}</span></li>' for k, n in o) + '</ul>'
+        return f'<ul class="kd-oneri-liste {sinif}">' + "".join(f'<li><b>{e(DD[k]["ad"])}</b></li>' for k, n in o) + '</ul>'
     return (f'<div class="kd-oneri" role="group" aria-label="Öneri: ilk aşamada şart ve sonraya bırakılabilir">'
             f'<div class="pnl-card kd-oneri-kol"><div class="pc-body"><span class="kd-oneri-bas">{ik("fa-circle-check")}İlk Aşamada Şart<span class="kd-sayac">{len(ONERI_ILK)}</span></span>{liste(ONERI_ILK, "ilk")}</div></div>'
             f'<div class="pnl-card kd-oneri-kol"><div class="pc-body"><span class="kd-oneri-bas">{ik("fa-clock")}Sonraya Bırakılabilir<span class="kd-sayac">{len(ONERI_SONRA)}</span></span>{liste(ONERI_SONRA, "sonra")}</div></div>'
@@ -484,9 +484,7 @@ def durumlar_html(iskelet_kodu):
                     f'<div class="kp-sira kd-sira">{"".join(kart(alt, d) for d in uye)}</div></section>')
     return (f'<div class="kd" data-kd-alt="{alt}">'
             f'<div class="kd-giris"><h2 class="kp-alt-bas">{ik("fa-layer-group")}Durumlar · {len(D)} durum</h2>'
-            f'<span class="fhint">Aynı iskelet, habere göre değişen işaretler. Her kart: ne zaman kullanılır ve standart kalıptan farkı. '
-            f'Kişi, söz, program adı ve oranlar örnektir; başlıkların çoğu sitedeki örnek haberlerden.</span></div>'
-            f'<div class="kb-bant bilgi">{ik("fa-circle-info")}<span><b>Öneri, karar değil.</b> Hangi durumların ilk aşamada yapılacağına Yasin Bey karar verecek.</span></div>'
+            f'</div>'
             f'{oneri()}{gruplar}</div>')
 
 

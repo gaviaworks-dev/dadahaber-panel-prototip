@@ -16,8 +16,8 @@
 .kd-oneri-bas .fa-solid{color:var(--muted)}
 .kd-sayac{margin-left:auto;font-size:var(--fs-12);font-weight:var(--fw-kalin);color:var(--muted);font-variant-numeric:tabular-nums}
 .kd-grup-bas .kd-sayac{margin-left:2px}
-.kd-oneri-liste{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
-.kd-oneri-liste li{display:grid;grid-template-columns:minmax(0,10.5em) minmax(0,1fr);gap:12px;align-items:baseline;padding:8px 0;border-top:1px solid var(--line);font-size:var(--fs-13);line-height:var(--lh-body)}
+.kd-oneri-liste{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px}
+.kd-oneri-liste li{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:8px 0;border-top:1px solid var(--line);font-size:var(--fs-13);line-height:var(--lh-body)}
 .kd-oneri-liste b{color:var(--slate)}
 .kd-oneri-liste span{color:var(--muted)}
 .kd-grup{display:flex;flex-direction:column;gap:14px;padding-top:18px;border-top:1px solid var(--line)}
@@ -27,7 +27,7 @@
 .kd-yazi .fhint{line-height:var(--lh-body)}
 .kd-ad{display:flex;align-items:center;gap:6px;font-size:var(--fs-13-5);color:var(--slate)}
 .kd-neden{font-size:var(--fs-12);line-height:var(--lh-body);color:var(--slate-2)}
-@media(max-width:1024px){.kd-oneri-liste li{grid-template-columns:minmax(0,9em) minmax(0,1fr)}}
+
 @media(max-width:640px){.kd-oneri{grid-template-columns:minmax(0,1fr)}.kd-grup{padding-top:14px}}
 
 /* ---------- 2 · tuval: durum renkleri ---------- */

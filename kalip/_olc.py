@@ -187,7 +187,10 @@ def main():
             for x, say in c.most_common(25): print(f"  {say:4d}  {x}")
     hepsi = [x for k, _ in AD for x in s[k]]
     for x in (hepsi if "--hepsi" in sys.argv else hepsi[:40]): print("   " + x)
-    sys.exit(1 if toplam else 0)
+    # tıklama denetimi (kalip/_tikla.py): her düğme, menü, seçenek, sekme × mecra, 5 genişlik — kalıcı parça
+    tk = subprocess.run([sys.executable, "-I", str(Path(__file__).with_name("_tikla.py"))], capture_output=True, text=True, timeout=1800)
+    print(tk.stdout.rstrip())
+    sys.exit(1 if toplam or tk.returncode else 0)
 
 
 if __name__ == "__main__":
