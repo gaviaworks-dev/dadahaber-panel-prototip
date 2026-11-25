@@ -25,9 +25,9 @@
         liste.push({ id: grup + '.' + k, grup: grup === 'web' ? 'Web' : 'Mobil', ad: (grup === 'web' ? 'Web ' : 'Mobil ') + (k === 'detay' ? 'detay' : 'kart'), oran: o.oran, px: o.px });
       });
     });
-    if(alan.bildirim) liste.push({ id: 'bildirim', grup: 'Bildirim', ad: 'Bildirim görseli', oran: alan.bildirim.oran, px: alan.bildirim.px || [1024, 512] });
-    (P.sosyal_oranlar || []).forEach(function(o){ liste.push({ id: 'sosyal.' + o.oran, grup: 'Sosyal medya', ad: 'Sosyal ' + o.oran, oran: o.oran, px: o.px }); });
-    if((P.sosyal_oranlar || []).length) liste.push({ id: 'sosyal.serbest', grup: 'Sosyal medya', ad: 'Sosyal serbest', oran: 'serbest', px: null });
+    if(alan.bildirim) liste.push({ id: 'bildirim', grup: 'Bildirim', ad: 'Bildirim Görseli', oran: alan.bildirim.oran, px: alan.bildirim.px || [1024, 512] });
+    (P.sosyal_oranlar || []).forEach(function(o){ liste.push({ id: 'sosyal.' + o.oran, grup: 'Sosyal Medya', ad: 'Sosyal ' + o.oran, oran: o.oran, px: o.px }); });
+    if((P.sosyal_oranlar || []).length) liste.push({ id: 'sosyal.serbest', grup: 'Sosyal Medya', ad: 'Sosyal serbest', oran: 'serbest', px: null });
     return liste;
   }
 

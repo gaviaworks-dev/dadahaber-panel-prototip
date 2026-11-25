@@ -4,7 +4,7 @@
    yasal metinler, sayfalar. Beyar seçimi: 24.11.2026.
 
    Kullanım:
-     <div class="kb-editor" data-editor-ad="Haber metni" [data-editor-kisa] [data-editor-medya]>
+     <div class="kb-editor" data-editor-ad="Haber Metni" [data-editor-kisa] [data-editor-medya]>
        <div class="kz-alan ke-alan" data-zorunlu> …başlangıç HTML… </div>
      </div>
    - data-editor-kisa : kısa alan (açıklama); başlık ve medya düğmeleri yok.

@@ -230,6 +230,36 @@
       var m = document.getElementById(b.getAttribute('data-acilir')); if(m) m.classList.remove('open');
     });
   }
+  /* KURAL · açılır kutu konumu: açılan menü, tarih ve renk seçici görünür alana sığar; üst barın ya da kaydet çubuğunun üstüne binmez.
+     Önce aşağı; sığmazsa yukarı; ikisi de sığmazsa sayfa kaydırılır ve aşağı açılır. Yatayda ekrana sığacak kadar içeri kaydırılır.
+     Sabit konumlu kutu (position:fixed) top/left ile, akıştaki kutu translate ile yerleşir. */
+  window.kbAcilirSigdir = function(m, b){
+    m.style.translate = ''; var sabit = getComputedStyle(m).position === 'fixed';
+    var mr = m.getBoundingClientRect(), vw = document.documentElement.clientWidth, vh = window.innerHeight; if(!mr.width) return;
+    b = b || document.body;
+    var ustBar = b.closest('.pnl-top') ? null : document.querySelector('.pnl-top'), ub = ustBar ? ustBar.getBoundingClientRect().bottom : 0;
+    var kk = Array.prototype.filter.call(document.querySelectorAll('.kb-kaydet'), function(k){ var r = k.getBoundingClientRect(); return r.height && r.top < vh && getComputedStyle(k).position === 'sticky'; })[0];
+    var kap = b.closest('.kb-kap-govde'), kr = kap ? kap.getBoundingClientRect() : null;
+    var ust = Math.max(ub, kr ? kr.top : 0) + 8, alt = Math.min(kk && !kap ? kk.getBoundingClientRect().top : vh, kr ? kr.bottom : vh) - 8;
+    var br = b.getBoundingClientRect(), h = mr.height, hedef;
+    if(!b || b === document.body || b === document.documentElement) hedef = Math.max(ust, Math.min(mr.top, alt - h)); /* tetik bilinmiyor: yalnız sınırlara sığdır */
+    else if(br.bottom + 6 + h <= alt) hedef = br.bottom + 6;
+    else if(br.top - 6 - h >= ust) hedef = br.top - 6 - h;
+    else if(!kap && !b.closest('.pnl-top')){ /* hiçbir yöne sığmıyor: sayfayı kaydır, tetiği üst barın altına getir */
+      window.scrollBy({ top: br.top - ust, behavior: 'instant' }); br = b.getBoundingClientRect(); hedef = Math.max(ust, Math.min(br.bottom + 6, alt - h)); }
+    else hedef = Math.max(ust, alt - h);
+    var dx = mr.right > vw - 8 ? -(mr.right - vw + 8) : (mr.left < 8 ? 8 - mr.left : 0); if(mr.width > vw - 16) dx = 8 - mr.left;
+    if(sabit){ m.style.top = hedef + 'px'; m.style.left = (mr.left + dx) + 'px'; m.style.right = 'auto'; m.style.bottom = 'auto'; }
+    else { mr = m.getBoundingClientRect(); var dy = hedef - mr.top; if(dx || Math.abs(dy) > .5) m.style.translate = dx + 'px ' + dy + 'px'; }
+  };
+  /* bütün açılan kutular (menü, tarih, tarih aralığı, Filtreler, ⋯ menüsü, öneri listeleri): 'open' alınca ve boyu değişince yeniden sığdırılır */
+  (function(){
+    var SEC = '.pnl-menu, .kb-diger-menu, .kb-cip-oneri, .ket-oneri, .kb-oneri';
+    function tetik(m){ return m._kbTetik || (m.id && document.querySelector('[data-acilir="' + m.id + '"]')) || (m.previousElementSibling && m.previousElementSibling.matches('input, button, .kb-cip-girdi') ? m.previousElementSibling : null) || m.parentElement; }
+    var ro = window.ResizeObserver ? new ResizeObserver(function(l){ l.forEach(function(x){ var m = x.target; if(m.classList.contains('open') && !m._kbSigiyor){ m._kbSigiyor = true; window.kbAcilirSigdir(m, tetik(m)); setTimeout(function(){ m._kbSigiyor = false; }, 0); } }); }) : null;
+    new MutationObserver(function(l){ l.forEach(function(x){ var m = x.target; if(!m.matches || !m.matches(SEC)) return; if(m.classList.contains('open')){ if(ro && !m._kbRo){ m._kbRo = 1; ro.observe(m); } requestAnimationFrame(function(){ if(m.classList.contains('open')) window.kbAcilirSigdir(m, tetik(m)); }); } else { m.style.translate = ''; } }); })
+      .observe(document.documentElement, { subtree: true, attributes: true, attributeFilter: ['class'] });
+  })();
   /* açılır kutular: belgeye tek dinleyici (çekmece ya da pencerede sonradan eklenenler de çalışır) */
   document.addEventListener('click', function(e){
     var b = e.target.closest('[data-acilir]');
@@ -242,8 +272,7 @@
       b.setAttribute('aria-expanded', ac ? 'true' : 'false');
       if(m) m.classList.toggle('open', ac);
       /* açılan menü ekrana sığar: sağdan ya da soldan taşıyorsa içeri kaydırılır */
-      if(m && ac){ m.style.translate = ''; var mr = m.getBoundingClientRect(), vw = document.documentElement.clientWidth;
-        if(mr.width){ var dx = mr.right > vw - 8 ? -(mr.right - vw + 8) : (mr.left < 8 ? 8 - mr.left : 0); if(mr.width > vw - 16) dx = 8 - mr.left; if(dx) m.style.translate = dx + 'px 0'; } }
+      if(m && ac){ m._kbTetik = b; window.kbAcilirSigdir(m, b); requestAnimationFrame(function(){ if(m.classList.contains('open')) window.kbAcilirSigdir(m, b); }); } /* içerik açılışta çiziliyorsa ikinci ölçü */
       return;
     }
     if(!e.target.closest('.pnl-menu')) kapatHepsi();
