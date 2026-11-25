@@ -279,7 +279,7 @@
    "dosya": "bilesen.css · form.js",
    "durum": "hazir",
    "ui_kit": "medya",
-   "not": ""
+   "not": "kimlik görselleri de bununla (arma, takım kapağı, lig logosu, branş görseli, burç, enstrüman logo/kapak); kayıtta oranı olmayanlar satır içi aspect-ratio"
   },
   {
    "id": "medya-secici",
@@ -576,7 +576,7 @@
    "dosya": "bilesen.css",
    "durum": "hazir",
    "ui_kit": "rozet",
-   "not": "ekip, oturumlar"
+   "not": "ekip, oturumlar; kimlik görseli yoksa yer tutucu: kısa kod rozeti ya da ikon (enstrüman, lig, branş)"
   },
   {
    "id": "sayfa-durumu",
