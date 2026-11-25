@@ -9,14 +9,15 @@
   function gor(e, win){ return e && e.getClientRects().length && !e.closest('[hidden], template') && win.getComputedStyle(e).visibility !== 'hidden'; }
   g.kbDurumOlc = function(kok, win, et){
     var out = [], on = et || '';
-    Array.prototype.forEach.call(kok.querySelectorAll('.kb-secenek-grup, .ket-kategori, [data-secenek-grup]'), function(G){
+    Array.prototype.forEach.call(kok.querySelectorAll('.kb-secenek-grup, .ket-kategori, [data-secenek-grup], .kb-kart-sec'), function(G){
       if(!gor(G, win) || G.classList.contains('is-acilir') || G.closest('.kb-arac, .kb-arac-filtre-pen, [data-secenek-serbest], [class*="oniz"]')) return;
       var og = Array.prototype.filter.call(G.children, function(c){ return c.tagName === 'LABEL' && gor(c, win); }); if(og.length < 2) return;
       var sat = {}; og.forEach(function(o){ var t = Math.round(o.getBoundingClientRect().top); sat[t] = (sat[t] || 0) + 1; });
       var k = Object.keys(sat).map(Number).sort(function(a, b){ return a - b; });
-      if(k.length > 1 && sat[k[k.length - 1]] === 1 && og.length > 2 && !G.classList.contains('is-alt-alta')) out.push('secenek-yalniz: ' + on + '"' + (og[og.length - 1].textContent || '').trim().replace(/\s+/g, ' ').slice(0, 24) + '" son satırda yalnız (' + og.length + ' seçenek, ' + k.length + ' satır)');
+      var tekSutun = k.every(function(x){ return sat[x] === 1; }); /* alt alta dizilmiş grup (her satırda bir) yalnız kutu sayılmaz */
+      if(k.length > 1 && sat[k[k.length - 1]] === 1 && og.length > 2 && !tekSutun && !G.classList.contains('is-alt-alta')) out.push('secenek-yalniz: ' + on + '"' + (og[og.length - 1].textContent || '').trim().replace(/\s+/g, ' ').slice(0, 24) + '" son satırda yalnız (' + og.length + ' seçenek, ' + k.length + ' satır)');
       var cok = og[0].querySelector('input[type=checkbox]');
-      if(cok && k.length > 2 && !G.classList.contains('is-alt-alta')) out.push('secenek-satir: ' + on + og.length + ' seçenek ' + k.length + ' satıra yayılmış, açılır listeye dönmemiş');
+      if(cok && k.length > 2 && !G.classList.contains('is-alt-alta') && !(G.classList.contains('kb-kart-sec') && og.length > 4)) out.push('secenek-satir: ' /* çok seçenekli açıklamalı kart ızgarası açılır listeye dönmez (izin grupları gibi) */ + on + og.length + ' seçenek ' + k.length + ' satıra yayılmış, açılır listeye dönmemiş');
     });
     /* kesik: taşmayı gizleyen kutu (overflow hidden/clip) içeriğini kesiyor — bilerek kısaltma (… , satır sınırı) ve kaydırma kapları hariç.
        Örnek: şifre güç çubuğu 6 px'lik liste satırıydı, satır simgesi içinde kesik görünüyordu (eski ölçüm yalnız metin sınıflarına bakıyordu). */
@@ -55,6 +56,10 @@
       if(kr.length < 2) return;
       var h = kr.map(function(x){ return Math.round(x.getBoundingClientRect().height); }), en = Math.min.apply(null, h), ey = Math.max.apply(null, h);
       if(ey - en > 4) out.push('kart-duzen: ' + on + 'kartlar farklı yükseklikte (' + en + '–' + ey + ' px): satır düzeni karttan karta değişiyor');
+      /* son satırda yalnız kart: üstteki satırda birden çok kart varken son satırda tek kart kalmaz (Beyar: "hepsi bir tarafa yaslanmış") */
+      var sat = {}; kr.forEach(function(x){ var tp = Math.round(x.getBoundingClientRect().top / 8); sat[tp] = (sat[tp] || 0) + 1; });
+      var sy = Object.keys(sat).map(Number).sort(function(a, b){ return a - b; }).map(function(k){ return sat[k]; });
+      if((tb.closest('[data-kartli]') || tb.hasAttribute('data-grup')) && sy.length > 1 && sy[sy.length - 1] === 1 && sy[0] > 1) out.push('kart-duzen: ' + on + 'kart ızgarasında son satırda yalnız kart kalıyor (' + sy.join('+') + ')');
     });
     /* binme: akıştaki kardeş öğeler üst üste (negatif boşluk, sabit yükseklikli kutuya sığmayan satır) */
     Array.prototype.forEach.call(kok.querySelectorAll('*'), function(P){
@@ -159,6 +164,7 @@
       var kk = Array.prototype.filter.call(d.querySelectorAll('.kb-kaydet'), function(k){ var q = k.getBoundingClientRect(); return q.height && q.top < H && win.getComputedStyle(k).position === 'sticky'; })[0];
       var alt = kk ? kk.getBoundingClientRect().top : H;
       if(!b.closest('.pnl-top') && r.height && r.top < ub - 1) out.push('acilir: ' + ad + ' kutusu üst barın altına giriyor');
+      var sm_ = d.getElementById('saMenu'); if(sm_ && !b.closest('#saMenu')){ var sr_ = sm_.getBoundingClientRect(); if(sr_.width && sr_.right > 0 && sr_.right < W / 2 && r.width && r.left < sr_.right - 1) out.push('acilir: ' + ad + ' kutusu yan menünün altına giriyor'); }
       if(r.height && r.bottom > alt + 1 && !b.closest('.kb-kaydet')) out.push('acilir: ' + ad + ' kutusu ' + (kk ? 'kaydet çubuğunun' : 'ekranın') + ' altına giriyor (' + Math.round(r.bottom - alt) + 'px)');
       /* içerik kesilmesi: kutunun içindeki bir öğe kutunun sağından taşıyor ya da kutu yatayda kırpıyor */
       var tas = Array.prototype.filter.call(m.querySelectorAll('*'), function(e){ var q = e.getBoundingClientRect(); return gor(e, win) && q.width && q.right > r.right + 1 && !/fixed/.test(win.getComputedStyle(e).position); })[0];
