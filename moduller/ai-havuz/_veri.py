@@ -111,9 +111,9 @@ HATA_LOG = {
 }
 TIP = {
     "rss": ("RSS", "fa-rss"),
-    "scraper": ("Kazıyıcı (scraper)", "fa-spider"),
-    "haber-sitesi": ("Haber sitesi", "fa-globe"),
-    "sosyal-hesap": ("Sosyal medya hesabı", "fa-hashtag"),
+    "scraper": ("Kazıyıcı (Scraper)", "fa-spider"),
+    "haber-sitesi": ("Haber Sitesi", "fa-globe"),
+    "sosyal-hesap": ("Sosyal Medya Hesabı", "fa-hashtag"),
 }
 
 # ---- havuz satırları ----

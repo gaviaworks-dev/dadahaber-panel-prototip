@@ -705,7 +705,7 @@ def seo_bolum(pid, baslik, aciklama, onek, slug, kw, uret=True):
     cip = "".join(f'<span class="kb-cip" data-deger="{e(k)}"><span>{e(k)}</span><button type="button" aria-label="Kaldır">{I("fa-xmark")}</button></span>' for k in kw)
     return f"""    <div class="sa-form-panel" id="{pid}" role="tabpanel" data-ai-grup="seo" hidden>
       <div class="form-sec">
-        <div class="form-sec-tt">{I("fa-wand-magic-sparkles")}Otomatik üretildi<span class="fs-ek"><button type="button" class="btn btn-ghost btn-sm" data-seo-uret>{I("fa-rotate")}Başlıktan yeniden üret</button></span></div>
+        <div class="form-sec-tt">{I("fa-wand-magic-sparkles")}Otomatik Üretildi<span class="fs-ek"><button type="button" class="btn btn-ghost btn-sm" data-seo-uret>{I("fa-rotate")}Başlıktan Yeniden Üret</button></span></div>
         <div class="form-grid">
           <div class="frow"><label for="{pid}B">SEO Başlığı</label>
             <input class="finput" id="{pid}B" data-alan="seo-baslik" data-sayac="60|70" value="{e(baslik)}">
@@ -733,7 +733,7 @@ def seo_skor(n=82, kontroller=None):
     bos_ = '<i class="fa-regular fa-circle" aria-hidden="true"></i>'
     ch = "".join(f'<div class="seo-chk {c}">{I("fa-circle-check") if c == "pass" else bos_}{e(t)}</div>' for c, t in k)
     return f"""    <section class="pnl-card" data-one-cik="pSeo">
-      <div class="pc-head"><h2 class="pc-title">{I("fa-gauge")}SEO skoru</h2></div>
+      <div class="pc-head"><h2 class="pc-title">{I("fa-gauge")}SEO Skoru</h2></div>
       <div class="pc-body">
         <p class="fhint" data-yeni-goster hidden>Skor, ad ve açıklama girilince hesaplanır.</p>
         <div class="seo-score" data-yeni-gizle><div class="score-ring" style="--p:{n}"><span class="score-num">{n}</span></div><div class="score-meta"><b>İyi</b><span>Eksikler giderilince yükselir</span></div></div>
@@ -764,8 +764,8 @@ def sayfa_kulup():
       <div class="ph-sub" data-yeni-metin="Henüz kaydedilmedi · spor veri API'sinde eşleşme aranır">Galatasaray · Süper Lig · {sira}. sıra, {t['P']} puan · API ile eşleşik</div>
     </div>
     <div class="ph-actions">
-      <a class="btn btn-ghost btn-sm" data-hedef="ozel-dikeyler.spor" href="spor.html">{I("fa-arrow-left")}Spora dön</a>
-      <a class="btn btn-ghost btn-sm" data-yeni-gizle href="{SITE}galatasaray.html" target="_blank" rel="noopener">{I("fa-arrow-up-right-from-square")}Sitede görüntüle</a>
+      <a class="btn btn-ghost btn-sm" data-hedef="ozel-dikeyler.spor" href="spor.html">{I("fa-arrow-left")}Spora Dön</a>
+      <a class="btn btn-ghost btn-sm" data-yeni-gizle href="{SITE}galatasaray.html" target="_blank" rel="noopener">{I("fa-arrow-up-right-from-square")}Sitede Görüntüle</a>
     </div>
   </div>
 
@@ -798,7 +798,7 @@ def sayfa_kulup():
         </div>
       </div>
       <div class="form-sec">
-        <div class="form-sec-tt">{I("fa-palette")}Kurumsal renk<span class="fs-ek">Puan durumunda rozet, skor bandında çizgi</span></div>
+        <div class="form-sec-tt">{I("fa-palette")}Kurumsal Renk<span class="fs-ek">Puan durumunda rozet, skor bandında çizgi</span></div>
         <div class="kb-renkler" role="radiogroup" aria-label="Kurumsal Renk" data-renk-ozel>{renkler}</div>
         <span class="fhint">Hazır renkler temadan; damlalık ile kulübün kendi rengi seçilir (okunurluk denetlenir).</span>
       </div>
@@ -806,10 +806,10 @@ def sayfa_kulup():
         <div class="form-sec-tt">{I("fa-shield-halved")}Arma<span class="fs-ek">İsteğe bağlı · yoksa renkli kısa kod rozeti görünür</span></div>
         <div class="kb-yukle" data-gorsel-bos><span class="kb-ava k-lg">GS</span><b>Armayı sürükleyin ya da seçin</b><span>1:1 · puan durumu 48×48, takım sayfası 160×160, mobil 40×40 · şeffaf PNG ya da SVG önerilir; medya havuzuna girmez</span><span class="kg-acts"><button type="button" class="btn btn-acc btn-sm" data-gorsel-yukle>{I("fa-upload")}Bilgisayardan yükle</button></span></div>
         <div class="kb-gorsel" data-gorsel-dolu hidden><div class="kg-bolum"><div class="kg-bas">{I("fa-desktop")}Web</div><div class="kg-ikili"><div class="kg-resim" data-gorsel-hedef="web" data-kirp-oran="web.detay" style="aspect-ratio:1/1"><span class="kg-etk">Takım sayfası · 1:1</span></div><div class="kg-resim" data-gorsel-hedef="web" data-kirp-oran="web.kart" style="aspect-ratio:1/1"><span class="kg-etk">Puan durumu · 1:1</span></div></div><div class="kg-olcu">Önerilen: takım sayfası <b>160×160</b>, puan durumu <b>48×48</b>.</div><div class="kg-acts"><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac>{I("fa-crop-simple")}Kırp</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle>{I("fa-upload")}Yükle</button><button type="button" class="btn btn-ghost btn-sm danger" data-gorsel-kaldir>{I("fa-trash")}Kaldır</button></div></div>
-          <div class="kg-bolum"><div class="kg-bas">{I("fa-mobile-screen")}Mobil<span class="kg-oto">{I("fa-wand-magic-sparkles")} Webden kırpıldı</span></div><div class="kg-resim" data-gorsel-hedef="mobil" data-kirp-oran="mobil.kart" style="aspect-ratio:1/1"><span class="kg-etk">Mobil · 1:1</span></div><div class="kg-olcu">Önerilen: <b>40×40</b>.</div><div class="kg-acts"><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac="mobil.kart">{I("fa-crop-simple")}Kırp</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle data-gorsel-kapsam="mobil">{I("fa-upload")}Ayrı görsel yükle</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-webe-don hidden>{I("fa-rotate-left")}Webden kırpılana dön</button></div></div></div>
+          <div class="kg-bolum"><div class="kg-bas">{I("fa-mobile-screen")}Mobil<span class="kg-oto">{I("fa-wand-magic-sparkles")} Webden kırpıldı</span></div><div class="kg-resim" data-gorsel-hedef="mobil" data-kirp-oran="mobil.kart" style="aspect-ratio:1/1"><span class="kg-etk">Mobil · 1:1</span></div><div class="kg-olcu">Önerilen: <b>40×40</b>.</div><div class="kg-acts"><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac="mobil.kart">{I("fa-crop-simple")}Kırp</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle data-gorsel-kapsam="mobil">{I("fa-upload")}Ayrı Görsel Yükle</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-webe-don hidden>{I("fa-rotate-left")}Webden kırpılana dön</button></div></div></div>
       </div>
       <div class="form-sec">
-        <div class="form-sec-tt">{I("fa-tags")}Etiket eşleştirme<span class="fs-ek">Haberler, skor ve kulüp sayfası bu eşleşmeyle bağlanır</span></div>
+        <div class="form-sec-tt">{I("fa-tags")}Etiket Eşleştirme<span class="fs-ek">Haberler, skor ve kulüp sayfası bu eşleşmeyle bağlanır</span></div>
         <div class="form-grid kb-iki-sutun">
           <div class="frow"><span class="flabel">Spor Alt Konusu</span>{secim("klAlt", spor_alt, deger="Galatasaray", bos="Alt konu seçin", ara="Alt konu ara")}<span class="fhint">Yeni alt konu Haberler › Kategoriler'den eklenir.</span></div>
           <div class="frow"><label for="klApi">Spor Veri API Kimliği</label><input class="finput" id="klApi" value="takim/645" readonly><span class="fhint">API eşleşmesi kendiliğinden yapılır; değişmez.</span></div>
@@ -819,7 +819,7 @@ def sayfa_kulup():
           <span class="fhint">AI havuzu ve arama bu adlarla da kulübü tanır.</span></div>
       </div>
       <div class="form-sec">
-        <div class="form-sec-tt">{I("fa-align-left")}Kulüp hakkında<span class="fs-ek">Takım sayfasının başında</span></div>
+        <div class="form-sec-tt">{I("fa-align-left")}Kulüp Hakkında<span class="fs-ek">Takım sayfasının başında</span></div>
         <div class="kb-editor" data-editor-ad="Kulüp Hakkında" data-editor-kisa><div class="kz-alan ke-alan"><p>1905'te kurulan Galatasaray, Süper Lig'in en çok şampiyonluk kazanan kulübü. Maçlarını İstanbul'da Ali Sami Yen Spor Kompleksi'nde oynuyor.</p></div></div>
       </div>
     </div>
@@ -941,7 +941,7 @@ def tk_sablonlar(r):
   <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="tkDz-{tid}">{I("fa-pen")}Düzenle</button></div>
 </template>
 <template id="tkDz-{tid}" data-baslik="{e(bas_)} · Düzenle" data-alt="Takvim kaydı · hemen yayında" data-zorunlu-kayit="ozel-dikeyler.takvim">
-{tk_form(tid, r)}  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-ghost btn-sm" data-kaydet-tur="taslak" data-sablon-ac="tkGor-{tid}" data-bildir-sonra="Taslak olarak kaydedildi; sitede görünmez">{I("fa-floppy-disk")}Taslak kaydet</button><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="tkGor-{tid}" data-bildir-sonra="Takvim kaydı güncellendi; önceki hal denetim izinde">{I("fa-check")}Kaydet ve yayımla</button></div>
+{tk_form(tid, r)}  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-ghost btn-sm" data-kaydet-tur="taslak" data-sablon-ac="tkGor-{tid}" data-bildir-sonra="Taslak olarak kaydedildi; sitede görünmez">{I("fa-floppy-disk")}Taslak Kaydet</button><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="tkGor-{tid}" data-bildir-sonra="Takvim kaydı güncellendi; önceki hal denetim izinde">{I("fa-check")}Kaydet ve Yayımla</button></div>
 </template>
 """
 
@@ -978,7 +978,7 @@ def sayfa_takvimler():
       <div class="ph-sub">{len(canli)} kayıt · {yuksek} yüksek önemli · takvimde boş bir güne tıklayarak o güne kayıt ekleyin</div>
     </div>
     <div class="ph-actions">
-      <button type="button" class="btn btn-acc btn-sm" data-tanim="tkYeni">{I("fa-plus")}Yeni kayıt</button>
+      <button type="button" class="btn btn-acc btn-sm" data-tanim="tkYeni">{I("fa-plus")}Yeni Kayıt</button>
     </div>
   </div>
 
@@ -1012,7 +1012,7 @@ def sayfa_takvimler():
     <div class="pnl-menu kb-diger-menu" role="menu">
       <div class="kb-dm-grup" data-durum-icin="gundem ekonomik sinav etkinlik">Kayıt</div>
       <button type="button" data-durum-icin="gundem ekonomik sinav etkinlik" data-bildir="Kopyası taslak olarak oluşturuldu (prototip)">{I("fa-copy")}Kopyasını oluştur</button>
-      <button type="button" data-durum-icin="gundem ekonomik sinav etkinlik" data-bildir="Kayıt sitede ilgili takvim sayfasında açılır (prototip)">{I("fa-arrow-up-right-from-square")}Sitede görüntüle</button>
+      <button type="button" data-durum-icin="gundem ekonomik sinav etkinlik" data-bildir="Kayıt sitede ilgili takvim sayfasında açılır (prototip)">{I("fa-arrow-up-right-from-square")}Sitede Görüntüle</button>
       <button type="button" data-durum-icin="gundem ekonomik sinav etkinlik" data-roller="super gyy" data-bildir="Denetim izi bu kayda süzülerek açılır (prototip)">{I("fa-clipboard-list")}Denetim izinde gör</button>
       <button type="button" data-durum-icin="cop" data-geri-al>{I("fa-rotate-left")}Çöpten geri al</button>
       <button type="button" class="danger" data-durum-icin="cop" data-kalici-sil>{I("fa-trash-can")}Kalıcı olarak sil</button>
@@ -1022,7 +1022,7 @@ def sayfa_takvimler():
 </div>
 
 <template id="tkYeni" data-baslik="Yeni Takvim Kaydı" data-alt="Takvim kaydı · seçilen türün sayfasında" data-zorunlu-kayit="ozel-dikeyler.takvim">
-{tk_form("yeni")}  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-ghost btn-sm" data-kaydet-tur="taslak" data-sablon-ac="tkEklendi" data-bildir-sonra="Taslak olarak kaydedildi; sitede görünmez">{I("fa-floppy-disk")}Taslak kaydet</button><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="tkEklendi" data-bildir-sonra="Takvim kaydı eklendi; denetim izine yazıldı">{I("fa-plus")}Ekle ve yayımla</button></div>
+{tk_form("yeni")}  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-ghost btn-sm" data-kaydet-tur="taslak" data-sablon-ac="tkEklendi" data-bildir-sonra="Taslak olarak kaydedildi; sitede görünmez">{I("fa-floppy-disk")}Taslak Kaydet</button><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="tkEklendi" data-bildir-sonra="Takvim kaydı eklendi; denetim izine yazıldı">{I("fa-plus")}Ekle ve Yayımla</button></div>
 </template>
 <template id="tkEklendi" data-baslik="Kayıt eklendi" data-alt="Takvimde ve listede görünür">
   <div class="pnl-empty"><div class="pe-ico">{I("fa-circle-check")}</div><h2>Takvim kaydı eklendi</h2><p>Kayıt seçilen türün takvim sayfasında görünür; listeden düzenleyip silebilirsiniz.</p></div>
@@ -1082,7 +1082,7 @@ def sayfa_veri():
   </div>
 
   <section class="pnl-card dash-row" aria-labelledby="vbDurum">
-    <div class="pc-head"><h2 class="pc-title" id="vbDurum">{I("fa-signal")}Bant durumu</h2><span class="kb-kap-alt">Son kontrol 16.04</span></div>
+    <div class="pc-head"><h2 class="pc-title" id="vbDurum">{I("fa-signal")}Bant Durumu</h2><span class="kb-kap-alt">Son kontrol 16.04</span></div>
     <div class="pc-body"><div class="kb-saglik-izgara">
       <a class="kb-saglik" href="veri.html?sekme=vbPiyasa"><span class="kb-saglik-bas"><span class="status-nokta"></span>Piyasa</span><span class="kb-saglik-deger">{soz["piyasa"]["guncelleme"]}</span><span class="kb-saglik-meta">{len(pyasa)} araç · 15 dk gecikmeli · Dolar {next(a["deger"] for a in pyasa if a["ad"] == "Dolar")}</span></a>
       <a class="kb-saglik uyari" href="veri.html?sekme=vbHava"><span class="kb-saglik-bas"><span class="status-nokta"></span>Hava</span><span class="kb-saglik-deger">16.00</span><span class="kb-saglik-meta">81 il · İstanbul {h["sicaklik"]}°, {h["durum"].lower()} · turuncu kod uyarısı şeritte</span></a>
@@ -1096,7 +1096,7 @@ def sayfa_veri():
     <div class="sa-form-tabs" role="tablist" aria-label="Bantlar">
       <button type="button" class="sa-form-tab is-on" role="tab" aria-selected="true" data-panel="vbPiyasa">{I("fa-chart-line")}Piyasa</button>
       <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="vbHava">{I("fa-cloud-sun")}Hava</button>
-      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="vbNamaz">{I("fa-mosque")}Namaz vakitleri</button>
+      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="vbNamaz">{I("fa-mosque")}Namaz Vakitleri</button>
       <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="vbDeprem">{I("fa-house-crack")}Deprem</button>
     </div>
 
@@ -1108,7 +1108,7 @@ def sayfa_veri():
 {periyot("vbP", 1, "Dakika", 60, "Saniye", gecikme=15)}        <div class="toggle-row kb-ust-bosluk"><span>Piyasa Kapalıyken Çekme<small>Hafta sonu ve resmî tatilde son kapanış gösterilir; kaynak kotası harcanmaz</small></span><label class="toggle"><input type="checkbox" checked aria-label="Piyasa Kapalıyken Çekme"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
       </div>
       <div class="form-sec">
-        <div class="form-sec-tt">{I("fa-arrow-right-arrow-left")}Şeritte görünenler<span class="fs-ek">Sitenin üst şeridi · sırası buradaki sıra</span></div>
+        <div class="form-sec-tt">{I("fa-arrow-right-arrow-left")}Şeritte Görünenler<span class="fs-ek">Sitenin üst şeridi · sırası buradaki sıra</span></div>
         <div class="kb-cip-girdi" data-havuz-kapali data-havuz='{e(havuz)}'>{cip}<input type="text" placeholder="Araç ekle" aria-label="Şeride araç ekle"><div class="pnl-menu kb-cip-oneri"></div></div>
         <span class="fhint">Kur ve altında satış fiyatı gösterilir ve “satış” etiketi taşır. Araç listesi kaynaktan gelir.</span>
 {hata_davranis("vbP")}      </div>
@@ -1150,7 +1150,7 @@ def sayfa_veri():
 
   <aside class="side-card" aria-label="Son Değişiklikler">
     <section class="pnl-card">
-      <div class="pc-head"><h2 class="pc-title">{I("fa-clock-rotate-left")}Son değişiklikler</h2></div>
+      <div class="pc-head"><h2 class="pc-title">{I("fa-clock-rotate-left")}Son Değişiklikler</h2></div>
       <div class="pc-body sa-gecmis">
         <div><b>Hava uyarısı şeritte açıldı</b><span>Ayşe Yıldız · 23.11.2026 08.10</span></div>
         <div><b>Şeride Gümüş eklendi</b><span>Selin Aydemir · 20.11.2026 11.45</span></div>
@@ -1221,7 +1221,7 @@ def sayfa_ilanlar():
       <div class="ph-sub">1.284 ilan yayında · bugün 2 yeni · 1 taslak · son başvurusu geçenler kendiliğinden “Süresi doldu”ya geçer</div>
     </div>
     <div class="ph-actions">
-      <a class="btn btn-acc btn-sm" data-hedef="ozel-dikeyler.ilan" data-hedef-ek="?yeni=1" href="ilan.html?yeni=1">{I("fa-plus")}Yeni ilan</a>
+      <a class="btn btn-acc btn-sm" data-hedef="ozel-dikeyler.ilan" data-hedef-ek="?yeni=1" href="ilan.html?yeni=1">{I("fa-plus")}Yeni İlan</a>
     </div>
   </div>
 
@@ -1288,8 +1288,8 @@ def sayfa_ilan():
       <div class="ph-sub" data-yeni-metin="Taslak · henüz kaydedilmedi">{tur} · Karayolları Genel Müdürlüğü · {yay}'da yayımlandı · {gor} görüntülenme</div>
     </div>
     <div class="ph-actions">
-      <a class="btn btn-ghost btn-sm" data-hedef="ozel-dikeyler.ilanlar" href="ilanlar.html">{I("fa-arrow-left")}İlanlara dön</a>
-      <a class="btn btn-ghost btn-sm" data-yeni-gizle href="{SITE}resmi-ilan-detay.html" target="_blank" rel="noopener">{I("fa-arrow-up-right-from-square")}Sitede görüntüle</a>
+      <a class="btn btn-ghost btn-sm" data-hedef="ozel-dikeyler.ilanlar" href="ilanlar.html">{I("fa-arrow-left")}İlanlara Dön</a>
+      <a class="btn btn-ghost btn-sm" data-yeni-gizle href="{SITE}resmi-ilan-detay.html" target="_blank" rel="noopener">{I("fa-arrow-up-right-from-square")}Sitede Görüntüle</a>
     </div>
   </div>
 
@@ -1314,7 +1314,7 @@ def sayfa_ilan():
       <div class="kb-ai-adim" data-ai-adim data-ai-kaynak="#ilBaslik" data-yeni-goster hidden>
         <div class="kaa-bas"><span class="kaa-ikon">{I("fa-wand-magic-sparkles")}</span><div><b>Gerisini AI ile üret</b><span data-ai-durum>Başlığı yazın ve ilan metnini yapıştırın; işaretli bölümler bunlardan üretilir. AI ilan metnini değiştirmez.</span></div></div>
         <div class="kaa-secim" role="group" aria-label="Üretilecek bölümler"><label class="kb-secenek"><input type="checkbox" value="ilozet" checked>Kısa Açıklama</label><label class="kb-secenek"><input type="checkbox" value="seo" checked>SEO</label></div>
-        <div class="kaa-alt"><button type="button" class="btn btn-acc btn-sm" data-ai-uret disabled>{I("fa-wand-magic-sparkles")}Gerisini üret</button><span class="fhint" data-ai-neden>Önce başlık</span></div>
+        <div class="kaa-alt"><button type="button" class="btn btn-acc btn-sm" data-ai-uret disabled>{I("fa-wand-magic-sparkles")}Gerisini Üret</button><span class="fhint" data-ai-neden>Önce başlık</span></div>
       </div>
       <div class="form-sec">
         <div class="form-grid kb-iki-sutun">
@@ -1335,7 +1335,7 @@ def sayfa_ilan():
         </div>
       </div>
       <div class="form-sec">
-        <div class="form-sec-tt">{I("fa-align-left")}İlan metni<span class="fs-ek">Kurumun yayımladığı metin; değiştirmeden aktarın</span></div>
+        <div class="form-sec-tt">{I("fa-align-left")}İlan Metni<span class="fs-ek">Kurumun yayımladığı metin; değiştirmeden aktarın</span></div>
         <div class="kb-editor" data-editor-ad="İlan Metni">
           <div class="kz-alan ke-alan" data-alan-id="metin" data-zorunlu-metin="İlan metnini yazın ya da yapıştırın"><h2>İşin adı, niteliği ve miktarı</h2><p>Kuzey Marmara Otoyolu bağlantı yollarında (Kurtköy–Akyazı kesimi) üstyapı bakım ve onarım işi. Ayrıntılı bilgi ihale dokümanında yer almaktadır.</p><h2>İhale usulü ve yeri</h2><p>4734 sayılı Kamu İhale Kanunu'nun 19. maddesine göre açık ihale usulüyle, Karayolları 1. Bölge Müdürlüğü ihale salonunda yapılacaktır.</p><h2>Son teklif verme tarihi</h2><p>9 Aralık 2026 saat 10.00. Teklifler elektronik ortamda EKAP üzerinden verilecektir.</p></div>
           <div class="kz-alt"><span data-kz-say></span><span>Sitede ilan sayfasında</span></div>
@@ -1369,7 +1369,7 @@ def sayfa_ilan():
   <div class="kb-kaydet" data-form-icin="ilForm">
     <div class="kk-durum">{I("fa-circle-check")}<span data-yeni-metin="Henüz kaydedilmedi">Kaydedildi · 23.11.2026 09.00 · Ayşe Yıldız</span></div>
     <div class="kk-sag">
-      <button type="button" class="btn btn-ghost btn-sm" data-kaydet data-kaydet-tur="taslak" data-kaydet-metin="Taslak olarak kaydedildi" data-bildir="Taslak kaydedildi; yayındaki hal değişmedi">{I("fa-floppy-disk")}Taslak kaydet</button>
+      <button type="button" class="btn btn-ghost btn-sm" data-kaydet data-kaydet-tur="taslak" data-kaydet-metin="Taslak olarak kaydedildi" data-bildir="Taslak kaydedildi; yayındaki hal değişmedi">{I("fa-floppy-disk")}Taslak Kaydet</button>
       <button type="button" class="btn btn-acc btn-sm" data-kaydet data-kaydet-metin="Güncellendi" data-bildir="İlan güncellendi; sitede yayında, önceki hal denetim izinde" data-yeni-bildir="İlan yayımlandı; sitede Resmî İlanlar sayfasında görünür">{I("fa-check")}<span data-yeni-metin="Yayımla">Güncelle</span></button>
     </div>
   </div>

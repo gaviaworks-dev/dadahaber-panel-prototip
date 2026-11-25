@@ -173,7 +173,7 @@ def ai_adim(kaynak, secenekler, durum="Başlığı ve spotu yazın; işaretli b�
     return (f'<div class="kb-ai-adim" data-ai-adim data-ai-kaynak="{kaynak}" data-yeni-goster hidden><div class="kaa-bas"><span class="kaa-ikon">{I("fa-wand-magic-sparkles")}</span>'
             f'<div><b>Gerisini AI ile üret</b><span data-ai-durum>{e(durum)}</span></div></div>'
             f'<div class="kaa-secim" role="group" aria-label="Üretilecek bölümler">{ops}</div>'
-            f'<div class="kaa-alt"><button type="button" class="btn btn-acc btn-sm" data-ai-uret disabled>{I("fa-wand-magic-sparkles")}Gerisini üret</button><span class="fhint" data-ai-neden>{e(neden)}</span></div></div>')
+            f'<div class="kaa-alt"><button type="button" class="btn btn-acc btn-sm" data-ai-uret disabled>{I("fa-wand-magic-sparkles")}Gerisini Üret</button><span class="fhint" data-ai-neden>{e(neden)}</span></div></div>')
 
 BOLUMLER = ["Gündem", "Spor", "Finans", "Kadın", "Savunma", "Dünya", "Kampüs", "Keşfet", "Köşe"]
 ALTLAR = {"Gündem": ["Siyaset", "Türkiye", "Toplum", "Hukuk", "Güvenlik", "Eğitim", "Çevre", "Afet", "Yerel Haberler", "İstanbul", "Ankara", "İzmir"],
@@ -207,18 +207,18 @@ def kapak(id_, gorsel, odak, kaynak, altyazi, yukle_not="Web görseli yükleninc
     ox, oy = odak
     st = f"background-image:url({g(gorsel)});background-position:{ox}% {oy}%"
     return (f'<div class="form-sec" id="{id_}" data-alan-id="kapak" data-zorunlu-metin="Kapak görseli yükleyin ya da havuzdan seçin" data-gorsel-alan="haberler.kapak" data-gorsel-ad="Kapak Görseli" data-kirp-sonra>'
-            f'<div class="form-sec-tt">{I("fa-image")}Kapak görseli<span class="fs-ek" data-yeni-gizle>{e(kaynak)}</span></div>'
+            f'<div class="form-sec-tt">{I("fa-image")}Kapak Görseli<span class="fs-ek" data-yeni-gizle>{e(kaynak)}</span></div>'
             f'<div class="kb-yukle" data-yeni-goster data-gorsel-bos hidden>{I("fa-cloud-arrow-up")}<b>Kapak görselini sürükleyin ya da seçin</b><span>{e(yukle_not)}</span><span class="kg-acts">'
-            f'<button type="button" class="btn btn-acc btn-sm" data-gorsel-yukle>{I("fa-upload")}Bilgisayardan yükle</button><button type="button" class="btn btn-ghost btn-sm" data-medya-sec>{I("fa-photo-film")}Havuzdan seç</button></span></div>'
+            f'<button type="button" class="btn btn-acc btn-sm" data-gorsel-yukle>{I("fa-upload")}Bilgisayardan yükle</button><button type="button" class="btn btn-ghost btn-sm" data-medya-sec>{I("fa-photo-film")}Havuzdan Seç</button></span></div>'
             f'<div class="kb-gorsel" data-yeni-gizle data-gorsel-dolu><div class="kg-bolum"><div class="kg-bas">{I("fa-desktop")}Web</div><div class="kg-ikili">'
             f'<div class="kg-resim r-detay" data-gorsel-hedef="web" data-kirp-oran="web.detay" style="{st}"><span class="kg-odak" style="left:{ox}%;top:{oy}%"></span><span class="kg-etk">Detay · 2.4:1</span></div>'
             f'<div class="kg-resim r-kart" data-gorsel-hedef="web" data-kirp-oran="web.kart" style="{st}"><span class="kg-etk">Kart · 16:10</span></div></div>'
             f'<div class="kg-olcu">Önerilen: detay <b>1280×533</b>, kart <b>308×193</b> (sitenin görünen genişliği). <span data-gorsel-bilgi>Yüklenen: 1200×800 JPG.</span></div>'
-            f'<div class="kg-acts"><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac>{I("fa-crop-simple")}Kırp ve odak</button><button type="button" class="btn btn-ghost btn-sm" data-medya-sec>{I("fa-photo-film")}Havuzdan seç</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle>{I("fa-upload")}Yükle</button><button type="button" class="btn btn-ghost btn-sm danger" data-gorsel-kaldir>{I("fa-trash")}Kaldır</button></div></div>'
+            f'<div class="kg-acts"><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac>{I("fa-crop-simple")}Kırp ve Odak</button><button type="button" class="btn btn-ghost btn-sm" data-medya-sec>{I("fa-photo-film")}Havuzdan Seç</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle>{I("fa-upload")}Yükle</button><button type="button" class="btn btn-ghost btn-sm danger" data-gorsel-kaldir>{I("fa-trash")}Kaldır</button></div></div>'
             f'<div class="kg-bolum"><div class="kg-bas">{I("fa-mobile-screen")}Mobil<span class="kg-oto">{I("fa-wand-magic-sparkles")} Webden kırpıldı</span></div>'
             f'<div class="kg-resim r-kart" data-gorsel-hedef="mobil" data-kirp-oran="mobil.kart" style="{st}"><span class="kg-odak" style="left:{ox}%;top:{oy}%"></span><span class="kg-etk">Mobil kart · 16:10</span></div>'
             f'<div class="kg-olcu">Önerilen: <b>358×224</b> (sitenin telefon görünümü). Aynı odak noktası kullanılır.</div>'
-            f'<div class="kg-acts"><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac="mobil.kart">{I("fa-crop-simple")}Kırp</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle data-gorsel-kapsam="mobil">{I("fa-upload")}Ayrı görsel yükle</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-webe-don hidden>{I("fa-rotate-left")}Webden kırpılana dön</button></div></div></div>'
+            f'<div class="kg-acts"><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac="mobil.kart">{I("fa-crop-simple")}Kırp</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle data-gorsel-kapsam="mobil">{I("fa-upload")}Ayrı Görsel Yükle</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-webe-don hidden>{I("fa-rotate-left")}Webden kırpılana dön</button></div></div></div>'
             + f'<div class="frow kb-ust-bosluk"><label for="{id_}Alt">Görsel Altyazısı ve Kaynağı</label><input class="finput" id="{id_}Alt" data-sayac="120|160" value="{e(altyazi)}">{cm("Görselin altında ve erişilebilirlik metninde", 120)}</div></div>')
 
 def sekmeler(liste, aria="Düzenleme sekmeleri"):
@@ -238,7 +238,7 @@ def seo_panel(seo_b, seo_a, pre, slug, kelimeler, onek=""):
         frow("Anahtar Kelimeler", cip_girdi(kelimeler, [], "Yazın; Enter ya da virgülle ekleyin", serbest=True)),
         frow("Arama Sonucu Önizlemesi", f'<div class="serp"><div class="serp-url"><span class="serp-fav kb-logo-isaret"></span><span>{e(pre.replace("/", " › ").rstrip(" › "))} › <span data-alan="slug">{e(slug)}</span></span></div><div class="serp-title" data-alan="seo-baslik">{e(seo_b)}</div><div class="serp-desc" data-alan="seo-aciklama">{e(seo_a)}</div></div>'),
         anahtar("Google Haberler ve Discover'a Uygun", "NewsArticle şeması ve büyük görsel önizlemesi açık")),
-        ek_bas=f'<button type="button" class="btn btn-ghost btn-sm" data-seo-uret>{I("fa-rotate")}Başlıktan yeniden üret</button>'), attr=' data-ai-grup="seo"')
+        ek_bas=f'<button type="button" class="btn btn-ghost btn-sm" data-seo-uret>{I("fa-rotate")}Başlıktan Yeniden Üret</button>'), attr=' data-ai-grup="seo"')
 
 def bildirim_panel(onek, baslik, metin, ek_secim=""):
     return panel(f"{onek}pBildirim", f'<div class="form-sec"><div>' + grid(
@@ -288,7 +288,7 @@ def yayin_karti(id_, durumlar, durum, tarih_deger, ekler="", surum=None, baslik=
 def seo_skor(puan, kontroller, onek=""):
     ch = "".join(f'<div class="seo-chk {"pass" if ok else "fail"}">{I("fa-circle-check") if ok else chr(60) + "i class=" + chr(34) + "fa-regular fa-circle" + chr(34) + " aria-hidden=" + chr(34) + "true" + chr(34) + "></i>"}{e(m)}</div>' for ok, m in kontroller)
     ad = "İyi" if puan >= 80 else "Orta" if puan >= 60 else "Zayıf"
-    return (f'<section class="pnl-card" data-one-cik="{onek}pSeo"><div class="pc-head"><h2 class="pc-title">{I("fa-gauge")}SEO skoru</h2></div><div class="pc-body">'
+    return (f'<section class="pnl-card" data-one-cik="{onek}pSeo"><div class="pc-head"><h2 class="pc-title">{I("fa-gauge")}SEO Skoru</h2></div><div class="pc-body">'
             f'<p class="fhint" data-yeni-goster hidden>Skor, başlık, spot ve görsel girilince hesaplanır.</p>'
             f'<div class="seo-score" data-yeni-gizle><div class="score-ring" style="--p:{puan}"><span class="score-num">{puan}</span></div><div class="score-meta"><b>{ad}</b><span>Eksikler giderilince yükselir</span></div></div>'
             f'<div class="seo-checks" data-yeni-gizle>{ch}</div></div></section>')
@@ -296,7 +296,7 @@ def seo_skor(puan, kontroller, onek=""):
 def kaydet(form_id, durum, ana, bildir, yeni_ana=None, yeni_bildir=None, taslak=True, yeni_durum="Henüz kaydedilmedi", taslak_bildir="Taslak kaydedildi; yayındaki hal değişmedi", ek_ana=""):
     ya = f' data-yeni-bildir="{e(yeni_bildir)}"' if yeni_bildir else ""
     ym = f'<span data-yeni-metin="{e(yeni_ana)}">{e(ana)}</span>' if yeni_ana else e(ana)
-    t = (f'<button type="button" class="btn btn-ghost btn-sm" data-kaydet data-kaydet-tur="taslak" data-kaydet-metin="Taslak olarak kaydedildi" data-bildir="{e(taslak_bildir)}">{I("fa-floppy-disk")}Taslak kaydet</button>' if taslak else "")
+    t = (f'<button type="button" class="btn btn-ghost btn-sm" data-kaydet data-kaydet-tur="taslak" data-kaydet-metin="Taslak olarak kaydedildi" data-bildir="{e(taslak_bildir)}">{I("fa-floppy-disk")}Taslak Kaydet</button>' if taslak else "")
     return (f'  <div class="kb-kaydet" data-form-icin="{form_id}"><div class="kk-durum">{I("fa-circle-check")}<span data-yeni-metin="{e(yeni_durum)}">{e(durum)}</span></div>'
             f'<div class="kk-sag">{t}<button type="button" class="btn btn-acc btn-sm" data-kaydet data-kaydet-metin="Kaydedildi" data-bildir="{e(bildir)}"{ya}{ek_ana}>{I("fa-check")}{ym}</button></div></div>\n')
 
@@ -518,7 +518,7 @@ def son_dakika():
             + m_ayir("serit bitti") + m_grup("Dağıtım", "serit bitti")
             + m_btn("Bildirim gönder", "fa-bell", "serit bitti", ' data-modul="etkilesim"' + onay("Bildirim gönderilsin mi?", "Başlık bütün abonelere telefon ve web bildirimi olarak gider; geri alınamaz. İşlem denetim izine yazılır.", "Gönder", ikon="fa-bell", bildir="Bildirim gönderildi"))
             + m_a("Habere dönüştür", "fa-file-circle-plus", "haberler.duzenle", "?yeni=1", ' data-durum-icin="serit bitti"')
-            + f'<a data-durum-icin="serit bitti" href="{SITE}son-dakika.html" target="_blank" rel="noopener">{I("fa-arrow-up-right-from-square")}Sitede görüntüle</a>'
+            + f'<a data-durum-icin="serit bitti" href="{SITE}son-dakika.html" target="_blank" rel="noopener">{I("fa-arrow-up-right-from-square")}Sitede Görüntüle</a>'
             + m_ayir("serit bitti") + m_grup("Kayıt") + DENETIM + COP_MENU)
     govde = bas("Son Dakika", "Şerit ve Son Dakika sayfası tek listeden beslenir · bugün 13 giriş · 4'ü şeritte",
                 [a_hedef("Vitrin", "fa-star", "haberler.vitrin"), f'<button type="button" class="btn btn-acc btn-sm" data-tanim="sdYeni" data-roller="super gyy editor">{I("fa-plus")}Yeni son dakika</button>'])
@@ -597,7 +597,7 @@ def giris_form(onek, gz=None):
     gorsel = (f'<div class="kb-gorsel-kucuk" data-gorsel-alan="haberler.canli_giris" data-gorsel-ad="Giriş görseli" data-kirp-oranlar="giris=Giriş görseli=16:9=800×450" data-kirp-sonra>'
               f'<span class="kg-resim r-kart" data-gorsel-hedef="web" data-kirp-oran="giris" data-gorsel-kucuk{(" style=" + chr(34) + "background-image:url(" + gk(medya[1]) + ")" + chr(34)) if m_g else ""}></span>'
               f'<div><b>16:9 · önerilen 800×450</b><span data-gorsel-bilgi>{"Akışta girişin altında tam genişlikte görünür." if m_g else "Görsel yok; isteğe bağlı."}</span><div class="kg-acts">'
-              f'<button type="button" class="btn btn-ghost btn-sm" data-medya-sec>{I("fa-photo-film")}Havuzdan seç</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle>{I("fa-upload")}Yükle</button><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac>{I("fa-crop-simple")}Kırp</button><button type="button" class="btn btn-ghost btn-sm danger" data-gorsel-kaldir>{I("fa-trash")}Kaldır</button></div></div></div>')
+              f'<button type="button" class="btn btn-ghost btn-sm" data-medya-sec>{I("fa-photo-film")}Havuzdan Seç</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle>{I("fa-upload")}Yükle</button><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac>{I("fa-crop-simple")}Kırp</button><button type="button" class="btn btn-ghost btn-sm danger" data-gorsel-kaldir>{I("fa-trash")}Kaldır</button></div></div></div>')
     video = f'<div class="kb-dosya" data-tur="video" data-ad="Giriş videosu" data-sinir="200">' + (f'<div class="kb-dosya-oge" data-ad="{medya[1]}" data-boyut="18874368" data-sure="{medya[2]}"></div>' if m_v else "") + '</div>'
     return (dil("Dil seçici başlığı ve metni birlikte değiştirir; saat, görsel ve kaynak bütün dillerde ortaktır.", kap=True)
             + kfs("Giriş", frow("Saat", tarih(f"{onek}T", f"2026-11-23 {saat}" if saat else "", ek=' data-alan-id="saat" data-bos="Yayımlanınca o anın saati" data-temizlenir="1"'), ipucu="Boş bırakılırsa yayımlandığı an yazılır; akış saate göre sıralanır.")
@@ -995,9 +995,9 @@ def yazar():
             f'<div class="kb-gorsel" data-gorsel-dolu hidden><div class="kg-bolum"><div class="kg-bas">{I("fa-desktop")}Web</div><div class="kg-ikili">'
             f'<div class="kg-resim r-1x1" data-gorsel-hedef="web" data-kirp-oran="web.detay"><span class="kg-etk">Profil · 1:1</span></div><div class="kg-resim r-1x1" data-gorsel-hedef="web" data-kirp-oran="web.kart"><span class="kg-etk">Kart · 1:1</span></div></div>'
             f'<div class="kg-olcu">Önerilen: profil <b>96×96</b>, yazar kartı <b>88×88</b> (sitenin görünen genişliği).</div>'
-            f'<div class="kg-acts"><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac>{I("fa-crop-simple")}Kırp ve odak</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle>{I("fa-upload")}Yükle</button><button type="button" class="btn btn-ghost btn-sm danger" data-gorsel-kaldir>{I("fa-trash")}Kaldır</button></div></div>'
+            f'<div class="kg-acts"><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac>{I("fa-crop-simple")}Kırp ve Odak</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle>{I("fa-upload")}Yükle</button><button type="button" class="btn btn-ghost btn-sm danger" data-gorsel-kaldir>{I("fa-trash")}Kaldır</button></div></div>'
             f'<div class="kg-bolum"><div class="kg-bas">{I("fa-mobile-screen")}Mobil<span class="kg-oto">{I("fa-wand-magic-sparkles")} Webden kırpıldı</span></div><div class="kg-resim r-1x1" data-gorsel-hedef="mobil" data-kirp-oran="mobil.kart"><span class="kg-etk">Mobil · 1:1</span></div>'
-            f'<div class="kg-olcu">Önerilen: <b>72×72</b> (sitenin telefon görünümü).</div><div class="kg-acts"><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac="mobil.kart">{I("fa-crop-simple")}Kırp</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle data-gorsel-kapsam="mobil">{I("fa-upload")}Ayrı görsel yükle</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-webe-don hidden>{I("fa-rotate-left")}Webden kırpılana dön</button></div></div></div></div>')
+            f'<div class="kg-olcu">Önerilen: <b>72×72</b> (sitenin telefon görünümü).</div><div class="kg-acts"><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac="mobil.kart">{I("fa-crop-simple")}Kırp</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle data-gorsel-kapsam="mobil">{I("fa-upload")}Ayrı Görsel Yükle</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-webe-don hidden>{I("fa-rotate-left")}Webden kırpılana dön</button></div></div></div></div>')
     # sosyal bağlantılar: çekirdek "sosyal bağlantı listesi" (Beyar K2); okur e-postası ayrı alan
     sosyal = ('<div class="kb-sbag" data-sosyal-baglanti data-ad="yzSosyal" data-degerler=\'[{"p":"x","k":"aylinsezer_dh"},{"p":"linkedin","k":"in/aylin-sezer"}]\'></div>'
               + grid(f'<div class="frow"><label for="yzEp">Okur e-postası</label><div class="kb-eposta"><input class="finput" id="yzEp" type="email" data-eposta value="aylin.sezer@dadahaber.ornek">{I("fa-circle-check")}</div><span class="fhint">Yazar sayfasında “Yazara yaz” bağlantısı · isteğe bağlı</span>{ferr("Geçerli bir e-posta yazın.")}</div>'))

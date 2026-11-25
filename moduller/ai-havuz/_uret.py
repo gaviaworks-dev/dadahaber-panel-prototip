@@ -279,13 +279,13 @@ def havuz_satirlari():
     for hid, v in pv["ai_kaynakli"]["kayitlar"].items():
         h = HABER[hid]
         yay.append((hid, [KAYNAK_AD_ID[v["kaynak"]]] + IKINCI.get(hid, []), v["skor"], "temiz", "editor", v["onay"], h))
-    yay.sort(key=lambda x: (x[6]["tarih"], x[6]["Saat"]), reverse=True)
+    yay.sort(key=lambda x: (x[6]["tarih"], x[6]["saat"]), reverse=True)
     for hid, ks, g, gd, yol, onay, h in yay:
         m = re.search(r'data-satir="%s"[^>]*data-gorsel="\.\./\.\./veri/gorsel/(p\d+)\.jpg"' % re.escape(hid), HBL)
         gor = m.group(1) if m else ("p203" if "altin" in hid else "p178" if "urdun" in hid else "p158")
-        t = f'{h["tarih"][8:10]}.{h["tarih"][5:7]}.{h["tarih"][:4]} {h["Saat"]}'
-        cek_dk = int(h["Saat"][3:]) - 6
-        cek = f'{t[:11]}{h["Saat"][:3]}{cek_dk:02d}' if cek_dk >= 0 else t
+        t = f'{h["tarih"][8:10]}.{h["tarih"][5:7]}.{h["tarih"][:4]} {h["saat"]}'
+        cek_dk = int(h["saat"][3:]) - 6
+        cek = f'{t[:11]}{h["saat"][:3]}{cek_dk:02d}' if cek_dk >= 0 else t
         rows.append(dict(id=hid, baslik=h["baslik"], kat=h["bolum"], alt=h.get("alt_konu") or h["bolum"], kaynaklar=ks, guven=g, gdurum=gd, gorsel=gor,
                          cekilme=cek, durum="yayinlanan", durum_ad="Otomatik yayımlandı" if yol == "otomatik" else "Yayında",
                          durum_sinif="info" if yol == "otomatik" else "ok", yayin=yol, href=f"duzenle.html?id={gd}",
@@ -320,9 +320,9 @@ def sayfa_havuz():
       <div class="ph-sub">{n_taslak} taslak onay bekliyor · {n_eksik}'ü görsel eksik · son çekim 16.00 · otomatik yayın kapalı</div>
     </div>
     <div class="ph-actions">
-      <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.cron" data-izin="cron-saglik" href="cron.html">{I("fa-heart-pulse")}Hat sağlığı</a>
+      <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.cron" data-izin="cron-saglik" href="cron.html">{I("fa-heart-pulse")}Hat Sağlığı</a>
       <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.kaynaklar" data-roller="super gyy" href="kaynaklar.html">{I("fa-rss")}Kaynaklar</a>
-      <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.ayarlar" data-roller="super gyy" href="ayarlar.html">{I("fa-sliders")}Otomatik yayın ve onay</a>
+      <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.ayarlar" data-roller="super gyy" href="ayarlar.html">{I("fa-sliders")}Otomatik Yayın ve Onay</a>
     </div>
   </div>
 
@@ -420,7 +420,7 @@ def sayfa_havuz():
       <button type="button" data-durum-icin="yayinlanan" data-roller="super gyy editor" data-onay-baslik="Haber yayından kaldırılsın mı?" data-onay-metin="Önce: yayında → Sonra: taslak. Haber sitede, uygulamada ve sosyal medya kuyruğunda görünmez olur; adresi 410 döner. Denetim izine yazılır." data-onay-evet="Yayından kaldır" data-onay-tehlike data-onay-ikon="fa-eye-slash" data-sonra-durum="taslak" data-sonra-durum-ad="Onay Bekliyor" data-sonra-durum-sinif="wait" data-bildir-sonra="Haber yayından kaldırıldı ve taslağa alındı">{I("fa-eye-slash")}Yayından kaldır</button>
       <div class="pmenu-div" data-durum-icin="taslak yayinlanan reddedilen"></div>
       <div class="kb-dm-grup" data-durum-icin="taslak yayinlanan reddedilen">Kaynak</div>
-      <button type="button" data-durum-icin="taslak yayinlanan reddedilen" data-bildir="Kaynak haberi yeni sekmede açılır (prototip)">{I("fa-arrow-up-right-from-square")}Kaynak haberini aç</button>
+      <button type="button" data-durum-icin="taslak yayinlanan reddedilen" data-bildir="Kaynak haberi yeni sekmede açılır (prototip)">{I("fa-arrow-up-right-from-square")}Kaynak Haberini Aç</button>
       <button type="button" data-durum-icin="taslak" data-bildir="Aynı olayı veren diğer kaynaklar düzenleme ekranındaki Kaynak teyidi panelinde (prototip)">{I("fa-layer-group")}Teyit kaynaklarını gör</button>
       <div class="pmenu-div"></div>
       <div class="kb-dm-grup">Kayıt</div>
@@ -444,11 +444,11 @@ def sayfa_havuz():
 
 
 # ================================================================== ortak: grup hesapları
-GUN_CEKIM = {"Dakika": lambda n: 24 * 60 / n, "Saat": lambda n: 24 / n, "gun": lambda n: 1 / n, "Gün": lambda n: 1 / n}
+GUN_CEKIM = {"dakika": lambda n: 24 * 60 / n, "saat": lambda n: 24 / n, "gun": lambda n: 1 / n, "gün": lambda n: 1 / n}
 
 
 def grup_hesap(gid):
-    ek = GRUP_EK.get(gid, {"ornek": "", "siklik": 1, "birim": "Gün", "yeni_oran": 1})
+    ek = GRUP_EK.get(gid, {"ornek": "", "siklik": 1, "birim": "gün", "yeni_oran": 1})
     ks = [k for k in KAYNAKLAR if k[4] == gid and k[5] != "cop"]
     etkin = [k for k in ks if k[5] in ("aktif", "hata")]
     cekim = round(len(etkin) * GUN_CEKIM[ek["birim"]](ek["siklik"]) * 30)
@@ -458,10 +458,10 @@ def grup_hesap(gid):
 
 
 def siklik_metin(ek):
-    return f'{ek["siklik"]} {ek["birim"]}{ {"Dakika": "da", "Saat": "te", "Gün": "de"}[ek["birim"]] } bir'
+    return f'{ek["siklik"]} {ek["birim"]}{ {"dakika": "da", "saat": "te", "gün": "de"}[ek["birim"]] } bir'
 
 
-BIRIMLER = [("Dakika", "Dakika", ""), ("Saat", "Saat", ""), ("Gün", "Gün", "")]
+BIRIMLER = [("dakika", "Dakika", ""), ("saat", "Saat", ""), ("gün", "Gün", "")]  # (değer, görünen ad, …): değer veri anahtarıdır, küçük kalır
 
 
 def kaynak_durum(k):
@@ -592,9 +592,9 @@ def sayfa_kaynaklar():
       <div class="ph-sub">{len(canli)} kaynak · {len(etkin)} etkin ({len(hata)}'i hatalı) · {len(pasif)} pasif · her 10 dakikada taranır</div>
     </div>
     <div class="ph-actions">
-      <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.havuz" href="index.html">{I("fa-arrow-left")}Haber havuzu</a>
-      <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.motor" data-roller="super" href="motor.html">{I("fa-gears")}Gruplar ve sıklık</a>
-      <button type="button" class="btn btn-acc btn-sm" data-tanim="kyYeni">{I("fa-plus")}Yeni kaynak</button>
+      <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.havuz" href="index.html">{I("fa-arrow-left")}Haber Havuzu</a>
+      <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.motor" data-roller="super" href="motor.html">{I("fa-gears")}Gruplar ve Sıklık</a>
+      <button type="button" class="btn btn-acc btn-sm" data-tanim="kyYeni">{I("fa-plus")}Yeni Kaynak</button>
     </div>
   </div>
 
@@ -656,7 +656,7 @@ def sayfa_kaynaklar():
 </div>
 
 <template id="kyYeni" data-baslik="Yeni Kaynak" data-alt="Kaynak ajans, haber sitesi ya da sosyal medya hesabı olabilir · ilk çekim kaydedince sıradaki taramada" data-zorunlu-kayit="ai-havuz.kaynak">
-{kaynak_form("yeni")}  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="kyEklendi" data-bildir-sonra="Kaynak eklendi; denetim izine yazıldı">{I("fa-plus")}Kaynağı ekle</button></div>
+{kaynak_form("yeni")}  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="kyEklendi" data-bildir-sonra="Kaynak eklendi; denetim izine yazıldı">{I("fa-plus")}Kaynağı Ekle</button></div>
 </template>
 <template id="kyEklendi" data-baslik="Kaynak eklendi" data-alt="Sıradaki taramada (16.10) ilk kez çekilir">
   <div class="pnl-empty"><div class="pe-ico">{I("fa-circle-check")}</div><h2>Kaynak eklendi</h2><p>İlk çekim 16.10'daki taramada yapılır. Yeni içerik AI taslağı olarak havuza düşer; ilk 24 saatin başarısı listede görünür.</p></div>
@@ -689,7 +689,7 @@ def grup_gor_sablon(g):
 def grup_form(gid, g=None):
     h = grup_hesap(gid) if g else None
     ad = g["ad"] if g else ""
-    ek = h["ek"] if g else {"ornek": "", "siklik": "", "birim": "Saat"}
+    ek = h["ek"] if g else {"ornek": "", "siklik": "", "birim": "saat"}
     kanallar = g["kanallar"] if g else ["web", "uygulama", "sosyal"]
     havuz = json.dumps([k[1] for k in KAYNAKLAR if k[5] != "cop"], ensure_ascii=False)
     cip = "".join(f'<span class="kb-cip" data-deger="{e(k[1])}"><span>{e(k[1])}</span><button type="button" aria-label="Kaldır">{I("fa-xmark")}</button></span>' for k in (h["ks"] if h else []))
@@ -732,7 +732,7 @@ def grup_dz_sablon(g):
     gid = g["id"]
     h = grup_hesap(gid)
     return f"""<template id="mtDz-{gid}" data-baslik="{gid} · {e(g['ad'])} · düzenle" data-alt="Değişiklik sonraki taramada geçerli olur; denetim izine önceki ve sonraki haliyle yazılır" data-zorunlu-kayit="ai-havuz.grup">
-{grup_form(gid, g)}  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-ghost btn-sm danger kb-sol" {tasi_attr(gid, g['ad'], len(h['ks']), satir=False)}>{I("fa-trash")}Grubu sil</button><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-{gid}" data-bildir-sonra="Grup kaydedildi; önceki hal denetim izinde">{I("fa-floppy-disk")}Kaydet</button></div>
+{grup_form(gid, g)}  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-ghost btn-sm danger kb-sol" {tasi_attr(gid, g['ad'], len(h['ks']), satir=False)}>{I("fa-trash")}Grubu Sil</button><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtGor-{gid}" data-bildir-sonra="Grup kaydedildi; önceki hal denetim izinde">{I("fa-floppy-disk")}Kaydet</button></div>
 </template>
 """
 
@@ -766,7 +766,7 @@ def sayfa_motor():
     usd = sum(h["usd"] for h in hs.values())
     etkin = sum(len(h["etkin"]) for h in hs.values())
     toplam = sum(len(h["ks"]) for h in hs.values())
-    cop_grup = {"id": "AJ", "ad": "Ajans (deneme)", "ornek": "örn. AA, DHA, İHA birlikte", "siklik": 15, "birim": "Dakika", "kanallar": ["web", "uygulama", "sosyal"]}
+    cop_grup = {"id": "AJ", "ad": "Ajans (deneme)", "ornek": "örn. AA, DHA, İHA birlikte", "siklik": 15, "birim": "dakika", "kanallar": ["web", "uygulama", "sosyal"]}
     satir = "".join(grup_satir(g) for g in GRUPLAR) + grup_satir(cop_grup, cop=True)
     sab = "".join(grup_gor_sablon(g) + grup_dz_sablon(g) for g in GRUPLAR)
     s = bas("Kaynak Motoru", "motor")
@@ -780,9 +780,9 @@ def sayfa_motor():
       <div class="ph-sub">Kaynak grupları ve çekim sıklığı · tarama her 10 dakikada çalışır; grubun süresi dolmuşsa kaynakları çekilir · sıklık ve kanallar “Düzenle”den</div>
     </div>
     <div class="ph-actions">
-      <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.cron" href="cron.html">{I("fa-heart-pulse")}Hat sağlığı</a>
+      <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.cron" href="cron.html">{I("fa-heart-pulse")}Hat Sağlığı</a>
       <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.kaynaklar" href="kaynaklar.html">{I("fa-rss")}Kaynaklar</a>
-      <button type="button" class="btn btn-acc btn-sm" data-tanim="mtYeni">{I("fa-plus")}Yeni grup</button>
+      <button type="button" class="btn btn-acc btn-sm" data-tanim="mtYeni">{I("fa-plus")}Yeni Grup</button>
     </div>
   </div>
 
@@ -849,7 +849,7 @@ def sayfa_motor():
 </div>
 
 <template id="mtYeni" data-baslik="Yeni Kaynak Grubu" data-alt="Ad, sıklık ve yayın kanalları · kaynakları şimdi ya da sonra ekleyin" data-zorunlu-kayit="ai-havuz.grup">
-{grup_form("yeni")}  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtEklendi" data-bildir-sonra="Grup eklendi; denetim izine yazıldı">{I("fa-plus")}Grubu ekle</button></div>
+{grup_form("yeni")}  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="mtEklendi" data-bildir-sonra="Grup eklendi; denetim izine yazıldı">{I("fa-plus")}Grubu Ekle</button></div>
 </template>
 <template id="mtEklendi" data-baslik="Grup eklendi" data-alt="Listede en alta eklendi">
   <div class="pnl-empty"><div class="pe-ico">{I("fa-circle-check")}</div><h2>Grup eklendi</h2><p>Kaynakları gruba bağlayın; grup ancak içinde etkin kaynak varsa çekilir. Sıklık ve kanallar bu gruptan gelen her haberde geçerli olur.</p></div>
@@ -925,18 +925,18 @@ def sayfa_cron():
       <div class="ph-sub">AI haber hattı · son tur 16.04 · her dakika kendiliğinden yenilenir</div>
     </div>
     <div class="ph-actions" data-izin="cron-saglik">
-      <a class="btn btn-ghost btn-sm" data-hedef="sistem-sagligi.ana" href="../../cekirdek/sistem-sagligi/index.html">{I("fa-server")}Sistem sağlığı</a>
+      <a class="btn btn-ghost btn-sm" data-hedef="sistem-sagligi.ana" href="../../cekirdek/sistem-sagligi/index.html">{I("fa-server")}Sistem Sağlığı</a>
       <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.motor" href="motor.html">{I("fa-gears")}Kaynak Motoru</a>
-      <button type="button" class="btn btn-acc btn-sm" data-onay-baslik="Kaynak taraması şimdi çalıştırılsın mı?" data-onay-metin="Grupların sıklığı beklenmeden {len(KS_ETKIN)} etkin kaynağın hepsi çekilir; yeni içerik AI taslağı olarak havuza düşer ve AI maliyeti oluşur. Çalışan bir tur varsa kilit çözülene kadar bekler. İşlem denetim izine yazılır." data-onay-evet="Şimdi çalıştır" data-onay-ikon="fa-play" data-bildir-sonra="Tarama kuyruğa alındı; kilit serbest, birkaç saniye içinde başlar">{I("fa-play")}Manuel tetikle</button>
+      <button type="button" class="btn btn-acc btn-sm" data-onay-baslik="Kaynak taraması şimdi çalıştırılsın mı?" data-onay-metin="Grupların sıklığı beklenmeden {len(KS_ETKIN)} etkin kaynağın hepsi çekilir; yeni içerik AI taslağı olarak havuza düşer ve AI maliyeti oluşur. Çalışan bir tur varsa kilit çözülene kadar bekler. İşlem denetim izine yazılır." data-onay-evet="Şimdi çalıştır" data-onay-ikon="fa-play" data-bildir-sonra="Tarama kuyruğa alındı; kilit serbest, birkaç saniye içinde başlar">{I("fa-play")}Manuel Tetikle</button>
     </div>
   </div>
 
   <section class="pnl-card" data-izin="cron-saglik" data-sekmeli aria-label="Cron ve Hat Sağlığı">
     <div class="sa-form-tabs" role="tablist" aria-label="Hat sağlığı bölümleri">
-      <button type="button" class="sa-form-tab is-on" role="tab" aria-selected="true" data-panel="crGenel">{I("fa-gauge-high")}Genel bakış</button>
-      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="crGrup">{I("fa-layer-group")}Kaynak grupları<span class="ch-cnt" title="{len(eksik)} grupta çekim eksik">{len(eksik)}</span></button>
-      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="crGorev">{I("fa-clock")}Zamanlanmış görevler<span class="ch-cnt" title="1 görev hata veriyor">1</span></button>
-      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="crLog">{I("fa-wave-square")}Hat günlüğü<span class="ch-cnt" title="1 hata, 2 uyarı · son 1 saat">3</span></button>
+      <button type="button" class="sa-form-tab is-on" role="tab" aria-selected="true" data-panel="crGenel">{I("fa-gauge-high")}Genel Bakış</button>
+      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="crGrup">{I("fa-layer-group")}Kaynak Grupları<span class="ch-cnt" title="{len(eksik)} grupta çekim eksik">{len(eksik)}</span></button>
+      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="crGorev">{I("fa-clock")}Zamanlanmış Görevler<span class="ch-cnt" title="1 görev hata veriyor">1</span></button>
+      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="crLog">{I("fa-wave-square")}Hat Günlüğü<span class="ch-cnt" title="1 hata, 2 uyarı · son 1 saat">3</span></button>
     </div>
 
     <!-- ===== GENEL BAKIŞ ===== -->
@@ -1054,17 +1054,17 @@ def sayfa_ayarlar():
       <div class="ph-sub">AI haber havuzu · son değişiklik 22.11.2026 23.30 · Selin Aydemir</div>
     </div>
     <div class="ph-actions">
-      <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.havuz" href="index.html">{I("fa-arrow-left")}Haber havuzu</a>
-      <a class="btn btn-ghost btn-sm" data-hedef="denetim-izi.liste" href="../../cekirdek/denetim-izi/index.html">{I("fa-clipboard-list")}Denetim izi</a>
+      <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.havuz" href="index.html">{I("fa-arrow-left")}Haber Havuzu</a>
+      <a class="btn btn-ghost btn-sm" data-hedef="denetim-izi.liste" href="../../cekirdek/denetim-izi/index.html">{I("fa-clipboard-list")}Denetim İzi</a>
     </div>
   </div>
 
   <div class="form-layout">
   <section class="pnl-card" id="ayForm" data-form data-sekmeli aria-label="Otomatik yayın ve onay ayarları formu">
     <div class="sa-form-tabs" role="tablist" aria-label="Ayar sekmeleri">
-      <button type="button" class="sa-form-tab is-on" role="tab" aria-selected="true" data-panel="ayOkuma">{I("fa-book-open-reader")}Onay ve okuma</button>
-      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="ayOto">{I("fa-robot")}Otomatik yayın</button>
-      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="ayGorsel">{I("fa-image")}Görsel ve kanallar</button>
+      <button type="button" class="sa-form-tab is-on" role="tab" aria-selected="true" data-panel="ayOkuma">{I("fa-book-open-reader")}Onay ve Okuma</button>
+      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="ayOto">{I("fa-robot")}Otomatik Yayın</button>
+      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="ayGorsel">{I("fa-image")}Görsel ve Kanallar</button>
     </div>
 
     <!-- ===== ONAY VE OKUMA (Y2, Y3, YS5, YS6) ===== -->
@@ -1095,11 +1095,11 @@ def sayfa_ayarlar():
         <p class="fhint">Kapalı · 22.11.2026 23.30'da Selin Aydemir kapattı. Açmak ve koşulları değiştirmek e-posta koduyla doğrulanır (K15).</p>
       </div>
       <div class="form-sec">
-        <div class="form-sec-tt">{I("fa-gauge-high")}Güven eşiği<span class="fs-ek">Güven seviyeleri: %85 ve üstü yüksek, %60–84 orta, altı düşük</span></div>
+        <div class="form-sec-tt">{I("fa-gauge-high")}Güven Eşiği<span class="fs-ek">Güven seviyeleri: %85 ve üstü yüksek, %60–84 orta, altı düşük</span></div>
         <div class="kb-esik" data-dagilim="9,14,21,30,38,52,71,96,118,104" data-donem="Son 7 Gün"><div class="kb-esik-ust"><label for="ayEsik">Otomatik Yayın Eşiği</label><output for="ayEsik"></output></div><input type="range" id="ayEsik" min="50" max="100" step="1" value="{ESIK}"></div>
       </div>
       <div class="form-sec">
-        <div class="form-sec-tt">{I("fa-shield-halved")}Güvenlik koşulları<span class="fs-ek">Hepsi birlikte aranır; biri sağlanmazsa haber onay bekler</span></div>
+        <div class="form-sec-tt">{I("fa-shield-halved")}Güvenlik Koşulları<span class="fs-ek">Hepsi birlikte aranır; biri sağlanmazsa haber onay bekler</span></div>
         <div class="kb-madde" data-satir-liste data-satir-ad="Koşul" data-satir-alan1="Koşul adı" data-satir-alan2="Açıklama">
           {kosullar}
           <button type="button" class="kb-ekle-btn" data-satir-ekle>{I("fa-plus")}Özel koşul ekle</button>
@@ -1111,7 +1111,7 @@ def sayfa_ayarlar():
     <!-- ===== GÖRSEL VE KANALLAR (YS1–YS4) ===== -->
     <div class="sa-form-panel" id="ayGorsel" role="tabpanel" hidden>
       <div class="form-sec">
-        <div class="form-sec-tt">{I("fa-image")}Görsel durumu<span class="fs-ek">AI her görseli üçe ayırır; kaynak başına izin yok (YS1)</span></div>
+        <div class="form-sec-tt">{I("fa-image")}Görsel Durumu<span class="fs-ek">AI her görseli üçe ayırır; kaynak başına izin yok (YS1)</span></div>
         <div class="kb-ozk">
           <div class="kb-ozk-satir"><span class="kb-ozk-ikon">{I("fa-image")}</span><div class="kb-ozk-yazi"><b>Temiz</b><span>Logo ya da damga yok; görsel aynen kullanılır. Otomatik yayına girebilir.</span></div><div class="kb-ozk-kapsam"><span>Otomatik Yayın</span></div><span class="pstat ok">Kullanılır</span></div>
           <div class="kb-ozk-satir"><span class="kb-ozk-ikon">{I("fa-crop-simple")}</span><div class="kb-ozk-yazi"><b>AI kırparak temizledi</b><span>Logo ya da damga kırpılarak çıkarıldı; düzenleme ekranında aslı ve kırpılmış hali görünür. Otomatik yayına girebilir.</span></div><div class="kb-ozk-kapsam"><span>Otomatik Yayın</span></div><span class="pstat ok">Kullanılır</span></div>
@@ -1119,7 +1119,7 @@ def sayfa_ayarlar():
         </div>
       </div>
       <div class="form-sec">
-        <div class="form-sec-tt">{I("fa-share-nodes")}Yayın kanalları<span class="fs-ek">Grupların kanalları <a class="kb-bag" data-hedef="ai-havuz.motor" href="motor.html">Kaynak Motoru'nda</a></span></div>
+        <div class="form-sec-tt">{I("fa-share-nodes")}Yayın Kanalları<span class="fs-ek">Grupların kanalları <a class="kb-bag" data-hedef="ai-havuz.motor" href="motor.html">Kaynak Motoru'nda</a></span></div>
         <div class="kb-ozk">
           <div class="kb-ozk-satir"><span class="kb-ozk-ikon">{I("fa-layer-group")}</span><div class="kb-ozk-yazi"><b>Kanalları 1. kaynağın grubu belirler</b><span>Kaynakları farklı gruplardan olan haberde ilk kaynağın grubundaki kanallar geçerlidir (YS4).</span></div><div class="kb-ozk-kapsam"><span>Kural</span></div>{I("fa-lock")}</div>
           <div class="kb-ozk-satir"><span class="kb-ozk-ikon">{I("fa-link-slash")}</span><div class="kb-ozk-yazi"><b>Yalnız Sosyal Medya'ya giden gönderi bağlantısızdır</b><span>Metin ve görsel kendi başına durur, haber gönderinin içinde özetlenir, sitede sayfa açılmaz (YS2).</span></div><div class="kb-ozk-kapsam"><span>Kural</span></div>{I("fa-lock")}</div>
@@ -1133,7 +1133,7 @@ def sayfa_ayarlar():
 
   <aside class="side-card" aria-label="Durum">
     <section class="pnl-card">
-      <div class="pc-head"><h2 class="pc-title">{I("fa-signal")}Şu an</h2><span class="pstat off">Otomatik yayın kapalı</span></div>
+      <div class="pc-head"><h2 class="pc-title">{I("fa-signal")}Şu An</h2><span class="pstat off">Otomatik yayın kapalı</span></div>
       <div class="pc-body sa-durum">
         <div><span>Eşik</span><b>%{ESIK}</b></div>
         <div><span>Bu eşikle son 7 gün</span><b>318 / 553 haber</b></div>
@@ -1143,7 +1143,7 @@ def sayfa_ayarlar():
       </div>
     </section>
     <section class="pnl-card">
-      <div class="pc-head"><h2 class="pc-title">{I("fa-clock-rotate-left")}Son değişiklikler</h2></div>
+      <div class="pc-head"><h2 class="pc-title">{I("fa-clock-rotate-left")}Son Değişiklikler</h2></div>
       <div class="pc-body sa-gecmis">
         <div><b>Otomatik yayın kapatıldı</b><span>Selin Aydemir · 22.11.2026 23.30</span></div>
         <div><b>Eşik %80 → %85</b><span>Selin Aydemir · 21.11.2026 10.30</span></div>
@@ -1258,9 +1258,9 @@ def gorsel_bolum(rid, r):
     if gd == "eksik":
         oneri = f'<p class="fhint">AI önerisi: havuzda “AB”, “Brüksel” ve “Dışişleri” etiketli 6 görsel var. <button type="button" class="kb-bag" data-medya-sec data-medya-ara="AB Brüksel">Önerileri havuzda aç</button></p>'
     return f"""      <div class="form-sec" id="aiKapak-{rid}" data-alan-id="kapak" data-zorunlu-metin="Kapak görseli yükleyin ya da havuzdan seçin" data-gorsel-alan="haberler.kapak" data-gorsel-ad="Kapak Görseli" data-kirp-sonra>
-        <div class="form-sec-tt">{I("fa-image")}Kapak görseli<span class="fs-ek">Kaynak: {e(k1)} · {ek_et}</span></div>
+        <div class="form-sec-tt">{I("fa-image")}Kapak Görseli<span class="fs-ek">Kaynak: {e(k1)} · {ek_et}</span></div>
         {ust}
-        <div class="kb-yukle" data-gorsel-bos{bos_gizli}>{I("fa-cloud-arrow-up")}<b>Kapak görselini sürükleyin ya da seçin</b><span>Web görseli yüklenince mobil görsel ondan otomatik kırpılır · önerilen en az 1280×533</span><span class="kg-acts"><button type="button" class="btn btn-acc btn-sm" data-medya-sec data-medya-ara="AB Brüksel">{I("fa-photo-film")}Havuzdan seç</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle>{I("fa-upload")}Bilgisayardan yükle</button></span></div>
+        <div class="kb-yukle" data-gorsel-bos{bos_gizli}>{I("fa-cloud-arrow-up")}<b>Kapak görselini sürükleyin ya da seçin</b><span>Web görseli yüklenince mobil görsel ondan otomatik kırpılır · önerilen en az 1280×533</span><span class="kg-acts"><button type="button" class="btn btn-acc btn-sm" data-medya-sec data-medya-ara="AB Brüksel">{I("fa-photo-film")}Havuzdan Seç</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle>{I("fa-upload")}Bilgisayardan yükle</button></span></div>
         {oneri}
         <div class="kb-gorsel" data-gorsel-dolu{dolu_gizli}>
           <div class="kg-bolum">
@@ -1271,8 +1271,8 @@ def gorsel_bolum(rid, r):
             </div>
             <div class="kg-olcu">Önerilen: detay <b>1280×533</b>, kart <b>308×193</b> (sitenin görünen genişliği). <span data-gorsel-bilgi>{"Kırpılmış: 1440×960 JPG" if gd == "kirpildi" else "Kaynaktan: 1280×853 JPG" if gor else ""}</span></div>
             <div class="kg-acts">
-              <button type="button" class="btn btn-ghost btn-sm" data-kirp-ac>{I("fa-crop-simple")}Kırp ve odak</button>
-              <button type="button" class="btn btn-ghost btn-sm" data-medya-sec>{I("fa-photo-film")}Havuzdan seç</button>
+              <button type="button" class="btn btn-ghost btn-sm" data-kirp-ac>{I("fa-crop-simple")}Kırp ve Odak</button>
+              <button type="button" class="btn btn-ghost btn-sm" data-medya-sec>{I("fa-photo-film")}Havuzdan Seç</button>
               <button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle>{I("fa-upload")}Yükle</button>
               <button type="button" class="btn btn-ghost btn-sm danger" data-gorsel-kaldir>{I("fa-trash")}Kaldır</button>
             </div>
@@ -1283,7 +1283,7 @@ def gorsel_bolum(rid, r):
             <div class="kg-olcu">Önerilen: <b>358×224</b> (sitenin telefon görünümü). Aynı odak noktası kullanılır.</div>
             <div class="kg-acts">
               <button type="button" class="btn btn-ghost btn-sm" data-kirp-ac="mobil.kart">{I("fa-crop-simple")}Kırp</button>
-              <button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle data-gorsel-kapsam="mobil">{I("fa-upload")}Ayrı görsel yükle</button>
+              <button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle data-gorsel-kapsam="mobil">{I("fa-upload")}Ayrı Görsel Yükle</button>
               <button type="button" class="btn btn-ghost btn-sm" data-gorsel-webe-don hidden>{I("fa-rotate-left")}Webden kırpılana dön</button>
             </div>
           </div>
@@ -1304,7 +1304,7 @@ def profil_blok(r):
         kartlar.append(f'<div class="kb-pm-kart" data-pm-kart="{pid}" data-oneri="{e(v or "Bu profil için öneri üretilmedi; kendi metninizi yazın.")}"{"" if on else " hidden"}><div class="kb-pm-bas">{I(ik)}<b>{ad}</b><button type="button" class="ia-btn danger" data-pm-kaldir aria-label="{ad} metnini kaldır" title="Kaldır">{I("fa-xmark")}</button></div><div class="frow"><textarea class="ftext" rows="2" data-sayac="180|240" aria-label="{ad} için Bana etkisi" placeholder="{ad} bu haberden nasıl etkilenir?">{e(v)}</textarea><div class="char-meter"><span></span><b>0 / 180</b></div></div><input class="finput kb-pm-kaynak" value="" placeholder="Kaynak (isteğe bağlı) · ör. TÜİK · 3 Kasım" aria-label="{ad} kaynağı"></div>')
     return f"""          <div class="kb-profil-metin" data-profil-metin>
             <div class="kb-pm-ust"><span class="flabel">Bana Etkisi</span><span class="kb-pm-say" data-pm-say></span>
-              <button type="button" class="btn btn-ghost btn-sm kb-sag" data-pm-oner>{I("fa-wand-magic-sparkles")}Profillere göre öner</button></div>
+              <button type="button" class="btn btn-ghost btn-sm kb-sag" data-pm-oner>{I("fa-wand-magic-sparkles")}Profillere göre Öner</button></div>
             <div class="frow"><label for="aiEtki" class="kb-pm-alt">Genel <small>profil seçmemiş okura görünür</small></label>
               <textarea class="ftext" id="aiEtki" rows="2" data-sayac="180|240">{e(r["etki_genel"])}</textarea>
               <div class="char-meter"><span></span><b>0 / 180</b></div></div>
@@ -1326,7 +1326,7 @@ def teyit_blok(r):
     ALT_URL = {"İHA": "https://www.iha.com.tr", "İstanbul": "https://x.com/istanbulvalilik", "AFP": "https://www.afp.com", "AB": "https://www.consilium.europa.eu"}
     alt = "".join(f'<li>{I("fa-link")}<a class="kb-bag" href="{ALT_URL.get(a.split()[0], "https://www.aa.com.tr")}" target="_blank" rel="noopener">{e(a)}</a><span>{s}</span></li>' for a, s in r["alternatif"]) or f'<li>{I("fa-circle-info")}<span>Aynı olayı veren başka kaynak bulunamadı.</span><span>—</span></li>'
     return f"""      <div class="form-sec">
-        <div class="form-sec-tt">{I("fa-list-check")}Kaynak teyidi<span class="fs-ek">1., 2., 3. kaynak · aynı haberin iki kez çekilmediğini de gösterir (K8)</span></div>
+        <div class="form-sec-tt">{I("fa-list-check")}Kaynak Teyidi<span class="fs-ek">1., 2., 3. kaynak · aynı haberin iki kez çekilmediğini de gösterir (K8)</span></div>
         <div class="kb-teyit">
           <div class="kb-teyit-ozet"><span class="kb-teyit-durum">{I(ik)}{bas_}</span><span class="kb-teyit-not">{e(not_)}</span></div>
           <ol class="kb-teyit-liste">{"".join(lis)}</ol>
@@ -1406,7 +1406,7 @@ def detay_kayit(rid, r):
       </div>
 {ai_adim() if rid == "kirpildi" else ""}{kategori_blok(rid, r)}{gorsel_bolum(rid, r)}
       <div class="form-sec">
-        <div class="form-sec-tt">{I("fa-align-left")}Haber metni<span class="fs-ek">AI kaynaklardan yazdı · okuyup düzeltin</span></div>
+        <div class="form-sec-tt">{I("fa-align-left")}Haber Metni<span class="fs-ek">AI kaynaklardan yazdı · okuyup düzeltin</span></div>
         <div class="kb-editor" data-editor-ad="Haber Metni" data-editor-medya>
           <div class="kz-alan ke-alan" data-alan-id="metin" data-zorunlu-metin="Haber metnini yazın">{"".join(r['metin'])}</div>
           <div class="kz-alt"><span data-kz-say></span><span>Sitede “Haberi dinle” bu metinden okunur</span></div>
@@ -1446,7 +1446,7 @@ def bilgi_seridi(rid, r):
     gor = {"temiz": '<span class="pstat ok">Temiz</span>', "kirpildi": '<span class="pstat info">AI kırparak temizledi</span>', "eksik": '<span class="pstat warm">Görsel eksik</span>'}[r["gdurum"]]
     kk = f'1. kaynağın grubundan: {k1[4]} · {g["ad"]}' + (" · gönderi bağlantısız (YS2)" if sosyal_yalniz else "")
     return f"""  <section class="pnl-card dash-row" data-kayit-icin="{rid}" aria-label="AI Kaynağı">
-    <div class="pc-head"><h2 class="pc-title">{I("fa-robot")}AI kaynağı</h2><span class="kb-guven k-lg" data-guven="{r['guven']}" data-esik="{ESIK}"></span></div>
+    <div class="pc-head"><h2 class="pc-title">{I("fa-robot")}AI Kaynağı</h2><span class="kb-guven k-lg" data-guven="{r['guven']}" data-esik="{ESIK}"></span></div>
     <div class="pc-body">
       <div class="form-grid kb-iki-sutun">
         <div class="sa-durum">
@@ -1478,7 +1478,7 @@ def seo_kayit(rid, r):
     pre = f'dadahaber.com/{"gundem" if r["kat"] == "Gündem" else "dunya" if r["kat"] == "Dünya" else "finans"}/'
     cip = "".join(f'<span class="kb-cip" data-deger="{e(k)}"><span>{e(k)}</span><button type="button" aria-label="Kaldır">{I("fa-xmark")}</button></span>' for k in kw)
     return f"""      <div class="form-sec" data-kayit-icin="{rid}">
-        <div class="form-sec-tt">{I("fa-wand-magic-sparkles")}Otomatik üretildi<span class="kb-ai-oneri">{I("fa-wand-magic-sparkles")}AI önerisi · onay bekliyor<button type="button" data-ai-onayla>Onayla</button></span><span class="fs-ek"><button type="button" class="btn btn-ghost btn-sm" data-seo-uret>{I("fa-rotate")}Başlıktan yeniden üret</button></span></div>
+        <div class="form-sec-tt">{I("fa-wand-magic-sparkles")}Otomatik Üretildi<span class="kb-ai-oneri">{I("fa-wand-magic-sparkles")}AI önerisi · onay bekliyor<button type="button" data-ai-onayla>Onayla</button></span><span class="fs-ek"><button type="button" class="btn btn-ghost btn-sm" data-seo-uret>{I("fa-rotate")}Başlıktan Yeniden Üret</button></span></div>
         <div class="form-grid">
           <div class="frow"><label for="sBaslik-{rid}">SEO Başlığı</label>
             <input class="finput" id="sBaslik-{rid}" data-alan="seo-baslik-{rid}" data-sayac="60|70" value="{e(b)}">
@@ -1594,8 +1594,8 @@ def sayfa_duzenle():
       {"".join(f'<div class="ph-sub" data-kayit-icin="{rid}">{e(t)}</div>' for rid, t in sub.items())}
     </div>
     <div class="ph-actions">
-      <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.havuz" href="index.html">{I("fa-arrow-left")}Haber havuzuna dön</a>
-      {"".join(f'<a class="btn btn-ghost btn-sm" data-kayit-icin="{rid}" href="{e(r["url"])}" target="_blank" rel="noopener">{I("fa-arrow-up-right-from-square")}Kaynak haberini aç</a>' for rid, r in KAYIT.items())}
+      <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.havuz" href="index.html">{I("fa-arrow-left")}Haber Havuzuna Dön</a>
+      {"".join(f'<a class="btn btn-ghost btn-sm" data-kayit-icin="{rid}" href="{e(r["url"])}" target="_blank" rel="noopener">{I("fa-arrow-up-right-from-square")}Kaynak Haberini Aç</a>' for rid, r in KAYIT.items())}
     </div>
   </div>
 
@@ -1615,7 +1615,7 @@ def sayfa_duzenle():
     <div class="sa-form-panel" id="pDetay" role="tabpanel">
 {"".join(detay_kayit(rid, r) for rid, r in KAYIT.items())}
       <div class="form-sec">
-        <div class="form-sec-tt">{I("fa-comments")}Okur etkileşimi</div>
+        <div class="form-sec-tt">{I("fa-comments")}Okur Etkileşimi</div>
         <div class="form-grid">
           <div class="toggle-row"><span>Yorumlar Açık<small>Yorumları editörler yönetir</small></span><label class="toggle"><input type="checkbox" checked aria-label="Yorumlar Açık"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
           <div class="toggle-row"><span>Haberi Dinle<small>Metin tarayıcının sesiyle okunur</small></span><label class="toggle"><input type="checkbox" checked aria-label="Haberi Dinle"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
@@ -1664,7 +1664,7 @@ def sayfa_duzenle():
     <div class="kk-durum">{I("fa-circle-dot")}<span>AI taslağı · henüz onaylanmadı</span></div>
     <div class="kk-sag">
       <button type="button" class="btn btn-ghost btn-sm danger" data-pencere="aiReddet">{I("fa-ban")}Reddet</button>
-      <button type="button" class="btn btn-ghost btn-sm" data-kaydet data-kaydet-tur="taslak" data-kaydet-metin="Taslak olarak kaydedildi" data-bildir="Taslak kaydedildi; havuzda onay bekliyor">{I("fa-floppy-disk")}Taslak kaydet</button>
+      <button type="button" class="btn btn-ghost btn-sm" data-kaydet data-kaydet-tur="taslak" data-kaydet-metin="Taslak olarak kaydedildi" data-bildir="Taslak kaydedildi; havuzda onay bekliyor">{I("fa-floppy-disk")}Taslak Kaydet</button>
       <div class="kb-okuma-onay" data-okuma-hedef="#pDetay" data-okuma-roller="{okuma_roller}" data-okuma-sure="{OKUMA['sigan_icerik_saniye']}"><button type="button" class="btn btn-acc btn-sm" data-okuma-btn data-kaydet data-kaydet-metin="Onaylandı ve yayımlandı" data-bildir="Haber onaylandı ve yayımlandı; 1. kaynağın grubundaki kanallarda görünür">{I("fa-check")}Onayla ve Yayınla</button><span class="ko-neden"></span></div>
     </div>
   </div>
