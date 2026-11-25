@@ -43,7 +43,7 @@ def sayfa_haritasi():
                 "baslik": s["baslik"], "ikon": s.get("ikon", "fa-circle"), "modul": m["id"],
                 "modul_ad": m["ad"], "grup": m["grup"], "hazir": bool(s.get("hazir")),
                 "dosya": s["dosya"], "roller": s.get("roller", m.get("roller", [])),
-                "acik": m["id"] in acik,
+                "acik": m["id"] in acik and s.get("acik", True) is not False,  # sayfa düzeyinde kapatma (ör. Reklam Alanları, Beyar 25.11.2026)
             }
     return harita
 SAYFALAR = sayfa_haritasi()
@@ -78,7 +78,7 @@ def menu_html(sayfa_yolu):
         linkler = []
         for m in mods:
             for s in m.get("sayfalar", []):
-                if not s.get("menude") or not s.get("hazir"):  # yarım sayfa (hazir: false) menüde görünmez (Beyar, 25.11.2026)
+                if not s.get("menude") or not s.get("hazir") or s.get("acik", True) is False:  # yarım (hazir: false) ya da kapalı (acik: false) sayfa menüde görünmez
                     continue
                 anahtar = f'{m["id"]}.{s["id"]}'
                 roller = " ".join(s.get("roller", m.get("roller", [])))
@@ -302,7 +302,7 @@ for p, rel in sayfalar():
             sorunlar.append(f"{rel}: kırık bağlantı → {h}")
     # kapalı modülün kendi sayfaları denetlenmez (modül kapalıyken o sayfalara hiçbir yerden ulaşılmaz);
     # aranan: açık modüllerin ve çekirdeğin sayfalarında kapalı modüle bağlantı. Düz metin (<pre>, kod) sayılmaz.
-    kapali_sayfa = any(rel.startswith(m["klasor"]) for m in moduller.values() if not m.get("acik") and m.get("klasor"))
+    kapali_sayfa = any(rel.startswith(m["klasor"]) for m in moduller.values() if not m.get("acik") and m.get("klasor")) or any(rel == s["dosya"] for s in SAYFALAR.values() if not s["acik"])  # kapalı sayfanın kendisi (sayfa düzeyinde kapatma)
     bag = " ".join(re.findall(r'(?:href|src)="([^"]+)"', yeni))
     for anahtar, s in SAYFALAR.items():
         if not kapali_sayfa and not s["acik"] and goreli(s["dosya"], rel) in bag:

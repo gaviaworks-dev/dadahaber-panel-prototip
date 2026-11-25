@@ -1101,7 +1101,7 @@ window.PANEL = {
    "ikon": "fa-rectangle-ad",
    "modul_ad": "Etkileşim",
    "hazir": true,
-   "acik": true,
+   "acik": false,
    "roller": [
     "super",
     "gyy"
@@ -1148,7 +1148,7 @@ window.PANEL = {
    "ikon": "fa-rectangle-ad",
    "modul_ad": "Etkileşim",
    "hazir": true,
-   "acik": true,
+   "acik": false,
    "roller": [
     "super",
     "gyy"
@@ -1998,6 +1998,7 @@ window.PANEL = {
   {
    "id": "x",
    "ad": "X",
+   "ikon": "fa-brands fa-x-twitter",
    "acik": true,
    "oranlar": [
     "16:9",
@@ -2021,6 +2022,7 @@ window.PANEL = {
   {
    "id": "facebook",
    "ad": "Facebook",
+   "ikon": "fa-brands fa-facebook",
    "acik": true,
    "oranlar": [
     "1.91:1",
@@ -2044,6 +2046,7 @@ window.PANEL = {
   {
    "id": "linkedin",
    "ad": "LinkedIn",
+   "ikon": "fa-brands fa-linkedin",
    "acik": true,
    "oranlar": [
     "1.91:1",
@@ -2067,6 +2070,7 @@ window.PANEL = {
   {
    "id": "instagram",
    "ad": "Instagram",
+   "ikon": "fa-brands fa-instagram",
    "acik": true,
    "oranlar": [
     "1:1",
@@ -2093,6 +2097,7 @@ window.PANEL = {
   {
    "id": "telegram",
    "ad": "Telegram",
+   "ikon": "fa-brands fa-telegram",
    "acik": true,
    "oranlar": [
     "16:9",
@@ -2115,9 +2120,155 @@ window.PANEL = {
     ],
     "not": "Gerçek biçim (MarkdownV2): kalın, italik, altı çizili, üstü çizili, kod, gizli metin · görselli gönderide 1024, görselsiz 4096 karakter"
    }
+  },
+  {
+   "id": "threads",
+   "ad": "Threads",
+   "ikon": "fa-brands fa-threads",
+   "acik": true,
+   "tur": "yazi",
+   "resmi_yol": "Threads API (Meta)",
+   "oranlar": [
+    "1:1",
+    "4:5",
+    "serbest"
+   ],
+   "editor": {
+    "sinir": 500,
+    "araclar": [
+     "emoji",
+     "etiket",
+     "kisi",
+     "link"
+    ],
+    "not": "Bağlantı önizleme kartı açar · gönderi başına bir konu etiketi",
+    "dogrulanacak": [
+     "konu etiketi sayısı (gönderi başına 1)",
+     "görsel oranları"
+    ]
+   }
+  },
+  {
+   "id": "bluesky",
+   "ad": "Bluesky",
+   "ikon": "fa-brands fa-bluesky",
+   "acik": true,
+   "tur": "yazi",
+   "resmi_yol": "AT Protocol API",
+   "oranlar": [
+    "16:9",
+    "1:1",
+    "serbest"
+   ],
+   "editor": {
+    "sinir": 300,
+    "araclar": [
+     "emoji",
+     "etiket",
+     "kisi",
+     "link"
+    ],
+    "not": "300 karakter · bağlantı kartı açar · en fazla 4 görsel",
+    "dogrulanacak": [
+     "görsel sayısı (4)",
+     "bağlantının karakter sayımı"
+    ]
+   }
+  },
+  {
+   "id": "youtube-shorts",
+   "ad": "YouTube Shorts",
+   "ikon": "fa-brands fa-youtube",
+   "acik": true,
+   "tur": "video",
+   "resmi_yol": "YouTube Data API",
+   "oranlar": [
+    "9:16"
+   ],
+   "editor": {
+    "baslik_sinir": 100,
+    "sinir": 5000,
+    "araclar": [
+     "emoji",
+     "etiket",
+     "link"
+    ],
+    "etiket_alani": true,
+    "kapak_karesi": true,
+    "not": "Dikey video · başlık 100, açıklama 5000 karakter",
+    "dogrulanacak": [
+     "en uzun süre (3 dk)",
+     "etiket alanının toplam sınırı",
+     "kapak karesinin API ile seçilebilmesi"
+    ]
+   }
+  },
+  {
+   "id": "instagram-reels",
+   "ad": "Instagram Reels",
+   "ikon": "fa-brands fa-instagram",
+   "acik": true,
+   "tur": "video",
+   "resmi_yol": "Instagram Graph API",
+   "oranlar": [
+    "9:16"
+   ],
+   "editor": {
+    "sinir": 2200,
+    "kesim": 125,
+    "etiket_siniri": 30,
+    "araclar": [
+     "emoji",
+     "etiket",
+     "kisi"
+    ],
+    "link_yok": true,
+    "kapak_karesi": true,
+    "not": "Dikey video · açıklama 2200 karakter, ilk 125 karakter görünür · en fazla 30 etiket · açıklamadaki bağlantı tıklanmaz",
+    "dogrulanacak": [
+     "API ile en uzun süre",
+     "kapak karesi (zaman konumu) desteği"
+    ]
+   }
+  },
+  {
+   "id": "tiktok",
+   "ad": "TikTok",
+   "ikon": "fa-brands fa-tiktok",
+   "acik": true,
+   "tur": "video",
+   "resmi_yol": "TikTok Content Posting API",
+   "onay_gerekir": "Uygulama onayı gerekir",
+   "oranlar": [
+    "9:16"
+   ],
+   "editor": {
+    "sinir": 2200,
+    "araclar": [
+     "emoji",
+     "etiket",
+     "kisi"
+    ],
+    "link_yok": true,
+    "kapak_karesi": true,
+    "not": "Dikey video · açıklama 2200 karakter · bağlantı tıklanmaz · uygulama onaylanana kadar gönderiler yalnız özel görünür",
+    "dogrulanacak": [
+     "açıklama sınırı (2200)",
+     "en uzun süre",
+     "onaysız uygulamada görünürlük kuralı"
+    ]
+   }
   }
  ],
  "sosyal_oranlar": [
+  {
+   "oran": "9:16",
+   "ad": "Sosyal 9:16",
+   "px": [
+    1080,
+    1920
+   ]
+  },
   {
    "oran": "16:9",
    "ad": "Sosyal 16:9",
@@ -2480,7 +2631,8 @@ window.PANEL = {
    ],
    "yayin": [
     "ad",
-    "ust"
+    "ust",
+    "sutun"
    ]
   },
   "ai-havuz.kaynak": {
@@ -2584,6 +2736,7 @@ window.PANEL = {
    "yayin": [
     "ad",
     "kategori",
+    "periyot",
     "kapak"
    ]
   },
@@ -2599,7 +2752,8 @@ window.PANEL = {
    "sistem": [
     "bolum-no",
     "sure",
-    "kapak"
+    "kapak",
+    "periyot"
    ]
   },
   "multimedya.sesli": {
@@ -2608,6 +2762,7 @@ window.PANEL = {
    ],
    "yayin": [
     "baslik",
+    "kusak",
     "haberler",
     "ses"
    ],
@@ -2623,10 +2778,12 @@ window.PANEL = {
    "yayin": [
     "baslik",
     "kategori",
+    "tema",
     "slaytlar"
    ],
    "sistem": [
-    "kapak"
+    "kapak",
+    "kare-sayisi"
    ]
   },
   "multimedya.infografik": {
@@ -2636,7 +2793,10 @@ window.PANEL = {
    "yayin": [
     "baslik",
     "kategori",
-    "gorsel"
+    "veri-konusu",
+    "gorsel",
+    "veri-kaynagi",
+    "donem"
    ]
   },
   "multimedya.varlik": {
