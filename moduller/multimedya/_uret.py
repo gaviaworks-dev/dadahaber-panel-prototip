@@ -504,7 +504,7 @@ def yayin_kart(durum_html, yayin_zamani, ek="", surum=None, durum_state="yayinda
 def seo_kart(skor, kontroller):
     ch = "".join(f'<div class="seo-chk {"pass" if ok else "fail"}">{ikon("fa-circle-check") if ok else ikon("fa-circle", "fa-regular")}{e(m)}</div>' for ok, m in kontroller)
     etk = "İyi" if skor >= 80 else "Orta"
-    return f"""    <section class="pnl-card" data-one-cik="pSeo">
+    return f"""    <section class="pnl-card">
       <div class="pc-head"><h2 class="pc-title">{ikon("fa-gauge")}SEO Skoru</h2></div>
       <div class="pc-body">
         <p class="fhint" data-yeni-goster hidden>Skor, başlık, açıklama ve görsel girilince hesaplanır.</p>
@@ -721,6 +721,90 @@ def yazar_suz(lid, adlar):
     return secim(lid + "SuzYaz", "", ops, suz="yazar", etk="Hazırlayan:", ara="Kişi ara", bos_metin="Bu adla kişi yok.")
 
 
+# ---- DADAHABER-10 §4–5: medya alanları (değerler modül kaydından, saat ve kart verisi sitenin kategori.json'undan) ----
+def _kayit_modul(o, ad="multimedya"):
+    if isinstance(o, dict):
+        if o.get("id") == ad or o.get("anahtar") == ad:
+            return o
+        o = list(o.values())
+    if isinstance(o, list):
+        for v in o:
+            r = _kayit_modul(v, ad)
+            if r:
+                return r
+    return None
+
+
+ALAN = (_kayit_modul(json.loads((KOK / "moduller.json").read_text(encoding="utf-8"))) or {}).get("ayarlar", {}).get("alanlar", {})
+SKAT = json.loads((PUB / "araclar" / "kategori.json").read_text(encoding="utf-8"))
+KUSAKLAR = [(k["ad"], k["saat"], k.get("ikon", "fa-clock")) for k in SKAT["kusaklar"].values()]
+PERIYOTLAR = ALAN.get("periyot", ["Haftalık", "Aylık Dosya", "Özel Seri"])
+PROGRAM_PERIYOT = ALAN.get("programlar", {})
+GALERI_TEMA = ALAN.get("galeri_tema", [])
+VIDEO_TUR = ALAN.get("video_tur", [])
+VERI_KONUSU = ALAN.get("veri_konusu", [])
+ALT_GECERLI = {b["ad"]: [o["ad"] for st in b.get("sutunlar", []) for o in st["ogeler"]] for b in SKAT["basliklar"]}
+
+
+def slug(s):
+    m = {"ç": "c", "ğ": "g", "ı": "i", "ö": "o", "ş": "s", "ü": "u", "â": "a", "î": "i", "û": "u"}
+    return re.sub(r"[^a-z0-9]+", "-", "".join(m.get(c, c) for c in s.replace("İ", "i").lower())).strip("-")
+
+
+def alt_yeni(ana, alt):
+    """Eski alt konu → yeni ağaçtaki karşılığı (sitenin kart_etiketi eşlemesi); ağaçta yoksa alt konu yok."""
+    a = SKAT.get("kart_etiketi", {}).get(alt, alt)
+    return a if a in ALT_GECERLI.get(ana, []) else None
+
+
+def site_kartlari(dosya):
+    """Public medya sayfasındaki kartlar: başlık → {kategori, tur, kusak} (slug)."""
+    t = (PUB / dosya).read_text(encoding="utf-8")
+    out = {}
+    for m in re.finditer(r'<(a|article|div|li)\b([^>]*data-(?:kategori|kusak)="[^"]*"[^>]*)>(.*?)</\1>', t, flags=re.S):
+        hh = re.search(r"<h[234][^>]*>(.*?)</h[234]>", m.group(3), re.S)
+        if hh:
+            b = html.unescape(re.sub(r"<[^>]+>", "", hh.group(1))).strip().replace("’", "'")
+            out[b] = dict(re.findall(r'data-(kategori|tur|kusak)="([^"]*)"', m.group(2)))
+    return out
+
+
+def slugdan(deger, liste, yedek=None):
+    return next((x for x in liste if slug(x) == deger), yedek)
+
+
+def bolmeli(ad, alan_id, secenekler, secili=None, ek="", yeni_bos=True):
+    """Bölmeli seçim (çekirdek kbSecenekDuzenle 2–4 seçeneği bölmeli düğmeye çevirir). secenekler: [(deger, ad, alt, ac)]."""
+    oge = ""
+    for d in secenekler:
+        deger, ad_, alt_, ac = (list(d) + [None, None, None])[:4]
+        oge += (f'<label class="kb-secenek"><input type="radio" name="{ad}" value="{e(deger)}"{" checked" if secili == deger else ""}'
+                f'{f" data-ac=\"{ac}\"" if ac else ""}{" data-yeni-isaret=\"0\"" if yeni_bos else ""}>{e(ad_)}{f"<small>{e(alt_)}</small>" if alt_ else ""}</label>')
+    return f'<div class="kb-secenek-grup" role="radiogroup" aria-label="{e(ad)}" data-alan-id="{alan_id}"{ek}>{oge}</div>'
+
+
+ILISKILI = [x for x in sorted(soz["haberler"], key=lambda x: (x["tarih"], x["saat"]), reverse=True) if x["detay"] == "haber-detay.html"][:40]
+
+
+def iliskili_haber(fid, deger=None, not_="Sitede içeriğin altında “İlgili haber” olarak görünür; haberin sayfasında da bu içeriğe bağlantı çıkar."):
+    """Bütün medya formlarında isteğe bağlı İlişkili Haber (DADAHABER-10 §5): kategori + son yayımlananlar içerik seçicisi."""
+    oge = "".join(f'<li data-id="{e(x["id"])}" data-kategori="{e(x["bolum"])}" data-zaman="{tarih(x["tarih"], x["saat"])}" data-gorsel="../../veri/gorsel/kucuk/{g_of(x["baslik"])}">{e(x["baslik"])}</li>' for x in ILISKILI)
+    dg = f' data-deger="{e(deger)}"' if deger else ""
+    return (f'<div class="form-sec" data-modul="haberler"><div class="form-sec-tt">{ikon("fa-link")}İlişkili Haber<span class="fs-ek">İsteğe bağlı</span></div><div class="form-grid">'
+            f'<div class="frow"><div class="kb-icerik-sec" id="{fid}" data-icerik-sec data-ad="{fid}" data-alan-id="iliskili-haber" data-sayi="6" data-bos="Haber seçin"{dg}><ul data-icerik-havuz hidden>{oge}</ul></div>'
+            f'<span class="fhint">{not_}</span></div></div></div>')
+
+
+def iliskili_id(baslik_parca):
+    return next((x["id"] for x in ILISKILI if baslik_parca.lower() in x["baslik"].lower()), None)
+
+
+def suz_liste(lid, anahtar, etk, bos_ad, degerler, sayilar=None):
+    """Liste süzgeci (kb-secim[data-suz]); satırda data-<anahtar> aranır."""
+    ops = [("", bos_ad)] + [(v, v, sayilar.get(v) if sayilar else None) for v in degerler if not sayilar or sayilar.get(v)]
+    return secim(f"{lid}Suz{anahtar.title()}", "", ops, suz=anahtar, etk=etk + ":", ara=f"{etk} ara" if len(ops) > 6 else None, bos_metin="Bu adla seçenek yok.")
+
+
 def dm_yayin(ad_tekil, onay_metin_kaldir):
     return (dm_grup("Yayın", "yayinda taslak zamanli")
             + dm("Şimdi Yayımla", "fa-paper-plane", "taslak zamanli",
@@ -752,11 +836,11 @@ def dm_icerik(ek=""):
 # =====================================================================
 VIDEOLAR = [dict(x, yazar=x.get("yazar") or "Dada Haber") for x in tur_listesi("video-detay.html")]
 VIDEO_EK = [
-    {"baslik": "Kar yağışında sürücülere 5 uyarı: zincir, lastik ve takip mesafesi", "bolum": "Gündem", "alt_konu": "Afet", "yazar": "Sibel Arslan", "tarih": "2026-11-24", "saat": "", "durum": "taslak", "sure": 214},
-    {"baslik": "Bütçe görüşmeleri 3 dakikada: ilk günün öne çıkanları", "bolum": "Finans", "alt_konu": "Türkiye Ekonomisi", "yazar": "Can Demir", "tarih": "2026-11-24", "saat": "19.30", "durum": "zamanli", "sure": 188},
-    {"baslik": "Derbi öncesi son antrenman: kadroda iki değişiklik", "bolum": "Spor", "alt_konu": "Futbol", "yazar": "Burak Tan", "tarih": "2026-11-25", "saat": "12.00", "durum": "zamanli", "sure": 142},
-    {"baslik": "KAAN test uçuşu: kokpitten görüntüler", "bolum": "Savunma", "alt_konu": "Hava Platformları", "yazar": "Mert Yalın", "tarih": "2026-11-24", "saat": "", "durum": "taslak", "sure": 96},
-    {"baslik": "Eski kapak denemesi: haftanın ekonomi özeti", "bolum": "Finans", "alt_konu": "Ekonomi Analizi", "yazar": "Elif Aras", "tarih": "2026-11-20", "saat": "10.00", "durum": "cop", "sure": 305},
+    {"baslik": "Kar yağışında sürücülere 5 uyarı: zincir, lastik ve takip mesafesi", "bolum": "Gündem", "alt_konu": "Çevre ve Afet", "yazar": "Sibel Arslan", "tarih": "2026-11-24", "saat": "", "durum": "taslak", "sure": 214, "tur": "Açıklayıcı Video"},
+    {"baslik": "Bütçe görüşmeleri 3 dakikada: ilk günün öne çıkanları", "bolum": "Finans", "alt_konu": "Türkiye Ekonomisi", "yazar": "Can Demir", "tarih": "2026-11-24", "saat": "19.30", "durum": "zamanli", "sure": 188, "tur": "Açıklayıcı Video"},
+    {"baslik": "Derbi öncesi son antrenman: kadroda iki değişiklik", "bolum": "Spor", "alt_konu": "Futbol", "yazar": "Burak Tan", "tarih": "2026-11-25", "saat": "12.00", "durum": "zamanli", "sure": 142, "tur": "Sahadan"},
+    {"baslik": "KAAN test uçuşu: kokpitten görüntüler", "bolum": "Savunma", "alt_konu": "Hava Platformları", "yazar": "Mert Yalın", "tarih": "2026-11-24", "saat": "", "durum": "taslak", "sure": 96, "tur": "Sahadan"},
+    {"baslik": "Eski kapak denemesi: haftanın ekonomi özeti", "bolum": "Finans", "alt_konu": "Türkiye Ekonomisi", "yazar": "Elif Aras", "tarih": "2026-11-20", "saat": "10.00", "durum": "cop", "sure": 305},
 ]
 AKIS = [
     ("Marmara'da kar yağışı: İstanbul sabah saatlerinde", "Gündem", 48, "31,2 B", "p193.jpg", "yayinda", "16.05"),
@@ -774,6 +858,20 @@ AKIS = [
     ("Akşam akışı: bütçenin ilk günü 45 saniyede", "Finans", 45, "—", "p163.jpg", "zamanli", "19.00"),
     ("Hava durumu: hafta sonu kar sürecek mi?", "Gündem", 0, "—", "p178.jpg", "taslak", ""),
 ]
+VIDEO_KART = site_kartlari("video.html")
+
+
+def video_turu(v):
+    """Tür etiketi (isteğe bağlı): sitedeki kart → örnek kayıt → kararlı örnek; beşte biri etiketsiz (kartta etiket yok)."""
+    t = VIDEO_KART.get(v["baslik"], {}).get("tur")
+    if t:
+        return slugdan(t, VIDEO_TUR)
+    if v.get("tur") in VIDEO_TUR:
+        return v["tur"]
+    k = h(v["baslik"], len(VIDEO_TUR) + 1)
+    return VIDEO_TUR[k] if k < len(VIDEO_TUR) else None
+
+
 CANLI = [
     ("2027 bütçesinin görüşmeleri Genel Kurul'da başladı", "TBMM Genel Kurulu · Meclis TV yayını", "Gündem", "canli", "24.11.2026 13.00", "4,8 B izleyici", "p195.jpg", "Ayşe Yıldız"),
     ("Valilik kar koordinasyon toplantısı sonrası açıklama", "İstanbul Valiliği · yaklaşık 20 dk", "Gündem", "planli", "24.11.2026 17.00", "hatırlatma 1.240", "p182.jpg", "Sibel Arslan"),
@@ -789,8 +887,11 @@ def video_sayfasi():
     sat = ""
     kayitlar = [dict(x, durum="yayinda") for x in VIDEOLAR] 
     kayitlar = [x for x in VIDEO_EK if x["durum"] != "cop"] + kayitlar + [x for x in VIDEO_EK if x["durum"] == "cop"]
-    say = {}
+    say, say_tur = {}, {}
     for i, v in enumerate(kayitlar):
+        tur = video_turu(v)
+        if tur and v["durum"] != "cop":
+            say_tur[tur] = say_tur.get(tur, 0) + 1
         sn = v.get("sure") if isinstance(v.get("sure"), int) else 60 + h(v["baslik"], 420)
         img = g_of(v["baslik"])
         d = v["durum"]
@@ -800,18 +901,19 @@ def video_sayfasi():
         href = "video-duzenle.html?id=video"
         alt = f'{ikon("fa-play")}{sure_yaz(sn)} · {e(v["yazar"])}'
         sil_kul = "Video sayfasında ve bir haberin içinde gömülü; oradan da kalkar" if d == "yayinda" and i % 5 == 0 else None
-        nit = {"satir": f"v{i}", "durum": d, "kategori": v["bolum"], "yazar": v["yazar"], "ara": f'{v["baslik"]} {v["yazar"]} {v["bolum"]} {v.get("alt_konu") or ""}',
+        nit = {"satir": f"v{i}", "durum": d, "kategori": v["bolum"], "tur": tur, "yazar": v["yazar"], "ara": f'{v["baslik"]} {v["yazar"]} {v["bolum"]} {v.get("alt_konu") or ""} {tur or ""}',
                "baslik": v["baslik"], "href": href, "kullanim": sil_kul}
         acts = eylemler(gor_href=SITE + "video-detay.html" if d == "yayinda" else href, gor_site=d == "yayinda", duz_href=href, ad=v["baslik"])
-        sat += satir(nit, [ana_hucre(v["baslik"], alt, img), kat_hucre(v["bolum"], v.get("alt_konu")), durum_hucre(d),
+        sat += satir(nit, [ana_hucre(v["baslik"], alt, img), kat_hucre(v["bolum"], alt_yeni(v["bolum"], v.get("alt_konu"))),
+                           f'<td class="kb-gizle-t">{f"<span class=\"kb-kat\">{e(tur)}</span>" if tur else "<span class=\"muted\">—</span>"}</td>', durum_hucre(d),
                            f'<td class="kb-gizle-m"><span class="kb-tarih{" muted" if d in ("taslak", "cop") else ""}">{zaman}</span></td>',
                            f'<td class="say kb-gizle-t">{e(gor)}</td>'], acts)
     diger = (dm_yayin("Video", "Video sitede ve haberlerin içindeki gömülü oynatıcıda görünmez olur; taslak olarak kalır, geri alınabilir ve denetim izine yazılır.")
              + dm_dagitim() + dm_icerik()
              + dm_kayit() + dm_cop())
-    ko = [("Video", "kb-ana"), ("Kategori", "kb-gizle-m"), ("Durum", ""), ("Yayın", "kb-gizle-m"), ("İzlenme", "say kb-gizle-t")]
+    ko = [("Video", "kb-ana"), ("Kategori", "kb-gizle-m"), ("Tür", "kb-gizle-t"), ("Durum", ""), ("Yayın", "kb-gizle-m"), ("İzlenme", "say kb-gizle-t")]
     l_video = liste("vd", "video", "Video listesi", [("hepsi", "Tümü", None), ("yayinda", "Yayında", None), ("taslak", "Taslak", None), ("zamanli", "Zamanlanmış", None)],
-                    "Başlık, hazırlayan ya da kategori ara", kat_suz("vd", say) + yazar_suz("vd", [x["yazar"] for x in kayitlar]),
+                    "Başlık, hazırlayan ya da kategori ara", kat_suz("vd", say) + suz_liste("vd", "tur", "Tür", "Bütün Türler", VIDEO_TUR, say_tur) + yazar_suz("vd", [x["yazar"] for x in kayitlar]),
                     f'<button type="button" class="btn btn-ghost btn-sm" data-toplu="taslak" data-bildir="Seçilen videolar yayından kaldırılıp taslağa alındı">{ikon("fa-eye-slash")}<span>Yayından Kaldır</span></button>',
                     ko, sat, ("fa-video", "Henüz video yok", "İlk videonuzu yükleyin ya da YouTube bağlantısı ekleyin; yayımladığınız videolar burada listelenir.",
                               f'<a class="pe-tag" href="video-duzenle.html?yeni=1&amp;id=video">{ikon("fa-plus")}Yeni Video</a>'),
@@ -908,12 +1010,16 @@ def yazar_secim(sid, deger, etiket="Hazırlayan"):
             + '<span class="fhint">Yeni kayıtta oturumdaki kişi gelir.</span></div>')
 
 
-def siniflandirma(sid, kat, alt, yazar, ek=""):
+def siniflandirma(sid, kat, alt, yazar, ek="", yan="", alt_satir=""):
+    """yan: Ana Kategori'nin yanındaki alan (Görsel Tema, Veri Konusu); verilirse alt konular yazarın yanına iner. alt_satir: tam genişlikte ek satır (Tür Etiketi)."""
+    ana = (f'<div class="frow"><span class="flabel">Ana Kategori</span>{kat_secim(sid, kat)}'
+           f'<span class="fhint">Adres ve SEO ana kategoriye göre kurulur. Kategoriler <a class="kb-bag" data-hedef="haberler.liste" href="#icerik">Haberler</a> ekranından yönetilir.</span></div>')
+    if yan:
+        satirlar_ = f'<div class="frow two">{ana}{yan}</div><div class="frow two">{alt_konu(sid, kat, alt)}{yazar_secim(sid + "Yaz", yazar)}</div>' + (f'<div class="frow two">{ek}</div>' if ek else "")
+    else:
+        satirlar_ = f'<div class="frow two">{ana}{alt_konu(sid, kat, alt)}</div><div class="frow two">{yazar_secim(sid + "Yaz", yazar)}{ek}</div>'
     return (f'<div class="form-sec" data-ai-grup="sinif"><div class="form-sec-tt">{ikon("fa-sitemap")}Sınıflandırma</div><div class="form-grid">'
-            f'<div class="frow two"><div class="frow"><span class="flabel">Ana Kategori</span>{kat_secim(sid, kat)}'
-            f'<span class="fhint">Adres ve SEO ana kategoriye göre kurulur. Kategoriler <a class="kb-bag" data-hedef="haberler.liste" href="#icerik">Haberler</a> ekranından yönetilir.</span></div>'
-            f'{alt_konu(sid, kat, alt)}</div>'
-            f'<div class="frow two">{yazar_secim(sid + "Yaz", yazar)}{ek}</div></div></div>')
+            f'{satirlar_}{alt_satir}</div></div>')
 
 
 def baslik_spot(baslik, spot, b_not="Sitede başlık; SEO başlığı buradan üretilir", s_not="Kartta ve paylaşımda başlığın altında", s_etk="Spot", s_sayac="160|200"):
@@ -987,7 +1093,9 @@ def video_duzenle():
              "oynatıcı <b>1280×720</b>, kart <b>308×231</b>", "<b>358×268</b>", "1280×720", kaynak="Dada Haber · telif bizde", odak=(50, 45),
              ek_alt=" Videodan kare seçmek için “Kırp ve odak” penceresinde yüklenen görsel kullanılır.")}
 {editor("Açıklama", aciklama, "Sitede videonun altında; okur “devamını oku” ile açar", ai_grup="aciklama", fs_ek="Ara başlık, bağlantı, liste")}
-{siniflandirma("vKat", v["bolum"], [v["alt_konu"]] if v.get("alt_konu") and v["alt_konu"] != v["bolum"] else ["Afet"], v["yazar"])}
+{siniflandirma("vKat", v["bolum"], [alt_yeni(v["bolum"], v.get("alt_konu")) or "Çevre ve Afet"], v["yazar"],
+               alt_satir=f'<div class="frow"><span class="flabel">Tür Etiketi</span>{bolmeli("vTur", "tur", [(t, t) for t in VIDEO_TUR], video_turu(v) or "Sahadan", ek=" data-bosaltilir")}<span class="fhint">İsteğe bağlı; sitede kartta etiket olarak görünür. Seçili türe yeniden tıklayınca kalkar, boşsa kartta etiket yok. Tür ayrı kategori değildir (Video Haber sayfasında ikinci süzgeç).</span></div>')}
+{iliskili_haber("vIliskili", iliskili_id("İstanbul Valiliği"))}
 {okur_etkilesimi(toggle("Yorumlar Açık", "Yorumları editörler yönetir"), toggle("Haberlerin İçine Gömülebilir", "Haber metnine “video ekle” ile eklenir; gömme kodu verilir"), toggle("Otomatik Oynat", "Sessiz başlar; yalnız video sayfasında", False))}"""
     paneller = (detay_panel(baslik_spot(baslik, spot) + ai + "\n" + icerik)
                 + seo_panel("pSeo", "İstanbul'da kar yağışı: sabah saatlerinden görüntüler | Dada Haber", "İstanbul'da kar yağışı sabah saatlerinde yoğunlaştı. Tuzlama çalışmaları, uzatılan seferler ve valiliğin açıklaması videoda.",
@@ -1007,7 +1115,7 @@ def video_duzenle():
                         surum=(3, "23.11.2026 16.20", "Sibel Arslan"))
            + seo_kart(84, [(True, "Başlık 50–60 karakter"), (True, "Açıklama 120–155 karakter"), (True, "Kapak 1280 px üstü"), (False, "Altyazı dosyası dizinde yok")]))
     duzenle_sayfasi("video-duzenle.html", "Video Düzenle", "multimedya.video", "Yeni Video", "Video Düzenle", "Yeni Video",
-                    f'{e(v["bolum"])} › Afet · {e(v["yazar"])} · {tarih(v["tarih"], v["saat"])}\'te yayımlandı · {e(v["goruntulenme"])} izlenme',
+                    f'{e(v["bolum"])} › {e(alt_yeni(v["bolum"], v.get("alt_konu")) or "Çevre ve Afet")} · {e(v["yazar"])} · {tarih(v["tarih"], v["saat"])}\'te yayımlandı · {e(v["goruntulenme"])} izlenme',
                     "Taslak · henüz kaydedilmedi · hazırlayan: oturumdaki kullanıcı", ("multimedya.video", "Videolara Dön"), SITE + "video-detay.html",
                     "vdForm", "multimedya.video", STD_SEKMELER, paneller, yan,
                     kaydet_cubugu("vdForm", "Kaydedildi · 23.11.2026 16.20 · Sibel Arslan", "Video güncellendi; sitede yayında ve önceki hal sürüm geçmişinde", "Video yayımlandı; video sayfasında ve uygulamada görünür"))
@@ -1040,15 +1148,13 @@ def akis_duzenle():
             <span class="fhint">Telefonda tam ekran oynar. Süre dosyadan okunur: <b>48 sn · 1080×1920</b>. Yatay video yüklenirse ortası kırpılır.</span></div>
           <div class="frow" data-ai-grup="altyazi"><span class="flabel">Ekran Yazıları</span>
             {toggle("Otomatik Ekran Yazısı", "Sessiz izleyen okur için videonun sesinden; editör düzeltir")}</div>
-          <div class="frow two">
-            <div class="frow"><label for="aSira">Akıştaki Sıra</label><div class="kb-birim"><input class="finput" id="aSira" data-alan-id="sira" inputmode="numeric" value="1"><span>/ 12</span></div><span class="fhint">Boşsa yayın saatine göre sıralanır.</span></div>
-            {haber_secim("aHaber", "Marmara'da kar yağışı: İstanbul'da okullar yarın da tatil", etiket="“Habere Git” Bağlantısı", not_="Akışın sonunda ve videonun altında okur bu habere gider.")}
-          </div>
+          <div class="frow"><label for="aSira">Akıştaki Sıra</label><div class="kb-birim"><input class="finput" id="aSira" data-alan-id="sira" inputmode="numeric" value="1"><span>/ 12</span></div><span class="fhint">Boşsa yayın saatine göre sıralanır.</span></div>
         </div>
       </div>
 {gorsel_alan("aKapak", "multimedya.akis", "Kapak Görseli", img, [("web.detay", "Oynatıcı · 9:16", "9:16", 150), ("web.kart", "Ray kartı · 9:16", "9:16", 110)], ("mobil.kart", "Tam ekran · 9:16", "9:16", 150),
              "oynatıcı <b>420×747</b>, ray kartı <b>188×334</b>", "<b>358×636</b>", "1080×1920", kaynak="Dada Haber · telif bizde", odak=(50, 50))}
 {siniflandirma("aKat", k, ["İstanbul"], "Sibel Arslan")}
+{iliskili_haber("aIliskili", iliskili_id("İstanbul Valiliği"), "Akışın sonunda ve videonun altında “Habere git” ile okur bu habere gider.")}
 {okur_etkilesimi(toggle("Yorumlar Açık", "Yorumları editörler yönetir"), toggle("Ana Sayfa Akış Rayında", "Ana sayfadaki dikey video rayında"))}"""
     paneller = (detay_panel(baslik_spot(b, "Gece başlayan kar sabah yoğunlaştı; ekipler tuzlama yapıyor, seferler uzatıldı.", s_etk="Kısa Metin", s_not="Videonun üstünde iki satır", s_sayac="90|120") + ai + "\n" + icerik)
                 + seo_panel("pSeo", "Marmara'da kar: İstanbul sabah saatlerinde | Dada Haber Akış", "İstanbul'da kar yağışı sabah saatlerinde: 48 saniyede yollar, seferler ve okullar. Dada Haber Akış.",
@@ -1103,6 +1209,7 @@ def canli_duzenle():
              ek_alt=" Yayın başlamadan önce oynatıcıda bu görsel görünür.")}
 {editor("Açıklama", aciklama, "Sitede oynatıcının altında", ai_grup="aciklama")}
 {siniflandirma("cKat", k, ["Siyaset"], kim)}
+{iliskili_haber("cIliskili", iliskili_id("bütçe"), "Yayının altında “İlgili haber” olarak görünür; yayın sürerken haberin sayfasında canlı yayın bağlantısı çıkar.")}
 {okur_etkilesimi(toggle("Canlı Sohbet", "Yayın sırasında yorumlar akar; editörler yönetir", False), toggle("Ana Sayfa Canlı Bandı", "Yayın sürerken ana sayfanın üstünde"))}"""
     paneller = (detay_panel(baslik_spot(b, "Plan ve Bütçe Komisyonu'nun ardından bütçe teklifi Genel Kurul'da; oturum canlı.") + ai + "\n" + icerik)
                 + seo_panel("pSeo", "Canlı: 2027 bütçe görüşmeleri Genel Kurul'da | Dada Haber", "2027 bütçesinin TBMM Genel Kurulu görüşmeleri canlı yayında. Öne çıkan gelişmeler canlı akışta.",
@@ -1136,34 +1243,37 @@ def act_satir(ik, b, alt, sag, href=None, sira=None):
 # =====================================================================
 # 5 · Podcast (podcast.html: Seriler · Bölümler)
 # =====================================================================
+# DADAHABER-10 §4: 7 program, periyodu modül kaydından (multimedya.ayarlar.alanlar.programlar). siklik = "Periyot · gün"
 SERILER = [
-    ("ekonomi-masasi", "Ekonomi Masası", "Finans", ["Can Demir", "Kerem Aksoy"], 42, "p163.jpg", "Haftalık · Perşembe", "yayinda", "48,2 B", "Enflasyon, faiz ve bütçe: haftanın ekonomisini masaya yatırıyoruz."),
-    ("teknoloji-sohbetleri", "Teknoloji Sohbetleri", "Keşfet", ["Ozan Er"], 41, "p178.jpg", "Haftalık · Salı", "yayinda", "31,6 B", "Yapay zekâdan uzaya, gündelik hayatı değiştiren teknoloji."),
-    ("saha", "Saha", "Gündem", ["Sibel Arslan", "Hakan Uysal"], 40, "p182.jpg", "Haftalık · Pazartesi", "yayinda", "27,9 B", "Muhabirlerimiz sahadan anlatıyor: deprem bölgesinden şantiyeye."),
-    ("tribun", "Tribün", "Spor", ["Burak Tan", "Murat Tekin"], 39, "p188.jpg", "Haftada iki · Pazartesi, Cuma", "yayinda", "52,4 B", "Süper Lig'den Avrupa'ya haftanın maçları ve hesapları."),
-    ("dunya-turu", "Dünya Turu", "Dünya", ["Zeynep Ak"], 27, "p193.jpg", "Haftalık · Çarşamba", "yayinda", "14,8 B", "Brüksel'den Washington'a dünyanın gündemi yarım saatte."),
-    ("savunma-notlari", "Savunma Notları", "Savunma", ["Mert Yalın", "Tarık Bulut"], 22, "p122.jpg", "İki haftada bir · Cuma", "yayinda", "19,3 B", "Millî projeler, platformlar ve güvenlik politikası."),
-    ("kampus-saati", "Kampüs Saati", "Kampüs", ["Selin Koç"], 18, "p203.jpg", "Haftalık · Cumartesi", "yayinda", "11,2 B", "Sınavlar, tercihler, burslar: gençlerin gündemi."),
-    ("ev-ekonomisi", "Ev Ekonomisi", "Finans", ["Nazlı Öztürk"], 15, "p155.jpg", "Haftalık · Pazar", "yayinda", "9,7 B", "Aile bütçesi, faturalar, kira: evin hesabı."),
-    ("kadin-gundemi", "Kadın Gündemi Sesli", "Kadın", ["Deniz Kara"], 0, "p192.jpg", "Haftalık · Perşembe", "taslak", "—", "Kadınların gündemi, haklar ve başarı hikâyeleri."),
-    ("gece-kutuphanesi", "Gece Kütüphanesi", "Keşfet", ["İrem Su"], 3, "p164.jpg", "Aylık", "cop", "—", "Kitaplar ve yazarlar üzerine sohbetler."),
+    ("gundem-odasi", "Gündem Odası", "Gündem", ["Sibel Arslan", "Zeynep Ak"], 40, "p182.jpg", "Haftalık · Pazartesi", "yayinda", "27,9 B", "Haftanın siyasi ve toplumsal gündemi: sahadan sesler, uzman yorumları."),
+    ("ekonomi-masasi", "Ekonomi Masası", "Finans", ["Can Demir", "Kerem Aksoy"], 43, "p163.jpg", "Haftalık · Perşembe", "yayinda", "48,2 B", "Piyasalar, enflasyon ve kişisel finans: haftanın ekonomisi masada."),
+    ("teknoloji-sohbetleri", "Teknoloji Sohbetleri", "Keşfet", ["Ozan Er", "Kerem Aksoy"], 41, "p178.jpg", "Haftalık · Salı", "yayinda", "31,6 B", "Yapay zekâ, dijital kültür ve bilim: gündelik hayatı değiştiren teknoloji."),
+    ("saha-ve-tribun", "Saha ve Tribün", "Spor", ["Burak Tan", "Murat Tekin"], 40, "p188.jpg", "Haftalık · Cuma", "yayinda", "52,4 B", "Lig analizi ve spor gündemi: haftanın maçları ve hesapları."),
+    ("strateji-ve-savunma-masasi", "Strateji ve Savunma Masası", "Savunma", ["Mert Yalın", "Tarık Bulut"], 22, "p122.jpg", "Aylık Dosya", "yayinda", "19,3 B", "Savunma projeleri, jeopolitik ve güvenlik: ayın dosyası."),
+    ("kultur-ajandasi", "Kültür Ajandası", "Keşfet", ["Nilay Ersoy"], 9, "p164.jpg", "Aylık Dosya", "yayinda", "8,7 B", "Sinema, kitap, sergi ve şehir kültürü: ayın seçkisi."),
+    ("kampus-ve-gelecek", "Kampüs ve Gelecek", "Kampüs", ["Selin Koç"], 18, "p203.jpg", "Özel Seri", "yayinda", "11,2 B", "Sınav dönemleri, kariyer, burs ve gençlik gündemi; dönemlik mini seriler."),
 ]
 BOLUMLER = [
-    ("Enflasyon sepetinde bu ay ne değişti?", "ekonomi-masasi", 42, 2280, "yayinda", "23.11.2026 12.05", "12,4 B"),
-    ("Yapay zekâ haber odasına girerse", "teknoloji-sohbetleri", 41, 2640, "yayinda", "23.11.2026 10.50", "8,8 B"),
-    ("Deprem bölgesinde üçüncü kış", "saha", 40, 1980, "yayinda", "23.11.2026 08.45", "1,1 B"),
-    ("Süper Lig'de devre arası hesapları", "tribun", 39, 3120, "yayinda", "23.11.2026 12.35", "9,8 B"),
-    ("Politika faizi sabit kaldı, sırada ne var", "ekonomi-masasi", 41, 2010, "yayinda", "23.11.2026 12.40", "2,2 B"),
-    ("Kira artışında TÜFE ortalaması nasıl hesaplanır", "ekonomi-masasi", 40, 1740, "yayinda", "23.11.2026 12.55", "8,4 B"),
-    ("Kira artışında yeni dönemin ilk ayı", "ekonomi-masasi", 39, 1860, "yayinda", "23.11.2026 15.35", "7,2 B"),
-    ("Asgari ücret pazarlığı nasıl işliyor", "ekonomi-masasi", 38, 2220, "yayinda", "23.11.2026 11.55", "9,6 B"),
-    ("Brüksel'deki göç pazarlığının arka planı", "dunya-turu", 27, 1920, "yayinda", "22.11.2026 18.00", "4,1 B"),
-    ("Yerli hava savunma sistemlerinde son durum", "savunma-notlari", 22, 2460, "yayinda", "21.11.2026 17.00", "6,3 B"),
-    ("Üniversite tercihinde bölüm mü şehir mi", "kampus-saati", 18, 1680, "yayinda", "22.11.2026 10.00", "3,9 B"),
-    ("Aile bütçesinde kış faturalarına hazırlık", "ev-ekonomisi", 15, 1560, "yayinda", "23.11.2026 09.00", "5,2 B"),
+    ("Enflasyon sepetinde bu ay ne değişti?", "ekonomi-masasi", 42, 2892, "yayinda", "23.11.2026 12.05", "12,4 B"),
+    ("Yapay zekâ haber odasına girerse", "teknoloji-sohbetleri", 41, 2165, "yayinda", "23.11.2026 10.50", "9,8 B"),
+    ("Deprem bölgesinde üçüncü kış", "gundem-odasi", 40, 3107, "yayinda", "23.11.2026 08.45", "17,1 B"),
+    ("Süper Lig'de devre arası hesapları", "saha-ve-tribun", 39, 1773, "yayinda", "23.11.2026 12.35", "23,6 B"),
+    ("Politika faizi sabit kaldı, sırada ne var", "ekonomi-masasi", 41, 2010, "yayinda", "16.11.2026 12.40", "2,2 B"),
+    ("Kira artışında TÜFE ortalaması nasıl hesaplanır", "ekonomi-masasi", 40, 1740, "yayinda", "09.11.2026 12.55", "8,4 B"),
+    ("Brüksel'deki göç pazarlığının arka planı", "gundem-odasi", 27, 2480, "yayinda", "22.11.2026 18.00", "6,7 B"),
+    ("Yerli hava savunma sistemlerinde son durum", "strateji-ve-savunma-masasi", 22, 2716, "yayinda", "21.11.2026 17.00", "10,9 B"),
+    ("Kasım ajandası: sinema, kitap ve sergi seçkisi", "kultur-ajandasi", 9, 2050, "yayinda", "20.11.2026 10.00", "8,7 B"),
+    ("Üniversite tercihinde bölüm mü şehir mi", "kampus-ve-gelecek", 18, 2028, "yayinda", "22.11.2026 10.00", "8,2 B"),
+    ("Aile bütçesinde kış faturalarına hazırlık", "ekonomi-masasi", 39, 1560, "yayinda", "02.11.2026 09.00", "5,2 B"),
     ("Bütçe 2027: vergi tarafında ne değişiyor?", "ekonomi-masasi", 43, 0, "zamanli", "27.11.2026 09.00", "—"),
-    ("Derbi haftası: kadrolar ve sakatlar", "tribun", 40, 0, "taslak", "—", "—"),
+    ("Derbi haftası: kadrolar ve sakatlar", "saha-ve-tribun", 40, 0, "taslak", "—", "—"),
 ]
+
+
+def periyot(s_):
+    return s_[6].split(" · ")[0]
+
+
 SERI_AD = {s[0]: s for s in SERILER}
 
 
@@ -1172,7 +1282,7 @@ def podcast_sayfasi():
     for s in SERILER:
         sid, ad, kat, sun, n, img, siklik, d, dinl, tanit = s
         href = "seri.html?id=" + sid
-        nit = {"satir": sid, "durum": d, "kategori": kat, "ara": f"{ad} {kat} {' '.join(sun)}", "baslik": ad, "href": href}
+        nit = {"satir": sid, "durum": d, "kategori": kat, "periyot": periyot(s), "ara": f"{ad} {kat} {periyot(s)} {' '.join(sun)}", "baslik": ad, "href": href}
         alt = f'{ikon("fa-microphone-lines")}{e(", ".join(sun))} · {e(siklik)}'
         if n and d != "cop":
             hedefler = "|".join(x[1] for x in SERILER if x[0] != sid and x[7] == "yayinda")
@@ -1181,17 +1291,21 @@ def podcast_sayfasi():
                    f' data-tasi-not="Bölümlerin adresi yeni seriye göre değişir, eski adresler yönlendirilir; RSS aboneleri yeni seride dinlemeye devam eder. “{e(ad)}” çöpe gider, oradan geri alınabilir; işlem denetim izine yazılır."')
         else:
             sil = " data-sil"
-        acts = eylemler(gor_href=SITE + "podcast-kategori.html" if d == "yayinda" else href, gor_site=d == "yayinda", duz_href=href, sil=sil, ad=ad)
-        sat += satir(nit, [ana_hucre(ad, alt, img), kat_hucre(kat), durum_hucre(d), f'<td class="say kb-gizle-m">{n}</td>', f'<td class="say kb-gizle-t">{dinl}</td>'], acts)
+        acts = eylemler(gor_href=SITE + f"podcast.html?program={sid}" if d == "yayinda" else href, gor_site=d == "yayinda", duz_href=href, sil=sil, ad=ad)
+        sat += satir(nit, [ana_hucre(ad, alt, img), f'<td><span class="pstat info">{e(periyot(s))}</span></td>', kat_hucre(kat), durum_hucre(d), f'<td class="say kb-gizle-m">{n}</td>', f'<td class="say kb-gizle-t">{dinl}</td>'], acts)
     diger = (dm_yayin("Seri", "Seri ve bütün bölümleri sitede ve dinleme platformlarının RSS akışında görünmez olur; taslak olarak kalır, geri alınabilir.")
              + dm("Yeni bölüm ekle", "fa-plus", "yayinda taslak", hedef="multimedya.bolum", ek=' data-hedef-ek="?yeni=1"')
              + dm_ayir("yayinda") + dm_grup("Dağıtım", "yayinda")
              + dm("RSS Adresini Kopyala", "fa-rss", "yayinda", bildir="RSS adresi kopyalandı: dadahaber.com/podcast/…/rss")
              + dm("Bağlantıyı Kopyala", "fa-link", "yayinda", ek=" data-kopyala")
              + dm_icerik() + dm_kayit() + dm_cop())
-    ko = [("Seri", "kb-ana"), ("Kategori", "kb-gizle-m"), ("Durum", ""), ("Bölüm", "say kb-gizle-m"), ("Dinlenme · 30 gün", "say kb-gizle-t")]
+    ko = [("Seri", "kb-ana"), ("Periyot", ""), ("Kategori", "kb-gizle-m"), ("Durum", ""), ("Bölüm", "say kb-gizle-m"), ("Dinlenme · 30 Gün", "say kb-gizle-t")]
+    say_p = {}
+    for x in SERILER:
+        if x[7] != "cop":
+            say_p[periyot(x)] = say_p.get(periyot(x), 0) + 1
     l_seri = liste("ps", "seri", "Podcast serileri", [("hepsi", "Tümü", None), ("yayinda", "Yayında", None), ("taslak", "Taslak", None)], "Seri adı, sunucu ya da kategori ara",
-                   kat_suz("ps"), f'<button type="button" class="btn btn-ghost btn-sm" data-toplu="taslak" data-bildir="Seçilen seriler yayından kaldırıldı">{ikon("fa-eye-slash")}<span>Yayından Kaldır</span></button>',
+                   suz_liste("ps", "periyot", "Periyot", "Bütün Periyotlar", PERIYOTLAR, say_p), f'<button type="button" class="btn btn-ghost btn-sm" data-toplu="taslak" data-bildir="Seçilen seriler yayından kaldırıldı">{ikon("fa-eye-slash")}<span>Yayından Kaldır</span></button>',
                    ko, sat, ("fa-podcast", "Henüz podcast serisi yok", "Önce bir seri oluşturun; bölümler serinin altında yayımlanır.",
                              f'<a class="pe-tag" data-hedef="multimedya.seri" data-hedef-ek="?yeni=1" href="#icerik">{ikon("fa-plus")}Yeni Seri</a>'),
                    "Podcast serileri yüklenemedi", diger, "podcast.html", cop_not="Seri sitede ve RSS akışında yayından kalkar ve Çöp sekmesine taşınır")
@@ -1200,15 +1314,16 @@ def podcast_sayfasi():
     for i, (b, sid, no, sn, d, z, dinl) in enumerate(BOLUMLER):
         s = SERI_AD[sid]
         href = "bolum.html?id=" + sid
-        nit = {"satir": f"b{i}", "durum": d, "seri": s[1], "kategori": s[2], "ara": f"{b} {s[1]} {' '.join(s[3])}", "baslik": b, "href": href}
+        nit = {"satir": f"b{i}", "durum": d, "seri": s[1], "periyot": periyot(s), "kategori": s[2], "ara": f"{b} {s[1]} {' '.join(s[3])}", "baslik": b, "href": href}
         alt = f'{ikon("fa-microphone-lines")}{e(s[1])} · {no}. bölüm · {sure_yaz(sn) if sn else "ses dosyası yok"}'
         acts = eylemler(gor_href=SITE + "podcast-detay.html" if d == "yayinda" else href, gor_site=d == "yayinda", duz_href=href, ad=b)
-        sat += satir(nit, [ana_hucre(b, alt, s[5]), f'<td class="kb-gizle-m"><span class="kb-kat"><b>{e(s[1])}</b></span></td>', durum_hucre(d),
+        sat += satir(nit, [ana_hucre(b, alt, s[5]), f'<td class="kb-gizle-m"><span class="kb-kat"><b>{e(s[1])}</b></span></td>', f'<td class="kb-gizle-t"><span class="pstat info">{e(periyot(s))}</span></td>', durum_hucre(d),
                            f'<td class="kb-gizle-m"><span class="kb-tarih{" muted" if d == "taslak" else ""}">{z}</span></td>', f'<td class="say kb-gizle-t">{dinl}</td>'], acts)
-    seri_suz = secim("pbSuzSeri", "", [("", "Bütün Seriler")] + [(x[1], x[1]) for x in SERILER if x[7] != "cop"], suz="seri", etk="Seri:", ara="Seri ara", bos_metin="Bu adla seri yok.")
+    seri_suz = (secim("pbSuzSeri", "", [("", "Bütün Programlar")] + [(x[1], x[1], periyot(x)) for x in SERILER if x[7] != "cop"], suz="seri", etk="Program:", ara="Program ara", bos_metin="Bu adla program yok.")
+                + suz_liste("pb", "periyot", "Periyot", "Bütün Periyotlar", PERIYOTLAR))
     diger_b = (dm_yayin("Bölüm", "Bölüm sitede ve dinleme platformlarında görünmez olur; taslak olarak kalır, geri alınabilir ve denetim izine yazılır.")
                + dm_dagitim(gomme=False) + dm_icerik() + dm_kayit() + dm_cop())
-    ko_b = [("Bölüm", "kb-ana"), ("Seri", "kb-gizle-m"), ("Durum", ""), ("Yayın", "kb-gizle-m"), ("Dinlenme", "say kb-gizle-t")]
+    ko_b = [("Bölüm", "kb-ana"), ("Program", "kb-gizle-m"), ("Periyot", "kb-gizle-t"), ("Durum", ""), ("Yayın", "kb-gizle-m"), ("Dinlenme", "say kb-gizle-t")]
     l_bolum = liste("pb", "bölüm", "Podcast bölümleri", [("hepsi", "Tümü", None), ("yayinda", "Yayında", None), ("taslak", "Taslak", None), ("zamanli", "Zamanlanmış", None)],
                     "Bölüm başlığı, seri ya da sunucu ara", seri_suz,
                     f'<button type="button" class="btn btn-ghost btn-sm" data-toplu="taslak" data-bildir="Seçilen bölümler yayından kaldırıldı">{ikon("fa-eye-slash")}<span>Yayından Kaldır</span></button>',
@@ -1227,13 +1342,14 @@ def podcast_sayfasi():
 # 6 · Podcast serisi düzenle (seri.html)
 # =====================================================================
 def seri_duzenle():
-    sid, ad, kat, sun, n, img, siklik, d, dinl, tanit = SERILER[0]
+    sid, ad, kat, sun, n, img, siklik, d, dinl, tanit = SERI_AD["ekonomi-masasi"]
     ai = ai_adim("#fBaslik,#fSpot", [("aciklama", "Açıklama Taslağı", True, None), ("seo", "SEO", True, None)],
                  "Seri adını ve kısa tanıtımı yazın; açıklama ve SEO bunlardan üretilir.")
     aciklama = ("<p>Ekonomi Masası, haftanın ekonomi gündemini yarım saatte anlatan Dada Haber podcast'idir. Can Demir ve Kerem Aksoy her perşembe enflasyon, faiz, "
                 "bütçe ve çalışma hayatındaki gelişmeleri konuklarıyla birlikte ele alır.</p><p>Bölümlerde rakamların arkasındaki hikâyeyi ve <b>bana etkisi</b> sorusunun cevabını arıyoruz.</p>")
     sun_cip = "".join(f'<span class="kb-cip" data-deger="{e(a)}"><span>{e(a)}</span><button type="button" aria-label="Kaldır">{ikon("fa-xmark")}</button></span>' for a in sun)
-    sik = secim("srSiklik", "haftalik", [("haftalik", "Haftalık"), ("iki-hafta", "İki Haftada Bir"), ("haftada-iki", "Haftada İki"), ("aylik", "Aylık"), ("duzensiz", "Düzensiz")])
+    per_acik = {"Haftalık": "her hafta, aynı gün", "Aylık Dosya": "ayda bir dosya", "Özel Seri": "dönemlik mini seri"}
+    sik = bolmeli("srPeriyot", "periyot", [(x, x, per_acik.get(x), "srGunKap" if x == "Haftalık" else None) for x in PERIYOTLAR], siklik.split(" · ")[0])
     gun = secim("srGun", "persembe", [(g.lower().replace("ı", "i").replace("ş", "s").replace("ç", "c").replace("ü", "u"), g) for g in ("Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar")])
     icerik = f"""{gorsel_alan("srKapak", "multimedya.podcast", "Seri Kapağı", img, [("web.kart", "Kart · 1:1", "1:1", 200), ("web.detay", "Seri sayfası · 1:1", "1:1", 200)], ("mobil.kart", "Mobil kart · 16:9", "16:9", None),
              "kart <b>168×168</b>, seri sayfası <b>600×600</b>; Spotify ve Apple için en az <b>1400×1400</b>", "<b>358×201</b> (telefonda kart yatay)", "1400×1400",
@@ -1241,7 +1357,8 @@ def seri_duzenle():
       <div class="form-sec"><div class="form-sec-tt">{ikon("fa-sitemap")}Seri Bilgileri</div><div class="form-grid">
         <div class="frow two"><div class="frow"><span class="flabel">Ana Kategori</span>{kat_secim("srKat", kat)}<span class="fhint">Seri sayfası ve bölüm adresleri bu kategoriye göre kurulur.</span></div>
           <div class="frow"><span class="flabel">Sunucular</span><div class="kb-cip-girdi" data-havuz-yonet data-kullanim-birim="seride" data-havuz="{e(json.dumps(YAZARLAR, ensure_ascii=False))}">{sun_cip}<input type="text" placeholder="Kişi ara" aria-label="Sunucu ara"><div class="pnl-menu kb-cip-oneri"></div></div><span class="fhint">Havuzda yoksa aynı yerden eklenir; ⋯ ile adını düzeltin ya da silin.</span></div></div>
-        <div class="frow two"><div class="frow"><span class="flabel">Yayın Sıklığı</span>{sik}</div><div class="frow"><span class="flabel">Yayın Günü</span>{gun}</div></div>
+        <div class="frow"><span class="flabel">Yayın Periyodu</span>{sik}<span class="fhint">Podcast sayfasında ikinci süzgeç ve kartta rozet olarak görünür; bölümler periyodu bu seriden alır.</span></div>
+        <div class="frow" id="srGunKap"><span class="flabel">Yayın Günü</span>{gun}<span class="fhint">Yalnız haftalık programlarda; yeni bölüm bu gün için zamanlanır.</span></div>
       </div></div>
 {editor("Açıklama", aciklama, "Seri sayfasının başında ve dinleme platformlarında", ai_grup="aciklama")}
       <div class="form-sec"><div class="form-sec-tt">{ikon("fa-rss")}Dinleme Platformları<span class="fs-ek">RSS ile otomatik</span></div><div class="form-grid">
@@ -1259,7 +1376,7 @@ def seri_duzenle():
                     for b, s_, no, sn, dd, z, _ in sorted([x for x in BOLUMLER if x[1] == sid], key=lambda x: -x[2])[:5])
     yan = (yayin_kart(durum_secim("ycDurum", "yayinda", [("yayinda", "Yayında", ""), ("taslak", "Taslak", "seri ve bölümleri yayından kalkar")]), "2025-03-06 09.00",
                       toggle("Yeni Bölümde Bildirim", "Seriyi takip eden okura bölüm yayımlanınca", True, ek=' data-modul="etkilesim"')
-                      + '<div class="sa-durum" data-yeni-gizle><div><span>Bölüm</span><b>42</b></div><div><span>Takipçi</span><b>6.418</b></div><div><span>Dinlenme · 30 gün</span><b>48,2 B</b></div></div>',
+                      + f'<div class="sa-durum" data-yeni-gizle><div><span>Bölüm</span><b>{n}</b></div><div><span>Takipçi</span><b>6.418</b></div><div><span>Dinlenme · 30 gün</span><b>48,2 B</b></div></div>',
                       surum=(7, "20.11.2026 10.15", "Kerem Aksoy"))
            + seo_kart(88, [(True, "Seri adı ve tanıtım dolu"), (True, "Kapak 1400 px üstü"), (True, "RSS akışı geçerli"), (False, "YouTube Music bağlantısı yok")])
            + f"""    <section class="pnl-card" data-yeni-gizle>
@@ -1269,8 +1386,8 @@ def seri_duzenle():
     </section>
 """)
     duzenle_sayfasi("seri.html", "Podcast Serisi Düzenle", "multimedya.podcast", "Yeni Podcast Serisi", "Podcast Serisi Düzenle", "Yeni Podcast Serisi",
-                    f"Finans · {', '.join(sun)} · haftalık, perşembe · 42 bölüm · 30 günde 48,2 B dinlenme", "Taslak · henüz kaydedilmedi",
-                    ("multimedya.podcast", "Podcast'e Dön"), SITE + "podcast-kategori.html", "srForm", "multimedya.seri",
+                    f"Finans · {', '.join(sun)} · haftalık, perşembe · {n} bölüm · 30 günde 48,2 B dinlenme", "Taslak · henüz kaydedilmedi",
+                    ("multimedya.podcast", "Podcast'e Dön"), SITE + "podcast.html?program=ekonomi-masasi", "srForm", "multimedya.seri",
                     [("pDetay", "fa-file-lines", "Detay", None), ("pSeo", "fa-magnifying-glass-chart", "SEO", None)], paneller, yan,
                     kaydet_cubugu("srForm", "Kaydedildi · 20.11.2026 10.15 · Kerem Aksoy", "Seri güncellendi; RSS akışı yenilendi", "Seri oluşturuldu; ilk bölümü ekleyebilirsiniz", ana_yeni="Oluştur"))
 
@@ -1293,12 +1410,13 @@ def bolum_duzenle():
     zd = [("00.00", "Giriş: ekim rakamları"), ("03.40", "Gıda: sebze ve meyvede mevsim etkisi"), ("12.15", "Kira: yapışkan enflasyon"), ("24.30", "Asgari ücrete etkisi"), ("33.10", "Dinleyici soruları")]
     zd_html = "".join(f'<div class="km-satir" data-sira><button type="button" class="kb-tutamac" aria-label="Sırayı değiştir (sürükleyin ya da ok tuşları)">{ikon("fa-grip-vertical")}</button><span class="km-yazi">{e(t)}<small>{e(a)}</small></span><button type="button" class="ia-btn" data-satir-duzenle aria-label="Zaman damgasını düzenle">{ikon("fa-pen")}</button><button type="button" class="ia-btn danger" data-satir-sil aria-label="Zaman damgasını kaldır">{ikon("fa-trash")}</button></div>' for t, a in zd)
     konuk = '<span class="kb-cip" data-deger="Elif Aras"><span>Elif Aras</span><button type="button" aria-label="Kaldır">' + ikon("fa-xmark") + "</button></span>"
-    seri_sec = secim("blSeri", s[1], [(x[1], x[1], f"{x[4]} bölüm") for x in SERILER if x[7] != "cop"], alan_id="seri", ara="Seri ara", bos="Seri seçin", zorunlu_metin="Bölümün serisini seçin", bos_metin="Bu adla seri yok.")
+    seri_sec = secim("blSeri", s[1], [(x[1], x[1], periyot(x)) for x in SERILER if x[7] != "cop"], alan_id="seri", ara="Seri ara", bos="Seri seçin", zorunlu_metin="Bölümün serisini seçin", bos_metin="Bu adla seri yok.")
     icerik = f"""      <div class="form-sec">
         <div class="form-sec-tt">{ikon("fa-microphone-lines")}Ses<span class="fs-ek">MP3, M4A, WAV ya da OGG</span></div>
         <div class="form-grid">
           <div class="frow two"><div class="frow"><span class="flabel">Seri</span>{seri_sec}<span class="fhint">Yeni Seri <a class="kb-bag" data-hedef="multimedya.podcast" href="#icerik">Podcast</a> ekranından eklenir.</span></div>
             <div class="frow"><label for="blNo">Bölüm No</label><div class="kb-birim"><input class="finput" id="blNo" data-alan-id="bolum-no" inputmode="numeric" value="42"><span>. bölüm</span></div><span class="fhint">Seriden sıradaki numara kendiliğinden gelir.</span></div></div>
+          <div class="frow"><label for="blPeriyot">Yayın Periyodu</label><input class="finput" id="blPeriyot" data-alan-id="periyot" value="{e(periyot(s))}" readonly><span class="fhint">Seriden gelir; değiştirmek için seriyi düzenleyin. Podcast sayfasında bölüm kartında rozet olarak görünür.</span></div>
           <div class="frow"><span class="flabel">Ses Dosyası</span>{dosya_alan("ses", "Bölüm ses dosyası", "ses", ("ekonomi-masasi-42.mp3", 43253760, 2280), hata="Bölümün ses dosyasını yükleyin")}
             <span class="fhint">Süre dosyadan okunur: <b>38 dk 0 sn · 128 kbps</b>. Site Ayarları › Limitler: en fazla 200 MB.</span></div>
           <div class="frow"><span class="flabel">Konuklar</span><div class="kb-cip-girdi" data-havuz-yonet data-kullanim-birim="bölümde" data-havuz="{e(json.dumps(['Elif Aras', 'Prof. Dr. Hakan Kara', 'Doç. Dr. Selva Demiralp', 'Tolga Bayram'], ensure_ascii=False))}">{konuk}<input type="text" placeholder="Konuk ara ya da ekle" aria-label="Konuk ara"><div class="pnl-menu kb-cip-oneri"></div></div><span class="fhint">Konuk havuzu bu ekrandan yönetilir: ⋯ ile adını düzeltin ya da silin.</span></div>
@@ -1312,6 +1430,7 @@ def bolum_duzenle():
              ek_alt=" Ayrı kapak yüklenmezse seri kapağı kullanılır.")}
 {editor("Açıklama", aciklama, "Bölüm sayfasında ve dinleme platformlarında", ai_grup="aciklama")}
 {editor("Deşifre", desifre, "Sitede “Deşifreyi oku” ile açılır; arama motorları bu metni okur", ai_grup="desifre", ikon_ad="fa-closed-captioning", fs_ek="Ses dosyasından üretilir, editör düzeltir")}
+{iliskili_haber("blIliskili", iliskili_id("kira yükü"))}
 {okur_etkilesimi(toggle("Yorumlar Açık", "Yorumları editörler yönetir"), toggle("İndirilebilir", "Okur bölümü uygulamada çevrimdışı dinler"))}"""
     paneller = (detay_panel(baslik_spot(b, "Ekim enflasyonunda sepetin içine bakıyoruz: gıda, kira ve ulaşım. Konuğumuz ekonomist Elif Aras.") + ai + "\n" + icerik)
                 + seo_panel("pSeo", "Enflasyon sepetinde bu ay ne değişti? | Ekonomi Masası", "Ekim enflasyonunda gıda, kira ve ulaşım: Ekonomi Masası'nın 42. bölümünde Can Demir ve Kerem Aksoy, konuk Elif Aras ile.",
@@ -1339,28 +1458,29 @@ def bolum_duzenle():
 # =====================================================================
 SESLI = [dict(x, yazar=x.get("yazar") or "Dada Spiker") for x in tur_listesi("haber-dinle-detay.html")]
 SES_LISTEDE = 14
+# DADAHABER-10 §4–5: bültenler yayın kuşağıyla işaretlenir (Sabah Özeti, Gün Ortası, Akşam Bülteni, Hafta Özeti; saatler sitenin kategori.json'undan)
 BULTENLER = [
-    ("aksam", "Akşam bülteni, 24 Kasım: günün 8 haberi", "Akşam Bülteni", "zamanli", "24.11.2026 18.00", 8, 0, "—"),
-    ("gece", "Gece özeti, 24 Kasım", "Gece Özeti", "zamanli", "24.11.2026 22.30", 5, 0, "—"),
-    ("ogle", "Öğle bülteni, 24 Kasım: sabahtan bu yana 8 haber", "Öğle Bülteni", "yayinda", "24.11.2026 12.30", 8, 548, "3,2 B"),
-    ("sabah", "Sabah bülteni: güne başlamadan bilmen gereken 6 haber", "Sabah Bülteni", "yayinda", "24.11.2026 07.00", 6, 372, "5,8 B"),
-    ("aksam-23", "Akşam bülteni, 23 Kasım: günün 8 haberi 9 dakikada", "Akşam Bülteni", "yayinda", "23.11.2026 18.00", 8, 544, "7,1 B"),
-    ("gece-23", "Gece özeti, 23 Kasım", "Gece Özeti", "yayinda", "23.11.2026 22.30", 5, 301, "2,4 B"),
-    ("hafta", "Hafta özeti: haftanın on gelişmesi, kaynaklarıyla", "Hafta Özeti", "yayinda", "22.11.2026 10.00", 10, 905, "9,6 B"),
-    ("ozel", "Özel bülten: deprem bölgesinde üçüncü kış", "Özel Bülten", "taslak", "—", 4, 0, "—"),
-    ("ogle-22", "Öğle bülteni, 22 Kasım (ses hatalı)", "Öğle Bülteni", "cop", "22.11.2026 12.30", 8, 530, "—"),
+    ("aksam", "Akşam Bülteni, 24 Kasım: günün 8 haberi", "Akşam Bülteni", "zamanli", "24.11.2026 18.00", 8, 0, "—"),
+    ("ogle", "Gün Ortası, 24 Kasım: sabahtan bu yana 8 haber", "Gün Ortası", "yayinda", "24.11.2026 12.30", 8, 548, "3,2 B"),
+    ("sabah", "Sabah Özeti, 24 Kasım: güne başlamadan bilmen gereken 6 haber", "Sabah Özeti", "yayinda", "24.11.2026 07.00", 6, 372, "5,8 B"),
+    ("aksam-23", "Akşam Bülteni, 23 Kasım: günün 8 haberi 9 dakikada", "Akşam Bülteni", "yayinda", "23.11.2026 18.00", 8, 544, "7,1 B"),
+    ("ogle-23", "Gün Ortası, 23 Kasım: sabahtan bu yana 8 haber 9 dakikada", "Gün Ortası", "yayinda", "23.11.2026 12.30", 8, 540, "4,4 B"),
+    ("sabah-23", "Sabah Özeti, 23 Kasım: güne başlamadan bilmen gereken 6 haber", "Sabah Özeti", "yayinda", "23.11.2026 07.00", 6, 365, "6,0 B"),
+    ("hafta", "Hafta Özeti, 22 Kasım: haftanın on gelişmesi, kaynaklarıyla", "Hafta Özeti", "yayinda", "22.11.2026 10.00", 10, 905, "9,6 B"),
+    ("hafta-29", "Hafta Özeti, 29 Kasım", "Hafta Özeti", "taslak", "—", 4, 0, "—"),
+    ("ogle-20", "Gün Ortası, 20 Kasım (ses hatalı)", "Gün Ortası", "cop", "20.11.2026 12.30", 8, 530, "—"),
 ]
-PROGRAMLAR = [("Sabah Bülteni", "07.00 · 6 dk · güne başlamadan bilinmesi gerekenler"), ("Öğle Bülteni", "12.30 · 9 dk · sabahtan bu yana öne çıkan sekiz haber"),
-              ("Akşam Bülteni", "18.00 · 9 dk · günün öne çıkan sekiz haberi"), ("Gece Özeti", "22.30 · 5 dk · günün kısa özeti ve yarının takvimi"),
-              ("Hafta Özeti", "Pazar 10.00 · 15 dk · haftanın on gelişmesi, kaynaklarıyla")]
+KUSAK_NOT = {"Sabah Özeti": "6 dk · güne başlamadan bilinmesi gerekenler", "Gün Ortası": "9 dk · sabahtan bu yana öne çıkan sekiz haber",
+             "Akşam Bülteni": "9 dk · günün öne çıkan sekiz haberi", "Hafta Özeti": "15 dk · haftanın on gelişmesi, kaynaklarıyla"}
+KUSAK_SAAT = {k: saat for k, saat, _ in KUSAKLAR}
 
 
-def km_satir(baslik, alt, ad, img=None, tutamac=True, duzenle=True):
+def km_satir(baslik, alt, ad, img=None, tutamac=True, duzenle=True, sil=True):
     t = f'<button type="button" class="kb-tutamac" aria-label="Sırayı değiştir (sürükleyin ya da ok tuşları)">{ikon("fa-grip-vertical")}</button>' if tutamac else ""
     th = f'<span class="rcp-thumb" style="background-image:url(../../veri/gorsel/kucuk/{img})"></span>' if img else ""
     dz = f'<button type="button" class="ia-btn" data-satir-duzenle aria-label="{ad} düzenle">{ikon("fa-pen")}</button>' if duzenle else ""
     return (f'<div class="km-satir" data-sira>{t}{th}<span class="km-yazi">{e(baslik)}<small>{e(alt)}</small></span>{dz}'
-            f'<button type="button" class="ia-btn danger" data-satir-sil aria-label="{ad} kaldır">{ikon("fa-trash")}</button></div>')
+            + (f'<button type="button" class="ia-btn danger" data-satir-sil aria-label="{ad} kaldır">{ikon("fa-trash")}</button>' if sil else "") + '</div>')
 
 
 def sesli_sayfasi():
@@ -1423,41 +1543,41 @@ def sesli_sayfasi():
     sat = ""
     for bid, b, prog, d, z, n, sn, dinl in BULTENLER:
         href = "sesli-duzenle.html?id=" + bid
-        nit = {"satir": "b-" + bid, "durum": d, "program": prog, "ara": f"{b} {prog}", "baslik": b, "href": href}
+        nit = {"satir": "b-" + bid, "durum": d, "kusak": prog, "ara": f"{b} {prog}", "baslik": b, "href": href}
         alt = f'{ikon("fa-microphone-lines")}{e(prog)} · {n} haber · {sure_yaz(sn) if sn else "henüz seslendirilmedi"}'
         acts = eylemler(gor_href=SITE + "haber-dinle-detay.html" if d == "yayinda" else href, gor_site=d == "yayinda", duz_href=href, ad=b)
-        sat += satir(nit, [ana_hucre(b, alt), durum_hucre(d), f'<td class="kb-gizle-m"><span class="kb-tarih{" muted" if d in ("taslak", "cop") else ""}">{z}</span></td>',
+        sat += satir(nit, [ana_hucre(b, alt), f'<td class="kb-gizle-m"><span class="kb-kat">{e(prog)}</span></td>', durum_hucre(d), f'<td class="kb-gizle-m"><span class="kb-tarih{" muted" if d in ("taslak", "cop") else ""}">{z}</span></td>',
                            f'<td class="say kb-gizle-t">{dinl}</td>'], acts)
-    prog_suz = secim("sbSuzProg", "", [("", "Bütün Programlar")] + [(p, p) for p, _ in PROGRAMLAR] + [("Özel Bülten", "Özel Bülten")], suz="program", etk="Program:")
+    prog_suz = secim("sbSuzKusak", "", [("", "Bütün Kuşaklar")] + [(k, k, saat) for k, saat, _ in KUSAKLAR], suz="kusak", etk="Kuşak:")
     diger_b = (dm_yayin("Bülten", "Bülten Haber Dinle sayfasından ve Spiker panelinden kalkar; taslak olarak kalır, geri alınabilir.")
                + dm_ayir("yayinda") + dm_grup("Dağıtım", "yayinda")
                + dm("Bildirim Gönder", "fa-bell", "yayinda", modul="etkilesim", bildir="Bildirim sekmesi düzenleme ekranında (prototip)")
                + dm("Bağlantıyı Kopyala", "fa-link", "yayinda", ek=" data-kopyala")
                + dm_icerik() + dm_kayit() + dm_cop())
-    ko_b = [("Bülten", "kb-ana"), ("Durum", ""), ("Yayın", "kb-gizle-m"), ("Dinlenme", "say kb-gizle-t")]
+    ko_b = [("Bülten", "kb-ana"), ("Yayın Kuşağı", "kb-gizle-m"), ("Durum", ""), ("Yayın", "kb-gizle-m"), ("Dinlenme", "say kb-gizle-t")]
     l_bulten = liste("sb", "bülten", "Spiker Bültenleri", [("hepsi", "Tümü", None), ("yayinda", "Yayında", None), ("zamanli", "Zamanlanmış", None), ("taslak", "Taslak", None)],
-                     "Bülten adı ya da program ara", prog_suz,
+                     "Bülten adı ya da kuşak ara", prog_suz,
                      f'<button type="button" class="btn btn-ghost btn-sm" data-toplu="taslak" data-bildir="Seçilen bültenler yayından kaldırıldı">{ikon("fa-eye-slash")}<span>Yayından Kaldır</span></button>',
-                     ko_b, sat, ("fa-microphone-lines", "Henüz bülten yok", "Yayın saatleri tanımlıysa bültenler kendiliğinden hazırlanır; özel bülten de buradan eklenir.",
+                     ko_b, sat, ("fa-microphone-lines", "Henüz bülten yok", "Bültenler dört yayın kuşağında kendiliğinden hazırlanır: Sabah Özeti, Gün Ortası, Akşam Bülteni, Hafta Özeti.",
                                  f'<a class="pe-tag" data-hedef="multimedya.sesli-duzenle" data-hedef-ek="?yeni=1" href="#icerik">{ikon("fa-plus")}Yeni Bülten</a>'),
                      "Bültenler yüklenemedi", diger_b, "sesli.html?sekme=tBulten", cop_not="Bülten Haber Dinle'den ve Spiker panelinden kalkar ve Çöp sekmesine taşınır",
                      ust_ek=f'<div class="kb-bant bilgi">{ikon("fa-circle-info")}<span>Bültenler yayın saatinden 20 dakika önce son haberlerle kendiliğinden hazırlanır ve editör onayına düşer; onaylanmayan bülten yayımlanmaz.</span></div>')
-    prog = "".join(km_satir(p, a, "Program") for p, a in PROGRAMLAR)
-    sab += f"""<template id="sbProgramlar" data-baslik="Yayın Saatleri" data-alt="Spiker bülteni programları · sitede Haber Dinle › Yayın akışında görünür">
+    prog = "".join(km_satir(k, f"{saat} · {KUSAK_NOT.get(k, '')}", "Kuşak", tutamac=False, sil=False) for k, saat, _ in KUSAKLAR)
+    sab += f"""<template id="sbProgramlar" data-baslik="Yayın Kuşakları" data-alt="Haber Dinle › yayın akışı">
   {kap_dil()}
-  <div class="kb-fs"><div class="kb-fs-tt">Programlar</div>
-    <div class="kb-madde" data-satir-liste data-siralanir data-satir-ad="Program" data-satir-alan1="Program adı" data-satir-alan2="Saat · süre · içerik">{prog}<button type="button" class="kb-ekle-btn" data-satir-ekle>{ikon("fa-plus")}Program Ekle</button></div>
-    <p class="fhint">Program kaldırılınca o saatin bülteni artık hazırlanmaz; yayımlanmış bültenler arşivde kalır.</p></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Kuşaklar</div>
+    <div class="kb-madde" data-satir-liste data-satir-ad="Kuşak" data-satir-alan1="Kuşak adı" data-satir-alan2="Saat · süre · içerik">{prog}</div>
+    <p class="fhint">Dört kuşak sitedeki Haber Dinle yayın akışıyla aynıdır; kuşak eklenmez ve silinmez, saati ve içerik notu düzenlenir. Bülten kendi kuşağında listelenir, içindeki sesli haberler ana kategorilerinde de görünür.</p></div>
   <div class="kb-fs"><div class="kb-fs-tt">Hazırlama</div>
     <div class="frow"><span class="flabel">Kendiliğinden Hazırla</span>{secim("sbOnce", "20", [("10", "Yayından 10 Dk Önce"), ("20", "Yayından 20 Dk Önce"), ("30", "Yayından 30 Dk Önce")])}</div>
     {toggle("Editör Onayı Olmadan Yayımlama", "Hazırlanan bülten onay bekler; onaylanmazsa yayımlanmaz")}</div>
-  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-kapat data-bildir-hemen="Yayın saatleri kaydedildi; Haber Dinle › Yayın akışı güncellendi">{ikon("fa-check")}Kaydet</button></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-kapat data-bildir-hemen="Yayın kuşakları kaydedildi; Haber Dinle › Yayın akışı güncellendi">{ikon("fa-check")}Kaydet</button></div>
 </template>
 """
-    ust = sayfa_bas("<h1>Sesli Haber ve Spiker</h1>", f'<div class="ph-sub">{len(SESLI)} sesli haber · bugün 2 bülten yayında, 2 bülten zamanlandı · seslendirme: Dada Spiker</div>',
-                    f'<button type="button" class="btn btn-ghost btn-sm" data-tanim="sbProgramlar">{ikon("fa-clock")}Yayın Saatleri</button>\n      '
+    ust = sayfa_bas("<h1>Sesli Haber ve Spiker</h1>", f'<div class="ph-sub">{len(SESLI)} sesli haber · bugün 2 bülten yayında, 1 bülten zamanlandı · 4 yayın kuşağı · seslendirme: Dada Spiker</div>',
+                    f'<button type="button" class="btn btn-ghost btn-sm" data-tanim="sbProgramlar">{ikon("fa-clock")}Yayın Kuşakları</button>\n      '
                     + btn_link("multimedya.sesli-duzenle", "Yeni Bülten", "fa-plus", acc=True, ek="?yeni=1"))
-    govde = (ust + '  <div data-sekmeli>\n  ' + sayfa_sekmeler([("tHaber", "fa-headphones", "Haber Dinle", len(SESLI)), ("tBulten", "fa-microphone-lines", "Spiker Bültenleri", 7)])
+    govde = (ust + '  <div data-sekmeli>\n  ' + sayfa_sekmeler([("tHaber", "fa-headphones", "Haber Dinle", len(SESLI)), ("tBulten", "fa-microphone-lines", "Spiker Bültenleri", sum(1 for x in BULTENLER if x[3] == "yayinda"))])
              + f'\n  <div class="sa-form-panel" id="tHaber">\n{l_haber}  </div>\n  <div class="sa-form-panel" id="tBulten" hidden>\n{l_bulten}  </div>\n  </div>\n')
     yaz("sesli.html", bas("Sesli Haber ve Spiker", "multimedya.sesli") + govde + son(sab))
 
@@ -1475,7 +1595,7 @@ def sirali(satirlar_, haberler, dolu):
 
 
 def sesli_duzenle():
-    bid, b, prog, d, z, n, sn, dinl = BULTENLER[4]
+    bid, b, prog, d, z, n, sn, dinl = next(x for x in BULTENLER if x[0] == "aksam-23")
     haberler = [x for x in SESLI if x["tarih"] == "2026-11-23" and not re.search(r"bülten|özet", x["baslik"], re.I)][:8]
     satirlar_ = "".join(f'<div class="km-satir" data-sira data-deger="{e(x["baslik"])}" data-ad="{e(x["baslik"])}" data-alt="{e(x["bolum"])} · {sure_yaz(50 + h(x["baslik"], 40))} okuma"></div>' for x in haberler)
     okuma = ("<p>İyi akşamlar, Dada Haber akşam bülteninde bugün sekiz başlık var.</p>"
@@ -1483,10 +1603,11 @@ def sesli_duzenle():
              + "<p>Bültenin tamamı ve kaynaklar dadahaber.com'da. İyi akşamlar.</p>")
     ai = ai_adim("#fBaslik,#fSpot", [("okuma", "Okuma Metni (Seçilen Haberlerden)", True, None), ("seo", "SEO", True, None), ("bildirim", "Bildirim Metni", True, "etkilesim")],
                  "Başlığı ve spotu yazın; okuma metni seçilen haberlerin spotlarından üretilir. Üretilen bölüm “AI önerisi” etiketiyle gelir.")
-    prog_sec = secim("sdProg", prog, [(p, p, a.split(" · ")[0]) for p, a in PROGRAMLAR] + [("Özel Bülten", "Özel Bülten", "saati serbest")], ara="Program ara", bos="Program seçin")
+    kusak = (f'<div class="form-sec"><div class="form-grid"><div class="frow"><span class="flabel">Yayın Kuşağı</span>'
+             + bolmeli("sdKusak", "kusak", [(k, k, saat) for k, saat, _ in KUSAKLAR], prog)
+             + '<span class="fhint">Bülten Haber Dinle\'de kendi kuşağında listelenir; içindeki sesli haberler ana kategorilerinde de görünür. Saatler <a class="kb-bag" data-hedef="multimedya.sesli" href="#icerik">Sesli Haber › Yayın kuşakları</a>\'ndan yönetilir.</span></div></div></div>\n')
     icerik = f"""      <div class="form-sec"><div class="form-sec-tt">{ikon("fa-list-ol")}Bültendeki Haberler<span class="fs-ek">Okuma sırası; sürükleyerek değiştirin</span></div>
         <div class="form-grid">
-          <div class="frow"><span class="flabel">Program</span>{prog_sec}<span class="fhint">Saatler <a class="kb-bag" data-hedef="multimedya.sesli" href="#icerik">Sesli Haber › Yayın saatleri</a>'nden yönetilir.</span></div>
           <div class="frow" data-modul="haberler"><span class="flabel">Haberler</span>
             {sirali(satirlar_, haberler, True)}{sirali("", [], False)}
             <span class="fhint">Bir bültende en çok 10 haber; toplam okuma süresi 9 dakikayı geçmesin. Kaldırılan haber “Geri al” ile döner.</span></div>
@@ -1504,7 +1625,7 @@ def sesli_duzenle():
         <div class="frow" id="sdStudyo" hidden><span class="flabel">Stüdyo Kaydı</span>{dosya_alan("ses", "Stüdyo Kaydı", "ses", hata="Stüdyo kaydını yükleyin")}<span class="fhint">Spiker: <b>Hande Polat</b> · MP3 ya da WAV</span></div>
         <div class="frow" id="sdVideo" hidden><span class="flabel">Video Bülten</span>{dosya_alan("video", "Video Bülten", "ses", hata="Video bülteni yükleyin")}<span class="fhint">Video Spiker panelinde ve Haber Dinle'de oynar; ses ayrıca çıkarılır.</span></div>
       </div></div>"""
-    paneller = (detay_panel(baslik_spot(b, "Bütçe görüşmeleri, kar yağışı ve asgari ücret: günün sekiz haberi dokuz dakikada.", s_not="Haber Dinle listesinde ve Spiker panelinde") + ai + "\n" + icerik)
+    paneller = (detay_panel(kusak + baslik_spot(b, "Bütçe görüşmeleri, kar yağışı ve asgari ücret: günün sekiz haberi dokuz dakikada.", s_not="Haber Dinle listesinde ve Spiker panelinde") + ai + "\n" + icerik)
                 + seo_panel("pSeo", "Akşam bülteni, 23 Kasım: günün 8 haberi | Dada Haber", "Günün öne çıkan sekiz haberi dokuz dakikada: bütçe görüşmeleri, Marmara'da kar ve asgari ücret. Dada Haber akşam bülteni.",
                             "dadahaber.com/haber-dinle/", "aksam-bulteni-23-kasim", ["akşam bülteni", "sesli haber"])
                 + bildirim_panel("pBildirim", "Akşam bülteni hazır: günün 8 haberi", "Bütçe, kar yağışı ve asgari ücret: dokuz dakikada dinle.", "Marka şablonundaki bülten görseli", "2026-11-23 18.00"))
@@ -1515,7 +1636,7 @@ def sesli_duzenle():
                         surum=(2, "23.11.2026 17.52", "Ayşe Yıldız"))
            + seo_kart(80, [(True, "Başlık 50–60 karakter"), (True, "Açıklama 120–155 karakter"), (True, "Okuma metni sayfada"), (False, "Görsel yok (sitede görselsiz satır)")]))
     duzenle_sayfasi("sesli-duzenle.html", "Spiker Bülteni Düzenle", "multimedya.sesli", "Yeni Bülten", "Spiker Bülteni Düzenle", "Yeni Bülten",
-                    "Akşam bülteni · 8 haber · 9 dk 4 sn · 23.11.2026 18.00'de yayımlandı · 7,1 B dinlenme", "Taslak · henüz kaydedilmedi",
+                    "Akşam Bülteni kuşağı · 8 haber · 9 dk 4 sn · 23.11.2026 18.00'de yayımlandı · 7,1 B dinlenme", "Taslak · henüz kaydedilmedi",
                     ("multimedya.sesli", "Bültenlere Dön", "?sekme=tBulten"), SITE + "haber-dinle-detay.html", "sdForm", "multimedya.sesli",
                     [("pDetay", "fa-file-lines", "Detay", None), ("pSeo", "fa-magnifying-glass-chart", "SEO", None), ("pBildirim", "fa-bell", "Bildirim", "etkilesim")], paneller, yan,
                     kaydet_cubugu("sdForm", "Kaydedildi · 23.11.2026 17.52 · Ayşe Yıldız", "Bülten güncellendi; Haber Dinle'de yayında", "Bülten yayımlandı; Haber Dinle'de ve Spiker panelinde görünür"))
@@ -1536,30 +1657,53 @@ for m in re.finditer(r'<(?:a|article) class="gk[^"]*"(.*?)</(?:a|article)>', _ff
         KOLAJ[s.group(2).replace("’", "'")] = [x for x in re.findall(r"assets/gorsel/(p\d+\.jpg)", m.group(1)) if x in GORSELLER][:3]
 
 
+FF_KART = site_kartlari("foto-fokus.html")
+INF_KART = site_kartlari("infografik.html")
+_TEMA_ALT = {"Şehir": "Şehir", "Doğa": "Doğa ve İklim", "Kültür": "Kültür ve Sanat", "Toplum": "Toplum"}
+_KONU_EK = {"Asgari ücretin on yıllık seyri": "Finans ve Ekonomi", "Şehirlere göre kira artış oranları": "Toplum ve Demografi",
+            "Aylık ihracat rakamları": "Finans ve Ekonomi", "Ekonominin çeyreklik büyüme seyri": "Finans ve Ekonomi", "Hanelerin tüketim harcamaları": "Toplum ve Demografi",
+            "Merkez Bankası brüt rezervlerinin seyri": "Finans ve Ekonomi", "Bölgelere göre konut fiyat artışı": "Finans ve Ekonomi", "Eski taslak: yıllık turist sayısı": "Toplum ve Demografi"}
+
+
+def galeri_tema(g):
+    t = FF_KART.get(g["baslik"].replace("’", "'"), {}).get("kategori")
+    return (slugdan(t, GALERI_TEMA) if t else None) or _TEMA_ALT.get(g.get("alt_konu")) or (g["bolum"] if g["bolum"] in GALERI_TEMA else None) or GALERI_TEMA[h(g["baslik"], len(GALERI_TEMA))]
+
+
+def veri_konusu(g):
+    t = INF_KART.get(g["baslik"], {}).get("kategori")
+    return (slugdan(t, VERI_KONUSU) if t else None) or _KONU_EK.get(g["baslik"]) or VERI_KONUSU[h(g["baslik"], len(VERI_KONUSU))]
+
+
 def galeri_sayfasi():
     sat = ""
     kay = [dict(x, durum="yayinda") for x in GALERILER]
-    kay = [{"baslik": "Erciyes'te kayak sezonu açılış hazırlıkları", "bolum": "Keşfet", "alt_konu": "Şehir", "yazar": "Ozan Er", "tarih": "2026-11-24", "saat": "", "durum": "taslak"},
-           {"baslik": "Derbi gününden kareler", "bolum": "Spor", "alt_konu": "Futbol", "yazar": "Gizem Aktaş", "tarih": "2026-11-25", "saat": "22.30", "durum": "zamanli"}] + kay + \
-          [{"baslik": "Deneme albümü (yinelenen kareler)", "bolum": "Keşfet", "alt_konu": "Şehir", "yazar": "İrem Su", "tarih": "2026-11-20", "saat": "10.00", "durum": "cop"}]
+    kay = [{"baslik": "Erciyes'te kayak sezonu açılış hazırlıkları", "bolum": "Keşfet", "alt_konu": "Foto Fokus", "yazar": "Ozan Er", "tarih": "2026-11-24", "saat": "", "durum": "taslak", "tema": "Doğa ve İklim"},
+           {"baslik": "Derbi gününden kareler", "bolum": "Spor", "alt_konu": "Futbol", "yazar": "Gizem Aktaş", "tarih": "2026-11-25", "saat": "22.30", "durum": "zamanli", "tema": "Spor"}] + kay + \
+          [{"baslik": "Deneme albümü (yinelenen kareler)", "bolum": "Keşfet", "alt_konu": "Foto Fokus", "yazar": "İrem Su", "tarih": "2026-11-20", "saat": "10.00", "durum": "cop", "tema": "Şehir"}]
+    say_t = {}
+    for g in kay:
+        if g["durum"] != "cop":
+            say_t[g.get("tema") or galeri_tema(g)] = say_t.get(g.get("tema") or galeri_tema(g), 0) + 1
     for i, g in enumerate(kay):
+        tema = g.get("tema") or galeri_tema(g)
         d = g["durum"]
         n = FOTO_SAY.get(g["baslik"], 12 + h(g["baslik"], 20))
         img = (KOLAJ.get(g["baslik"]) or [g_of(g["baslik"])])[0]
         href = "galeri-duzenle.html?id=galeri"
-        nit = {"satir": f"g{i}", "durum": d, "kategori": g["bolum"], "yazar": g["yazar"], "ara": f'{g["baslik"]} {g["yazar"]} {g["bolum"]} {g.get("alt_konu") or ""}', "baslik": g["baslik"], "href": href,
+        nit = {"satir": f"g{i}", "durum": d, "kategori": g["bolum"], "tema": tema, "yazar": g["yazar"], "ara": f'{g["baslik"]} {g["yazar"]} {g["bolum"]} {tema}', "baslik": g["baslik"], "href": href,
                "kullanim": "Foto Fokus vitrininde ve bir haberin içinde gömülü; oradan da kalkar" if i == 2 else None}
-        alt = f'{ikon("fa-images")}{n} fotoğraf · {e(g["yazar"])}'
+        alt = f'{ikon("fa-images")}{n} kare · {e(g["yazar"])}'
         acts = eylemler(gor_href=SITE + "foto-fokus-detay.html" if d == "yayinda" else href, gor_site=d == "yayinda", duz_href=href, ad=g["baslik"])
-        sat += satir(nit, [ana_hucre(g["baslik"], alt, img), kat_hucre(g["bolum"], g.get("alt_konu")), durum_hucre(d),
+        sat += satir(nit, [ana_hucre(g["baslik"], alt, img), f'<td class="kb-gizle-m"><span class="kb-kat"><b>{e(tema)}</b></span></td>', durum_hucre(d),
                            f'<td class="kb-gizle-m"><span class="kb-tarih{" muted" if d in ("taslak", "cop") else ""}">{tarih(g["tarih"], g["saat"]) if g.get("saat") else "—"}</span></td>',
                            f'<td class="say kb-gizle-t">{e(g.get("goruntulenme", "—")) if d == "yayinda" else "—"}</td>'], acts)
     diger = (dm_yayin("Galeri", "Galeri Foto Fokus'tan ve gömülü olduğu haberlerden kalkar; taslak olarak kalır, geri alınabilir ve denetim izine yazılır.")
              + dm_dagitim() + dm_icerik()
              + dm_kayit() + dm_cop())
-    ko = [("Galeri", "kb-ana"), ("Kategori", "kb-gizle-m"), ("Durum", ""), ("Yayın", "kb-gizle-m"), ("Görüntülenme", "say kb-gizle-t")]
+    ko = [("Galeri", "kb-ana"), ("Görsel Tema", "kb-gizle-m"), ("Durum", ""), ("Yayın", "kb-gizle-m"), ("Görüntülenme", "say kb-gizle-t")]
     l_gal = liste("fg", "galeri", "Foto galeriler", [("hepsi", "Tümü", None), ("yayinda", "Yayında", None), ("taslak", "Taslak", None), ("zamanli", "Zamanlanmış", None)],
-                  "Galeri adı, fotoğrafçı ya da kategori ara", kat_suz("fg") + yazar_suz("fg", [x["yazar"] for x in kay]),
+                  "Galeri adı, fotoğrafçı ya da tema ara", suz_liste("fg", "tema", "Tema", "Bütün Temalar", GALERI_TEMA, say_t) + yazar_suz("fg", [x["yazar"] for x in kay]),
                   f'<button type="button" class="btn btn-ghost btn-sm" data-toplu="taslak" data-bildir="Seçilen galeriler yayından kaldırıldı">{ikon("fa-eye-slash")}<span>Yayından Kaldır</span></button>',
                   ko, sat, ("fa-images", "Henüz galeri yok", "Fotoğrafları medya havuzundan seçin ya da yükleyin; galeri Foto Fokus'ta yayımlanır.",
                             f'<a class="pe-tag" data-hedef="multimedya.galeri-duzenle" data-hedef-ek="?yeni=1" href="#icerik">{ikon("fa-plus")}Yeni Galeri</a>'),
@@ -1569,24 +1713,29 @@ def galeri_sayfasi():
     kay = [dict(x, durum="yayinda") for x in INFOGRAFIKLER] + [
         {"baslik": "Bölgelere göre konut fiyat artışı", "bolum": "Finans", "alt_konu": "Gayrimenkul", "yazar": "Nazlı Öztürk", "tarih": "2026-11-24", "saat": "", "durum": "taslak"},
         {"baslik": "Eski taslak: yıllık turist sayısı", "bolum": "Keşfet", "alt_konu": "Seyahat", "yazar": "Ozan Er", "tarih": "2026-11-18", "saat": "11.00", "durum": "cop"}]
+    say_k = {}
+    for g in kay:
+        if g["durum"] != "cop":
+            say_k[veri_konusu(g)] = say_k.get(veri_konusu(g), 0) + 1
     for i, g in enumerate(kay):
+        konu = veri_konusu(g)
         d = g["durum"]
         img = g_of(g["baslik"])
         href = "infografik.html?id=infografik"
-        nit = {"satir": f"i{i}", "durum": d, "kategori": g["bolum"], "yazar": g["yazar"], "ara": f'{g["baslik"]} {g["yazar"]} {g["bolum"]} {g.get("alt_konu") or ""}', "baslik": g["baslik"], "href": href}
-        alt = f'{ikon("fa-chart-pie")}{e(g.get("alt_konu") or g["bolum"])} · {e(g["yazar"])}'
+        nit = {"satir": f"i{i}", "durum": d, "kategori": g["bolum"], "konu": konu, "yazar": g["yazar"], "ara": f'{g["baslik"]} {g["yazar"]} {g["bolum"]} {konu}', "baslik": g["baslik"], "href": href}
+        alt = f'{ikon("fa-chart-pie")}{e(g["bolum"])} · {e(g["yazar"])}'
         acts = eylemler(gor_href=SITE + "infografik-detay.html" if d == "yayinda" else href, gor_site=d == "yayinda", duz_href=href, ad=g["baslik"])
-        sat += satir(nit, [ana_hucre(g["baslik"], alt, img), kat_hucre(g["bolum"], g.get("alt_konu")), durum_hucre(d),
+        sat += satir(nit, [ana_hucre(g["baslik"], alt, img), f'<td class="kb-gizle-m"><span class="kb-kat"><b>{e(konu)}</b></span></td>', durum_hucre(d),
                            f'<td class="kb-gizle-m"><span class="kb-tarih{" muted" if d in ("taslak", "cop") else ""}">{tarih(g["tarih"], g["saat"]) if g.get("saat") else "—"}</span></td>',
                            f'<td class="say kb-gizle-t">{e(g.get("goruntulenme", "—")) if d == "yayinda" else "—"}</td>'], acts)
     diger_i = (dm_yayin("İnfografik", "İnfografik sitede ve gömülü olduğu haberlerde görünmez olur; taslak olarak kalır, geri alınabilir.")
                + dm_dagitim() + dm("Yüksek Çözünürlüklü Dosyayı İndir", "fa-download", "yayinda taslak", bildir="PDF indiriliyor (prototip)")
                + dm_icerik() + dm_kayit() + dm_cop())
-    ko_i = [("İnfografik", "kb-ana"), ("Kategori", "kb-gizle-m"), ("Durum", ""), ("Yayın", "kb-gizle-m"), ("Görüntülenme", "say kb-gizle-t")]
+    ko_i = [("İnfografik", "kb-ana"), ("Veri Konusu", "kb-gizle-m"), ("Durum", ""), ("Yayın", "kb-gizle-m"), ("Görüntülenme", "say kb-gizle-t")]
     l_inf = liste("in", "infografik", "İnfografikler", [("hepsi", "Tümü", None), ("yayinda", "Yayında", None), ("taslak", "Taslak", None), ("zamanli", "Zamanlanmış", None)],
-                  "Başlık, hazırlayan ya da kategori ara", kat_suz("in"),
+                  "Başlık, hazırlayan ya da veri konusu ara", suz_liste("in", "konu", "Veri Konusu", "Bütün Veri Konuları", VERI_KONUSU, say_k),
                   f'<button type="button" class="btn btn-ghost btn-sm" data-toplu="taslak" data-bildir="Seçilen infografikler yayından kaldırıldı">{ikon("fa-eye-slash")}<span>Yayından Kaldır</span></button>',
-                  ko_i, sat, ("fa-chart-pie", "Henüz infografik yok", "3:4 infografik görselini yükleyin, veri kaynaklarını yazın; İnfografik sayfasında yayımlanır.",
+                  ko_i, sat, ("fa-chart-pie", "Henüz infografik yok", "3:4 infografik görselini yükleyin, veri kaynağını ve dönemi yazın; İnfografik sayfasında yayımlanır.",
                               f'<a class="pe-tag" data-hedef="multimedya.infografik" data-hedef-ek="?yeni=1" href="#icerik">{ikon("fa-plus")}Yeni İnfografik</a>'),
                   "İnfografikler yüklenemedi", diger_i, "galeri.html?sekme=tInfo", cop_not="İnfografik sayfasından ve gömülü olduğu haberlerden kalkar ve Çöp sekmesine taşınır")
     ust = sayfa_bas("<h1>Galeri ve İnfografik</h1>", f'<div class="ph-sub">Foto Fokus\'ta {len(GALERILER)} galeri · {len(INFOGRAFIKLER)} infografik yayında · görseller medya havuzundan</div>',
@@ -1601,7 +1750,7 @@ def galeri_sayfasi():
 # =====================================================================
 def slaytlar(icerik, dolu):
     sar = " data-yeni-gizle" if dolu else " data-yeni-goster hidden"
-    return (f'<div{sar}><div class="kb-slaytlar" data-slaytlar data-gorsel-alan="multimedya.galeri" data-gorsel-ad="Galeri slaytı" data-alan-id="slaytlar" data-zorunlu-metin="Galeriye en az bir görsel ekleyin">'
+    return (f'<div{sar}><div class="kb-slaytlar" data-slaytlar data-gorsel-alan="multimedya.galeri" data-gorsel-ad="Galeri karesi" data-alan-id="slaytlar" data-zorunlu-metin="Galeriye en az bir görsel ekleyin">'
             f'<div class="kb-slayt-liste" data-siralanir>{icerik}</div>'
             f'<div class="kb-slayt-ekle"><button type="button" class="btn btn-ghost btn-sm" data-medya-sec data-gorsel-kapsam="yeni" data-slayt-ekle>{ikon("fa-photo-film")}Havuzdan Ekle</button>'
             f'<button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle data-gorsel-kapsam="yeni" data-slayt-ekle>{ikon("fa-upload")}Yükle</button><span hidden data-gorsel-hedef="yeni"></span><span data-slayt-say></span></div></div></div>')
@@ -1616,18 +1765,20 @@ def galeri_duzenle():
     sl = "".join(f'<div class="kb-slayt" data-sira data-gorsel="../../veri/gorsel/kucuk/{im}" data-altyazi="{e(a)}" data-kaynak="{e(k)}"{" data-kapak" if j == 0 else ""}></div>' for j, (im, a, k) in enumerate(slayt))
     ai = ai_adim("#fBaslik,#fSpot", [("aciklama", "Açıklama Taslağı", False, None), ("sinif", "Kategori ve Alt Konular", True, None), ("seo", "SEO", True, None),
                                      ("bildirim", "Bildirim Metni", True, "etkilesim"), ("sosyal", "Sosyal Medya Metinleri", True, "sosyal-medya")],
-                 "Başlığı ve spotu yazın; işaretli bölümler bunlardan üretilir. Slayt altyazıları sizde.")
+                 "Başlığı ve spotu yazın; işaretli bölümler bunlardan üretilir. Kare altyazıları sizde.")
     aciklama = "<p>Ankara'da gece başlayan kar yağışı sabah şehri beyaza bürüdü. Foto muhabirimiz Nilay Ersoy, Kızılay'dan Ulus'a başkentin ilk kar gününü yirmi dört karede anlattı.</p>"
     icerik = f"""      <div class="form-sec">
-        <div class="form-sec-tt">{ikon("fa-images")}Slaytlar<span class="fs-ek">Sürükleyerek sıralayın · ilk üç slayt kart kolajında</span></div>
+        <div class="form-sec-tt">{ikon("fa-images")}Kareler<span class="fs-ek">Kare sayısı kendiliğinden · sürükleyerek sıralayın · ilk üç kare kart kolajında</span></div>
         {slaytlar(sl, True)}{slaytlar("", False)}
-        <span class="fhint">Yüklenen görsel önce etiketlenir (Dada Haber'e ait görsel medya havuzuna girer, dış kaynaklı yalnız bu galeride kalır). Kapak işaretli slayt sosyal medya ve bildirim görselidir.</span>
+        <span class="fhint">Yüklenen görsel önce etiketlenir (Dada Haber'e ait görsel medya havuzuna girer, dış kaynaklı yalnız bu galeride kalır). Kapak işaretli kare sosyal medya ve bildirim görselidir; sitede kartta “6 kare” yazar.</span>
       </div>
 {gorsel_alan("glKapak", "multimedya.galeri", "Kapak Görseli", kolaj[0], [("web.detay", "Görüntüleyici · 16:10", "16:10", None), ("web.kart", "Kart kolajı · 4:3", "4:3", None)], ("mobil.kart", "Mobil kart · 4:3", "4:3", None),
-             "görüntüleyici <b>1280×800</b>, kart <b>308×231</b> (ilk üç slayttan kolaj)", "<b>358×268</b>", "1280×800", kaynak="Kapak slaytından", odak=(50, 45), alan_id=None,
-             baslik="Kapak Kırpımı", ek_alt=" Kapak slaytı değişince bu kırpım da yenilenir.")}
+             "görüntüleyici <b>1280×800</b>, kart <b>308×231</b> (ilk üç kareden kolaj)", "<b>358×268</b>", "1280×800", kaynak="Kapak karesinden", odak=(50, 45), alan_id=None,
+             baslik="Kapak Kırpımı", ek_alt=" Kapak karesi değişince bu kırpım da yenilenir.")}
 {editor("Açıklama", aciklama, "Görüntüleyicinin başında", ai_grup="aciklama")}
-{siniflandirma("glKat", g["bolum"], ["Foto Fokus"] if "Foto Fokus" in ALT_HARITA.get(g["bolum"], []) else [], g["yazar"])}
+{siniflandirma("glKat", g["bolum"], ["Foto Fokus"] if "Foto Fokus" in ALT_HARITA.get(g["bolum"], []) else [], g["yazar"],
+               yan=f'<div class="frow"><span class="flabel">Görsel Tema</span>{secim("glTema", galeri_tema(g), [(t, t) for t in GALERI_TEMA], alan_id="tema", ara="Tema ara", bos="Tema seçin", zorunlu_metin="Görsel temayı seçin", bos_metin="Bu adla tema yok.")}<span class="fhint">Foto Fokus sayfasındaki süzgeç; kartta kare sayısıyla görünür.</span></div>')}
+{iliskili_haber("glIliskili", iliskili_id("Havalimanlarında kar"))}
 {okur_etkilesimi(toggle("Yorumlar Açık", "Yorumları editörler yönetir"), toggle("Haberlerin İçine Gömülebilir", "Haber metnine “galeri ekle” ile eklenir"), toggle("Tam Ekran Görüntüleyici", "Okur kaydırarak ve yakınlaştırarak gezer"))}"""
     paneller = (detay_panel(baslik_spot(g["baslik"], "Başkentte gece başlayan kar sabah şehri beyaza bürüdü; Kızılay'dan Ulus'a ilk kar günü.") + ai + "\n" + icerik)
                 + seo_panel("pSeo", "Ankara'da ilk kar: şehirden 24 kare | Foto Fokus", "Başkentte gece başlayan kar yağışı sabah şehri beyaza bürüdü. Kızılay'dan Ulus'a Ankara'nın ilk kar günü 24 karede.",
@@ -1637,16 +1788,16 @@ def galeri_duzenle():
                 + sosyal_panel("pSosyal", {"instagram": "Ankara'da ilk kar ❄️ Kızılay'dan Ulus'a başkentin beyaz günü. Galerinin tamamı profildeki bağlantıda.\n\n#ankara #kar #fotofokus",
                                            "x": "Ankara'da ilk kar: şehirden yirmi dört kare 📷\n\nhttps://dadahaber.com/foto-fokus/ankara-da-ilk-kar\n\n#Ankara",
                                            "facebook": "Başkentte gece başlayan kar sabah şehri beyaza bürüdü. Foto muhabirimiz Nilay Ersoy'un objektifinden Ankara'nın ilk kar günü.\n\nhttps://dadahaber.com/foto-fokus/ankara-da-ilk-kar"},
-                               kolaj[0], "#glKapak", (50, 45), "Instagram'da ilk 10 slayt kaydırmalı gönderi (carousel) olur; diğer platformlarda kapak ve bağlantı paylaşılır."))
+                               kolaj[0], "#glKapak", (50, 45), "Instagram'da ilk 10 kare kaydırmalı gönderi (carousel) olur; diğer platformlarda kapak ve bağlantı paylaşılır."))
     yan = (bildirim_onizle("pBildirim", "Foto Fokus: Ankara'da ilk kar", "Başkentin ilk kar günü 24 karede. Kızılay'dan Ulus'a beyaz bir şehir.", kolaj[0])
            + sosyal_onizle("pSosyal", kolaj[0], g["baslik"], (50, 45))
            + yayin_kart(durum_secim("ycDurum", "yayinda", YAYIN_DURUM), "2026-11-22 12.30",
                         toggle("Foto Fokus Vitrininde", "Foto Fokus sayfasının başında", True)
-                        + f'<div class="sa-durum" data-yeni-gizle><div><span>Slayt</span><b>6</b></div><div><span>Görüntülenme</span><b>{e(g["goruntulenme"])}</b></div><div><span>Ortalama gezilen</span><b>5 slayt</b></div></div>',
+                        + f'<div class="sa-durum" data-yeni-gizle><div><span>Kare</span><b data-alan-id="kare-sayisi">6</b></div><div><span>Görüntülenme</span><b>{e(g["goruntulenme"])}</b></div><div><span>Ortalama gezilen</span><b>5 kare</b></div></div>',
                         surum=(4, "22.11.2026 13.05", "Nilay Ersoy"))
-           + seo_kart(87, [(True, "Başlık 50–60 karakter"), (True, "Açıklama 120–155 karakter"), (True, "Her slaytta altyazı"), (False, "2 slaytta kaynak eksik")]))
+           + seo_kart(87, [(True, "Başlık 50–60 karakter"), (True, "Açıklama 120–155 karakter"), (True, "Her karede altyazı"), (False, "2 karede kaynak eksik")]))
     duzenle_sayfasi("galeri-duzenle.html", "Galeri Düzenle", "multimedya.galeri", "Yeni Galeri", "Galeri Düzenle", "Yeni Galeri",
-                    f'Keşfet › Foto Fokus · {e(g["yazar"])} · 6 slayt · {tarih(g["tarih"], g["saat"])}\'te yayımlandı · {e(g["goruntulenme"])} görüntülenme',
+                    f'{e(galeri_tema(g))} · Keşfet › Foto Fokus · {e(g["yazar"])} · 6 kare · {tarih(g["tarih"], g["saat"])}\'te yayımlandı · {e(g["goruntulenme"])} görüntülenme',
                     "Taslak · henüz kaydedilmedi · hazırlayan: oturumdaki kullanıcı", ("multimedya.galeri", "Galerilere Dön"), SITE + "foto-fokus-detay.html",
                     "glForm", "multimedya.galeri", STD_SEKMELER, paneller, yan,
                     kaydet_cubugu("glForm", "Kaydedildi · 22.11.2026 13.05 · Nilay Ersoy", "Galeri güncellendi; Foto Fokus'ta yayında", "Galeri yayımlandı; Foto Fokus'ta görünür"))
@@ -1666,19 +1817,28 @@ def infografik_duzenle():
     icerik = f"""{gorsel_alan("ifGorsel", "multimedya.infografik", "İnfografik Görseli", img, [("web.detay", "Görüntüleyici · 3:4", "3:4", None), ("web.kart", "Kart · 3:4", "3:4", None)], ("mobil.kart", "Mobil · 3:4", "3:4", None),
              "görüntüleyici <b>900×1200</b>, kart <b>305×407</b>", "<b>358×477</b>", "1800×2400", kaynak="Dada Haber grafik masası", odak=(50, 50), alan_id="gorsel",
              hata="İnfografik görselini yükleyin", ek_alt=" Metin içeren görsel kırpılmaz; “Kırpmadan kullan” önerilir.")}
+      <div class="form-sec"><div class="form-sec-tt">{ikon("fa-database")}Veri<span class="fs-ek">Sitede görselin altında</span></div><div class="form-grid">
+        <div class="frow"><span class="flabel">Veri Kaynağı</span>
+          <div class="kb-madde" data-satir-liste data-siralanir data-alan-id="veri-kaynagi" data-zorunlu-metin="En az bir veri kaynağı ekleyin" data-satir-ad="Kaynak" data-satir-alan1="Kaynak adı (kurum, belge)" data-satir-alan2="Veri seti, tarih ya da bağlantı">{kay_html}<button type="button" class="kb-ekle-btn" data-satir-ekle>{ikon("fa-plus")}Kaynak Ekle</button></div>
+          <span class="fhint">En az bir kaynak: kurum ve veri seti. Sitede “Kaynak:” satırında görünür.</span></div>
+        <div class="frow two">
+          <div class="frow"><span class="flabel">Dönem</span>{tarih_sec("infDonem", "2026", ' data-donem data-donem-etiket="#infDonemEtk" data-alan-id="donem" data-zorunlu-metin="Verinin dönemini seçin: ay, çeyrek ya da yıl" data-bos="Ay, çeyrek ya da yıl seçin" data-yeni-bos')}<span class="fhint">Verinin ait olduğu ay, çeyrek ya da yıl.</span></div>
+          <div class="frow"><label for="infDonemEtk">Dönem Etiketi</label><input class="finput" id="infDonemEtk" value="2016–2026" placeholder="ör. Ekim 2026"><span class="fhint">Seçimden kendiliğinden yazılır (Ekim 2026, 2026 3. Çeyrek, 2026); isteğe bağlı olarak düzeltin. Sitede kartta bu metin görünür.</span></div>
+        </div>
+      </div></div>
+{siniflandirma("ifKat", g["bolum"], [], g["yazar"],
+               yan=f'<div class="frow"><span class="flabel">Veri Konusu</span>{secim("ifKonu", veri_konusu(g), [(t, t) for t in VERI_KONUSU], alan_id="veri-konusu", ara="Veri konusu ara", bos="Veri konusu seçin", zorunlu_metin="Veri konusunu seçin", bos_metin="Bu adla veri konusu yok.")}<span class="fhint">İnfografik sayfasındaki süzgeç; ana kategoriden ayrı seçilir.</span></div>')}
+{iliskili_haber("ifIliskili", iliskili_id("hangi veriler masada"))}
       <div class="form-sec" data-ai-grup="alt"><div class="form-grid">
         {metin_alani("ifAlt", "Erişilebilirlik Metni", "2016'da 1.300 lira olan net asgari ücret 2026'da 22.104 liraya yükseldi; en büyük artış 2023'te yüzde 100 oldu.", sayac="250|320", not_="Ekran okuyucu bu metni okur; görseldeki rakamları yazın")}
       </div></div>
-      <div class="form-sec"><div class="form-sec-tt">{ikon("fa-link")}Veri Kaynakları<span class="fs-ek">Sitede görselin altında</span></div>
-        <div class="kb-madde" data-satir-liste data-siralanir data-satir-ad="Kaynak" data-satir-alan1="Kaynak adı (kurum, belge)" data-satir-alan2="Veri seti, tarih ya da bağlantı">{kay_html}<button type="button" class="kb-ekle-btn" data-satir-ekle>{ikon("fa-plus")}Kaynak Ekle</button></div></div>
       <div class="form-sec"><div class="form-sec-tt">{ikon("fa-share-from-square")}İndirme ve Paylaşım İzni</div><div class="form-grid">
         {toggle("Okur İndirebilir", "Görüntüleyicide “İndir” düğmesi (PNG)")}
         {toggle("Başka Siteler Gömebilir", "Gömme kodu verilir; Dada Haber'e atıf ve bağlantı zorunlu")}
         <div class="frow"><span class="flabel">Lisans</span>{secim("ifLisans", "atif", [("hakli", "Dada Haber · tüm hakları saklı"), ("atif", "Atıfla Paylaşılabilir (CC BY 4.0)"), ("ticari-degil", "Atıfla, Ticari Olmayan (CC BY-NC 4.0)")])}</div>
         <div class="frow"><span class="flabel">Yüksek Çözünürlüklü Dosya</span>{dosya_alan("belge", "Baskı dosyası", None, ("asgari-ucret-on-yil.pdf", 2516582), kabul=".pdf,.png,.svg", sinir=50)}<span class="fhint">İsteğe bağlı; basın ve kurumlar için indirme bağlantısı.</span></div>
       </div></div>
-{editor("Açıklama", "<p>Asgari ücretin son on yıldaki seyri: net tutar, yıllık artış oranı ve aynı dönemde enflasyon. Veriler TÜİK ve Çalışma ve Sosyal Güvenlik Bakanlığı'ndan.</p>", "Görüntüleyicinin altında", ai_grup="aciklama")}
-{siniflandirma("ifKat", g["bolum"], [], g["yazar"])}"""
+{editor("Açıklama", "<p>Asgari ücretin son on yıldaki seyri: net tutar, yıllık artış oranı ve aynı dönemde enflasyon. Veriler TÜİK ve Çalışma ve Sosyal Güvenlik Bakanlığı'ndan.</p>", "Görüntüleyicinin altında", ai_grup="aciklama")}"""
     paneller = (detay_panel(baslik_spot(g["baslik"], "2016'dan 2026'ya net asgari ücret, yıllık artış ve enflasyon tek grafikte.") + ai + "\n" + icerik)
                 + seo_panel("pSeo", "Asgari ücretin on yıllık seyri | Dada Haber İnfografik", "2016'dan 2026'ya net asgari ücret, yıllık artış oranları ve enflasyon. Veriler TÜİK ve Çalışma Bakanlığı'ndan.",
                             "dadahaber.com/infografik/", "asgari-ucretin-on-yillik-seyri", ["asgari ücret grafik", "asgari ücret 10 yıl"])
@@ -1692,7 +1852,7 @@ def infografik_duzenle():
                         surum=(2, "23.11.2026 09.40", g["yazar"]))
            + seo_kart(82, [(True, "Başlık 50–60 karakter"), (True, "Erişilebilirlik metni var"), (True, "Veri kaynağı yazılı"), (False, "Görsel 1800 px altında")]))
     duzenle_sayfasi("infografik.html", "İnfografik Düzenle", "multimedya.galeri", "Yeni İnfografik", "İnfografik Düzenle", "Yeni İnfografik",
-                    f'Keşfet › Veri ve Harita · {e(g["yazar"])} · {tarih(g["tarih"], g["saat"])}\'te yayımlandı · {e(g["goruntulenme"])} görüntülenme', "Taslak · henüz kaydedilmedi · hazırlayan: oturumdaki kullanıcı",
+                    f'{e(veri_konusu(g))} · Keşfet › Veri ve Harita · {e(g["yazar"])} · {tarih(g["tarih"], g["saat"])}\'te yayımlandı · {e(g["goruntulenme"])} görüntülenme', "Taslak · henüz kaydedilmedi · hazırlayan: oturumdaki kullanıcı",
                     ("multimedya.galeri", "İnfografiklere Dön", "?sekme=tInfo"), SITE + "infografik-detay.html", "ifForm", "multimedya.infografik",
                     [("pDetay", "fa-file-lines", "Detay", None), ("pSeo", "fa-magnifying-glass-chart", "SEO", None), ("pSosyal", "fa-share-nodes", "Sosyal Medya", "sosyal-medya")], paneller, yan,
                     kaydet_cubugu("ifForm", f'Kaydedildi · 23.11.2026 09.40 · {e(g["yazar"])}', "İnfografik güncellendi; sitede yayında", "İnfografik yayımlandı; İnfografik sayfasında görünür"))
