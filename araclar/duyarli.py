@@ -53,6 +53,10 @@ isler = [(w, S[i:i + 10]) for w in GEN for i in range(0, len(S), 10)]
 sonuc = []
 with concurrent.futures.ThreadPoolExecutor(max_workers=int(os.environ.get('PARALEL', '2'))) as ex:
     for r in ex.map(lambda x: calistir(TABAN, x[0], x[1]), isler): sonuc += r
+# yük altında sunucu bir dosyayı geç verebilir (kbKurucu yok): sorunlu sayfa/genişlik bir kez tek başına yeniden ölçülür
+for x in [x for x in sonuc if x["hata"]]:
+    y = calistir(TABAN, x["w"], [x["sayfa"]])
+    if y and y[0].get("sayfa") == x["sayfa"]: sonuc[sonuc.index(x)] = y[0]
 if srv: srv.shutdown()
 print(f"Duyarlı test: {len(S)} sayfa/form × {len(GEN)} genişlik · taban {TABAN}")
 for w in GEN:
@@ -60,6 +64,21 @@ for w in GEN:
     print(f"  {w}px: sorunlu {len(k)}")
     for x in k:
         print(f"    ✗ {x['sayfa']}: " + " · ".join(x["hata"])[:300])
+import collections
+pen = sum((x.get("pencere") or {}).get("olculen", 0) for x in sonuc); penh = sum((x.get("pencere") or {}).get("hatali", 0) for x in sonuc)
+bd = sum((x.get("bosluk") or {}).get("durum", 0) for x in sonuc); by = sum((x.get("bosluk") or {}).get("yapisik", 0) for x in sonuc); bb = sum((x.get("bosluk") or {}).get("binme", 0) for x in sonuc)
+tek = {(x["sayfa"], b["ad"]) for x in sonuc for b in (x.get("pencere") or {}).get("bas", [])}
+notlu = {(x["sayfa"].split("?")[0], i) for x in sonuc for i in (x.get("pencere") or {}).get("notlu", [])}
+print(f"Çekmece/pencere: {len(tek)} ayrı çekmece/pencere · {pen} açılış ölçüldü (sayfa × genişlik) · sorunlu {penh} · uzun açıklaması gövdeye inen {len(notlu)}")
+ac = sum(x.get("acilir", 0) or 0 for x in sonuc); print(f"Açılan kutu: {ac} açılış ölçüldü (sayfa × genişlik) · sorunlu sayfa/genişlik {sum(1 for x in sonuc if any(h.startswith('acilir') for h in x['hata']))}")
+print(f"Blok boşluğu: {bd} durum · yapışık çift {by} · binme {bb}")
+for w in GEN:  # başlık yüksekliği bütün çekmece ve pencerelerde aynı olmalı
+    hs = collections.Counter(b["h"] for x in sonuc if x["w"] == w for b in (x.get("pencere") or {}).get("bas", []))
+    if len(hs) > 1:
+        cok = hs.most_common(1)[0][0]
+        farkli = [(x["sayfa"], b["ad"], b["h"]) for x in sonuc if x["w"] == w for b in (x.get("pencere") or {}).get("bas", []) if b["h"] != cok]
+        print(f"  ✗ {w}px başlık yüksekliği farklı (çoğu {cok}px): " + "; ".join(f"{s} {a} {h}px" for s, a, h in farkli[:5]))
+        for s, a_, h in farkli: next(x for x in sonuc if x["w"] == w and x["sayfa"] == s)["hata"].append(f"pencere: {a_} başlık yüksekliği {h}px (çoğu {cok}px)")
 (KOK / "docs" / "screenshots").mkdir(parents=True, exist_ok=True)
 (KOK / "docs" / "screenshots" / "duyarli-son.json").write_text(json.dumps(sonuc, ensure_ascii=False, indent=1), encoding="utf-8")
 sys.exit(1 if any(x["hata"] for x in sonuc) else 0)

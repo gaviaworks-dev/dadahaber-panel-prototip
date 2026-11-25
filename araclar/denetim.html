@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="tr"><head><meta charset="utf-8"><title>Panel denetimi (tarayıcı ölçümü)</title></head>
 <body><pre id="sonuc">bekliyor</pre>
+<script src="bosluk-olc.js"></script><script src="pencere-olc.js"></script><script src="yerlesim-olc.js"></script>
 <script>
 /* araclar/denetim.py bu sayfayı başsız Chrome'la açar: ?s=sayfa1,sayfa2&w=1440,390
    Her sayfa her genişlikte bir iframe'de açılır, kurallar ölçülür, sonuç JSON olarak #sonuc'a yazılır.
@@ -17,7 +18,7 @@ function olc(d, w, sayfa, hatalar){
   function ihlal(k, m){ if(IST.indexOf(k) > -1) return; r.ihlal.push(k + ': ' + m); }
   function karar(k, m){ if(IST.indexOf(k) > -1) return; r.karar.push(k + ': ' + m); }
   /* genel: JS hatası, yatay taşma */
-  if(hatalar.length) ihlal('js', hatalar.slice(0, 2).join(' | '));
+  var jsh = hatalar.filter(function(x){ return x.indexOf('TARAYICI-KUTUSU') !== 0; }); if(jsh.length) ihlal('js', jsh.slice(0, 2).join(' | '));
   if(d.documentElement.scrollWidth > w + 1) ihlal('tasma', 'sayfa ' + d.documentElement.scrollWidth + 'px');
   /* 1 · araç satırı: ham sekme/süzgeç satırı kalmamalı; her araç satırı tek satır (≤ 64 px) ve taşmasız; bir listede bir araç satırı */
   Array.prototype.forEach.call(d.querySelectorAll('.kb-liste-ust, .filter-bar:not(.kb-arac)'), function(x){ if(gorunur(x) && x.querySelector('.chips, .fb-search, .kb-secim')) ihlal('arac-satiri', 'kalıba girmemiş satır (' + x.className + ')'); });
@@ -30,7 +31,20 @@ function olc(d, w, sayfa, hatalar){
     if(tas) ihlal('arac-satiri', 'taşıyor');
   });
   Array.prototype.forEach.call(d.querySelectorAll('[data-liste], [data-kart-liste]'), function(L){ if(!gorunur(L)) return; var n = Array.prototype.filter.call(L.querySelectorAll('.kb-arac'), gorunur).length; if(n > 1) ihlal('arac-satiri', 'bir listede ' + n + ' araç satırı'); });
-  if(w < 1000) return r; /* aşağıdaki yapı kuralları geniş ekranda ölçülür */
+  /* 10 · blok boşluğu (araclar/bosluk-olc.js): her genişlikte; sayfa, her sekme, açılan her pencere; yapışık (< --b-3) ve binme (< 0) ayrı */
+  function blokOlc(){
+    window.kbYazimTam = []; var so = kbSayfaOlc(d, win); /* sayfalama, yapışkan sütun: sekmelere tıklamadan önce */
+    var bo = kbBoslukTara(d, win, kbDurumOlc); r.bosluk = { durum: bo.durum, yapisik: bo.yapisik, binme: bo.binme };
+    r.yazim = (window.kbYazimTam || []).filter(function(x, i, a){ return a.indexOf(x) === i; });
+    var ekg = {}; bo.ek.concat(so).forEach(function(x){ var k = x.split(':')[0]; if(IST.indexOf(k) > -1) return; /* açık istisna (UI kit vitrini) */ (ekg[k] = ekg[k] || []).push(x.slice(k.length + 2)); });
+    Object.keys(ekg).forEach(function(k){ var v = ekg[k].filter(function(x, i){ return ekg[k].indexOf(x) === i; }); ihlal(k, v.length + ': ' + v.slice(0, 2).join(' | ') + (v.length > 2 ? ' (+' + (v.length - 2) + ')' : '')); });
+    if(bo.yapisik.length) ihlal('bosluk-blok', bo.yapisik.length + ' çift: ' + bo.yapisik.slice(0, 3).join(' | ') + (bo.yapisik.length > 3 ? ' (+' + (bo.yapisik.length - 3) + ')' : ''));
+    var pp = kbPencereTara(d, win); r.pencere = { olculen: pp.olculen, bas: pp.bas, notlu: pp.notlu };
+    if(pp.hata.length) ihlal('pencere', pp.hata.length + ': ' + pp.hata.slice(0, 2).join(' | ') + (pp.hata.length > 2 ? ' (+' + (pp.hata.length - 2) + ')' : ''));
+    var kutu = hatalar.filter(function(x){ return x.indexOf('TARAYICI-KUTUSU') === 0; }); if(kutu.length) ihlal('tarayici-kutusu', kutu.length + ': ' + kutu.slice(0, 2).join(' | ').replace(/TARAYICI-KUTUSU /g, '') + ' — panelin onay/bildirim bileşeni kullanılmalı');
+    if(bo.binme.length) ihlal('binme', bo.binme.length + ' çift: ' + bo.binme.slice(0, 3).join(' | ') + (bo.binme.length > 3 ? ' (+' + (bo.binme.length - 3) + ')' : ''));
+  }
+  if(w < 1000){ blokOlc(); return r; } /* aşağıdaki yapı kuralları geniş ekranda ölçülür */
   /* 2 · çift blok: ana sütunda aynı anda görünen büyük veri görünümleri (tablo ≥3 satır, takvim, matris, kart ızgarası, log) */
   var bloklar = Array.prototype.filter.call(main.querySelectorAll('table.ptable, .kb-takvim, table.kb-matris, .kb-entegre-izgara, .kb-medya-izgara, [data-kart-liste], pre.kb-log'), function(b){
     if(!gorunur(b) || b.closest('.side-card') || b.parentElement.closest('table.ptable, .kb-takvim, [data-kart-liste]')) return false;
@@ -73,6 +87,7 @@ function olc(d, w, sayfa, hatalar){
   }
   /* 9 · zorunlu alan: ana düğme eksik alanda pasif görünür (yalnız ?yeni=1 açılan formlarda) */
   if(/[?&]yeni=1/.test(sayfa)){ var ana = Array.prototype.filter.call(d.querySelectorAll('.kb-kaydet .btn-acc[data-kaydet]'), gorunur)[0]; var eks = win.kbEksikler && d.querySelector('[data-zorunlu-kayit]') ? win.kbEksikler(d.querySelector('[data-zorunlu-kayit]')) : []; if(ana && eks.length && !ana.classList.contains('is-pasif')) ihlal('zorunlu', 'eksik alan varken ana düğme pasif görünmüyor'); }
+  blokOlc();
   return r;
 }
 var i = 0;
@@ -81,8 +96,8 @@ function sonraki(){
   var s = ISLER[i][0], w = ISLER[i][1]; i++;
   var f = document.createElement('iframe'), hatalar = [];
   f.style.cssText = 'width:' + w + 'px;height:900px;border:0';
-  var t = setInterval(function(){ try{ var cw = f.contentWindow; if(cw && !cw._dz){ cw._dz = 1; cw.addEventListener('error', function(e){ hatalar.push(e.message); }); } }catch(x){} }, 3);
-  f.onload = function(){ setTimeout(function(){ clearInterval(t); try{ SONUC.push(olc(f.contentDocument, w, s, hatalar)); }catch(e){ SONUC.push({ sayfa:s, w:w, ihlal:['denetim: ' + e.message], karar:[] }); } f.remove(); sonraki(); }, 1100); };
+  var t = setInterval(function(){ try{ var cw = f.contentWindow; if(cw && !cw._dz){ cw._dz = 1; cw.addEventListener('error', function(e){ hatalar.push(e.message); }); ['alert', 'confirm', 'prompt'].forEach(function(k){ cw[k] = function(){ hatalar.push('TARAYICI-KUTUSU ' + k + '(' + String(arguments[0] || '').slice(0, 40) + ')'); return k === 'confirm' ? true : null; }; }); } }catch(x){} }, 3);
+  f.onload = function(){ try{ var st = f.contentDocument.createElement('style'); st.textContent = '*,*::before,*::after{transition:none!important;animation:none!important}'; f.contentDocument.head.appendChild(st); }catch(x){} setTimeout(function(){ clearInterval(t); try{ SONUC.push(olc(f.contentDocument, w, s, hatalar)); }catch(e){ SONUC.push({ sayfa:s, w:w, ihlal:['denetim: ' + e.message], karar:[] }); } f.remove(); sonraki(); }, 1100); };
   f.src = '/' + s; document.body.appendChild(f);
 }
 sonraki();

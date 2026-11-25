@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="tr"><head><meta charset="utf-8"><title>Duyarlı test (tarayıcı ölçümü)</title></head>
 <body><pre id="sonuc">bekliyor</pre>
+<script src="bosluk-olc.js"></script><script src="pencere-olc.js"></script><script src="yerlesim-olc.js"></script>
 <script>
 /* araclar/duyarli.py ya da elle: ?w=390&s=sayfa1,sayfa2 — her sayfa verilen genişlikte iframe'de açılır.
    Ölçülen (CLAUDE.md "Arayüz kuralları" + kararlar): yatay taşma; kesilen metin; üst üste binen düğmeler; tablonun kendi içinde
    kayması; yan menünün açılıp kapanması (≤1024); açılır menü ve çekmece/pencerenin ekrana sığması; kaydet çubuğunun içeriği
-   kapatması; dokunma hedefi ≥ 44 px (≤ 640). Sekmeli formlarda her sekme ayrıca taşma için ölçülür. */
+   kapatması; dokunma hedefi ≥ 44 px (≤ 640). Sekmeli formlarda her sekme ayrıca taşma için ölçülür.
+   Ayrıca: bütün çekmece/pencereler (pencere-olc.js) ve blok boşluğu (bosluk-olc.js). */
 var q = new URLSearchParams(location.search), S = (q.get('s') || '').split(',').filter(Boolean), W = +(q.get('w') || 1440), SON = [];
 function gor(e){ return e && e.getClientRects().length && !e.closest('[hidden],template'); }
 function kes(a, b){ return a.left < b.right - 1 && a.right > b.left + 1 && a.top < b.bottom - 1 && a.bottom > b.top + 1; }
@@ -41,14 +43,8 @@ async function olc(f, s){
     d.dispatchEvent(new w.KeyboardEvent('keydown', { key:'Escape', bubbles:true })); await bekle(120);
     if(!acik) H('yan-menu', 'açılmıyor'); else if(d.body.classList.contains('nav-open')) H('yan-menu', 'Esc ile kapanmıyor');
   }
-  /* açılır menüler ekrana sığmalı (ilk 6 görünür tetik) */
-  var tet = Array.prototype.filter.call(main.querySelectorAll('[data-acilir]'), gor).slice(0, 6);
-  for(var t = 0; t < tet.length; t++){
-    var b = tet[t]; b.click(); await bekle(80);
-    var m = d.getElementById(b.getAttribute('data-acilir'));
-    if(m && m.classList.contains('open')){ var mr = m.getBoundingClientRect(); if(mr.width && (mr.left < -1 || mr.right > W + 1)) H('acilir', '"' + b.textContent.trim().slice(0, 18) + '" menüsü ekrandan taşıyor (' + Math.round(mr.left) + '…' + Math.round(mr.right) + ')'); }
-    d.body.click(); d.dispatchEvent(new w.KeyboardEvent('keydown', { key:'Escape', bubbles:true })); await bekle(40);
-  }
+  /* bütün açılan kutular (yerlesim-olc.js kbAcilirOlc): gerçekten açılır; ekranda mı, üst bar/kaydet çubuğuna biniyor mu, içerik kesiliyor mu */
+  var ao = kbAcilirOlc(d, w, 40); r.acilir = ao.n; ao.forEach(function(x){ H('acilir', x.slice(8)); });
   /* çekmece / pencere: ilk tanım tetiği */
   var tn = Array.prototype.filter.call(main.querySelectorAll('[data-tanim], [data-sablon-ac], [data-pencere]'), gor)[0];
   if(tn){ tn.click(); await bekle(350); var k2 = d.querySelector('.kb-cekmece.open, .kb-pencere.open, .kb-cekmece:not([hidden]), .kb-pencere:not([hidden])');
@@ -63,6 +59,15 @@ async function olc(f, s){
     if(son && son.bottom > br.top + 2 && son.top < br.top) H('kaydet-cubugu', 'son içerik çubuğun altında kalıyor (' + Math.round(son.bottom - br.top) + 'px)');
     w.scrollTo(0, 0);
   }
+  /* çekmece ve pencereler (araclar/pencere-olc.js): hepsi açılır; kapat ve alt çubuk görünür mü, taşma, başlık yüksekliği */
+  var pp = kbPencereTara(d, w); r.pencere = { olculen: pp.olculen, hatali: 0, bas: pp.bas, notlu: pp.notlu };
+  var hk = {}; pp.hata.forEach(function(x){ hk[x.split(':')[0]] = 1; H('pencere', x); }); r.pencere.hatali = Object.keys(hk).length;
+  /* blok boşluğu (araclar/bosluk-olc.js): sayfa, sekmeler, pencereler */
+  kbSayfaOlc(d, w).forEach(function(x){ var k = x.split(':')[0]; H(k, x.slice(k.length + 2)); });
+  var bo = kbBoslukTara(d, w, kbDurumOlc); r.bosluk = { durum: bo.durum, yapisik: bo.yapisik.length, binme: bo.binme.length };
+  bo.ek.filter(function(x, i){ return bo.ek.indexOf(x) === i; }).forEach(function(x){ var k = x.split(':')[0]; H(k, x.slice(k.length + 2)); });
+  if(bo.yapisik.length) H('bosluk', bo.yapisik.length + ' yapışık çift: ' + bo.yapisik.slice(0, 2).join(' | '));
+  if(bo.binme.length) H('binme', bo.binme.length + ' çift: ' + bo.binme.slice(0, 2).join(' | '));
   /* sekmeli formlar: her sekmede taşma */
   var sek = Array.prototype.filter.call(main.querySelectorAll('.sa-form-tab[data-panel]'), gor);
   for(var z = 1; z < sek.length && z < 7; z++){ sek[z].click(); await bekle(120); if(d.documentElement.scrollWidth > W + 1) H('tasma', 'sekme "' + sek[z].textContent.trim().slice(0, 16) + '" ' + d.documentElement.scrollWidth + 'px'); }
