@@ -184,6 +184,10 @@ D = [
          bas="Haftanın Özeti · 17–23 Kasım", gunler=[("Pzt", "AB genişleme gündemini ele aldı"), ("Çar", "NATO bakanları Brüksel'de buluştu"),
                                                        ("Cum", "BM insani yardım fonuna ek bütçe"), ("Paz", "İklim konferansında sonuç metni kabul edildi")],
          ne="Hafta sonunda. Numara yerine gün adı yazar; tarih aralığı başlıktadır, dört gelişme kısa satırlarla dizilir."),
+    dict(id="ay", ad="Ayın Özeti", grup="derle", tip="ic", kat="finans", katad="Finans", bolge="Türkiye", g="p369.jpg", o="50% 50%",
+         bas="Ayın Özeti · Kasım 2026", gunler=[("1. hf", "Ekim ayında dış ticaret açığı yüzde 8 daraldı"), ("2. hf", "Konut satışları ekimde yüzde 8 arttı"),
+                                               ("3. hf", "Kira artışında yüzde 25 sınırı sona erdi"), ("4. hf", "Asgari ücret komisyonu aralıkta toplanacak")],
+         ne="Ay sonunda. Gün adı yerine hafta yazar; ay başlıktadır, dört haftanın öne çıkanı kısa satırlarla dizilir."),
     # ---- video ve ses
     dict(id="reels", ad="Video ve Reels Kapağı", grup="ses", tip="reels", bicim="uzun", kat="savunma", katad="Savunma", bolge="Türkiye", g="p626.jpg", o="50% 50%",
          b="KAAN'ın ikinci prototipinin test uçuşundan görüntüler", v="test uçuşundan", kaynak=True, sure="1.12",
@@ -230,7 +234,7 @@ ONERI_ILK = [("sd", "her gün, birden çok kez"), ("gelisiyor", "Son Dakika'nın
 ONERI_SONRA = [("flas", "Son Dakika ilk aşamada yeter"), ("ozel", "ibare eklemek kolay; sıklık düşük"), ("roportaj", "Alıntı kartı geçici olarak karşılar"),
                ("bayram", "yılda birkaç kez; elle hazırlanabilir"), ("duyuru", "seyrek; elle hazırlanabilir"), ("maconu", "maç sonucundan sonra gelir"),
                ("transfer", "ara transfer 5 Ocak'ta açılıyor"), ("puan", "haftalık; sitede tablo zaten var"), ("veri", "Alıntı ve Veri sekmesindeki veri kartı karşılar"),
-               ("hava", "sitede hava sayfası var; sosyalde seyrek"), ("gun5", "derleme düzeni oturunca"), ("hafta", "derleme düzeni oturunca"),
+               ("hava", "sitede hava sayfası var; sosyalde seyrek"), ("gun5", "derleme düzeni oturunca"), ("hafta", "derleme düzeni oturunca"), ("ay", "derleme düzeni oturunca"),
                ("podcast", "podcast yayını başlayınca"), ("dinle", "sesli sürüm yaygınlaşınca"), ("galeri", "kaydırmalı kalıp geçici olarak karşılar"),
                ("infografik", "veri ekibi kurulunca"), ("anket", "anket modülü açılınca"), ("soru", "hikâye takvimi oturunca"),
                ("teyit", "teyit masası kurulunca"), ("yasak", "seyrek; gerekirse nötr kalıpla")]
