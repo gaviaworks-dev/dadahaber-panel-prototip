@@ -174,6 +174,13 @@ Aynı iş her modülde aynı biçimde yapılır. Bir modülde olan bir yetenek, 
 - Prototip ritmi: yap, tek hızlı kontrol, raporla. Uzun ölçüm ya da test turundan önce büyük harfle yaz: `ÖLÇÜM: <ne>, tahmini X dk`; 10 dakikayı aşacaksa önce sor.
 - Raporlar Türkçe, kısa, sonuç önce, madde madde.
 
+## Seçtirerek Tasarım (isteğe bağlı yöntem)
+
+Bu bir kural değil, başvurulabilecek bir yöntem tarifidir.
+- Karar vericiye tasarım seçtirilecek bir işte, uygun görürsen Beyar'a "Bunu seçim sayfasıyla yapalım mı?" diye önerebilirsin. Beyar isterse uygulanır; kendiliğinden başlatılmaz.
+- Tarif: ayrı bağlantıda bir seçim sayfası; iskelet düzeyinde gerçekten ayrışan alternatifler; anında değişen ayar katmanı (renk, ölçü, süsleme); her alternatifte "Bunu Seç" ve seçim özeti.
+- Örnek: `kalip/` klasöründeki sosyal medya kalıp alternatifleri sayfası.
+
 ## Açık konular (Beyar ve Yasin Bey ile netleşecek)
 
 - Dada Haber dokümanında 2.1 "Editoryal Haber ve Vitrin Yönetimi" ayrıntı bölümü yok (2.2 iki kez yazılmış). Haber, kategori ve vitrin yönetiminin ayrıntısı public siteden türetilecek ve Beyar ile birlikte gözden geçirilecek.
