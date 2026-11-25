@@ -80,6 +80,13 @@
       var sk = Array.prototype.filter.call(kok.querySelectorAll('.sa-form-tab[data-panel]'), function(t){ return t.getClientRects().length && !t.closest('[hidden]'); });
       for(var z = 1; z < sk.length && z < 9; z++){ sk[z].click(); var on2 = on + 'sekme "' + sk[z].textContent.trim().replace(/\s+\d+$/, '').slice(0, 18) + '": '; ekle(g.kbBoslukOlc(kok, win, on2)); if(ek) top.ek = top.ek.concat(ek(kok, win, on2)); }
       if(sk.length > 1) sk[0].click();
+      /* görünüm değiştirici (Kart · Liste): ikinci görünüm de ölçülür (hesaplar sayfasında kart görünümü hiç ölçülmüyordu) */
+      Array.prototype.forEach.call(kok.querySelectorAll('[data-liste]'), function(L){
+        var gb = Array.prototype.filter.call(L.querySelectorAll('button[data-gorunum]'), function(x){ return x.getClientRects().length && x.getAttribute('aria-pressed') !== 'true'; });
+        var ilk = L.querySelector('button[data-gorunum][aria-pressed="true"]');
+        gb.forEach(function(x){ x.click(); var on3 = on + 'görünüm "' + x.textContent.trim().slice(0, 12) + '": '; ekle(g.kbBoslukOlc(kok, win, on3)); if(ek) top.ek = top.ek.concat(ek(kok, win, on3)); });
+        if(gb.length && ilk) ilk.click();
+      });
     }
     sekmeli(main, '');
     var acilan = {}, tik = 0;

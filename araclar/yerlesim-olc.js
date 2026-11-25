@@ -20,11 +20,19 @@
     });
     /* kesik: taşmayı gizleyen kutu (overflow hidden/clip) içeriğini kesiyor — bilerek kısaltma (… , satır sınırı) ve kaydırma kapları hariç.
        Örnek: şifre güç çubuğu 6 px'lik liste satırıydı, satır simgesi içinde kesik görünüyordu (eski ölçüm yalnız metin sınıflarına bakıyordu). */
-    var KES_ATLA = '[class*="oniz"], .kb-kirp, .kb-kirp-alan, .ptable-wrap, .kb-editor, .ql-editor, [contenteditable], .kb-takvim, .pnl-menu, .chips, .kb-arac, svg, canvas, .kb-grafik, .sr-only, .kb-tel, .kb-sosyal-kart, .kmo-kutu, .kg-resim, .kb-medya, .kb-avatar, .avatar';
+    var KES_ATLA = '[class*="oniz"], .kb-kirp, .kb-kirp-alan, .kb-editor, .ql-editor, [contenteditable], .kb-takvim, .pnl-menu, .chips, .kb-arac, svg, canvas, .kb-grafik, .sr-only, .kb-tel, .kb-sosyal-kart, .kmo-kutu, .kg-resim, .kb-medya, .kb-avatar, .avatar';
     Array.prototype.forEach.call(kok.querySelectorAll('*'), function(e){
       if(!gor(e, win) || e.closest(KES_ATLA)) return;
       var cs = win.getComputedStyle(e); if(!/hidden|clip/.test(cs.overflowY + cs.overflowX)) return;
-      if(cs.textOverflow === 'ellipsis' || cs.webkitLineClamp !== 'none' && cs.webkitLineClamp || /auto|scroll/.test(cs.overflowY + cs.overflowX)) return;
+      if(/auto|scroll/.test(cs.overflowY + cs.overflowX)) return;
+      /* "…" ile kısaltma yalnız metne yakışır: kutunun içindeki rozet, düğme, anahtar gibi blok öğe sağdan ya da alttan kesiliyorsa kesik sayılır
+         (Hesaplar kart görünümünde platform başlığı "…" taşıyan hücredeydi; ölçüm kısaltmayı bilerek sayıp geçiyordu) */
+      if(cs.textOverflow === 'ellipsis' || cs.webkitLineClamp !== 'none' && cs.webkitLineClamp){
+        var rr = e.getBoundingClientRect();
+        var blok = Array.prototype.filter.call(e.querySelectorAll('button, .btn, .pstat, .toggle, .etk, input, .kb-isaret, .ia-btn'), function(x){ if(!gor(x, win) || /absolute|fixed/.test(win.getComputedStyle(x).position)) return false; var q = x.getBoundingClientRect(); return q.width > 1 && (q.right > rr.right + 1.5 || q.left < rr.left - 1.5 || q.bottom > rr.bottom + 1.5); })[0];
+        if(blok) out.push('kesik: ' + on + (e.className && typeof e.className === 'string' ? e.className.split(' ')[0] : e.tagName.toLowerCase()) + ' içindeki "' + (blok.textContent || blok.getAttribute('aria-label') || blok.className).trim().slice(0, 18) + '" kesiliyor');
+        return;
+      }
       if(e.matches('img, video, iframe, input, textarea, select, progress, [style*="background-image"]') || cs.backgroundImage !== 'none' && !e.children.length) return;
       if(!e.childNodes.length && !win.getComputedStyle(e, '::before').content.replace(/none|normal|""/g, '') && !win.getComputedStyle(e, '::after').content.replace(/none|normal|""/g, '')) return;
       var r = e.getBoundingClientRect(); if(r.height < 2 || r.width < 2) return;
@@ -38,6 +46,15 @@
         var ps = win.getComputedStyle(e, '::before').content; var tx = (e.textContent || '').trim().slice(0, 22) || (ps && ps !== 'none' ? 'simge (::before)' : e.className.split(' ')[0]);
         out.push('kesik: ' + on + (e.className && typeof e.className === 'string' ? e.className.split(' ')[0] : e.tagName.toLowerCase()) + ' içeriği kesiliyor (' + e.scrollHeight + ' > ' + e.clientHeight + 'px) "' + tx + '"');
       }
+    });
+    /* kart-duzen: kart görünümünde aynı listenin kartları aynı satır düzeninde ve aynı yükseklikte olmalı (Hesaplar: bir kart tek satır,
+       öbürü iki satıra kırılıyordu; ne kesik ne binme vardı, ölçüm kaçırdı). Aynı ızgara satırındaki ya da tek sütundaki kartlar karşılaştırılır. */
+    Array.prototype.forEach.call(kok.querySelectorAll('[data-liste][data-gorunum="izgara"] tbody'), function(tb){
+      if(!gor(tb, win)) return;
+      var kr = Array.prototype.filter.call(tb.querySelectorAll(':scope > tr[data-satir]'), function(x){ return gor(x, win); });
+      if(kr.length < 2) return;
+      var h = kr.map(function(x){ return Math.round(x.getBoundingClientRect().height); }), en = Math.min.apply(null, h), ey = Math.max.apply(null, h);
+      if(ey - en > 4) out.push('kart-duzen: ' + on + 'kartlar farklı yükseklikte (' + en + '–' + ey + ' px): satır düzeni karttan karta değişiyor');
     });
     /* binme: akıştaki kardeş öğeler üst üste (negatif boşluk, sabit yükseklikli kutuya sığmayan satır) */
     Array.prototype.forEach.call(kok.querySelectorAll('*'), function(P){
@@ -188,7 +205,7 @@
       [0.25, 0.5, 0.75, 1].forEach(function(f){
         win.scrollTo(0, Math.round(H * f));
         var r = sc.getBoundingClientRect(), yap = win.getComputedStyle(sc).position === 'sticky';
-        if(yap && r.top >= ub - 1){ var kt = kk ? kk.getBoundingClientRect().top : win.innerHeight; if(r.bottom > kt + 1 && r.top < kt) out.push('yapiskan: sağ sütun kaydet çubuğunun altına giriyor (' + Math.round(r.bottom - kt) + 'px, kaydırma %' + Math.round(f * 100) + ')'); }
+        var stTop = parseFloat(win.getComputedStyle(sc).top) || 0; if(yap && Math.abs(r.top - stTop) < 2){ /* yalnız yapışmış halde (akıştayken içerik kaydet çubuğunun altından kayabilir) */ var kt = kk ? kk.getBoundingClientRect().top : win.innerHeight; if(r.bottom > kt + 1 && r.top < kt) out.push('yapiskan: sağ sütun kaydet çubuğunun altına giriyor (' + Math.round(r.bottom - kt) + 'px, kaydırma %' + Math.round(f * 100) + ')'); }
         var c = Array.prototype.filter.call(sc.children, function(x){ return gor(x, win); });
         for(var i = 1; i < c.length; i++){ var a = c[i - 1].getBoundingClientRect(), b = c[i].getBoundingClientRect(); if(b.top < a.bottom - 1 && b.bottom > a.top + 1){ out.push('yapiskan: sağ sütunda kart kartın altından akıyor (kaydırma %' + Math.round(f * 100) + ')'); break; } }
       });

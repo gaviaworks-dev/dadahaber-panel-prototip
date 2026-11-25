@@ -47,6 +47,10 @@
       if(win.kbKapat) win.kbKapat();
       k.classList.remove('open'); k.hidden = true;
     });
+    /* onay penceresi (kbOnay): sağ üstte kapat düğmesi görünür ve pencerenin içinde */
+    if(win.kbOnay){ try{ win.kbOnay({ baslik: 'Ölçüm', metin: 'Ölçüm', evet: 'Tamam' }); var om = d.querySelector('.sa-modal-ov.open .sa-modal'), ok_ = om && om.querySelector('.sa-modal-kapat');
+      if(om){ sonuc.olculen++; var mr_ = om.getBoundingClientRect(); if(!ok_ || !gor(ok_)) sonuc.hata.push('onay penceresi: sağ üstte kapat düğmesi yok'); else { var q_ = ok_.getBoundingClientRect(); if(!icinde(q_, mr_) || q_.left < mr_.left + mr_.width / 2) sonuc.hata.push('onay penceresi: kapat düğmesi sağ üstte değil'); } }
+      var ov_ = d.querySelector('.sa-modal-ov.open'); if(ov_) ov_.classList.remove('open'); }catch(x){} }
     return sonuc;
   };
 })(window);
