@@ -1,0 +1,120 @@
+/* =====================================================================
+   K ve L · dikey öğeli iki iskelet (t-kalip4) — kalip.css'ten SONRA yüklenir.
+   Yalnız .kp-k ve .kp-l (ve L'nin kendi parçası .kl-dev). Ortak tuval değişkenleri kalip.css'ten:
+   --st --sb --ss --se (kenar; 9:16'da birleşik güvenli alan) · --lh (logo yüksekliği) · --vr --kat-on --vr-koyu · --scrim.
+   Ölçü cqmin (kısa kenar); sabit renk yok. Dikey yazı hiçbir biçimde logoya, başlığa ve güvenli alana taşmaz.
+   ===================================================================== */
+
+/* L'nin dev kelimesi her tuvalde yazılı gelir; yalnız L'de görünür */
+.kl-dev{display:none}
+
+/* =====================================================================
+   K · BANT — sol alttan yükselen ince kategori bandı; ucundaki bayrakta logo; bantta dikey “Kategori · Bölge”;
+   başlık bandın yanında, dibine hizalı. (G · Sütun'dan farkı: bant tam boy değil, kenardan içeride ve dar;
+   logo bandın tepesinde bayrakta; fotoğrafın üst yarısı serbest.)
+   ===================================================================== */
+#kpSahne .kp-k{
+  --bg:9.5cqmin;                                   /* bant genişliği */
+  --bx:var(--ss);                                  /* bant sol kenarı */
+  --bu:40cqmin;                                    /* bandın üst ucu = bayrağın üstü */
+  --bp:2.6cqmin;                                   /* bayrak iç boşluğu */
+  --l-gen:15.5cqmin;
+  --lh:calc(var(--l-gen) / 2.97);
+  --bh:calc(var(--lh) + var(--bp) * 2);            /* bayrak yüksekliği */
+  --bw:calc(var(--l-gen) + var(--bp) * 2);         /* bayrak genişliği */
+  --bk:var(--vr);                                  /* bayrak rengi */
+  --fs-b:6.7cqmin;--dk:0px;
+  --scrim:linear-gradient(180deg,rgba(var(--golge-rgb),0) 52%,rgba(var(--golge-rgb),.5) 78%,rgba(var(--golge-rgb),.72) 100%);   /* yalnız başlık için; “Alttan Geçiş” üstüne koyulaştırır */
+  --kc:var(--paper)
+}
+#kpSahne .kp-k .kp-sekil{display:block;inset:var(--bu) auto 0 var(--bx);width:var(--bg);background:var(--vr)}
+#kpSahne .kp-k .kp-sekil2{display:block;left:var(--bx);top:var(--bu);width:var(--bw);height:var(--bh);background:var(--bk)}
+#kpSahne .kp-k .kp-logo{left:calc(var(--bx) + var(--bp));top:calc(var(--bu) + var(--bp));width:var(--l-gen);padding:0;background:none;box-shadow:none;border-radius:0;transform:none}
+#kpSahne .kp-k .kp-blok{left:calc(var(--bx) + var(--bg) + 4.4cqmin);right:var(--se);top:calc(var(--bu) + var(--bh) + 4cqmin);bottom:var(--sb);justify-content:safe flex-end}
+#kpSahne .kp-k .kp-blok .kp-etiket{display:none}
+/* bantta dikey etiket: aşağıdan yukarı okunur, dibi başlığın dibiyle aynı hizada */
+#kpSahne .kp-k .kp-etiket-dikey{display:flex;position:absolute;z-index:3;left:var(--bx);width:var(--bg);top:calc(var(--bu) + var(--bh) + 3cqmin);bottom:var(--sb);
+  writing-mode:vertical-rl;transform:rotate(180deg);align-items:center;justify-content:flex-start;gap:0;overflow:hidden;
+  font-size:var(--fs-e);font-weight:var(--fw-orta);text-transform:uppercase;letter-spacing:.13em;white-space:nowrap;color:var(--kat-on)}
+#kpSahne .kp-k .kp-etiket-dikey .kp-bolge::before{margin:1.1cqmin 0}
+/* etiket süslemesi bantta: düz yazı (varsayılan) · dolu kutu · çerçeveli · nokta  (dikey: pasif, zaten dikey) */
+#kpSahne .kp-orn[data-o-etiket="dolu"] .kp-k .kp-etiket-dikey{top:auto;padding:2.2cqmin 0;color:var(--vr);
+  background:linear-gradient(var(--kat-on),var(--kat-on)) center/calc(var(--fs-e) * 2.1) 100% no-repeat}
+#kpSahne .kp-orn[data-o-etiket="cerceve"] .kp-k .kp-etiket-dikey{top:auto;padding:2cqmin 0;
+  background:linear-gradient(var(--kat-on),var(--kat-on)) left calc(50% - var(--fs-e)) top/.36cqmin 100% no-repeat,linear-gradient(var(--kat-on),var(--kat-on)) left calc(50% + var(--fs-e)) top/.36cqmin 100% no-repeat}
+#kpSahne .kp-orn[data-o-etiket="nokta"] .kp-k .kp-etiket-dikey::after{content:"";order:-1;flex:none;width:2cqmin;height:2cqmin;margin-bottom:2cqmin;border-radius:var(--radius-circle);background:var(--kat-on)}
+#kpSahne .kp-orn[data-o-etiket="duz"] .kp-k .kp-etiket-dikey{letter-spacing:.16em}
+/* logo süslemesi bayrakta: düz (logo bayrağın renginde tek renk) · plaka (beyaz bayrak, koyu logo) · rozet (bandın tepesinde yuvarlak) · renkli (beyaz bayrak, kategori renginde logo) */
+#kpSahne .kp-orn[data-o-logo="plaka"] .kp-k{--bk:var(--paper)}
+#kpSahne .kp-orn[data-o-logo="renk"] .kp-k{--bk:var(--paper)}
+#kpSahne .kp-orn[data-o-logo="renk"] .kp-k .kp-l-maske{--lr:var(--renk-acik)}
+#kpSahne .kp-orn[data-o-logo="rozet"] .kp-k{--rz:calc(var(--bg) + 7cqmin);--bh:calc(var(--rz) * .5)}
+#kpSahne .kp-orn[data-o-logo="rozet"] .kp-k .kp-sekil2{display:none}
+#kpSahne .kp-orn[data-o-logo="rozet"] .kp-k .kp-sekil{top:calc(var(--bu) + var(--rz) * .5)}
+#kpSahne .kp-orn[data-o-logo="rozet"] .kp-k .kp-logo{width:var(--rz);height:var(--rz);aspect-ratio:1;left:calc(var(--bx) + var(--bg) / 2 - var(--rz) / 2);top:var(--bu);
+  border-radius:var(--radius-circle);background:var(--paper);box-shadow:0 0 0 .7cqmin var(--vr)}
+#kpSahne .kp-orn[data-o-logo="rozet"] .kp-k .kp-l-maske{display:block;width:76%;--lr:var(--renk-acik)}
+#kpSahne .kp-orn[data-o-logo="rozet"] .kp-k .kp-etiket-dikey{top:calc(var(--bu) + var(--rz) + 3cqmin)}
+/* vurgu öğesi: köşe işareti sağ üstte (bayrak ve bant solda) */
+#kpSahne .kp-k{--kt:calc(var(--st) - 2.5cqmin);--kr:calc(var(--se) - 2.5cqmin)}
+/* kaydırmalı: "Kaydır" sağ üstte kalır; iç sayfada bant üst şeride yükselir */
+#kpSahne .kp-k[data-tip="ic"]{--bu:27cqmin;--gi:0 0 64% 0}
+#kpSahne .kp-k[data-tip="ic"] .kp-blok{top:calc(var(--bu) + var(--bh) + 4cqmin);justify-content:flex-start}
+#kpSahne .kp-k[data-tip="ic"] .kp-etiket-dikey{top:auto}
+/* Son Dakika: bant ve bayrak kırmızı (--vr), işaret başlığın üstünde */
+#kpSahne .kp-k[data-tip="sd"] .kp-sdbas{background:var(--paper);color:var(--danger)}
+/* 9:16 — bandın dibi güvenli alanın altındaki boşluğa uzanır (şekil), yazı ve logo güvenli alanda */
+#kpSahne .kp-k[data-bicim="uzun"]{--bx:6.02cqw;--bg:9cqw;--bu:46cqw;--l-gen:17cqw;--bp:2.6cqw;
+  --scrim:linear-gradient(180deg,rgba(var(--golge-rgb),.3) 0%,rgba(var(--golge-rgb),0) 18%,rgba(var(--golge-rgb),0) 30%,rgba(var(--golge-rgb),.6) 46%,rgba(var(--golge-rgb),.82) 64%,rgba(var(--golge-rgb),.5) 100%)}
+#kpSahne .kp-k[data-bicim="uzun"] .kp-blok{left:calc(var(--bx) + var(--bg) + 4cqw)}
+/* yatay (LinkedIn, Facebook, X): bant yukarıdan başlar, başlık solda, fotoğraf sağda serbest */
+#kpSahne .kp-k[data-bicim="yatay"]{--bu:20cqmin;--l-gen:16cqmin;--bg:9cqmin;
+  --scrim:linear-gradient(90deg,rgba(var(--golge-rgb),.88) 0%,rgba(var(--golge-rgb),.62) 42%,rgba(var(--golge-rgb),0) 74%)}
+#kpSahne .kp-k[data-bicim="yatay"] .kp-blok{right:46%}
+
+/* =====================================================================
+   L · SIRT — kategori adı sağ kenarda kitap sırtı gibi dev ve dikey; başlık solda, logo sol üstte.
+   Kelime boyu sığacak şekilde hesaplanır: --n (kelimenin em uzunluğu, _iskelet_kl.py) → boy / n.
+   ===================================================================== */
+#kpSahne .kp-l{
+  --kh:calc(100cqh - var(--st) - var(--sb));      /* dev kelimenin kullanabileceği yükseklik */
+  --kmax:21cqmin;                                  /* dev kelime en çok bu boyda */
+  --kg:calc(var(--kmax) * .8);                     /* sütun genişliği (en büyük boyda) */
+  --fs-b:6.6cqmin;
+  --scrim:linear-gradient(180deg,rgba(var(--golge-rgb),.3) 0%,rgba(var(--golge-rgb),0) 20%,rgba(var(--golge-rgb),0) 56%,rgba(var(--golge-rgb),.5) 80%,rgba(var(--golge-rgb),.72) 100%),
+          linear-gradient(270deg,rgba(var(--golge-rgb),.38) 0%,rgba(var(--golge-rgb),0) 30%);   /* logo, dev kelime ve başlık için en az koyuluk */
+  --kt:auto;--kb:calc(var(--sb) - 2.5cqmin);--kl:auto;--kr:calc(var(--se) - 2.5cqmin);--ktr:scaleY(-1)
+}
+#kpSahne .kp-l .kl-dev{display:block;position:absolute;z-index:2;top:var(--st);right:var(--se);bottom:var(--sb);width:var(--kg);pointer-events:none}
+#kpSahne .kp-l .kl-ic{position:absolute;top:0;right:0;display:flex;align-items:center;gap:calc(var(--kf) * .14);
+  --kf:min(var(--kmax), calc(var(--kh) / var(--n)));
+  writing-mode:vertical-rl;font-family:var(--font-vurgu);font-weight:var(--fw-ekstra);white-space:nowrap;line-height:1;color:var(--kr-y,var(--vr-koyu))}
+#kpSahne .kp-l .kl-ic>*{flex:none}
+#kpSahne .kp-l .kl-ic b{font-size:var(--kf);line-height:.78;letter-spacing:-.01em;font-weight:inherit}
+#kpSahne .kp-l .kl-ic small{font-family:var(--font-vurgu);font-size:calc(var(--kf) * .17);font-weight:var(--fw-ekstra);letter-spacing:.12em;text-transform:uppercase;color:var(--paper);opacity:.92}
+#kpSahne .kp-l .kp-blok{right:calc(var(--se) + var(--kg) + 4cqmin)}
+#kpSahne .kp-l .kp-blok .kp-etiket,#kpSahne .kp-l .kp-etiket-dikey{display:none}
+#kpSahne .kp-l{--dk:0px}
+#kpSahne .kp-l .kp-kaydir{right:auto;left:var(--ss);top:calc(var(--st) + var(--lh) + 3cqmin)}
+#kpSahne .kp-l[data-tip="sd"] .kp-sdbas{display:none}
+#kpSahne .kp-l[data-tip="sd"] .kl-ic{--kr-y:var(--paper)}
+#kpSahne .kp-l[data-tip="sd"] .kl-ic b{color:var(--danger);-webkit-text-stroke:0}
+/* etiket süslemesi dev kelimede: düz (kategori renginde, varsayılan) · dolu (kategori renginde sırt şeridi, kelime içinde)
+   · çerceveli (yalnız dış çizgi) · nokta (beyaz kelime, başında kategori noktası)  (dikey: pasif, zaten dikey) */
+#kpSahne .kp-orn[data-o-etiket="dolu"] .kp-l .kl-dev{top:0;bottom:0;right:calc(var(--se) - 3cqmin);width:calc(var(--kg) + 6cqmin);background:var(--vr)}
+#kpSahne .kp-orn[data-o-etiket="dolu"] .kp-l .kl-ic{top:var(--st);right:3cqmin;--kr-y:var(--kat-on)}
+#kpSahne .kp-orn[data-o-etiket="dolu"] .kp-l .kl-ic small{color:var(--kat-on)}
+#kpSahne .kp-orn[data-o-etiket="dolu"] .kp-l[data-tip="sd"] .kl-ic b{color:var(--paper)}
+#kpSahne .kp-orn[data-o-etiket="cerceve"] .kp-l .kl-ic b{color:transparent;-webkit-text-stroke:.42cqmin var(--paper)}
+#kpSahne .kp-orn[data-o-etiket="nokta"] .kp-l .kl-ic{--kr-y:var(--paper)}
+#kpSahne .kp-orn[data-o-etiket="nokta"] .kp-l .kl-ic::before{content:"";flex:none;width:calc(var(--kf) * .2);height:calc(var(--kf) * .2);margin-bottom:calc(var(--kf) * .08);border-radius:var(--radius-circle);background:var(--vr-koyu)}
+/* içerik çeşitleri */
+#kpSahne .kp-l[data-tip="ic"]{--kmax:15cqmin;--kg:calc(var(--kmax) * .8);--gi:0 0 70% 0}
+#kpSahne .kp-l[data-tip="ic"] .kp-blok{top:calc(30% + 4cqmin);right:calc(var(--se) + var(--kg) + 3.5cqmin)}
+/* 9:16 — dev kelime güvenli alanın içinde (üst 288 · alt 672 · sağ 192 px) */
+#kpSahne .kp-l[data-bicim="uzun"]{--kmax:17cqw;--kg:calc(var(--kmax) * .8);
+  --scrim:linear-gradient(180deg,rgba(var(--golge-rgb),.3) 0%,rgba(var(--golge-rgb),0) 18%,rgba(var(--golge-rgb),.25) 32%,rgba(var(--golge-rgb),.7) 52%,rgba(var(--golge-rgb),.8) 66%,rgba(var(--golge-rgb),.45) 100%)}
+/* yatay: dev kelime fotoğrafın sağ kenarında, başlık solda */
+#kpSahne .kp-l[data-bicim="yatay"]{--kmax:17cqmin;--kg:calc(var(--kmax) * .8);
+  --scrim:linear-gradient(90deg,rgba(var(--golge-rgb),.88) 0%,rgba(var(--golge-rgb),.6) 40%,rgba(var(--golge-rgb),0) 70%),linear-gradient(270deg,rgba(var(--golge-rgb),.45) 0%,rgba(var(--golge-rgb),0) 22%)}
+#kpSahne .kp-l[data-bicim="yatay"] .kp-blok{right:48%}
