@@ -14,7 +14,8 @@ Kurallar (hepsi 0 olmalı):
   etkisiz seçenek  her iskelet × süsleme grubu × seçenek, aynı gruptaki diğer seçeneklerden görünür biçimde ayrılır
                    (hesaplanmış stil ve DOM farkı); pasif olarak işaretlenmiş seçenek sayılmaz
   düşük karşıtlık  başlıktaki vurgu metni ile zemini WCAG ≥ 3:1 (bütün başlık vurgusu × görsel işlemi × kategori)
-  boya             zeminli vurgu ve veri rakamı kutusu komşu satırdaki (ve kendisi dışındaki) hiçbir harfin mürekkebine değmez (Yasin Bey)
+  boya             iki yönlü: kutu kendi dışındaki hiçbir harfin mürekkebine değmez; kendi harfleri (kuyruk, şapka) kutunun dışına taşmaz (Yasin Bey, Beyar)
+  altta boşluk     panel içeriği (liste, tablo, grafik, hava, maç bilgisi, düğme satırı…) taşıyan kartta içerik ile güvenli alt kenar arası ≤ kart yüksekliğinin %6'sı (Beyar)
 Kullanım: python3 -I kalip/_olc.py [--ozet] [--hepsi]  → "Kalıp ölçümü: …"; sorun varsa çıkış 1.
 """
 import functools, http.server, json, os, re, socket, subprocess, sys, threading, html, collections
@@ -23,7 +24,9 @@ from pathlib import Path
 KOK = Path(__file__).resolve().parent.parent
 CHROME = os.environ.get("CHROME", "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
 JS = r"""
-var W, d, out = {cakisma:[], tasma:[], kesik:[], kucuk:[], merkez:[], guvenli:[], gorsel:[], etkisiz:[], karsitlik:[], boya:[], sayi:[]}, n = 0, nb = 0, url = {};
+var W, d, out = {cakisma:[], tasma:[], kesik:[], kucuk:[], merkez:[], guvenli:[], gorsel:[], etkisiz:[], karsitlik:[], boya:[], altbos:[], sayi:[]}, n = 0, nb = 0, nl = 0, url = {};
+var ALT_BOS = .06; /* liste/tablo kartında içerik ile güvenli alt kenar arası en çok kart yüksekliğinin %6'sı (Beyar, kararlar dosyası) */
+var LISTE = '.kp-liste,.kd-liste,.kd-tablo,.kd-grafik,.kd-secenekler,.kd-akis,.kd-skor,.kd-hava-gunler,.kd-bilgi,.kd-cagri,.kd-ses,.kd-soru-kutu,.kd-zaman'; /* koyu alt panelde içerik: tablo, liste, grafik, anket, akış, skor, hava, maç bilgisi, düğme, ses, soru */
 function gor(e){ if(!e || !e.getClientRects().length) return false; var s = W.getComputedStyle(e); return s.visibility != 'hidden' && parseFloat(s.opacity) > 0.05; }
 function kes(a, b){ return !(a.right <= b.left + 1 || a.left >= b.right - 1 || a.bottom <= b.top + 1 || a.top >= b.bottom - 1); }
 var PARCA = '.kp-logo,.kp-etiket,.kp-etiket-dikey,.kp-baslik,.kp-kaydir,.kp-sdbas,.kp-kim,.kp-aciklama,.kp-liste,.kp-meta,.kp-masthead,.kp-baglanti,.kp-oynat,.kp-sayi,.kp-ust-not,.kp-ic-bas,.kp-glif,.kp-sayfa-nokta,[data-olc-parca],.kd-rozet,.kd-damga,.kd-ust,.kd-yazar,.kd-program,.kd-skor,.kd-zaman,.kd-bilgi,.kd-tablo,.kd-hava-simdi,.kd-hava-gunler,.kd-akis,.kd-onceki,.kd-eklenen,.kd-not,.kd-yil,.kd-cagri,.kd-ses,.kd-grafik,.kd-secenekler,.kd-soru-kutu,.kd-liste,.ks-yuz';
@@ -55,6 +58,12 @@ function olc(t, ek){
     if(p[i].contains(p[j]) || p[j].contains(p[i])) continue;
     if(kes(p[i].getBoundingClientRect(), p[j].getBoundingClientRect())) out.cakisma.push('çakışma ' + kisa(p[i]) + '/' + kisa(p[j]) + ' · ' + a);
   }
+  /* alt boşluk: liste ya da tablo taşıyan kartta içerik güvenli alt kenara kadar iner */
+  if(bl && gor(bl) && [].some.call(t.querySelectorAll(LISTE), gor)){ nl++;
+    var bb = bl.getBoundingClientRect(), enAlt = 0, bps = W.getComputedStyle(bl);
+    [].forEach.call(bl.children, function(c){ if(!gor(c) || W.getComputedStyle(c).position == 'absolute') return; enAlt = Math.max(enAlt, c.getBoundingClientRect().bottom); });
+    var bos = (bb.bottom - parseFloat(bps.paddingBottom) - enAlt) / tr.height;
+    if(enAlt && bos > ALT_BOS) out.altbos.push('altta boşluk %' + Math.round(bos * 100) + ' · ' + a); }
   if(t.dataset.bicim == 'uzun'){
     var G = W.kp.V.guvenli, s = {t: tr.top + tr.height * G.ust / G.boy, b: tr.bottom - tr.height * G.alt / G.boy, l: tr.left + tr.width * G.sol / G.en, r: tr.right - tr.width * G.sag / G.en};
     [].forEach.call(t.querySelectorAll(GUV), function(x){ if(!gor(x)) return; var r = x.getBoundingClientRect();
@@ -76,6 +85,13 @@ function boya(t, ek){
       var py = parseFloat(cs.backgroundPositionY) || 0, sh = parseFloat((cs.backgroundSize.split(' ')[1]) || r.height);
       return {left: r.left, right: r.right, top: r.top + py, bottom: r.top + py + sh}; });
     var kok = t.querySelector('.kp-blok') || t, tw = d.createTreeWalker(kok, 4), dn, rg = d.createRange(), fs = {};
+    /* ikinci yön: kutunun kendi harfleri (kuyruk ve şapka dahil) kendi satırının boyasının içinde */
+    var tv = d.createTreeWalker(v, 4), vn, vf = W.getComputedStyle(v), vfont = vf.fontStyle + ' ' + vf.fontWeight + ' ' + vf.fontSize + ' ' + vf.fontFamily, rg0 = d.createRange();
+    while((vn = tv.nextNode())){ for(var q = 0; q < vn.nodeValue.length; q++){ var cq = vn.nodeValue[q]; if(!cq.trim()) continue;
+      rg0.setStart(vn, q); rg0.setEnd(vn, q + 1); var rq = rg0.getClientRects()[0]; if(!rq || !rq.width) continue;
+      var mq = murekkep(vfont, cq), tq = rq.top + mq.fa, uq = tq - mq.ua, aq = tq + mq.ad;
+      var bq = bant.filter(function(b){ return rq.left < b.right + .5 && rq.right > b.left - .5 && tq > b.top && tq < b.bottom; })[0]; /* harfin kendi satırının bandı: taban çizgisi bandın içinde */
+      if(bq && (uq < bq.top - .5 || aq > bq.bottom + .5)){ out.boya.push('harf boyanın dışına taşıyor "' + cq + '" · ' + ad(t, ek)); return; } } }
     while((dn = tw.nextNode())){
       if(v.contains(dn) || !dn.nodeValue.trim()) continue; var el = dn.parentElement; if(!gor(el)) continue;
       var c2 = W.getComputedStyle(el), font = c2.fontStyle + ' ' + c2.fontWeight + ' ' + c2.fontSize + ' ' + c2.fontFamily;
@@ -189,14 +205,14 @@ function calis(){
   if(dp){ var m3 = /(\d+)\s*durum/i.exec(dp.textContent), ids = {}; [].forEach.call(dp.querySelectorAll('[data-durum]'), function(x){ ids[x.getAttribute('data-durum')] = 1; });
     var nd = Object.keys(ids).length; if(m3 && +m3[1] != nd) out.sayi.push('durum sayısı: yazıda ' + m3[1] + ', kartlarda ' + nd); }
   var us = Object.keys(url), kalan = us.length;
-  function bitir(){ o.textContent = JSON.stringify({n: n, nb: nb, sorun: out}); }
+  function bitir(){ o.textContent = JSON.stringify({n: n, nb: nb, nl: nl, sorun: out}); }
   if(!kalan) return bitir();
   us.forEach(function(u){ var im = new Image(); im.onload = function(){ if(!--kalan) bitir(); }; im.onerror = function(){ out.gorsel.push('görsel yüklenmiyor ' + u + ' · ' + url[u]); if(!--kalan) bitir(); }; im.src = new URL(u, f.contentDocument.baseURI).href; });
 }
 f.onload = function(){ var w = f.contentWindow; (w.document.fonts ? w.document.fonts.ready : Promise.resolve()).then(function(){ setTimeout(function bekle(){ if(!f.contentWindow.kp) return setTimeout(bekle, 200); try{ calis(); }catch(ex){ o.textContent = JSON.stringify({hata: String(ex) + ' ' + ex.stack}); } }, 300); }); };
 """
 AD = [("cakisma", "çakışma"), ("tasma", "taşma"), ("kesik", "kesik başlık"), ("kucuk", "küçük başlık"), ("merkez", "merkez dışı"), ("guvenli", "güvenli alan dışı"),
-      ("gorsel", "görsel eksik"), ("etkisiz", "etkisiz seçenek"), ("karsitlik", "düşük karşıtlık"), ("boya", "boya harfe değiyor"), ("sayi", "sayı uyuşmazlığı")]
+      ("gorsel", "görsel eksik"), ("etkisiz", "etkisiz seçenek"), ("karsitlik", "düşük karşıtlık"), ("boya", "boya"), ("altbos", "altta boşluk"), ("sayi", "sayı uyuşmazlığı")]
 
 
 def main():
@@ -224,11 +240,11 @@ def main():
         print("Kalıp ölçümü: betik hatası ·", v["hata"][:600]); sys.exit(1)
     s = {k: sorted(set(v["sorun"][k])) for k, _ in AD}
     toplam = sum(len(x) for x in s.values())
-    print(f"Kalıp ölçümü: {v['n']} tuval (Seçilen + 14 iskelet × 5 kategori × 5 mecra × 3 başlık boyu, bütün çeşitler; boya {v.get('nb', 0)} kutu) · "
+    print(f"Kalıp ölçümü: {v['n']} tuval (Seçilen + 14 iskelet × 5 kategori × 5 mecra × 3 başlık boyu, bütün çeşitler; boya {v.get('nb', 0)} kutu, liste kartı {v.get('nl', 0)}) · "
           + " · ".join(f"{a} {len(s[k])}" for k, a in AD))
     if "--ozet" in sys.argv:
         for k, a in AD:
-            c = collections.Counter(re.sub(r" · (\S+ \S+ \S+).*", r" · \1", x) for x in s[k])
+            c = collections.Counter(re.sub(r" · (\S+ \S+ \S+).*?( \[[^\]]*\])?$", r" · \1\2", x) for x in s[k])
             for x, say in c.most_common(25): print(f"  {say:4d}  {x}")
     hepsi = [x for k, _ in AD for x in s[k]]
     for x in (hepsi if "--hepsi" in sys.argv else hepsi[:40]): print("   " + x)
