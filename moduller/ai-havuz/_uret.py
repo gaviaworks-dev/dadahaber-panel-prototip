@@ -4,7 +4,7 @@
 Kullanım:  python3 -I moduller/ai-havuz/_uret.py && python3 -I araclar/menu_yaz.py --yalniz moduller/ai-havuz
 
 Kaynaklar (yalnızca okunur): public sözlük (ornek_veri.json), veri/panel.json (ai_kaynakli), moduller.json (kaynak grupları,
-okuma zorunluluğu, otomatik yayın), moduller/haberler/duzenle.html (kategori, yazar, tür, alt konu listeleri), _veri.py.
+okuma zorunluluğu, otomatik yayın), moduller/haberler/duzenle.html (kategori, yazar, biçim, alt konu listeleri), _veri.py.
 Sayfalar: index (havuz), duzenle, kaynaklar, motor, cron, ayarlar. Bileşenler yalnız UI kitten; sayfada stil yok.
 """
 import html, json, re, sys
@@ -247,6 +247,9 @@ def havuz_satir(r):
     else:
         alt_satir.append(f'{e(tarih_kisa(r["cekilme"]))} · Öneri: {e(r["kat"])} › {e(r["alt"])}')
     by = " · ".join(alt_satir)
+    if yalniz_sosyal(grup):
+        by = (f'<span class="kb-ai-etk" title="{grup} · {e(GA[grup]["ad"])}: yalnız sosyal medya paylaşım taslağı; siteye haber basılmaz, otomatik yayına girmez, gönderi bağlantısız (YS2)">'
+              f'{I("fa-share-nodes")}Yalnız Sosyal</span>') + by
     gd = r["gdurum"]
     ara = " ".join([r["baslik"], k1[1], r["kat"], r["alt"], grup, GA[grup]["ad"]])
     kaynak_by = f'{grup} · ' + (f'+{ek} kaynak' if ek else "tek kaynak")
@@ -444,24 +447,49 @@ def sayfa_havuz():
 
 
 # ================================================================== ortak: grup hesapları
-GUN_CEKIM = {"dakika": lambda n: 24 * 60 / n, "saat": lambda n: 24 / n, "gun": lambda n: 1 / n, "gün": lambda n: 1 / n}
+# sıklık değeri kayıttaki siklik_secenekleri biçiminde: "2 saat", "1 gün" (dakika yok; DADAHABER-11 §1)
+def sik_parca(v):
+    n, birim = v.split()
+    return int(n), birim
+
+
+def siklik_metin(x):
+    """"2 saat" ya da {"siklik": "2 saat"} → "2 saatte bir"."""
+    v = x["siklik"] if isinstance(x, dict) else x
+    n, birim = sik_parca(v)
+    return f'{n} {birim}{ {"saat": "te", "gün": "de"}[birim] } bir'
+
+
+def gunluk_cekim(v):
+    n, birim = sik_parca(v)
+    return 24 / n if birim == "saat" else 1 / n
+
+
+def kaynak_siklik(k):
+    return DETAY.get(k[0], {}).get("siklik") or GA[k[4]]["siklik"]
+
+
+def yalniz_sosyal(gid):
+    return "web" not in GA[gid]["kanallar"] and "uygulama" not in GA[gid]["kanallar"]
 
 
 def grup_hesap(gid):
-    ek = GRUP_EK.get(gid, {"ornek": "", "siklik": 1, "birim": "gün", "yeni_oran": 1})
+    ek = dict(GRUP_EK.get(gid, {"ornek": "", "tip": "rss", "yeni_oran": 1}), siklik=GA[gid]["siklik"])
     ks = [k for k in KAYNAKLAR if k[4] == gid and k[5] != "cop"]
     etkin = [k for k in ks if k[5] in ("aktif", "hata")]
-    cekim = round(len(etkin) * GUN_CEKIM[ek["birim"]](ek["siklik"]) * 30)
+    cekim = round(sum(gunluk_cekim(kaynak_siklik(k)) for k in etkin) * 30)
     haber = round(cekim * ek["yeni_oran"])
     usd = haber * HABER_BASI_USD
     return dict(ek=ek, ks=ks, etkin=etkin, cekim=cekim, haber=haber, usd=usd)
 
 
-def siklik_metin(ek):
-    return f'{ek["siklik"]} {ek["birim"]}{ {"dakika": "da", "saat": "te", "gün": "de"}[ek["birim"]] } bir'
+def siklik_etiket(v):  # seçenek adı (yazım kuralı: baş harfler büyük)
+    n, birim = sik_parca(v)
+    return f'{n} {"Saatte" if birim == "saat" else "Günde"} Bir'
 
 
-BIRIMLER = [("dakika", "Dakika", ""), ("saat", "Saat", ""), ("gün", "Gün", "")]  # (değer, görünen ad, …): değer veri anahtarıdır, küçük kalır
+SIKLIKLAR = [(v, siklik_etiket(v), "") for v in AY["siklik_secenekleri"]]
+TARAMA_NOT = "Tarama her grubun kendi sıklığında çalışır; en kısa aralık 1 saat."
 
 
 def kaynak_durum(k):
@@ -477,12 +505,21 @@ def kaynak_sayim():
 
 
 KS_CANLI, KS_ETKIN, KS_HATA, KS_PASIF = kaynak_sayim()
-HATA_KISA = {"defense-news": "Defense News (T3) 14.20'den beri 403 döndürüyor", "spk": "SPK (T1) duyuru sayfasının yapısı değişti",
-             "oyun-tekno": "Oyun ve Teknoloji (T4) akışı ayrıştırılamıyor"}
+HATA_KISA = {"defense-news": "Defense News (T8) 12.00'den beri 403 döndürüyor", "rekabet": "Rekabet Kurumu (T2) haber sayfasının yapısı değişti",
+             "ensonhaber": "Ensonhaber (T12) akışı ayrıştırılamıyor"}
 
 
 def hata_ozet():
     return "; ".join(HATA_KISA.get(k[0], f"{k[1]} ({k[4]}) hata veriyor") for k in KS_HATA)
+
+
+def onceki_cekimler(son_, sik):
+    """Son çekimden geriye üç çekim zamanı (bugün için ss.dd; günlükte gün.ay · ss.dd)."""
+    n, birim = sik_parca(sik)
+    if birim == "saat" and len(son_) == 5:
+        h = int(son_[:2])
+        return [f"{(h - i * n) % 24:02d}{son_[2:]}" for i in range(3)]
+    return [son_, f"22.11 · {son_[-5:]}", f"21.11 · {son_[-5:]}"]
 
 
 # ================================================================== KAYNAKLAR
@@ -495,25 +532,39 @@ def kaynak_gor_sablon(k):
         bant = f'<div class="kb-bant tehlike">{I("fa-triangle-exclamation")}<span><b>Son çekimler başarısız.</b> {e(not_)}. Kaynak sitesi erişimi engelliyor olabilir; adres değiştiyse düzenleyin. Bu sürede grup teyidi diğer kaynaklarla yapılır.</span></div>'
     elif dur == "pasif":
         bant = f'<div class="kb-bant bilgi">{I("fa-circle-pause")}<span><b>Pasif kaynak.</b> {e(not_)}. Çekilmez; eski haberlerdeki teyit kayıtları durur.</span></div>'
+    sik = kaynak_siklik(k)
+    t1, t2, t3 = onceki_cekimler(son_, sik)
     log = {
         "hata": HATA_LOG.get(kid, [("hata", "16.00.04", "403 Forbidden · sonraki deneme bir sonraki turda"), ("bilgi", son_ + ".02", "Son başarılı çekim")]),
         "pasif": [("bilgi", son_.replace(" ", " · ") + ".00", "Kaynak pasifleştirildi; çekim durdu")],
-    }.get(dur, [("bilgi", f"{son_}.0{len(ad) % 9}", f"{2 + len(ad) % 5} yeni içerik, {len(ad) % 4} tekrar elendi"),
-               ("bilgi", "15.30.0" + str(len(ad) % 7), f"{1 + len(ad) % 3} yeni içerik"),
-               ("uyari" if basari < 100 else "bilgi", "15.00.03", "Yavaş yanıt (4,2 sn)" if basari < 100 else "Değişiklik yok")])
+    }.get(dur, [("bilgi", f"{t1}.0{len(ad) % 9}", f"{2 + len(ad) % 5} yeni içerik, {len(ad) % 4} tekrar elendi"),
+               ("bilgi", f"{t2}.0{len(ad) % 7}", f"{1 + len(ad) % 3} yeni içerik"),
+               ("uyari" if basari < 100 else "bilgi", f"{t3}.03", "Yavaş yanıt (4,2 sn)" if basari < 100 else "Değişiklik yok")])
     logh = "".join(f'<span class="kl-satir {s}"><span class="kl-zaman">{z}</span><span class="kl-seviye">{"uyarı" if s == "uyari" else s}</span><span class="kl-kaynak">{kid}</span><span>{e(m)}</span></span>' for s, z, m in log)
-    tad, tik = TIP[tip]
+    tad, tik = TIP[tip][:2]
+    dt = DETAY.get(kid, {})
+    sik_ad = siklik_metin(sik) + (" · kaynağa özel" if dt.get("siklik") else " · gruptan")
+    tip_ad = tad + (" · gruptan" if tip == GRUP_EK.get(gid, {}).get("tip") else " · kaynağa özel")
+    if yalniz_sosyal(gid) and dur != "hata":
+        bant = bant or f'<div class="kb-bant bilgi">{I("fa-share-nodes")}<span><b>Yalnız Sosyal.</b> {gid} grubundan gelen içerik yalnız sosyal medya paylaşım taslağı olur; siteye haber basılmaz, otomatik yayına girmez, gönderi bağlantısızdır (YS2).</span></div>'
     return f"""<template id="kyGor-{kid}" data-baslik="{e(ad)}" data-alt="{e(tad)} · {gid} · {e(g['ad'])}">
   {bant}
   <div class="kb-fs"><div class="kb-fs-tt">Durum</div><div class="sa-durum">
     <div><span>Durum</span><b><span class="pstat {sinif}">{dad}</span></b></div>
     <div><span>Grup</span><b>{gid} · {e(g['ad'])}</b></div>
-    <div><span>Tip</span><b>{e(tad)}</b></div>
+    <div><span>Çekim Tipi</span><b>{e(tip_ad)}</b></div>
+    <div><span>Çekim Sıklığı</span><b>{e(sik_ad)}</b></div>
     <div><span>Adres</span><b>{e(url)}</b></div>
+    <div><span>Akış Yolu</span><b>{e(dt.get("akis") or "—")}</b></div>
+    <div><span>Hedef Kategori</span><b>{e(dt.get("hedef") or ("Yalnız Sosyal" if yalniz_sosyal(gid) else "AI her haberde önerir"))}</b></div>
     <div><span>Son çekim</span><b>{e(son_)}</b></div>
     <div><span>Başarı · son 24 saat</span><b>%{basari}</b></div>
     <div><span>Havuza düşen · 30 gün</span><b>{sayi(haber30)} içerik</b></div>
     <div><span>Yayın kanalları (gruptan)</span><b>{kanal_ikon(g['kanallar'])}</b></div>
+  </div></div>
+  <div class="kb-fs"><div class="kb-fs-tt">Kurum</div><div class="sa-durum">
+    <div><span>Birim ve Açıklama</span><b>{e(dt.get("birim") or "—")}</b></div>
+    <div><span>İçerik Detayı</span><b>{e(dt.get("icerik") or "—")}</b></div>
   </div></div>
   <div class="kb-fs"><div class="kb-fs-tt">Görsel</div><p class="fhint">Görsel izni kaynak başına ayarlanmaz (YS1). AI bu kaynaktan gelen her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; son 30 günde bu kaynakta {3 + len(ad) % 6} görsel temizlenemedi ve haber “Görsel eksik” geldi.</p></div>
   <div class="kb-fs"><div class="kb-fs-tt">Son çekimler</div><pre class="kb-log">{logh}</pre><p class="fhint kb-ust-bosluk">Çekim günlüğü sistem logudur; silinemez ve değiştirilemez.</p></div>
@@ -522,25 +573,56 @@ def kaynak_gor_sablon(k):
 """
 
 
+def hedef_secenekleri():
+    """Hedef kategori havuzu: haber formunun ana kategori › alt konu ağacı (public kategori.json; haberler düzenle işaretinden)."""
+    harita = json.loads(html.unescape(re.search(r'data-alt-harita="([^"]*)"', isaret("hb-df-alt")).group(1)))
+    ops = [("", "AI Her Haberde Önerir", "Hedef yok")]
+    for ana, altlar in harita.items():
+        ops.append((ana, ana, "Ana kategori"))
+        ops += [(f"{ana} › {a}", f"{ana} › {a}", "") for a in altlar]
+    return ops
+
+
 def kaynak_form(kid, k=None):
     ad, tip, url, gid, dur = (k[1], k[2], k[3], k[4], k[5]) if k else ("", "rss", "", "", "aktif")
+    dt = DETAY.get(kid, {}) if k else {}
     sid = kid
-    tipler = "".join(f'<label class="kb-secenek kb-secenek-kart"><input type="radio" name="kyTip-{sid}" value="{t}"{" checked" if t == tip else ""}><span><b>{I(TIP[t][1])} {TIP[t][0]}</b><small>{ {"rss": "Akış adresi", "scraper": "Sayfa düzenli taranır", "haber-sitesi": "Sitenin haber listesi", "sosyal-hesap": "X, Telegram ya da benzeri hesap"}[t] }</small></span></label>' for t in TIP)
-    grp = [(g["id"], f'{g["id"]} · {g["ad"]}', f'{len(grup_hesap(g["id"])["ks"])} kaynak') for g in GRUPLAR]
+    tipler = "".join(f'<label class="kb-secenek kb-secenek-kart"><input type="radio" name="kyTip-{sid}" value="{t}"{" checked" if t == tip else ""}><span><b>{I(TIP[t][1])} {TIP[t][0]}</b><small>{TIP[t][2]}</small></span></label>' for t in AY["kaynak_tipleri"])
+    grp = [(g["id"], f'{g["id"]} · {g["ad"]}', f'{len(grup_hesap(g["id"])["ks"])} kaynak · {siklik_metin(g)}') for g in GRUPLAR]
+    sik_grup = f'Grubun Sıklığı · {siklik_metin(GA[gid])}' if gid else "Grubun Sıklığı"
+    sik_ops = [("", sik_grup, "Gruptan gelir")] + SIKLIKLAR
     return f"""  <div class="kb-fs">
     <div class="frow"><label for="kyAd-{sid}">Kaynak Adı</label>
-      <input class="finput" id="kyAd-{sid}" data-alan-id="ad" data-sayac="40|60" value="{e(ad)}" placeholder="ör. Anadolu Ajansı">
-      <div class="char-meter"><span>Havuzda ve kaynak teyidinde görünür</span><b>0 / 40</b></div>
+      <input class="finput" id="kyAd-{sid}" data-alan-id="ad" data-sayac="60|80" value="{e(ad)}" placeholder="ör. Anadolu Ajansı (AA) — Gündem">
+      <div class="char-meter"><span>Havuzda ve kaynak teyidinde görünür</span><b>0 / 60</b></div>
       <div class="ferr">{I("fa-circle-exclamation")}Kaynak adı zorunlu.</div></div>
-    <div class="frow"><span class="flabel">Tip</span><div class="kb-kart-sec">{tipler}</div></div>
-    <div class="frow"><label for="kyUrl-{sid}">Adres</label>
-      <input class="finput" id="kyUrl-{sid}" data-alan-id="adres" inputmode="url" value="{e(url)}" placeholder="ör. aa.com.tr/tr/rss/default">
-      <span class="fhint">RSS'te akış adresi, sitede haber listesinin adresi, hesapta profil adresi.</span>
-      <div class="ferr">{I("fa-circle-exclamation")}Adres zorunlu.</div></div>
+    <div class="frow"><label for="kyUrl-{sid}">Alan Adı</label>
+      <input class="finput" id="kyUrl-{sid}" data-alan-id="adres" inputmode="url" value="{e(url)}" placeholder="ör. aa.com.tr">
+      <span class="fhint">Kurumun teyitli ana alan adı. Haber ya da duyuru bölümü aşağıda Akış Yolu'na yazılır.</span>
+      <div class="ferr">{I("fa-circle-exclamation")}Alan adı zorunlu.</div></div>
     <div class="frow"><span class="flabel">Kaynak Grubu</span>
       {secim("kyGrup-" + sid, grp, deger=gid, bos="Grup seçin", ara="Grup ara", ek=' data-alan-id="grup" data-zorunlu-metin="Kaynağın grubunu seçin"')}
-      <span class="fhint">Çekim sıklığı ve yayın kanalları gruptan gelir. Yeni grup <a class="kb-bag" data-hedef="ai-havuz.motor" href="motor.html">Kaynak Motoru'nda</a> eklenir.</span>
+      <span class="fhint">Yayın kanalları gruptan gelir; çekim tipi ve sıklığın varsayılanı da gruptandır. Yeni grup <a class="kb-bag" data-hedef="ai-havuz.motor" href="motor.html">Kaynak Motoru'nda</a> eklenir.</span>
       <div class="ferr">{I("fa-circle-exclamation")}Kaynağın grubunu seçin.</div></div>
+    <div class="frow"><span class="flabel">Çekim Tipi</span><div class="kb-kart-sec">{tipler}</div>
+      <span class="fhint">Varsayılan, grubun çekim tipidir (ör. T1 Kazıyıcı, T3 RSS); kaynağa göre değiştirilebilir.</span></div>
+    <div class="frow two">
+      <div class="frow"><span class="flabel">Çekim Sıklığı</span>
+        {secim("kySik-" + sid, sik_ops, deger=dt.get("siklik") or "", bos=sik_grup, ara="Sıklık ara")}
+        <span class="fhint">{TARAMA_NOT}</span></div>
+      <div class="frow"><span class="flabel">Hedef Kategori</span>
+        {secim("kyKat-" + sid, hedef_secenekleri(), deger=dt.get("hedef") or "", bos="AI Her Haberde Önerir", ara="Kategori ara")}
+        <span class="fhint">AI'ın bu kaynaktan gelen habere önereceği kategori; editör haberde değiştirebilir.</span></div>
+    </div>
+    <div class="frow two">
+      <div class="frow"><label for="kyAkis-{sid}">Akış Yolu</label>
+        <input class="finput" id="kyAkis-{sid}" value="{e(dt.get("akis", ""))}" placeholder="ör. /tr/gundem ya da Haberler &amp; Duyurular"></div>
+      <div class="frow"><label for="kyBirim-{sid}">Birim ve Açıklama</label>
+        <input class="finput" id="kyBirim-{sid}" value="{e(dt.get("birim", ""))}" placeholder="ör. Basın ve Halkla İlişkiler Müşavirliği"></div>
+    </div>
+    <div class="frow"><label for="kyIcerik-{sid}">İçerik Detayı</label>
+      <textarea class="ftext" id="kyIcerik-{sid}" rows="2" data-sayac="160|240" placeholder="ör. Kanunlar, yönetmelikler, tebliğler ve atama kararları">{e(dt.get("icerik", ""))}</textarea>
+      <div class="char-meter"><span>AI hangi içeriği alacağını buradan anlar</span><b>0 / 160</b></div></div>
     <div class="toggle-row"><span>Etkin<small>Kapalıyken kaynak çekilmez; kayıtları durur</small></span><label class="toggle"><input type="checkbox"{" checked" if dur != "pasif" else ""} aria-label="Etkin"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
   </div>
   <div class="kb-fs"><div class="kb-bant bilgi">{I("fa-image")}<span><b>Görsel izni kaynak başına değil (YS1).</b> AI her görseli temiz, AI kırparak temizledi ya da görsel eksik diye ayırır; kaynağın logosu ya da damgası temizlenemezse görsel kullanılmaz ve haber “Görsel eksik” gelir.</span></div></div>
@@ -558,20 +640,22 @@ def kaynak_dz_sablon(k):
 def kaynak_satir(k):
     kid, ad, tip, url, gid, dur, son_, basari, haber30, not_ = k
     sinif, dad = kaynak_durum(k)
-    tad, tik = TIP[tip]
+    tad, tik = TIP[tip][:2]
     g = GA[gid]
     kul = f'{gid} · {g["ad"]} grubunda; son 30 günde {sayi(haber30)} içeriğin kaynağı. Teyit kayıtları silinmez' if haber30 else ""
     durum = "cop" if dur == "cop" else dur
-    ara = " ".join([ad, url, gid, g["ad"], tad])
+    dt = DETAY.get(kid, {})
+    hedef = dt.get("hedef") or ""
+    ara = " ".join([ad, url, gid, g["ad"], tad, hedef, dt.get("birim", "")])
     son_h = f'<span class="kb-tarih{" muted" if dur in ("pasif", "cop") else ""}">{e(son_)}</span>'
     bas_ = f'<td class="say kb-gizle-t">{"%" + str(basari) if dur not in ("pasif", "cop") else "—"}</td>'
     return (f'<tr data-satir="{kid}" data-durum="{durum}" data-grup="{gid}" data-tip="{tip}" data-ara="{e(ara)}" data-baslik="{e(ad)}"'
             f'{f" data-kullanim=\"{e(kul)}\"" if kul else ""}{" data-onceki=\"pasif\"" if dur == "cop" else ""}>'
             f'<td class="kb-sec-hucre"><input type="checkbox" class="kb-onay-kutu" aria-label="Seç: {e(ad)}"></td>'
             f'<td class="kb-ana"><div class="rcp-id"><div class="rcp-name" title="{e(ad)}">{e(ad)}</div><div class="rcp-by">{I(tik)}{e(tad)} · {e(url)}</div></div></td>'
-            f'<td class="kb-gizle-m"><div class="rcp-id"><div class="rcp-name">{gid}</div><div class="rcp-by">{e(g["ad"])}</div></div></td>'
+            f'<td class="kb-gizle-m"><div class="rcp-id" title="{gid} · {e(g["ad"])}"><div class="rcp-name">{gid}</div><div class="rcp-by">{siklik_metin(kaynak_siklik(k))}</div></div></td>'
+            f'<td class="kb-gizle-t">{e(hedef) if hedef else "<span class=\"muted\">" + ("Yalnız Sosyal" if yalniz_sosyal(gid) else "AI önerir") + "</span>"}</td>'
             f'<td class="kb-gizle-t">{son_h}</td>{bas_}'
-            f'<td class="say kb-gizle-t">{sayi(haber30) if haber30 else "—"}</td>'
             f'<td><span class="pstat {sinif}" title="{e(not_)}">{dad}</span></td>'
             f'<td>{row_acts(("tanim", "kyGor-" + kid), ("tanim", "kyDz-" + kid), "sil")}</td></tr>')
 
@@ -581,7 +665,7 @@ def sayfa_kaynaklar():
     sab = "".join(kaynak_gor_sablon(k) + kaynak_dz_sablon(k) for k in KAYNAKLAR)
     canli, etkin, hata, pasif = KS_CANLI, KS_ETKIN, KS_HATA, KS_PASIF
     gruplar = [("", "Bütün Gruplar", "")] + [(g["id"], f'{g["id"]} · {g["ad"]}', str(len([k for k in canli if k[4] == g["id"]]))) for g in GRUPLAR]
-    tipler = [("", "Bütün Tipler", "")] + [(t, v[0], str(len([k for k in canli if k[2] == t]))) for t, v in TIP.items()]
+    tipler = [("", "Bütün Tipler", "")] + [(t, TIP[t][0], str(len([k for k in canli if k[2] == t]))) for t in AY["kaynak_tipleri"]]
     s = bas("Kaynaklar", "kaynaklar")
     s += f"""
 <!-- KAYNAKLAR (Y1, YS1): liste + çekmecede görüntüle/düzenle (kaynağın kendi sayfası yok; satır tıklama = görüntüle). Görsel izni kaynak başına yok. -->
@@ -589,7 +673,7 @@ def sayfa_kaynaklar():
   <div class="pnl-page-head">
     <div>
       <h1>Kaynaklar</h1>
-      <div class="ph-sub">{len(canli)} kaynak · {len(etkin)} etkin ({len(hata)}'i hatalı) · {len(pasif)} pasif · her 10 dakikada taranır</div>
+      <div class="ph-sub">{len(canli)} kaynak · {len(etkin)} etkin ({len(hata)}'i hatalı) · {len(pasif)} pasif · {len(GRUPLAR)} grup · {TARAMA_NOT}</div>
     </div>
     <div class="ph-actions">
       <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.havuz" href="index.html">{I("fa-arrow-left")}Haber Havuzu</a>
@@ -632,7 +716,7 @@ def sayfa_kaynaklar():
       <table class="ptable">
         <thead><tr>
           <th class="kb-sec-hucre"><input type="checkbox" class="kb-onay-kutu" data-hepsini-sec aria-label="Görünen bütün kaynakları seç"></th>
-          <th class="kb-ana">Kaynak</th><th class="kb-gizle-m">Grup</th><th class="kb-gizle-t">Son çekim</th><th class="say kb-gizle-t">Başarı · 24 sa</th><th class="say kb-gizle-t">İçerik · 30 gün</th><th>Durum</th><th><span class="sr-only">İşlemler</span></th>
+          <th class="kb-ana">Kaynak</th><th class="kb-gizle-m">Grup</th><th class="kb-gizle-t">Hedef Kategori</th><th class="kb-gizle-t">Son çekim</th><th class="say kb-gizle-t">Başarı · 24 sa</th><th>Durum</th><th><span class="sr-only">İşlemler</span></th>
         </tr></thead>
         <tbody data-satirlar>{satir}</tbody>
 {durum_govdeleri(8, "fa-rss", "Henüz kaynak yok", "İlk kaynağı ekleyin; AI haber havuzu kaynaklardan beslenir.", "Kaynaklar yüklenemedi", "Sunucuya ulaşılamadı. Bağlantınızı kontrol edip yeniden deneyin.", bos_eylem=chr(10) + '            <button type="button" class="pe-tag" data-tanim="kyYeni">' + I("fa-plus") + 'Yeni kaynak</button>', iskelet='<td></td><td><div class="rcp-id"><span></span></div></td><td class="kb-gizle-m"><span></span></td><td class="kb-gizle-t"><span></span></td><td class="kb-gizle-t"><span></span></td><td class="kb-gizle-t"><span></span></td><td><span></span></td><td></td>', yeniden="kaynaklar.html")}      </table>
@@ -671,10 +755,14 @@ def sayfa_kaynaklar():
 def grup_gor_sablon(g):
     gid = g["id"]
     h = grup_hesap(gid)
-    satir = "".join(f'<div class="km-satir"><span class="km-yazi">{e(k[1])}<small>{TIP[k[2]][0]} · {e(k[3])}</small></span><span class="pstat {kaynak_durum(k)[0]}">{kaynak_durum(k)[1]}</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-{k[0]}" aria-label="{e(k[1])} ayrıntısı" title="Ayrıntı">{I("fa-eye")}</button></div>' for k in h["ks"])
+    satir = "".join(f'<div class="km-satir"><span class="km-yazi">{e(k[1])}<small>{TIP[k[2]][0]} · {e(k[3])} · {siklik_metin(kaynak_siklik(k))}</small></span><span class="pstat {kaynak_durum(k)[0]}">{kaynak_durum(k)[1]}</span><button type="button" class="ia-btn" data-sablon-ac="kyGorM-{k[0]}" aria-label="{e(k[1])} ayrıntısı" title="Ayrıntı">{I("fa-eye")}</button></div>' for k in h["ks"])
+    sosyal = (f'<div class="kb-bant bilgi">{I("fa-share-nodes")}<span><b>Yalnız Sosyal.</b> Bu gruptan gelen içerik yalnız sosyal medya paylaşım taslağı olur; '
+              f'siteye haber basılmaz, otomatik yayına girmez, gönderi bağlantısızdır (YS2).</span></div>') if yalniz_sosyal(gid) else ""
     return f"""<template id="mtGor-{gid}" data-baslik="{gid} · {e(g['ad'])}" data-alt="{e(h['ek']['ornek'])}">
+  {sosyal}
   <div class="kb-fs"><div class="kb-fs-tt">Grup</div><div class="sa-durum">
     <div><span>Çekim Sıklığı</span><b>{siklik_metin(h['ek'])}</b></div>
+    <div><span>Varsayılan Çekim Tipi</span><b>{TIP[h['ek']['tip']][0]}</b></div>
     <div><span>Yayın Kanalları</span><b>{kanal_ikon(g['kanallar'])}</b></div>
     <div><span>Etkin kaynak</span><b>{len(h['etkin'])} / {len(h['ks'])}</b></div>
     <div><span>Aylık tahmin</span><b>{sayi(h['cekim'])} çekim · {sayi(h['haber'])} içerik<span data-izin="ai-maliyet"> · ${para(h['usd'])}</span></b></div>
@@ -689,7 +777,7 @@ def grup_gor_sablon(g):
 def grup_form(gid, g=None):
     h = grup_hesap(gid) if g else None
     ad = g["ad"] if g else ""
-    ek = h["ek"] if g else {"ornek": "", "siklik": "", "birim": "saat"}
+    ek = h["ek"] if g else {"ornek": "", "siklik": "", "tip": "rss"}
     kanallar = g["kanallar"] if g else ["web", "uygulama", "sosyal"]
     havuz = json.dumps([k[1] for k in KAYNAKLAR if k[5] != "cop"], ensure_ascii=False)
     cip = "".join(f'<span class="kb-cip" data-deger="{e(k[1])}"><span>{e(k[1])}</span><button type="button" aria-label="Kaldır">{I("fa-xmark")}</button></span>' for k in (h["ks"] if h else []))
@@ -701,13 +789,15 @@ def grup_form(gid, g=None):
     <div class="frow"><label for="mtOrnek-{gid}">Örnek Açıklaması</label>
       <input class="finput" id="mtOrnek-{gid}" data-sayac="60|80" value="{e(ek['ornek'])}" placeholder="ör. örn. Anadolu Ajansı, DHA, İHA">
       <div class="char-meter"><span>Listede adın altında</span><b>0 / 60</b></div></div>
-    <div class="frow"><span class="flabel">Çekim Sıklığı</span>
-      <div class="frow two">
-        <input class="finput" id="mtSik-{gid}" data-alan-id="siklik" inputmode="numeric" value="{ek['siklik']}" aria-label="Çekim sıklığı sayısı" placeholder="ör. 2" data-zorunlu-metin="Çekim sıklığını yazın">
-        {secim("mtBirim-" + gid, BIRIMLER, deger=ek['birim'], bos="Birim")}
-      </div>
-      <span class="fhint">Tarama her 10 dakikada çalışır; grubun son çekiminden bu yana süre dolmuşsa gruptaki kaynaklar çekilir.</span>
-      <div class="ferr">{I("fa-circle-exclamation")}Çekim sıklığını yazın.</div></div>
+    <div class="frow two">
+      <div class="frow"><span class="flabel">Çekim Sıklığı</span>
+        {secim("mtSik-" + gid, SIKLIKLAR, deger=ek['siklik'], bos="Sıklık seçin", ara="Sıklık ara", ek=' data-alan-id="siklik" data-zorunlu-metin="Çekim sıklığını seçin"')}
+        <span class="fhint">{TARAMA_NOT} Kaynağa özel sıklık Kaynaklar ekranında verilir.</span>
+        <div class="ferr">{I("fa-circle-exclamation")}Çekim sıklığını seçin.</div></div>
+      <div class="frow"><span class="flabel">Varsayılan Çekim Tipi</span>
+        {secim("mtTip-" + gid, [(t, TIP[t][0], TIP[t][2]) for t in AY["kaynak_tipleri"]], deger=ek.get('tip', 'rss'), bos="Tip seçin")}
+        <span class="fhint">Gruba eklenen kaynak bu tiple gelir; kaynakta değiştirilebilir.</span></div>
+    </div>
     <div class="frow"><span class="flabel">Yayın Kanalları</span>
       {kanallar_html(kanallar)}
       <p class="fhint" data-kanal-uyari hidden>Hiçbir kanal seçili değil: bu gruptan gelen haberler yayımlanmaz.</p>
@@ -766,7 +856,7 @@ def sayfa_motor():
     usd = sum(h["usd"] for h in hs.values())
     etkin = sum(len(h["etkin"]) for h in hs.values())
     toplam = sum(len(h["ks"]) for h in hs.values())
-    cop_grup = {"id": "AJ", "ad": "Ajans (deneme)", "ornek": "örn. AA, DHA, İHA birlikte", "siklik": 15, "birim": "dakika", "kanallar": ["web", "uygulama", "sosyal"]}
+    cop_grup = {"id": "AJ", "ad": "Ajans (deneme)", "ornek": "örn. AA, DHA, İHA birlikte", "siklik": "1 saat", "kanallar": ["web", "uygulama", "sosyal"]}
     satir = "".join(grup_satir(g) for g in GRUPLAR) + grup_satir(cop_grup, cop=True)
     sab = "".join(grup_gor_sablon(g) + grup_dz_sablon(g) for g in GRUPLAR)
     s = bas("Kaynak Motoru", "motor")
@@ -777,7 +867,7 @@ def sayfa_motor():
   <div class="pnl-page-head">
     <div>
       <h1>Kaynak Motoru</h1>
-      <div class="ph-sub">Kaynak grupları ve çekim sıklığı · tarama her 10 dakikada çalışır; grubun süresi dolmuşsa kaynakları çekilir · sıklık ve kanallar “Düzenle”den</div>
+      <div class="ph-sub">Kaynak grupları ve çekim sıklığı · {TARAMA_NOT} · sıklık ve kanallar “Düzenle”den</div>
     </div>
     <div class="ph-actions">
       <a class="btn btn-ghost btn-sm" data-hedef="ai-havuz.cron" href="cron.html">{I("fa-heart-pulse")}Hat Sağlığı</a>
@@ -860,21 +950,44 @@ def sayfa_motor():
     return s
 
 # ================================================================== CRON VE HAT SAĞLIĞI
-HAT_LOG = [("bilgi", "16.04.08", "Görsel temizleme: 14 görsel, 1 temizlenemedi → “KAP: iki enerji şirketinden…” Görsel eksik"), ("bilgi", "16.03.13", "12 taslak havuza düştü; 3'ü görsel eksik"), ("uyari", "16.02.40", "“Benzinde indirim beklentisi…” tek kaynaklı (T4); güven %62"), ("uyari", "16.02.22", "Çelişki: “AB genişleme toplantısında…” 3. kaynakta tarih farklı"), ("bilgi", "16.01.01", "AI üretimi başladı: 42 içerik, 17 olay grubu"), ("hata", "16.00.20", "Defense News: 403 Forbidden (11. deneme)"), ("bilgi", "16.00.00", f"Kaynak taraması başladı: T1–T4, {len(KS_ETKIN)} etkin kaynak")] + [("bilgi", "15.50.48", f"Kaynak taraması bitti: {len(KS_ETKIN) - len(KS_HATA)} kaynak, 37 yeni içerik"), ("uyari", "15.31.02", "Teknoloji Gündemi yavaş yanıt verdi (5,8 sn)"), ("bilgi", "15.20.11", "11 taslak havuza düştü"), ("hata", "15.20.04", "Defense News: 403 Forbidden (10. deneme)")]
+def tur_gruplari(saat):
+    """O saatteki taramada süresi dolan gruplar (gruplar tam saatlerde çekilir; günlük gruplar son çekim saatinde)."""
+    out = []
+    for g in GRUPLAR:
+        n, birim = sik_parca(g["siklik"])
+        son_ = next((k[6] for k in KS_ETKIN if k[4] == g["id"] and len(k[6]) == 5), "")
+        if (birim == "saat" and saat % n == 0) or (birim == "gün" and son_[:2] == f"{saat:02d}"):
+            out.append(g["id"])
+    return out
+
+
+TUR16, TUR15 = tur_gruplari(16), tur_gruplari(15)
+N16 = len([k for k in KS_ETKIN if k[4] in TUR16])
+N15 = len([k for k in KS_ETKIN if k[4] in TUR15])
+HAT_LOG = [("bilgi", "16.04.08", "Görsel temizleme: 14 görsel, 1 temizlenemedi → “KAP: iki enerji şirketinden…” Görsel eksik"), ("bilgi", "16.03.13", "12 taslak havuza düştü; 3'ü görsel eksik"),
+           ("uyari", "16.02.22", "Çelişki: “AB genişleme toplantısında…” 3. kaynakta tarih farklı"), ("uyari", "16.01.30", "Bursa Hakimiyet yavaş yanıt verdi (5,8 sn)"),
+           ("bilgi", "16.01.01", "AI üretimi başladı: 42 içerik, 17 olay grubu"), ("hata", "16.00.41", "Rekabet Kurumu: haber listesi bulunamadı (sayfa yapısı değişmiş olabilir)"),
+           ("hata", "16.00.20", "Defense News: 403 Forbidden (2. deneme)"),
+           ("bilgi", "16.00.00", f"Kaynak taraması başladı: süresi dolan {len(TUR16)} grup ({', '.join(TUR16)}), {N16} kaynak"),
+           ("bilgi", "15.03.10", "9 taslak havuza düştü"), ("bilgi", "15.00.52", f"Kaynak taraması bitti: {N15} kaynak, 31 yeni içerik"),
+           ("hata", "15.00.39", "Rekabet Kurumu: haber listesi bulunamadı"),
+           ("bilgi", "15.00.00", f"Kaynak taraması başladı: süresi dolan {len(TUR15)} grup ({', '.join(TUR15)}), {N15} kaynak")]
+HAT_SAY = {sev: sum(1 for x in HAT_LOG if x[0] == sev and x[1] >= "15.04") for sev in ("hata", "uyari")}
 CRONLAR = [
     # id, ad, komut, sıklık, son, süre, sonraki, durum, log
-    ("tara", "Kaynak taraması", "kaynak:tara", "Her 10 dakikada", "16.00", "48 sn", "16.10", "ok",
-     [("bilgi", "16.00.48", f"Tarama bitti: {len(KS_ETKIN)} kaynak, 42 yeni içerik, 31 tekrar elendi"), ("hata", "16.00.20", "Defense News: 403 Forbidden (11. deneme)"), ("bilgi", "16.00.00", f"Tarama başladı: T1–T4, {len(KS_ETKIN)} etkin kaynak")]),
-    ("uret", "AI taslak üretimi", "ai-havuz:uret", "Her 10 dakikada", "16.01", "2 dk 12 sn", "16.11", "ok",
+    ("tara", "Kaynak taraması", "kaynak:tara", "Her saat", "16.00", "48 sn", "17.00", "ok",
+     [("bilgi", "16.00.48", f"Tarama bitti: {N16} kaynak, 42 yeni içerik, 31 tekrar elendi"), ("hata", "16.00.41", "Rekabet Kurumu: haber listesi bulunamadı"), ("hata", "16.00.20", "Defense News: 403 Forbidden (2. deneme)"),
+      ("bilgi", "16.00.00", f"Tarama başladı: süresi dolan {len(TUR16)} grup ({', '.join(TUR16)}), {N16} kaynak")]),
+    ("uret", "AI taslak üretimi", "ai-havuz:uret", "Her saat", "16.01", "2 dk 12 sn", "17.01", "ok",
      [("bilgi", "16.03.13", "12 taslak havuza düştü; 3'ü görsel eksik"), ("uyari", "16.02.40", "1 içerik tek kaynaklı; güven %62"), ("bilgi", "16.01.01", "Üretim başladı: 42 içerik, 17 olay grubu")]),
-    ("gorsel", "Görsel temizleme (logo ve damga)", "ai-havuz:gorsel", "Her 10 dakikada", "16.03", "1 dk 05 sn", "16.13", "ok",
+    ("gorsel", "Görsel temizleme (logo ve damga)", "ai-havuz:gorsel", "Her saat", "16.03", "1 dk 05 sn", "17.03", "ok",
      [("bilgi", "16.04.08", "14 görsel: 9 temiz, 4 AI kırparak temizledi, 1 temizlenemedi → Görsel eksik"), ("bilgi", "16.03.00", "Görsel işleme başladı")]),
-    ("teyit", "Teyit ve tekrar eleme", "ai-havuz:teyit", "Her 10 dakikada", "16.02", "22 sn", "16.12", "ok",
+    ("teyit", "Teyit ve tekrar eleme", "ai-havuz:teyit", "Her saat", "16.02", "22 sn", "17.02", "ok",
      [("bilgi", "16.02.22", "17 olay grubu: 11'i en az 2 kaynakla teyitli, 1 çelişki işaretlendi"), ("bilgi", "16.02.00", "Teyit turu başladı")]),
     ("saglik", "Kaynak erişim denetimi", "kaynak:saglik", "Her saat", "16.00", "31 sn", "17.00", "hata",
      [("hata", "16.00.31", "Defense News 403 döndürüyor; kaynak sahibine erişim engeli olabilir"), ("bilgi", "16.00.02", f"{len(KS_CANLI)} kaynak denetlendi: {len(KS_ETKIN) - len(KS_HATA)} sağlıklı, {len(KS_HATA)} hatalı, {len(KS_PASIF)} pasif")]),
-    ("otomatik", "Otomatik Yayın", "ai-havuz:otomatik-yayin", "Her dakika", "22.11 23.29", "1 sn", "—", "durdu",
-     [("bilgi", "22.11 23.30", "Otomatik yayın ayarı kapatıldı (Selin Aydemir); görev duraklatıldı"), ("bilgi", "22.11 22.25", "Eşik üstü 1 haber otomatik yayımlandı (%92)")]),
+    ("otomatik", "Otomatik Yayın", "ai-havuz:otomatik-yayin", "Her saat", "22.11 23.04", "1 sn", "—", "durdu",
+     [("bilgi", "22.11 23.30", "Otomatik yayın ayarı kapatıldı (Selin Aydemir); görev duraklatıldı"), ("bilgi", "22.11 22.04", "Eşik üstü 1 haber otomatik yayımlandı (%92)")]),
     ("maliyet", "Maliyet ve kullanım özeti", "ai-havuz:maliyet", "Her gün 00.05", "00.05", "6 sn", "00.05", "ok",
      [("bilgi", "00.05.06", "22.11 özeti: 64 içerik işlendi, $2,14"), ("bilgi", "00.05.00", "Özet başladı")]),
 ]
@@ -901,14 +1014,12 @@ def sayfa_cron():
 </template>
 """)
     katman = []
-    yeni_oran = {"T1": 0.16, "T2": 0.39, "T3": 0.19, "T4": 0.30}  # bugün gerçekleşen çekim başına yeni içerik
     eksik = []
     for g in GRUPLAR:
         h = grup_hesap(g["id"])
-        gun = GUN_CEKIM[h["ek"]["birim"]](h["ek"]["siklik"])
-        bek = round(len(h["etkin"]) * gun)
-        ger = round(sum(gun * k[7] / 100 for k in h["etkin"]))  # gerçekleşen: kaynakların 24 saatlik başarısından
-        yeni = round(ger * yeni_oran.get(g["id"], 0.2))
+        bek = round(sum(gunluk_cekim(kaynak_siklik(k)) for k in h["etkin"]))
+        ger = round(sum(gunluk_cekim(kaynak_siklik(k)) * k[7] / 100 for k in h["etkin"]))  # gerçekleşen: kaynakların 24 saatlik başarısından
+        yeni = round(ger * h["ek"]["yeni_oran"])
         oran = round(ger / bek * 100) if bek else 100
         sinif, dad = ("ok", "Normal") if oran >= 95 else ("wait", "Eksik") if oran >= 80 else ("warm", "Düşük")
         if oran < 95:
@@ -922,7 +1033,7 @@ def sayfa_cron():
   <div class="pnl-page-head">
     <div>
       <h1>Cron ve Hat Sağlığı</h1>
-      <div class="ph-sub">AI haber hattı · son tur 16.04 · her dakika kendiliğinden yenilenir</div>
+      <div class="ph-sub">AI haber hattı · son tur 16.04 · {TARAMA_NOT}</div>
     </div>
     <div class="ph-actions" data-izin="cron-saglik">
       <a class="btn btn-ghost btn-sm" data-hedef="sistem-sagligi.ana" href="../../cekirdek/sistem-sagligi/index.html">{I("fa-server")}Sistem Sağlığı</a>
@@ -936,14 +1047,14 @@ def sayfa_cron():
       <button type="button" class="sa-form-tab is-on" role="tab" aria-selected="true" data-panel="crGenel">{I("fa-gauge-high")}Genel Bakış</button>
       <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="crGrup">{I("fa-layer-group")}Kaynak Grupları<span class="ch-cnt" title="{len(eksik)} grupta çekim eksik">{len(eksik)}</span></button>
       <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="crGorev">{I("fa-clock")}Zamanlanmış Görevler<span class="ch-cnt" title="1 görev hata veriyor">1</span></button>
-      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="crLog">{I("fa-wave-square")}Hat Günlüğü<span class="ch-cnt" title="1 hata, 2 uyarı · son 1 saat">3</span></button>
+      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="crLog">{I("fa-wave-square")}Hat Günlüğü<span class="ch-cnt" title="{HAT_SAY['hata']} hata, {HAT_SAY['uyari']} uyarı · son 1 saat">{HAT_SAY['hata'] + HAT_SAY['uyari']}</span></button>
     </div>
 
     <!-- ===== GENEL BAKIŞ ===== -->
     <div class="sa-form-panel pc-body" id="crGenel" role="tabpanel">
       <div class="kb-bant tehlike">{I("fa-triangle-exclamation")}<span><b>{len(KS_HATA)} kaynak hatalı.</b> {hata_ozet()}. {("Beklenen çekimin altında kalan grup: " + ", ".join(eksik) + ". ") if eksik else ""}AI kuyruğu yoğun (96 iş), taslaklar 6 dk gecikmeli düşüyor.</span><a class="btn btn-ghost btn-sm kb-bant-eylem" data-hedef="ai-havuz.kaynaklar" href="kaynaklar.html">{I("fa-rss")}Kaynaklar</a></div>
       <div class="kb-saglik-izgara kb-ust-bosluk">
-      <a class="kb-saglik" href="cron.html?sekme=crGorev"><span class="kb-saglik-bas"><span class="status-nokta"></span>Kaynak taraması</span><span class="kb-saglik-deger">16.00</span><span class="kb-saglik-meta">48 sn · 42 yeni içerik · sonraki 16.10</span></a>
+      <a class="kb-saglik" href="cron.html?sekme=crGorev"><span class="kb-saglik-bas"><span class="status-nokta"></span>Kaynak taraması</span><span class="kb-saglik-deger">16.00</span><span class="kb-saglik-meta">48 sn · 42 yeni içerik · sonraki 17.00</span></a>
       <a class="kb-saglik" href="cron.html?sekme=crGorev"><span class="kb-saglik-bas"><span class="status-nokta"></span>AI taslak üretimi</span><span class="kb-saglik-deger">2 dk 12 sn</span><span class="kb-saglik-meta">16.01 · 12 taslak havuza düştü</span></a>
       <div class="kb-saglik"><span class="kb-saglik-bas"><span class="status-nokta"></span>Kilit</span><span class="kb-saglik-deger">Serbest</span><span class="kb-saglik-meta">Son alınma 16.01 · 2 dk 12 sn tuttu · çakışma yok</span></div>
       <a class="kb-saglik uyari" data-hedef="sistem-sagligi.ana" href="../../cekirdek/sistem-sagligi/index.html"><span class="kb-saglik-bas"><span class="status-nokta"></span>AI kuyruğu</span><span class="kb-saglik-deger">96 iş</span><span class="kb-saglik-meta">Normalin 3 katı · en eski 6 dk</span></a>
@@ -1031,12 +1142,14 @@ def sayfa_ayarlar():
     rol_kutu = "".join(f'<label class="kb-secenek"><input type="checkbox" value="{r}"{" checked" if r in OKUMA["roller"] else ""}>{e(ROL_AD[r])}{" · muaf" if r in OKUMA.get("muaf", []) else ""}</label>' for r in ROL_AD if r not in ("sosyal", "analist"))
     kanal_rol = "".join(f'<label class="kb-secenek"><input type="checkbox" value="{r}"{" checked" if r in AY["kanal_degistirebilen_roller"] else ""}>{e(ROL_AD[r])}</label>' for r in ROL_AD if r not in ("sosyal", "analist"))
     grp_cip = "".join(f'<span class="kb-cip" data-deger="{g["id"]} · {e(g["ad"])}"><span>{g["id"]} · {e(g["ad"])}</span><button type="button" aria-label="Kaldır">{I("fa-xmark")}</button></span>' for g in GRUPLAR[:2])
-    grp_havuz = json.dumps([f'{g["id"]} · {g["ad"]}' for g in GRUPLAR], ensure_ascii=False)
+    grp_havuz = json.dumps([f'{g["id"]} · {g["ad"]}' for g in GRUPLAR if not yalniz_sosyal(g["id"])], ensure_ascii=False)
+    sosyal_gr = ", ".join(g["id"] for g in GRUPLAR if yalniz_sosyal(g["id"]))
     kat_cip = "".join(f'<span class="kb-cip" data-deger="{k}"><span>{k}</span><button type="button" aria-label="Kaldır">{I("fa-xmark")}</button></span>' for k in ["Gündem › Siyaset", "Dünya › Savaş ve Çatışmalar"])
     alt = json.loads(html.unescape(re.search(r'data-alt-harita="([^"]*)"', isaret("hb-df-alt")).group(1)))
     kat_havuz = json.dumps([f"{a} › {b}" for a, bs in alt.items() for b in bs], ensure_ascii=False)
     kosullar = "".join([
         kosul("Görseli eksik haber otomatik yayımlanmaz", "Logo ya da damga temizlenemediyse haber her zaman editör onayına düşer (YS1)", "", kilit="YS1 gereği kapatılamaz ve kaldırılamaz"),
+        kosul(f"Yalnız Sosyal gruptan gelen içerik otomatik yayımlanmaz", f"{sosyal_gr} içeriği yalnız sosyal medya paylaşım taslağıdır; siteye haber basılmaz, editör paylaşımı onaylar (YS2)", "", kilit="Grubun kanalı yalnız Sosyal Medya; kapatılamaz ve kaldırılamaz"),
         kosul("Yalnız bu kaynak gruplarından", "1. kaynağın grubu listede değilse haber kuyrukta kalır", f'<div class="kb-cip-girdi kb-ust-bosluk" data-havuz-kapali data-havuz=\'{e(grp_havuz)}\'>{grp_cip}<input type="text" placeholder="Grup ekle" aria-label="Kaynak grubu ekle"><div class="pnl-menu kb-cip-oneri"></div></div>'),
         kosul("Hariç tutulan kategoriler", "Bu kategorilerdeki haber eşiği geçse de onay bekler", f'<div class="kb-cip-girdi kb-ust-bosluk" data-havuz-kapali data-havuz=\'{e(kat_havuz)}\'>{kat_cip}<input type="text" placeholder="Kategori ekle" aria-label="Hariç kategori ekle"><div class="pnl-menu kb-cip-oneri"></div></div>'),
         kosul("En az bağımsız kaynak sayısı", "Önceki dokümandaki “iki bağımsız kaynak olmadan otomatik yayın yok” kuralı; açık konu", f'<div class="kb-birim kb-ust-bosluk"><input class="finput" inputmode="numeric" value="2" aria-label="En az kaynak sayısı"><span>kaynak</span></div>'),
@@ -1175,8 +1288,8 @@ KAYIT = {
     "kirpildi": dict(
         baslik="Meteoroloji'den Marmara için turuncu kod kar uyarısı",
         spot="Meteoroloji Genel Müdürlüğü, Marmara Bölgesi için 24 Kasım sabahından itibaren kuvvetli kar yağışı uyarısı yaptı. İstanbul'un kuzey ilçelerinde kar kalınlığının yer yer 15 santimetreyi bulması bekleniyor.",
-        kat="Gündem", alt=["İstanbul", "Afet"], kaynaklar=["mgm", "aa", "dha"], guven=91, gdurum="kirpildi", gorsel="p183", odak=(50, 40),
-        cekilme="23.11.2026 15.58", url="https://www.mgm.gov.tr", model="Claude Haiku 4.5",
+        kat="Gündem", alt=["İstanbul", "Çevre ve Afet"], kaynaklar=["afad", "aa", "dha"], guven=91, gdurum="kirpildi", gorsel="p183", odak=(50, 40),
+        cekilme="23.11.2026 15.58", url="https://www.afad.gov.tr", model="Claude Haiku 4.5",
         metin=["<p>Meteoroloji Genel Müdürlüğü, Marmara Bölgesi için 24 Kasım Salı sabahından itibaren geçerli turuncu kodlu kar yağışı uyarısı yayımladı. Uyarıya göre İstanbul'un kuzey ilçeleri ile Kırklareli, Tekirdağ ve Kocaeli'nin yüksek kesimlerinde kar kalınlığı yer yer 15 santimetreyi bulabilir.</p>",
                "<p>Yağışın gece saatlerinde kuzeydoğudan gelen soğuk hava ile birlikte etkisini artırması bekleniyor. Meteoroloji, rüzgârın yer yer saatte 60 kilometreye ulaşabileceğini ve görüş mesafesinin düşebileceğini belirtti.</p>",
                "<h2>Ulaşım ve okullar</h2>",
@@ -1189,8 +1302,8 @@ KAYIT = {
         etki={"ogrenci": "Okulların durumu akşam açıklanacak; valiliğin duyurusunu bekle, servis saatleri değişebilir.",
               "calisan": "Salı sabahı işe gidişte ek süre ayır; toplu taşıma seferleri gece yarısına kadar uzatıldı.",
               "esnaf": "Kar nedeniyle salı sabahı müşteri ve tedarik trafiği yavaşlayabilir; teslimat saatlerini buna göre planla."},
-        site=[("Meteoroloji Genel Müdürlüğü", "Turuncu kod uyarısı · 23 Kasım 2026 15.40"), ("İstanbul Valiliği", "Ulaşım ve toplu taşıma duyurusu · 23 Kasım 2026"), ("AFAD", "Hazırlık açıklaması · 23 Kasım 2026")],
-        teyit=[("mgm", "15.40", "ok", "Ana kaynak", ""), ("aa", "15.46", "ok", "Teyit", ""), ("dha", "15.51", "ok", "Teyit", "")],
+        site=[("AFAD", "Meteorolojik turuncu kod uyarısı ve hazırlık açıklaması · 23 Kasım 2026 15.40"), ("Meteoroloji Genel Müdürlüğü", "Turuncu kod uyarısı · 23 Kasım 2026"), ("İstanbul Valiliği", "Ulaşım ve toplu taşıma duyurusu · 23 Kasım 2026")],
+        teyit=[("afad", "15.40", "ok", "Ana kaynak", ""), ("aa", "15.46", "ok", "Teyit", ""), ("dha", "15.51", "ok", "Teyit", "")],
         teyit_ozet=("fa-circle-check", "3 kaynak · 2 bağımsız teyit", "Aynı olay iki kez çekilmedi; kanallar 1. kaynağın grubundan (YS4)"),
         alternatif=[("İHA · aynı olay", "15.55"), ("İstanbul Valiliği (X) · ulaşım duyurusu", "15.57")],
         seo=("Marmara'ya turuncu kod: İstanbul'da kar uyarısı | Dada Haber", "Meteoroloji, Marmara için 24 Kasım sabahından itibaren turuncu kod kar uyarısı yaptı. İstanbul'un kuzeyinde kar 15 santimetreyi bulabilir.", "meteorolojiden-marmara-icin-turuncu-kod-kar-uyarisi", ["marmara kar uyarısı", "turuncu kod", "istanbul kar"]),
@@ -1218,15 +1331,15 @@ KAYIT = {
     "temiz": dict(
         baslik="Benzinde indirim beklentisi: pompaya yansıması hafta sonunu bulabilir",
         spot="Brent petroldeki düşüşün ardından benzinde litre başına indirim bekleniyor. Sektör kaynaklarına dayanan paylaşıma göre indirimin pompaya yansıması hafta sonunu bulabilir.",
-        kat="Finans", alt=["Enerji"], kaynaklar=["ekonomi-gundem"], guven=62, gdurum="temiz", gorsel="p192", odak=(50, 50),
-        cekilme="23.11.2026 09.04", url="https://x.com/ekonomi_gundem", model="Claude Haiku 4.5",
-        metin=["<p>Brent petrol fiyatlarındaki son düşüşün ardından benzinde indirim beklentisi oluştu. @ekonomi_gundem hesabının sektör kaynaklarına dayandırdığı paylaşıma göre indirimin litre başına 1 lira civarında olması ve pompaya hafta sonu yansıması bekleniyor.</p>",
+        kat="Finans", alt=["Enerji"], kaynaklar=["x-ekonomi"], guven=62, gdurum="temiz", gorsel="p192", odak=(50, 50),
+        cekilme="23.11.2026 09.04", url="https://x.com", model="Claude Haiku 4.5",
+        metin=["<p>Brent petrol fiyatlarındaki son düşüşün ardından benzinde indirim beklentisi oluştu. X'teki ekonomi ve piyasa uzmanları listesinden bir hesabın sektör kaynaklarına dayandırdığı paylaşıma göre indirimin litre başına 1 lira civarında olması ve pompaya hafta sonu yansıması bekleniyor.</p>",
                "<p>İndirime ilişkin dağıtım şirketlerinden ya da EPDK'dan resmî bir açıklama yapılmadı. Akaryakıt fiyatları, ürün fiyatları ve döviz kurundaki değişime göre belirleniyor.</p>"],
         ozet=["Benzinde litre başına 1 lira civarında indirim bekleniyor.", "İndirimin hafta sonu pompaya yansıması bekleniyor.", "Resmî açıklama henüz yok."],
         neden="Akaryakıt fiyatı ulaşım ve gıda fiyatlarını dolaylı olarak etkiliyor.",
         sonra="Dağıtım şirketlerinin fiyat listesi hafta sonundan önce netleşecek.",
-        site=[("@ekonomi_gundem (X)", "Paylaşım · 23 Kasım 2026 09.00")],
-        teyit=[("ekonomi-gundem", "09.00", "wait", "Ana kaynak", "")],
+        site=[("X · Ekonomi ve Piyasa Uzmanları", "Paylaşım · 23 Kasım 2026 09.00")],
+        teyit=[("x-ekonomi", "09.00", "wait", "Ana kaynak", "")],
         teyit_ozet=("fa-circle-exclamation", "1 kaynak · teyit yok", "Aynı olayı veren başka kaynak bulunamadı; tek kaynaklı haber otomatik yayına girmez"),
         alternatif=[],
         seo=None, push=None,
@@ -1345,7 +1458,7 @@ def kategori_blok(rid, r):
     harita = json.loads(html.unescape(re.search(r'data-alt-harita="([^"]*)"', alt).group(1)))
     alt = re.sub(r'data-havuz="[^"]*"', f'data-havuz="{e(json.dumps(harita[r["kat"]], ensure_ascii=False))}"', alt, count=1)
     yazar = isaret("hb-df-yazar").replace(' class="is-sec"', "")
-    tur = isaret("hb-df-tur")
+    bicim = isaret("hb-df-bicim")  # haber formuyla aynı Biçim alanı (DADAHABER-10 §3)
     return f"""      <div class="form-sec">
         <div class="form-sec-tt">{I("fa-sitemap")}Sınıflandırma<span class="fs-ek">AI önerisi · gözden geçirin</span></div>
         <div class="form-grid">
@@ -1369,11 +1482,12 @@ def kategori_blok(rid, r):
                 <div class="pnl-menu kb-secim-menu" id="aiYazar-{rid}"><div class="kb-secim-ara">{I("fa-magnifying-glass")}<input type="search" placeholder="Yazar ara" aria-label="Yazar ara"></div>
                   <div class="kb-secim-liste" role="listbox"><button type="button" data-deger="Dada Haber" data-ad="Dada Haber" class="is-sec">Dada Haber<span class="ks-alt">AI haberlerinde varsayılan imza</span></button>{yazar}</div><div class="kb-secim-bos" hidden>Bu adla yazar yok.</div></div>
               </div><span class="fhint">Onaylayan editör denetim izinde ve sürüm geçmişinde görünür.</span></div>
-            <div class="frow"><span class="flabel">Tür</span>
-              <div class="kb-secim is-dolu" data-deger="Haber" data-bos="Haber">
-                <button type="button" class="kb-secim-btn" data-acilir="aiTur-{rid}" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">Haber</span>{I("fa-chevron-down")}</button>
-                <div class="pnl-menu kb-secim-menu" id="aiTur-{rid}"><div class="kb-secim-liste" role="listbox">{tur}</div></div>
-              </div></div>
+            <div class="frow"><span class="flabel">Biçim</span>
+              <div class="kb-secim is-dolu" data-alan-id="bicim" data-deger="haber" data-bos="Haber">
+                <button type="button" class="kb-secim-btn" data-acilir="aiBicim-{rid}" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">Haber</span>{I("fa-chevron-down")}</button>
+                <div class="pnl-menu kb-secim-menu" id="aiBicim-{rid}"><div class="kb-secim-ara">{I("fa-magnifying-glass")}<input type="search" placeholder="Biçim ara" aria-label="Biçim ara"></div>
+                  <div class="kb-secim-liste" role="listbox">{bicim}</div><div class="kb-secim-bos" hidden>Bu adla biçim yok.</div></div>
+              </div><span class="fhint">Kartta etiket olarak görünür; Haber seçiliyse etiket yok.</span></div>
           </div>
         </div>
       </div>
