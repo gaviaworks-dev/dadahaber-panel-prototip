@@ -37,7 +37,11 @@ CC BY ve CC BY-SA lisanslı görsellerde atıf zorunludur (yazar · lisans · ka
 | p361.jpg | Ankara'da Kızılay metro istasyonuna giren M1 treni | https://commons.wikimedia.org/wiki/File:15_Temmuz_K%C4%B1z%C4%B1lay_Mill%C3%AE_%C4%B0rade_%C4%B0stasyonu-Ankara_Metrosu,_M1_Hatt%C4%B1-Ankara_Rayl%C4%B1_Sistemi.jpg | Modern primat | CC BY-SA 4.0 |
 | p362.jpg | İstanbul M3 hattında boş Özgürlük Meydanı metro peronu | https://commons.wikimedia.org/wiki/File:Istanbul_M3_%C3%96zg%C3%BCrl%C3%BCk_Meydan%C4%B1_Metro_Station_Train_Platform.jpg | MacBookator | CC0 |
 | p363.jpg | İstanbul'da suyu çekilmiş kıyılarıyla Ömerli Barajı | https://commons.wikimedia.org/wiki/File:%C3%96merli_Baraji.jpg | aachim3 | CC BY 3.0 |
+| p365.jpg | Antrenman sahasında çizgi üzerinde futbol topu | https://commons.wikimedia.org/wiki/File:Soccer_Ball_(27181880724).jpg | USARJ NCO CORPS | CC BY 2.0 |
 | p366.jpg | İstanbul Maratonu'nda köprü yolunda koşan kalabalık | https://commons.wikimedia.org/wiki/File:38th_Istanbul_Vodafone_Marathon_(8).jpg | Sakhalinio | CC BY-SA 4.0 |
+| p367.jpg | Sinop limanında bağlı balıkçı tekneleri | https://commons.wikimedia.org/wiki/File:Sinop-Marina_port_area.jpg | Ertly | CC BY-SA 4.0 |
+| p368.jpg | Tezgâhta dokuma yapan eller | https://commons.wikimedia.org/wiki/File:WEAVING_WITH_A_LOOPED_PILE_WEFT_ON_THE_WARP-WEIGHTED_LOOM.jpg | SEN Heritage Looms - Sophia Tsourinaki | CC BY-SA 4.0 |
+| p369.jpg | İpek fabrikasında dikiş makinelerinde çalışan kadınlar | https://commons.wikimedia.org/wiki/File:Women_working_in_a_silk_factory_in_China.jpg | Lindsay Maizland | CC BY-SA 2.0 |
 | p370.jpg | Kredi kartı takılı ödeme (POS) cihazı | https://commons.wikimedia.org/wiki/File:Credit_card_terminal_in_Laos.jpg | Basile Morin | CC BY-SA 4.0 |
 | p372.jpg | 1 Türk lirası madeni para yakın plan | https://commons.wikimedia.org/wiki/File:Turkish_Lira_(13593185824).jpg | Mark Morgan from Trinidad | CC BY 2.0 |
 | p373.jpg | İstanbul Boğazı'nda seyreden Sahil Güvenlik botu | https://commons.wikimedia.org/wiki/File:Turkish_Coast_Guard_Kaan_33_class_patrol_boat_312.jpg | Eusebius | CC BY 3.0 |
@@ -70,6 +74,41 @@ CC BY ve CC BY-SA lisanslı görsellerde atıf zorunludur (yazar · lisans · ka
 | p501.jpg | Hazır giyim atölyesinde çalışan kadınlar | https://commons.wikimedia.org/wiki/File:Garment_factory_in_Bangladesh_Women_working.jpg | Tareq Salahuddin from Dhaka, Bangladesh | CC BY 2.0 |
 | p502.jpg | Ataşehir'de İstanbul Finans Merkezi gökdelenleri | https://commons.wikimedia.org/wiki/File:Finans_Merkezi.jpg | Ail Subway | CC BY-SA 4.0 |
 | p503.jpg | Türkiye Cumhuriyet Merkez Bankası Denizli Şubesi cephesi | https://commons.wikimedia.org/wiki/File:T%C3%BCrkiye_Cumhuriyet_Merkez_Bankas%C4%B1_Denizli_%C5%9Eubesi_01.jpg | Biologg | CC BY-SA 4.0 |
+| p600.jpg | Deicing of an aircraft propeller in Växjö | https://commons.wikimedia.org/wiki/File:Deicing_of_an_aircraft_propeller_in_V%C3%A4xj%C3%B6.jpg | Sendelbach (talk) | CC BY-SA 3.0 |
+| p601.jpg | Iskenderun Central Bank building 6639 | https://commons.wikimedia.org/wiki/File:Iskenderun_Central_Bank_building_6639.jpg | Dosseman | CC BY-SA 4.0 |
+| p602.jpg | 2014-11-13 07 55 15 Elko city snow plow along Lamoille Highway (Nevada State Route 227) in Elko, Nevada | https://commons.wikimedia.org/wiki/File:2014-11-13_07_55_15_Elko_city_snow_plow_along_Lamoille_Highway_(Nevada_State_Route_227)_in_Elko,_Nevada.JPG | Famartin | CC BY-SA 4.0 |
+| p603.jpg | Television Outside Broadcast Unit (8724322710) | https://commons.wikimedia.org/wiki/File:Television_Outside_Broadcast_Unit_(8724322710).jpg | John K  Thorne from Dor | CC0 |
+| p604.jpg | 100 Turkish lira and 50 kuruş | https://commons.wikimedia.org/wiki/File:100_Turkish_lira_and_50_kuru%C5%9F.jpg | Aykhan Zayedzadeh | CC BY 4.0 |
+| p605.jpg | Reconstruction with a crane in front of mountains, Hatay, Turkey, 2024 | https://commons.wikimedia.org/wiki/File:Reconstruction_with_a_crane_in_front_of_mountains,_Hatay,_Turkey,_2024.jpg | Middle East Minorities | CC BY 4.0 |
+| p606.jpg | Adana Yüreğir Kışla TOKİ Konutları 04 | https://commons.wikimedia.org/wiki/File:Adana_Y%C3%BCre%C4%9Fir_K%C4%B1%C5%9Fla_TOK%C4%B0_Konutlar%C4%B1_04.jpg | Zeynel Cebeci | CC BY-SA 4.0 |
+| p607.jpg | Istanbul Grand Bazaar (52556647351) | https://commons.wikimedia.org/wiki/File:Istanbul_Grand_Bazaar_(52556647351).jpg | Nan Palmero from San Antonio, TX, USA | CC BY 2.0 |
+| p608.jpg | Theater Show | https://commons.wikimedia.org/wiki/File:Theater_Show.jpg | Kurt Kaiser | CC0 |
+| p609.jpg | Hancock Whitney Bank, Carrollton Branch, New Orleans March 2026 - 4 | https://commons.wikimedia.org/wiki/File:Hancock_Whitney_Bank,_Carrollton_Branch,_New_Orleans_March_2026_-_4.jpg | Infrogmation | CC BY-SA 4.0 |
+| p610.jpg | Hands typing on a vintage typewriter in a cozy workspace | https://commons.wikimedia.org/wiki/File:Hands_typing_on_a_vintage_typewriter_in_a_cozy_workspace.jpg | Shixart1985 | CC BY 2.0 |
+| p611.jpg | Flames in the dark | https://commons.wikimedia.org/wiki/File:Flames_in_the_dark.jpg | Upcomingphotographerscorner | CC BY-SA 3.0 |
+| p612.jpg | Anıtkabir in November 2025 | https://commons.wikimedia.org/wiki/File:An%C4%B1tkabir_in_November_2025.jpg | Mehman | CC BY-SA 4.0 |
+| p613.jpg | Turkish flag 3705 | https://commons.wikimedia.org/wiki/File:Turkish_flag_3705.jpg | User:Darwinek | CC BY-SA 3.0 |
+| p614.jpg | 2023-01-14 Newsroom ARD-aktuell (tagesschau) | https://commons.wikimedia.org/wiki/File:2023-01-14_Newsroom_ARD-aktuell_(tagesschau).jpg | User:Wikiuka (Wikimedia) | CC BY 4.0 |
+| p615.jpg | Şükrü Saracoğlu Stadium 22012017 | https://commons.wikimedia.org/wiki/File:%C5%9E%C3%BCkr%C3%BC_Saraco%C4%9Flu_Stadium_22012017.jpg | Sakhalinio | CC BY-SA 4.0 |
+| p616.jpg | Tüpraş Stadyumu 20231011 1 | https://commons.wikimedia.org/wiki/File:T%C3%BCpra%C5%9F_Stadyumu_20231011_1.jpg | Beşiktaş JK | CC BY 2.0 |
+| p617.jpg | Gola Speedster soccer shoes 20200501 001 | https://commons.wikimedia.org/wiki/File:Gola_Speedster_soccer_shoes_20200501_001.jpg | Methem (Mikko J. Putkonen) | CC BY 4.0 |
+| p618.jpg | Tüpraş Stadyumu 20231011 3 | https://commons.wikimedia.org/wiki/File:T%C3%BCpra%C5%9F_Stadyumu_20231011_3.jpg | Beşiktaş JK | CC BY 2.0 |
+| p619.jpg | Levent At Night (159321869) | https://commons.wikimedia.org/wiki/File:Levent_At_Night_(159321869).jpeg | Giuseppe Pinto | CC BY-SA 3.0 |
+| p620.jpg | Gold ingot and bar of Banque de France | https://commons.wikimedia.org/wiki/File:Gold_ingot_and_bar_of_Banque_de_France.jpg | Ibex73 | CC BY 4.0 |
+| p621.jpg | Galata tower with snow | https://commons.wikimedia.org/wiki/File:Galata_tower_with_snow.jpg | Melih1969 | CC BY-SA 4.0 |
+| p622.jpg | Sea Storm (41283179412) | https://commons.wikimedia.org/wiki/File:Sea_Storm_(41283179412).jpg | João Dias from Lisboa, Portugal | CC BY 2.0 |
+| p623.jpg | Aegean Sea (MODIS 2017-07-04) | https://commons.wikimedia.org/wiki/File:Aegean_Sea_(MODIS_2017-07-04).jpg | Jeff Schmaltz, MODIS Land Rapid Response Team, NASA GSFC | Public domain |
+| p624.jpg | ŞH-Fatih approaching Eminönü Ferry Terminal, March 2024 05 | https://commons.wikimedia.org/wiki/File:%C5%9EH-Fatih_approaching_Emin%C3%B6n%C3%BC_Ferry_Terminal,_March_2024_05.jpg | Calistemon | CC BY-SA 4.0 |
+| p625.jpg | Behind the clouds, the lights of Ankara city | https://commons.wikimedia.org/wiki/File:Behind_the_clouds,_the_lights_of_Ankara_city.jpg | DilaverPhoto | CC BY-SA 4.0 |
+| p626.jpg | IMG-TAI-TFX | https://commons.wikimedia.org/wiki/File:IMG-TAI-TFX.jpg | Dimir | CC BY-SA 4.0 |
+| p627.jpg | Microphones in SPNN Podcast studio-01 | https://commons.wikimedia.org/wiki/File:Microphones_in_SPNN_Podcast_studio-01.jpg | Myotus | CC BY 4.0 |
+| p628.jpg | Headphones on wood in black and white (Unsplash) | https://commons.wikimedia.org/wiki/File:Headphones_on_wood_in_black_and_white_(Unsplash).jpg | Corey Blaz blazphoto | CC0 |
+| p629.jpg | Antakya Decorated buildings in 2008 16 | https://commons.wikimedia.org/wiki/File:Antakya_Decorated_buildings_in_2008_16.jpg | Dosseman | CC BY-SA 4.0 |
+| p630.jpg | Colored pen and smartphone on a table (Unsplash 36nRvt6EP2I) | https://commons.wikimedia.org/wiki/File:Colored_pen_and_smartphone_on_a_table_(Unsplash_36nRvt6EP2I).jpg | Gabriel Santiago gabrielssantiago | CC0 |
+| p631.jpg | Blackboards – UNM Astrophysics | https://commons.wikimedia.org/wiki/File:Blackboards_%E2%80%93_UNM_Astrophysics.JPG | Anthony J. Bentley | Public domain |
+| p632.jpg | Playing with colorful building blocks and toys on the floor in a cozy indoor setting | https://commons.wikimedia.org/wiki/File:Playing_with_colorful_building_blocks_and_toys_on_the_floor_in_a_cozy_indoor_setting.jpg | Shixart1985 | CC BY 2.0 |
+| p633.jpg | Convex lens (magnifying glass) and upside-down image | https://commons.wikimedia.org/wiki/File:Convex_lens_(magnifying_glass)_and_upside-down_image.jpg | AntanO | CC BY-SA 4.0 |
+| p634.jpg | PalaceOfJusticeIstanbul (1) | https://commons.wikimedia.org/wiki/File:PalaceOfJusticeIstanbul_(1).jpg | CeeGee | CC BY-SA 4.0 |
 
 Kim Dornic (IFREMER, Pôle média &amp; web, Centre Bretagne - ZI de la Pointe du Diable - CS 10070 - 29280 Plouzané) | CC BY 4.0 |
 
