@@ -867,6 +867,8 @@ p.kb-sa-not i{margin-top:2px;color:var(--info)}
 /* ================= telefon, e-posta, birimli sayı ================= */
 .kb-tel{display:flex;gap:8px}
 .kb-tel .kb-secim{flex:none;width:118px}
+.kb-tel .kb-secim-menu{min-width:240px;width:max-content;max-width:calc(100vw - 16px)} /* ülke adı ve kodu kesilmez */
+.kb-tel .kb-secim-liste button{white-space:nowrap}
 .kb-tel input{flex:1;min-width:0;font-variant-numeric:tabular-nums}
 .finput.is-gecerli{background-image:linear-gradient(var(--ok),var(--ok));background-size:0 0}
 .kb-eposta{position:relative}

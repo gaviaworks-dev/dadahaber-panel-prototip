@@ -310,7 +310,8 @@
     document.querySelectorAll('.side-card').forEach(function(s){
       s.classList.remove('is-akar'); if(getComputedStyle(s).position !== 'sticky') return;
       var bos = parseFloat(getComputedStyle(s).top) || (uh + 24);
-      if(s.getBoundingClientRect().height > window.innerHeight - bos - ah - 8) s.classList.add('is-akar');
+      var kkb = kk ? (parseFloat(getComputedStyle(kk).bottom) || 0) + (parseFloat(getComputedStyle(document.querySelector('.pnl-main') || document.body).paddingBottom) || 0) : 0; /* kaydet çubuğunun alttan payı */
+      if(s.getBoundingClientRect().height > window.innerHeight - bos - ah - kkb - 8) s.classList.add('is-akar');
     });
   };
   (function(){
