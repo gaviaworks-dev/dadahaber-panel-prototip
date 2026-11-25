@@ -124,7 +124,7 @@ def varsayilan(h):
             f'data-isaret-bildir-off="{p} için varsayılan kaldırıldı; ilk hesap otomatik varsayılan oldu" aria-pressed="{on}"></button>')
 
 
-SUTUN = 8
+SUTUN = 7
 
 
 def satir(h):
@@ -134,12 +134,10 @@ def satir(h):
     kul = f' data-kullanim="{h["bekleyen"]} bekleyen gönderim bu hesaba gidecek; silinince bu gönderimler bekletilir"' if h["bekleyen"] else ""
     ara = f'{h["ad"]} {h["tut"]} {p["ad"]} {h["dil"]} {h["kul"]}'
     if h["hata"]:
-        hata = f'<td class="kb-gizle-t" title="Son hata">{I("fa-solid fa-triangle-exclamation")} <b>{e(h["hata"])}</b></td>'
+        hata = f'<td class="kb-gizle-t kb-kisalt" title="{e(h["hata"])}">{I("fa-solid fa-triangle-exclamation")} <b>{e(h["hata"])}</b></td>'
     else:
         hata = f'<td class="kb-gizle-t" title="Son hata">{I("fa-solid fa-circle-check")} <span class="muted">Hata yok</span></td>'
-    if h["durum"] == "cop": etkin = '<td class="kb-gizle-m"></td>'
-    elif not yayin_acik(h): etkin = '<td class="kb-gizle-m"><span class="muted" title="Bu dilde yayın sonraki aşamada açılır">sonraki aşama</span></td>'
-    else: etkin = f'<td class="kb-gizle-m"><div class="toggle-row">{anahtar(h)}</div></td>'
+    # etkin/pasif: satırda anahtar yok (tablo taşmasın); "Bağlantı" rozeti Pasif yazar, anahtar düzenleme çekmecesinde ve toplu "Pasif Yap"ta
     return (f'<tr data-satir="{h["id"]}" data-durum="{h["durum"]}" data-platform="{h["pl"]}" data-dil="{e(h["dil"])}" data-ara="{e(ara)}" data-baslik="{e(adt)}"{kul}>'
             f'<td class="kb-sec-hucre"><input type="checkbox" class="kb-onay-kutu" aria-label="Seç: {e(adt)}"></td>'
             f'<td class="kb-ana"><div class="rcp-cell"><span class="kb-ava{pas}">{I(p["ikon"])}</span><div class="rcp-id">'
@@ -148,7 +146,7 @@ def satir(h):
             f'<td><span class="pstat {sinif}">{dad}</span></td>'
             f'<td class="kb-gizle-m">{varsayilan(h)}</td>'
             f'<td class="kb-gizle-m" title="Son paylaşım">{I("fa-solid fa-paper-plane")} <span class="kb-tarih">{e(h["son"])}</span></td>'
-            f'{hata}{etkin}'
+            f'{hata}'
             '<td><div class="row-acts">'
             f'<button type="button" class="ia-btn" data-tanim="hsGor-{h["id"]}" aria-label="Görüntüle" title="Görüntüle">{I("fa-solid fa-eye")}</button>'
             f'<button type="button" class="ia-btn" data-tanim="hsDuz-{h["id"]}" aria-label="Düzenle" title="Düzenle">{I("fa-solid fa-pen")}</button>'
@@ -320,7 +318,6 @@ def ana():
             <th class="kb-gizle-m">Varsayılan</th>
             <th class="kb-gizle-m">Son paylaşım</th>
             <th class="kb-gizle-t">Son hata</th>
-            <th class="kb-gizle-m">Etkin</th>
             <th><span class="sr-only">İşlemler</span></th>
           </tr>
         </thead>

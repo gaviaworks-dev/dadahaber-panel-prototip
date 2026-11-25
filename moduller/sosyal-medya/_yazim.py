@@ -36,7 +36,7 @@ def baslik(s, bas=True):
 ETIKET = {"h1", "h2", "h3", "label", "button", "th", "dt"}
 SINIF = {"flabel", "form-sec-tt", "kb-fs-tt", "pc-title", "kb-dm-grup", "kpi-lbl", "ks-grup", "ks-deger", "kaa-bas", "kb-entegre-bas"}
 HARIC = {"small", "kbd", "code", "textarea", "script", "style"}
-HARIC_SINIF = {"ks-alt", "ch-cnt", "fs-ek", "fhint", "kd-etk", "etk", "pstat", "muted", "sr-only", "kp-durum", "kb-ai-durum", "kb-tarih", "kis-m"}
+HARIC_SINIF = {"ks-alt", "ch-cnt", "fs-ek", "fhint", "kd-etk", "etk", "pstat", "muted", "kp-durum", "kb-ai-durum", "kb-tarih", "kis-m"}
 BOS = {"input", "img", "br", "hr", "meta", "link", "source", "col", "area", "base", "wbr", "embed", "param", "track"}
 NIT = {"data-ad", "data-onay-evet", "data-yeni-metin"}
 
