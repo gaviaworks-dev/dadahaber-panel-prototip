@@ -7,6 +7,7 @@
    - Yan yana görünüm: açık sekmenin içeriği bütün alternatifler için kopyalanır; her kart kendi süslemesini taşır.
    - Başlık sığdırma: başlık ya da rakam bloğa sığmıyorsa en çok %54 küçülür (kesilmez).
    Adres satırı: ?alt=c&sekme=haber&kat=spor&mecra=x&guvenli=1&hepsi=1 (sunum ve ölçüm için).
+   Kalıp motoru (Yasin Bey, 25.11.2026): iskelet + mecra + süsleme; şeridin ilk öğesi hazır birleşim "Seçilen", Varsayılan ona döner.
    window.kp: ölçüm (kalip/_olc.py) için durum ve araçlar.
    ===================================================================== */
 (function(){
@@ -17,7 +18,7 @@
   var GRUP = Object.keys(V.susleme), q = new URLSearchParams(location.search);
   var SEKMELER = Array.prototype.map.call(S.querySelectorAll('.sa-form-tab[data-sekme]'), function(t){ return t.dataset.sekme; });
   var D = {
-    alt: ALT[q.get('alt')] ? q.get('alt') : 'a',
+    alt: ALT[q.get('alt')] ? q.get('alt') : V.varsayilan, /* sayfa motorun Seçilen birleşimiyle açılır (Yasin Bey) */
     sekme: SEKMELER.indexOf(q.get('sekme')) > -1 ? q.get('sekme') : 'akis',
     hepsi: q.get('hepsi') === '1',
     kat: /^(gundem|spor|kadin|finans|savunma)$/.test(q.get('kat') || '') ? q.get('kat') : 'gundem',
@@ -36,7 +37,7 @@
   }
   function uygula(t, id){
     each(Array.prototype.slice.call(t.classList), function(c){ if(/^kp-[a-n]$/.test(c)) t.classList.remove(c); });
-    t.classList.add('kp-' + id);
+    t.classList.add('kp-' + (ALT[id].iskelet || id)); /* Seçilen gibi hazır birleşim bir iskeleti kullanır */
     if(t.hasAttribute('data-mecrali')) t.setAttribute('data-bicim', V.mecra[D.mecra]);
     var z = zemin(id, t.dataset.tip, t.dataset.bicim);
     t.setAttribute('data-yz', z[0]); t.setAttribute('data-lz', z[1]);
@@ -54,7 +55,7 @@
     if(!D.hepsi || !G) return;
     if(!G._kuruldu){
       G.innerHTML = SIRA.map(function(id){ var a = ALT[id];
-        return '<article class="pnl-card kp-hk kp-orn" data-alt="' + id + '"><div class="kp-hk-bas" data-kp-sec-alt="' + id + '" title="Bu alternatifi seç"><span class="kp-harf">' + a.harf + '</span><div><b>' + a.harf + ' · ' + a.ad + '</b><small>' + a.aile + '</small></div></div><div class="kp-hk-govde"></div></article>'; }).join('');
+        return '<article class="pnl-card kp-hk kp-orn" data-alt="' + id + '"><div class="kp-hk-bas" data-kp-sec-alt="' + id + '" title="Bu alternatifi seç"><span class="kp-harf">' + a.harf + '</span><div><b>' + (a.hazir ? 'Seçilen · ' : '') + a.harf + ' · ' + a.ad + '</b><small>' + a.aile + '</small></div></div><div class="kp-hk-govde"></div></article>'; }).join('');
       each(G.children, function(kart){
         var id = kart.dataset.alt, govde = kart.querySelector('.kp-hk-govde'), parca = [];
         if(D.sekme === 'durum' || D.sekme === 'kisi'){ var x = kaynak.querySelector('[data-alt-icerik="' + id + '"]') || kaynak.querySelector('.kp-dis'); if(x) parca = [x]; }
@@ -129,7 +130,7 @@
   document.addEventListener('click', function(e){
     var t = e.target.closest && e.target.closest('[data-kp-varsayilan], .kp-serit-oge, [data-kp-hepsi], [data-kp-kaydir], [data-kp-sec-alt], .sa-form-tab[data-sekme], [data-kp-mecra], [data-kp-sec]');
     if(!t) return;
-    if(t.matches('[data-kp-varsayilan]')){ e.preventDefault(); D.orn[D.alt] = Object.assign({}, ALT[D.alt].orn); ciz(); return; }
+    if(t.matches('[data-kp-varsayilan]')){ e.preventDefault(); D.alt = V.varsayilan; D.orn[D.alt] = Object.assign({}, ALT[D.alt].orn); ciz(); return; } /* Varsayılan = Seçilen (Yasin Bey) */
     if(t.matches('.kp-serit-oge')){ D.alt = t.dataset.alt; D.hepsi = false; ciz(); t.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' }); return; }
     if(t.matches('[data-kp-hepsi]')){ D.hepsi = !D.hepsi; ciz(); return; }
     if(t.matches('[data-kp-kaydir]')){ serit.scrollBy({ left: +t.dataset.kpKaydir * serit.clientWidth * .8, behavior: 'smooth' }); return; }

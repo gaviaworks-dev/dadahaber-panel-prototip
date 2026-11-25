@@ -63,6 +63,10 @@ body{overflow-anchor:none} /* kontrol alanı küçülünce tarayıcı kaydırmay
 .kp-serit-oge{flex:none;scroll-snap-align:start;display:flex;align-items:center;gap:10px;min-height:74px;padding:6px 14px 6px 6px;border:1px solid var(--line);border-radius:var(--radius-md);
   background:var(--paper);cursor:pointer;text-align:left;font:inherit;color:var(--slate);transition:border-color .16s var(--ease),box-shadow .16s var(--ease)}
 .kp-serit-oge:hover{border-color:var(--line-2)}
+/* Seçilen: motorun hazır birleşimi (Yasin Bey); iskeletlerden ince bir boşlukla ayrılır */
+.kp-serit-oge.kp-hazir{margin-right:10px}
+.kp-secilen-etiket{flex:none;align-self:center;padding:2px 8px;border-radius:var(--radius-pill);background:rgba(var(--acc-rgb),.16);color:var(--acc-ink);
+  font-size:var(--fs-11);font-weight:var(--fw-kalin);line-height:1.5;white-space:nowrap}
 .kp-serit-oge.is-on{border-color:var(--acc);box-shadow:0 0 0 3px rgba(var(--acc-rgb),.3)}
 .kp-serit-oge:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .kp-minik{display:block;width:50px;flex:none;pointer-events:none}
@@ -177,7 +181,7 @@ body{overflow-anchor:none} /* kontrol alanı küçülünce tarayıcı kaydırmay
   -webkit-mask-image:var(--gm,none);mask-image:var(--gm,none)}
 .kp-gorsel::before{content:"";position:absolute;inset:0;background-image:var(--img);background-size:cover;background-repeat:no-repeat;background-position:var(--pos,50% 50%);
   filter:var(--gf-t,var(--gf,none));opacity:var(--go,1)}
-.kp-gorsel::after{content:"";position:absolute;inset:0;background:var(--ton,transparent);mix-blend-mode:multiply;opacity:.94}
+.kp-gorsel::after{content:"";position:absolute;inset:0;background:var(--ton,transparent);mix-blend-mode:multiply;opacity:var(--ton-o,.94)}
 .kp-karart{position:absolute;z-index:1;inset:var(--gi,0);border-radius:var(--gr,0);pointer-events:none;
   background-image:var(--gecis,linear-gradient(transparent,transparent)),var(--scrim,linear-gradient(transparent,transparent));
   -webkit-mask-image:var(--gm,none);mask-image:var(--gm,none)}
@@ -220,6 +224,7 @@ body{overflow-anchor:none} /* kontrol alanı küçülünce tarayıcı kaydırmay
 .kp-orn[data-o-logo="duz"] .kp-tuval[data-lz="koyu"] .kp-l-sari{display:block}
 .kp-orn[data-o-logo="duz"] .kp-tuval[data-lz="acik"] .kp-l-koyu{display:block}
 .kp-orn[data-o-logo="duz"] .kp-tuval[data-lz="kat"] .kp-l-maske{display:block;--lr:var(--kat-on)}
+.kp-orn[data-o-logo="beyaz"] .kp-l-maske{display:block;--lr:var(--paper)} /* Yasin Bey: renkli/geçişli zeminde sarı logo yok */
 .kp-orn[data-o-logo="plaka"] .kp-tuval{--lh:calc(var(--l-gen) * .82 / 2.97 + 3cqmin)}
 .kp-orn[data-o-logo="plaka"] .kp-l-koyu{display:block}
 .kp-orn[data-o-logo="plaka"] .kp-logo{padding:1.5cqmin 2.2cqmin;border-radius:calc(var(--kose) * .5 + .5cqmin);background:var(--paper);width:calc(var(--l-gen) * .82)}
@@ -255,15 +260,26 @@ body{overflow-anchor:none} /* kontrol alanı küçülünce tarayıcı kaydırmay
 
 /* başlık vurgusu: renk zemine göre (kategori zemininde açık/koyu ikinci ton; beyazda koyulaştırılmış kategori) */
 .kp-orn[data-o-bvurgu="renkli"] .kp-vurgu{color:var(--zr)}
-.kp-orn[data-o-bvurgu="zeminli"] .kp-vurgu{background:var(--zz);color:var(--zzy);padding:0 .14em;border-radius:calc(var(--kose) * .2)}
+/* zeminli: boya yazının içerik kutusunu (taban çizgisinin .96em üstü – .27em altı) değil, harf bandını boyar: tabanın .77em üstünden .08em altına.
+   Böylece üst satırın kuyrukları (g y ş ç p) ve alt satırın şapkaları (Ğ İ Ö Ü) boyanın altında kalmaz; satır aralığı en az 1,07. Ölçüm: kalip/_olc.py "boya" */
+.kp-orn[data-o-bvurgu="zeminli"] .kp-vurgu{--vzr:var(--zz);background:linear-gradient(var(--vzr),var(--vzr)) 0 .19em / 100% .85em no-repeat;color:var(--zzy);padding:0 .14em;border-radius:calc(var(--kose) * .2)}
+.kp-orn[data-o-bvurgu="zeminli"] .kp-tuval:not(.kp-j) .kp-baslik{line-height:1.07}
 .kp-orn[data-o-bvurgu="alti"] .kp-vurgu{text-decoration:underline;text-decoration-thickness:.09em;text-underline-offset:.13em;text-decoration-color:var(--za);text-decoration-skip-ink:none}
 /* kategori tonu açıkken fotoğraf da kategori renginde: zeminli beyaz zemin + kategori yazısı, renkli açık ton */
-.kp-orn[data-o-islem="ton"][data-o-bvurgu="zeminli"] .kp-tuval[data-yz="koyu"] .kp-vurgu{background:var(--paper);color:var(--renk-acik)}
-.kp-orn[data-o-islem="ton"][data-o-bvurgu="alti"] .kp-tuval[data-yz="koyu"] .kp-vurgu{text-decoration-color:var(--paper)}
+.kp-orn:is([data-o-islem="ton"],[data-o-islem="kgecis"])[data-o-bvurgu="zeminli"] .kp-tuval[data-yz="koyu"] .kp-vurgu{--vzr:var(--paper);color:var(--renk-acik)}
+.kp-orn:is([data-o-islem="ton"],[data-o-islem="kgecis"])[data-o-bvurgu="alti"] .kp-tuval[data-yz="koyu"] .kp-vurgu{text-decoration-color:var(--paper)}
+.kp-orn[data-o-islem="kgecis"][data-o-bvurgu="renkli"] .kp-tuval[data-yz="koyu"] .kp-vurgu{color:var(--paper);text-decoration:underline;text-decoration-thickness:.07em;text-underline-offset:.12em;text-decoration-color:var(--renk-koyu)}
 
 /* görsel işlemi */
 .kp-orn[data-o-islem="gecis"] .kp-tuval{--gecis:linear-gradient(180deg,rgba(var(--golge-rgb),0) 30%,rgba(var(--golge-rgb),.5) 62%,rgba(var(--golge-rgb),.9) 100%)}
-.kp-orn[data-o-islem="ton"] .kp-tuval{--gf:grayscale(1) contrast(1.12) brightness(1.08);--ton:var(--vr)}
+.kp-orn[data-o-islem="ton"] .kp-tuval{--gf:grayscale(.55) contrast(1.06) brightness(1.06);--ton:var(--vr);--ton-o:.58} /* Yasin Bey: "bu kadar renk kokmasın" */
+/* kategori geçişi (Yasin Bey, Seçilen): kategori rengi fotoğrafın tamamını kaplar; sol altta çok yoğun (beyaz yazı okunur: koyulaştırılmış ton),
+   sağa ve yukarı hafifler, üstte fotoğraf renkli ve seçilir; sol üstten (logo köşesi) ikinci hafif geçiş */
+.kp-orn[data-o-islem="kgecis"] .kp-tuval{
+  --kg-a:lch(from var(--vr) min(l, 40) c h / .93);--kg-b:lch(from var(--vr) min(l, 48) c h / .64);--kg-c:lch(from var(--vr) l c h / .32);--kg-d:lch(from var(--vr) l c h / .14);
+  --kg-l:lch(from var(--vr) min(l, 34) c h / .5);--kg-l0:lch(from var(--vr) min(l, 34) c h / 0);
+  --gecis:radial-gradient(ellipse 62% 46% at 0% 0%,var(--kg-l) 0%,var(--kg-l0) 100%),linear-gradient(34deg,var(--kg-a) 0%,var(--kg-a) 18%,var(--kg-b) 40%,var(--kg-c) 66%,var(--kg-d) 100%);
+  --scrim:linear-gradient(transparent,transparent)}
 .kp-orn[data-o-islem="sb"] .kp-tuval{--gf:grayscale(1) contrast(1.12)}
 
 /* köşe: tuval genişliğinin %2,75'i; iç öğeler orantılı */
@@ -454,9 +470,10 @@ body{overflow-anchor:none} /* kontrol alanı küçülünce tarayıcı kaydırmay
 .kp-tuval[data-tip="ic"][data-yz="acik"]{--tz:var(--paper)}
 .kp-tuval[data-tip="ic"][data-yz="kat"]{--tz:var(--vr)}
 .kp-tuval[data-tip="ic"] .kp-blok{top:calc(36% + 5cqmin);justify-content:flex-start}
+:where(.kp-tuval[data-tip="ic"]) .kp-blok{bottom:calc(var(--sb) + 3cqmin)} /* liste sayfanın sonuna iner (sayfa noktalarının üstü); iskeletin kendi alt sınırı (alttaki logo) önceliklidir */
 .kp-tuval[data-tip="ic"] .kp-ic-bas{display:block;order:-1;font-family:var(--font-vurgu);font-weight:var(--fw-ekstra);font-size:5.6cqmin;letter-spacing:-.02em;line-height:1.05}
-.kp-tuval[data-tip="ic"] .kp-liste{display:flex;order:1;flex-direction:column;gap:2.2cqmin;margin:0;padding:0;list-style:none;width:100%}
-.kp-liste li{display:grid;grid-template-columns:7cqmin minmax(0,1fr);gap:2cqmin;align-items:baseline;font-size:4cqmin;font-weight:var(--fw-yari);line-height:1.22;
+.kp-tuval[data-tip="ic"] .kp-liste{display:flex;order:1;flex:1 1 auto;min-height:0;flex-direction:column;justify-content:space-between;gap:1.6cqmin;margin:0;padding:0;list-style:none;width:100%} /* 5 madde, boşluk eşit dağılır (Yasin Bey) */
+.kp-liste li{display:grid;grid-template-columns:7cqmin minmax(0,1fr);gap:2cqmin;align-items:baseline;font-size:3.6cqmin;font-weight:var(--fw-yari);line-height:1.22;
   padding-top:2.2cqmin;border-top:.3cqmin solid color-mix(in srgb,currentColor 25%,transparent)}
 .kp-no{font-family:var(--font-vurgu);font-weight:var(--fw-ekstra);color:var(--za)}
 .kp-tuval[data-tip="ic"] .kp-oge{order:-2}
@@ -471,6 +488,7 @@ body{overflow-anchor:none} /* kontrol alanı küçülünce tarayıcı kaydırmay
 .kp-h[data-tip="ic"]{--gi:var(--ust) 0 62% 0}
 .kp-h[data-tip="ic"] .kp-blok{top:calc(38% + 4cqmin)}
 .kp-i[data-tip="ic"]{--k1:30%;--k2:37%}
+.kp-i[data-tip="sd"]:not([data-bicim]),.kp-i[data-tip="sd"][data-bicim="kare"]{--k1:48%;--k2:62%} /* Son Dakika işareti + dolu etiket + 4 satırlık uzun başlığa yer */
 .kp-m[data-tip="ic"]{--gi:var(--frt) var(--fr) 62% var(--fr)}
 .kp-m[data-tip="ic"] .kp-blok{top:calc(38% + 2cqmin);max-height:none}
 .kp-n[data-tip="ic"]{--cap:60cqmin;--cy:-12cqmin;--cx:-12cqmin}
@@ -482,7 +500,8 @@ body{overflow-anchor:none} /* kontrol alanı küçülünce tarayıcı kaydırmay
 .kp-soz{font-size:calc(var(--fs-b) * .84);line-height:1.1;-webkit-line-clamp:4}
 .kp-tuval[data-tip="alinti"] .kp-kim{display:flex;order:2;flex-direction:column;gap:.5cqmin;font-size:3.1cqmin;flex:none}
 .kp-kim b{font-family:var(--font-vurgu);font-weight:var(--fw-ekstra);font-size:3.6cqmin}
-.kp-kim span{opacity:.82}
+.kp-kim b + span{opacity:.82}
+.kp-kim > [data-k]{display:contents} /* kategori sarmalı düzeni bozmasın: ad ve unvan alt alta */
 .kp-b[data-tip="alinti"]{--bl:58%}
 .kp-d[data-tip="alinti"]{--al:56%}
 .kp-h[data-tip="alinti"]{--al:52%}
@@ -534,7 +553,7 @@ body{overflow-anchor:none} /* kontrol alanı küçülünce tarayıcı kaydırmay
 .kp-c[data-tip="sd"]{--fs-b:8cqmin}
 .kp-c[data-tip="kapak"]{--fs-b:8.2cqmin}
 .kp-c[data-bicim="yatay"][data-tip="alinti"]{--fs-b:6.6cqmin}
-.kp-m[data-tip="ic"] .kp-liste li{font-size:3.7cqmin}
+.kp-m[data-tip="ic"] .kp-liste li{font-size:3.3cqmin}
 .kp-h[data-bicim="yatay"]{--dkl:calc(48% - 6cqmin);--dkt:auto;--dkb:var(--sb)}
 .kp-orn[data-o-etiket="dikey"] .kp-h[data-bicim="yatay"]{--dk:0px}
 .kp-m[data-bicim="uzun"]{--dkl:var(--ss)}

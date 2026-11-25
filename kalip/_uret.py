@@ -52,7 +52,7 @@ KAT = [
         kapak=H("p304.jpg", "81 ilde toplu taşıma ücretlerinin karşılaştırması", "toplu taşıma", "Türkiye", "40% 50%"),
         hikaye=H("p305.jpg", "Kış hazırlığı: 24 ilde karla mücadele ekipleri göreve hazır", "24 ilde", "Türkiye", "50% 55%"),
         reels=H("p306.jpg", "İstanbul'da Kirazlı–Halkalı metrosu açılıyor", "Kirazlı–Halkalı", "İstanbul", "45% 50%"),
-        ic=dict(g="p361.jpg", o="45% 55%", liste=["Narlıdere metrosunda yolcu sayısı 10 milyonu geçti", "Ankara'da yeni metro hattı için ihale süreci başladı", "Tramvay hattının yeni durağı hizmete girdi"]),
+        ic=dict(g="p361.jpg", o="45% 55%", liste=["Narlıdere metrosunda yolcu sayısı 10 milyonu geçti", "Ankara'da yeni metro hattı için ihale süreci başladı", "Tramvay hattının yeni durağı hizmete girdi", "Bursa'da metro hattının yeni istasyonu hizmete açıldı", "Yüksek hızlı tren hattında yeni sefer sayıları belirlendi"]),
         alinti=dict(g="p362.jpg", o="50% 55%", soz="Gece seferleri, vardiyayla çalışanlar için şehri yeniden ulaşılabilir kılıyor.", v="yeniden ulaşılabilir", kim="Doç. Dr. Selim Kaya", unvan="Ulaşım planlamacısı"),
         veri=dict(g="p363.jpg", o="60% 45%", b="İstanbul barajlarında doluluk oranı yüzde 38'e geriledi", sayi="%38", acik="İstanbul barajlarında doluluk oranı"))),
     dict(k="spor", ad="Spor", s=dict(
@@ -62,7 +62,7 @@ KAT = [
         kapak=H("p314.jpg", "Stadyumda zemin yenileme çalışması tamamlandı", "zemin yenileme", "Türkiye", "50% 60%"),
         hikaye=H("p315.jpg", "Basketbol Süper Ligi'nde 9. hafta Efes–Fenerbahçe maçıyla kapanıyor", "Efes–Fenerbahçe", "İstanbul", "45% 45%"),
         reels=H("p316.jpg", "Süper Lig'de derbi heyecanı: Galatasaray 2-1 önde", "2-1 önde", "İstanbul", "50% 50%"),
-        ic=dict(g="p387.jpg", o="50% 60%", liste=["Kulüpten stadyum ulaşımına ilişkin duyuru", "Derbi için stadyum çevresinde trafik düzenlemesi", "Beşiktaş'ta yeni stadyum yönetimi göreve başladı"]),
+        ic=dict(g="p387.jpg", o="50% 60%", liste=["Kulüpten stadyum ulaşımına ilişkin duyuru", "Derbi için stadyum çevresinde trafik düzenlemesi", "Beşiktaş'ta yeni stadyum yönetimi göreve başladı", "Kulüpten bilet fiyatlarına ilişkin açıklama", "Derbinin VAR hakemi açıklandı"]),
         alinti=dict(g="p376.jpg", o="50% 50%", soz="Bu sezon gençlere güveniyoruz; sonuç tabloya yansımaya başladı.", v="gençlere güveniyoruz", kim="Murat Erdem", unvan="Teknik direktör"),
         veri=dict(g="p366.jpg", o="55% 65%", b="Antalya Yarı Maratonu'na 9 bin koşucu katıldı", sayi="9 bin", acik="Antalya Yarı Maratonu'na katılan koşucu"))),
     dict(k="kadin", ad="Kadın", s=dict(
@@ -72,7 +72,7 @@ KAT = [
         kapak=H("p324.jpg", "El dokumasını yaşatan atölyeler yeni koleksiyon hazırladı", "El dokumasını", "Türkiye", "45% 50%"),
         hikaye=H("p192.jpg", "Hizmet sektöründe uzaktan çalışan kadınların payı artıyor", "uzaktan çalışan", "Türkiye", "55% 50%"),
         reels=H("p322.jpg", "Kırsalda kadın çiftçilere yönelik eğitim programı 20 ile yayıldı", "20 ile", "Türkiye", "50% 60%"),
-        ic=dict(g="p379.jpg", o="60% 50%", liste=["Kız çocuklarının okullaşma oranında bölgesel farklar raporlandı", "Genç mühendis, geliştirdiği sulama sensörüyle tarım ödülü aldı", "Trabzon'da kadın balıkçıların kurduğu kooperatif ilk sezonunu tamamladı"]),
+        ic=dict(g="p379.jpg", o="60% 50%", liste=["Kız çocuklarının okullaşma oranında bölgesel farklar raporlandı", "Genç mühendis, geliştirdiği sulama sensörüyle tarım ödülü aldı", "Trabzon'da kadın balıkçıların kurduğu kooperatif ilk sezonunu tamamladı", "Kadın kooperatiflerine hibe başvuruları 15 Aralık'ta başlıyor", "Kars'ta peynir atölyesi kuran üç kadın ürünlerini Avrupa'ya gönderiyor"]),
         alinti=dict(g="p500.jpg", o="50% 55%", soz="Kooperatife katılan her kadın, köyde bir işyeri daha açmış oluyor.", v="bir işyeri daha", kim="Ayşe Demirtaş", unvan="Kooperatif başkanı"),
         veri=dict(g="p501.jpg", o="50% 55%", b="TÜİK verilerine göre kadınların işgücüne katılım oranı yüzde 36'ya yükseldi", sayi="%36", acik="Kadınların işgücüne katılım oranı (TÜİK)"))),
     dict(k="finans", ad="Finans", s=dict(
@@ -82,7 +82,7 @@ KAT = [
         kapak=H("p333.jpg", "Kredi kartı borcunu yapılandırmadan önce bilinmesi gerekenler", "bilinmesi gerekenler", "Türkiye", "35% 50%"),
         hikaye=H("p334.jpg", "Küresel konteyner taşıma ücretleri kasımda yatay seyretti", "yatay seyretti", "Dünya", "50% 55%"),
         reels=H("p182.jpg", "Rüzgâr kurulu gücü 14 bin megavatı aştı", "14 bin megavatı", "Türkiye", "40% 50%"),
-        ic=dict(g="p370.jpg", o="50% 50%", liste=["BDDK kredi kartı taksit sınırlarında yeni düzenleme yaptı", "Kredi kartı azami faiz oranları aralıkta güncellenecek", "Konut kredisi faizlerinde bankalar arası fark açıldı"]),
+        ic=dict(g="p370.jpg", o="50% 50%", liste=["BDDK kredi kartı taksit sınırlarında yeni düzenleme yaptı", "Kredi kartı azami faiz oranları aralıkta güncellenecek", "Konut kredisi faizlerinde bankalar arası fark açıldı", "Konut kredisi faizlerinde kasımda sınırlı düşüş görüldü", "Asgari ödeme oranı değişmedi: kart borcunda neye dikkat edilmeli"]),
         alinti=dict(g="p388.jpg", o="45% 55%", soz="Faiz indirimi için ilk adım, hizmet enflasyonundaki katılığın kırılması.", v="hizmet enflasyonundaki", kim="Doç. Dr. Elif Arslan", unvan="Ekonomist"),
         veri=dict(g="p503.jpg", o="45% 50%", b="Merkez Bankası politika faizini yüzde 42,5'te sabit tuttu", sayi="%42,5", acik="Merkez Bankası politika faizi, sabit"))),
     dict(k="savunma", ad="Savunma", s=dict(
@@ -92,7 +92,7 @@ KAT = [
         kapak=H("p344.jpg", "Lojistik destek gemisi Deniz Kuvvetleri'ne teslim edildi", "Lojistik destek gemisi", "Türkiye", "50% 55%"),
         hikaye=H("p345.jpg", "Altay tankının ilk teslimat partisi için kabul testleri sürüyor", "kabul testleri", "Türkiye", "50% 55%"),
         reels=H("p346.jpg", "NATO tatbikatına Türk Deniz Kuvvetleri de katılıyor", "NATO tatbikatına", "Türkiye", "60% 50%"),
-        ic=dict(g="p373.jpg", o="55% 55%", liste=["Millî fırkateyn projesinin üçüncü gemisi denize indirildi", "Sahil güvenlik botlarının ikinci partisi teslim edildi", "Ege'de sahil güvenlik devriyelerinin sayısı artırıldı"]),
+        ic=dict(g="p373.jpg", o="55% 55%", liste=["Millî fırkateyn projesinin üçüncü gemisi denize indirildi", "Sahil güvenlik botlarının ikinci partisi teslim edildi", "Ege'de sahil güvenlik devriyelerinin sayısı artırıldı", "İnsansız deniz aracı Ege'de seyir testlerini tamamladı", "Yeni insansız deniz aracı envantere girdi"]),
         alinti=dict(g="p374.jpg", o="40% 55%", soz="İnsansız sistemlerde asıl fark, sahadaki doktrinin ne kadar hızlı güncellendiği.", v="ne kadar hızlı", kim="Prof. Dr. Kerem Aydın", unvan="Güvenlik uzmanı"),
         veri=dict(g="p375.jpg", o="60% 45%", b="SSB verilerine göre savunma ve havacılık ihracatı ekimde yüzde 18 arttı", sayi="%18", acik="Savunma ve havacılık ihracatı artışı, ekim (SSB)"))),
 ]
@@ -124,6 +124,8 @@ for _c in KAT:
             assert _d["v"] in (_d.get("b") or _d.get("soz")), (_c["k"], _s)
         for _b in _d.get("liste", []):
             assert _b in HABER, _b
+        if "liste" in _d:
+            assert len(_d["liste"]) == 5, ("iç sayfa 5 madde (Yasin Bey)", _c["k"])
 for _a in AKIS:
     assert (KOK / "veri" / "gorsel" / _a["g"]).exists(), _a["g"]
     _kullanilan.append(_a["g"])
@@ -220,13 +222,27 @@ try:
 except Exception:
     kl_parca = None
 ALT = ALT[:10] + list(ISKELETLER_KL) + ALT[10:]
+# SEÇİLEN (Yasin Bey, 25.11.2026 18.06): motorun hazır birleşimi; iskelet A Vitrin. Şeridin ilk öğesi, sayfa bununla açılır, Varsayılan buna döner.
+_A = next(a for a in ALT if a["id"] == "a")
+SECILEN = dict(id="s", harf="A", ad="Vitrin", aile="Yasin Bey'in birleşimi", hazir=True, iskelet="a",
+               fikir="Yasin Bey'in seçtiği birleşim: A Vitrin iskeleti; dikey etiket, kalın çizgi, zeminli vurgu, yuvarlak köşe, beyaz logo, kategori geçişi.",
+               kaynak="Yasin Bey ile toplantı, 25.11.2026 18.06.", oz="Seçildi.", guc="guclu",
+               orn=dict(logo="beyaz", etiket="dikey", oge="kalin", bvurgu="zeminli", islem="kgecis", kose="yuvarlak"),
+               yz=dict(_A["yz"]), lz=dict(_A["lz"]), pasif=dict(_A.get("pasif", {})))
+ISKELET_SAYISI = len(ALT)
+ALT = [SECILEN] + ALT
 ALTD = {a["id"]: a for a in ALT}
+isk = lambda alt: ALTD[alt].get("iskelet", alt)  # çizimde kullanılan iskelet sınıfı (Seçilen → a)
+# beyaz logo beyaz zeminde görünmez: logosu açık zeminde duran kalıpta pasif ve gerekçeli
+for _a in ALT:
+    if "acik" in _a["lz"].values():
+        _a.setdefault("pasif", {}).setdefault("logo", {})["beyaz"] = "Bu kalıpta logo beyaz zeminde durur; beyaz logo görünmez"
 SUSLEME = [
-    ("logo", "Logo", [("duz", "Düz"), ("plaka", "Plaka"), ("rozet", "Rozet"), ("renk", "Renkli")]),
+    ("logo", "Logo", [("duz", "Düz"), ("plaka", "Plaka"), ("rozet", "Rozet"), ("renk", "Renkli"), ("beyaz", "Beyaz")]),
     ("etiket", "Etiket", [("duz", "Düz Yazı"), ("dolu", "Dolu Kutu"), ("cerceve", "Çerçeveli"), ("nokta", "Nokta"), ("dikey", "Dikey")]),
     ("oge", "Vurgu Öğesi", [("ince", "İnce Çizgi"), ("kalin", "Kalın Çizgi"), ("kose", "Köşe İşareti"), ("nokta", "Nokta Dizisi"), ("yok", "Yok")]),
     ("bvurgu", "Başlık Vurgusu", [("yok", "Yok"), ("renkli", "Renkli"), ("zeminli", "Zeminli"), ("alti", "Altı Çizgili")]),
-    ("islem", "Görsel İşlemi", [("dogal", "Doğal"), ("gecis", "Alttan Geçiş"), ("ton", "Kategori Tonu"), ("sb", "Siyah-Beyaz")]),
+    ("islem", "Görsel İşlemi", [("dogal", "Doğal"), ("gecis", "Alttan Geçiş"), ("ton", "Kategori Tonu"), ("sb", "Siyah-Beyaz"), ("kgecis", "Kategori Geçişi")]),
     ("kose", "Köşe", [("keskin", "Keskin"), ("yuvarlak", "Yuvarlak")]),
 ]
 MECRA = [("ig", "Instagram 4:5", "kare"), ("dikey", "Dikey 9:16", "uzun"), ("linkedin", "LinkedIn", "yatay"), ("facebook", "Facebook", "yatay"), ("x", "X", "yatay")]
@@ -315,7 +331,7 @@ def tuval(alt, tip, slot=None, bicim="kare", sabit=None, mecrali=False):
     kaydir = f'<span class="kp-kaydir">{"1" if tip == "kapak" else "2"}/4 · Kaydır{ikon("fa-arrow-right")}</span><span class="kp-sayfa-nokta"><i></i><i></i><i></i><i></i></span>' if tip in ("kapak", "ic") else ""
     mast = '<span class="kp-masthead"><span>25 Kasım 2026</span><b>Sayı 327</b></span>'
     yz, lz = zemin(alt, tip, bicim)
-    return (f'<div class="kp-tuval kp-{alt}{sinif}" data-tip="{tip}" data-bicim="{bicim}" data-yz="{yz}" data-lz="{lz}"{" data-mecrali" if mecrali else ""}{stil} role="img" aria-label="{e(ALTD[alt]["harf"])} · {e(tip)}">'
+    return (f'<div class="kp-tuval kp-{isk(alt)}{sinif}" data-tip="{tip}" data-bicim="{bicim}" data-yz="{yz}" data-lz="{lz}"{" data-mecrali" if mecrali else ""}{stil} role="img" aria-label="{e(ALTD[alt]["harf"])} · {e(tip)}">'
             f'<span class="kp-gorsel"></span><span class="kp-karart"></span><span class="kp-sekil"></span><span class="kp-sekil2"></span><span class="kp-kose"></span>'
             f'{mast}{LOGO}{kaydir}<span class="kp-etiket-dikey">{etk}</span>'
             f'{kl_parca(tip, al, saat) if kl_parca else ""}<span class="kp-blok"><span class="kp-oge"><i></i><i></i><i></i></span>{ic_}</span><span class="kp-guvenli"></span></div>')
@@ -441,9 +457,10 @@ def kontrol(sekmeler):
 
 
 def serit():
-    oge = "".join(f'<button type="button" class="kp-serit-oge{" is-on" if i == 0 else ""}" data-alt="{a["id"]}" aria-pressed="{"true" if i == 0 else "false"}" title="{e(a["harf"])} · {e(a["ad"])} · {e(a["aile"])}">'
+    oge = "".join(f'<button type="button" class="kp-serit-oge{" is-on" if i == 0 else ""}{" kp-hazir" if a.get("hazir") else ""}" data-alt="{a["id"]}"{" data-hazir" if a.get("hazir") else ""} aria-pressed="{"true" if i == 0 else "false"}" title="{e(a["harf"])} · {e(a["ad"])} · {e(a["aile"])}">'
                   f'<span class="kp-minik kp-orn" data-alt="{a["id"]}" {" ".join(f"data-o-{k}={v}" for k, v in a["orn"].items())}>{tuval(a["id"], "haber", "haber_koyu")}</span>'
-                  f'<span class="kp-serit-yazi"><span class="kp-harf">{e(a["harf"])}</span><span class="kp-serit-ad">{e(a["ad"])}<small>{e(a["aile"])}</small></span></span></button>'
+                  f'<span class="kp-serit-yazi"><span class="kp-harf">{e(a["harf"])}</span><span class="kp-serit-ad">{e(a["ad"])}<small>{e(a["aile"])}</small></span></span>'
+                  + ('<span class="kp-secilen-etiket">Seçilen</span>' if a.get("hazir") else "") + '</button>'
                   for i, a in enumerate(ALT))
     return (f'<div class="kp-secici">'
             f'<button type="button" class="btn btn-ghost btn-sm kp-serit-ok" data-kp-kaydir="-1" aria-label="Önceki alternatifler">{ikon("fa-chevron-left")}</button>'
@@ -470,8 +487,8 @@ def sayfa():
             ic_ = f'<div class="kp-tek kp-orn" {orn0}>{tek_icerik(s)}</div>'
         paneller += (f'    <div class="sa-form-panel" id="kpT-{s}" role="tabpanel" data-sekme="{s}"{"" if i == 0 else " hidden"}>\n      {ic_}\n'
                      f'      <div class="kp-hepsi-izgara" data-sekme="{s}" hidden></div>\n    </div>\n')
-    veri = dict(alt=[dict(id=a["id"], harf=a["harf"], ad=a["ad"], aile=a["aile"],
-                          orn=a["orn"], yz=a["yz"], lz=a["lz"], pasif=a.get("pasif", {})) for a in ALT],
+    veri = dict(alt=[dict(id=a["id"], harf=a["harf"], ad=a["ad"], aile=a["aile"], iskelet=isk(a["id"]), hazir=bool(a.get("hazir")),
+                          orn=a["orn"], yz=a["yz"], lz=a["lz"], pasif=a.get("pasif", {})) for a in ALT], varsayilan=ALT[0]["id"],
                 mecra={m: b for m, a, b in MECRA}, guvenli=BIRLESIK, susleme={k: [o for o, _ in ops] for k, _, ops in SUSLEME},
                 ad={k: dict(ops) for k, _, ops in SUSLEME}, grupad={k: ad for k, ad, _ in SUSLEME})
     css = ["../assets/vendor/fontawesome-6.5.2/css/all.min.css", "../tema/dadahaber.css", "../cekirdek/css/kabuk.css", "../cekirdek/css/bilesen.css"]
@@ -495,7 +512,7 @@ def sayfa():
   <div class="pnl-page-head kp-bas">
     <div>
       <h1>Kalıp Alternatifleri</h1>
-      <div class="ph-sub">Dada Haber sosyal medya · <span data-kp-say="iskelet">{len(ALT)}</span> iskelet · karar değil, Yasin Bey seçecek · 25.11.2026</div>
+      <div class="ph-sub">Dada Haber sosyal medya · kalıp motoru · Seçilen + <span data-kp-say="iskelet">{ISKELET_SAYISI}</span> iskelet · karar değil, Yasin Bey seçecek · 25.11.2026</div>
     </div>
   </div>
 {kontrol(sekmeler)}
