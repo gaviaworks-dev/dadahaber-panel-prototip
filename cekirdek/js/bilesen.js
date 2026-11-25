@@ -315,10 +315,12 @@
     var kk = Array.prototype.filter.call(document.querySelectorAll('.kb-kaydet'), function(k){ return k.getClientRects().length && getComputedStyle(k).position === 'sticky'; })[0];
     /* kaydet çubuğunun yapışık haldeki üst kenarı ölçülür (ekranın altına tam oturmayabilir); görünür değilse ekranın altı − çubuk boyu */
     var kr = kk && kk.getBoundingClientRect(), sinir = kk ? Math.min(kr.top < vh && kr.top > 0 ? kr.top : vh - kr.height, vh - kr.height) : vh;
+    /* KURAL · sağ sütun her düzenleme sayfasında yapışkandır (Beyar, 25.11.2026): sığan sütun üst barın altına yapışır;
+       sığmayan (uzun) sütun sayfayla kayar, alt ucu kaydet çubuğunun üstüne gelince orada yapışır (top eksi değer alır). */
     document.querySelectorAll('.side-card').forEach(function(s){
-      s.classList.remove('is-akar'); if(getComputedStyle(s).position !== 'sticky') return;
-      var bos = parseFloat(getComputedStyle(s).top) || (uh + 24);
-      if(bos + s.getBoundingClientRect().height + 8 > sinir) s.classList.add('is-akar');
+      s.classList.remove('is-akar'); s.style.top = ''; if(getComputedStyle(s).position !== 'sticky') return;
+      var bos = parseFloat(getComputedStyle(s).top) || (uh + 24), h = s.getBoundingClientRect().height;
+      if(bos + h + 8 > sinir){ s.style.top = Math.round(sinir - 8 - h) + 'px'; s.classList.add('is-uzun'); } else s.classList.remove('is-uzun');
     });
   };
   (function(){

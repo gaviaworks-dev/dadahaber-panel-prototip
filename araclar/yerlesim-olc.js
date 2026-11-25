@@ -202,6 +202,7 @@
       var ust = d.querySelector('.pnl-top'), ub = ust ? ust.getBoundingClientRect().bottom : 64, kk = Array.prototype.filter.call(d.querySelectorAll('.kb-kaydet'), function(k){ return gor(k, win) && win.getComputedStyle(k).position === 'sticky'; })[0];
       var eskiY = win.scrollY, H = d.documentElement.scrollHeight - win.innerHeight;
       d.documentElement.style.scrollBehavior = 'auto';
+      if(win.innerWidth > 1180 && win.getComputedStyle(sc).position !== 'sticky') out.push('yapiskan: sağ sütun yapışmıyor (her düzenleme sayfasında yapışkan olmalı; uzun sütun alt ucundan yapışır)');
       [0.25, 0.5, 0.75, 1].forEach(function(f){
         win.scrollTo(0, Math.round(H * f));
         var r = sc.getBoundingClientRect(), yap = win.getComputedStyle(sc).position === 'sticky';
