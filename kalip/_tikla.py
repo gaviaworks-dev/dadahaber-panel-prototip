@@ -63,7 +63,10 @@ try {
   const sekmeAc = async (t) => {
     if(gor(t)) return await tikla(t);
     const db = S.querySelector('.sa-diger-btn'); if(!gor(db)) return 'sekme de Diğer menüsü de görünmüyor';
+    await bekle(120); /* çekirdek sekme satırı bir önceki seçimden sonra 0 ms gecikmeyle yeniden dizilir; insan hızında bekle */
     let h = await tikla(db); if(h) return 'Diğer: ' + h;
+    const dm = d.getElementById(db.dataset.acilir); await bekle(60);
+    if(!dm || !dm.classList.contains('open')) return 'Diğer menüsü açılmadı';
     const it = d.querySelector('.sa-diger-menu [data-sekme-hedef="' + t.dataset.panel + '"]'); if(!it) return 'Diğer menüsünde yok';
     return await tikla(it);
   };
