@@ -315,16 +315,22 @@
     var kk = Array.prototype.filter.call(document.querySelectorAll('.kb-kaydet'), function(k){ return k.getClientRects().length && getComputedStyle(k).position === 'sticky'; })[0];
     /* kaydet çubuğunun yapışık haldeki üst kenarı ölçülür (ekranın altına tam oturmayabilir); görünür değilse ekranın altı − çubuk boyu */
     var kr = kk && kk.getBoundingClientRect(), sinir = kk ? Math.min(kr.top < vh && kr.top > 0 ? kr.top : vh - kr.height, vh - kr.height) : vh;
-    /* KURAL · sağ sütun her düzenleme sayfasında yapışkandır (Beyar, 25.11.2026): sığan sütun üst barın altına yapışır;
-       sığmayan (uzun) sütun sayfayla kayar, alt ucu kaydet çubuğunun üstüne gelince orada yapışır (top eksi değer alır). */
+    /* sayfa sonunda kaydet çubuğu yapışıklıktan çıkıp yukarı gelir: sınır onun en yüksek (son) konumu */
+    if(kk && kk.previousElementSibling){ /* çubuğun akıştaki (yapışmamış) yeri: önceki kardeşin altı + üst boşluk */
+      var de = document.documentElement, dogal = kk.previousElementSibling.getBoundingClientRect().bottom + window.scrollY + parseFloat(getComputedStyle(kk).marginTop);
+      var sonUst = vh - (de.scrollHeight - dogal); if(de.scrollHeight > vh + 4) sinir = Math.min(sinir, Math.max(sonUst, uh + 160)); }
+    /* KURAL · sağ sütun her düzenleme sayfasında yapışkandır, istisna yok (Beyar, 25.11.2026): üst barın altına yapışır;
+       üst bar ile kaydet çubuğu arasına sığmayan sütun yine yapışkan kalır ve kendi içinde kayar (ince kaydırma çubuğu). */
     document.querySelectorAll('.side-card').forEach(function(s){
       s.classList.remove('is-akar'); s.style.top = ''; if(getComputedStyle(s).position !== 'sticky') return;
-      var bos = parseFloat(getComputedStyle(s).top) || (uh + 24), h = s.getBoundingClientRect().height;
-      if(bos + h + 8 > sinir){ s.style.top = Math.round(sinir - 8 - h) + 'px'; s.classList.add('is-uzun'); } else s.classList.remove('is-uzun');
+      s.style.maxHeight = ''; s.classList.remove('is-uzun');
+      var bos = parseFloat(getComputedStyle(s).top) || (uh + 24), h = s.scrollHeight;
+      if(bos + h + 8 > sinir){ s.style.maxHeight = Math.floor(sinir - 8 - bos) + 'px'; s.classList.add('is-uzun'); } /* uzun sütun yapışkan kalır, kendi içinde kayar */
     });
   };
   (function(){
     var bekle; function yap(){ clearTimeout(bekle); bekle = setTimeout(window.kbYapiskanSigdir, 30); }
+    document.addEventListener('kb-sekme', yap);
     window.addEventListener('resize', yap); window.addEventListener('load', yap);
     document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('.sa-form-tab, [data-sekme], .kb-onizle-sec button')) yap(); });
     if(window.ResizeObserver) document.addEventListener('DOMContentLoaded', function(){ var ro = new ResizeObserver(yap); document.querySelectorAll('.side-card').forEach(function(s){ ro.observe(s); }); });
@@ -559,7 +565,7 @@
     var yan = document.querySelector('.side-card'); if(!yan) return;
     var var_ = false;
     yan.querySelectorAll('[data-panel-icin]').forEach(function(x){ var on = x.getAttribute('data-panel-icin') === pid; x.hidden = !on; if(on) var_ = true; });
-    yan.querySelectorAll('[data-one-cik]').forEach(function(x){ x.style.order = x.getAttribute('data-one-cik') === pid ? -1 : ''; });
+    /* kart sırası her sekmede aynı: önce sekmenin önizlemesi (varsa), sonra Yayın, sonra SEO Skoru (Beyar, 25.11.2026); data-one-cik artık sıra değiştirmez */
     yan.classList.toggle('kb-onizlemeli', var_);
   }
   /* sayfa içinden sekme açma: [data-sekme-git="panelId"] (ör. "Etiketleri Yönet") — sayfa yenilenmez, sekme açılır, kartın başına kayar */

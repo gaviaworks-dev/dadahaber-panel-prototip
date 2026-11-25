@@ -234,9 +234,15 @@
      Önce aşağı; sığmazsa yukarı; ikisi de sığmazsa görünür alanın içine yerleşir (sayfa kaydırılmaz), gerekirse kendi içinde kayar. Yatayda ekrana sığacak kadar içeri kaydırılır.
      Sabit konumlu kutu (position:fixed) top/left ile, akıştaki kutu translate ile yerleşir. */
   window.kbAcilirSigdir = function(m, b){
-    m.style.translate = ''; var sabit = getComputedStyle(m).position === 'fixed';
-    var mr = m.getBoundingClientRect(), vw = document.documentElement.clientWidth, vh = window.innerHeight; if(!mr.width) return;
+    m.style.translate = '';
+    /* kendi içinde kayan kabın (uzun sağ sütun) içindeki kutu kaba kırpılmasın diye ekrana sabitlenir; düğmenin kenarına hizalanır */
     b = b || document.body;
+    var kayan = b !== document.body && b.closest && b.closest('.side-card.is-uzun');
+    if(kayan && !m.dataset.kbSabit){ var cs0 = getComputedStyle(m); m.dataset.kbSabit = cs0.right !== 'auto' && cs0.left === 'auto' ? 'sag' : 'sol'; m.style.position = 'fixed'; }
+    else if(!kayan && m.dataset.kbSabit){ delete m.dataset.kbSabit; ['position', 'top', 'left', 'right', 'bottom'].forEach(function(p){ m.style[p] = ''; }); }
+    var sabit = getComputedStyle(m).position === 'fixed';
+    var mr = m.getBoundingClientRect(), vw = document.documentElement.clientWidth, vh = window.innerHeight; if(!mr.width) return;
+    if(m.dataset.kbSabit){ var br0 = b.getBoundingClientRect(), sol0 = m.dataset.kbSabit === 'sag' ? br0.right - mr.width : br0.left; mr = { left: sol0, right: sol0 + mr.width, width: mr.width, top: mr.top, bottom: mr.bottom, height: mr.height }; }
     var ustBar = b.closest('.pnl-top') ? null : document.querySelector('.pnl-top'), ub = ustBar ? ustBar.getBoundingClientRect().bottom : 0;
     var kk = Array.prototype.filter.call(document.querySelectorAll('.kb-kaydet'), function(k){ var r = k.getBoundingClientRect(); return r.height && r.top < vh && getComputedStyle(k).position === 'sticky'; })[0];
     var kap = b.closest('.kb-kap-govde'), kr = kap ? kap.getBoundingClientRect() : null;

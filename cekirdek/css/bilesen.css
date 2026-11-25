@@ -1932,3 +1932,8 @@ body.kb-giris-sayfa{min-height:100vh;margin:0;display:grid;grid-template-columns
 
 /* süzgeç şeridi görünürken araç satırındaki "Süzgeçleri Temizle" gizli: tek temizle düğmesi (şeritteki "Temizle") */
 [data-liste]:has(.kb-arac-etiket:not([hidden])) .kb-suz-temizle[data-suz-temizle]{display:none}
+
+/* uzun sağ sütun: yapışkan kalır, kendi içinde kayar; ince kaydırma çubuğu, kart gölgesi kesilmesin diye iç boşluk */
+.side-card.is-uzun{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--line) transparent;padding:2px 8px 8px 2px;margin:-2px -8px -8px -2px}
+.side-card.is-uzun::-webkit-scrollbar{width:6px}
+.side-card.is-uzun::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
