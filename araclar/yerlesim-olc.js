@@ -155,6 +155,16 @@
     var out = [];
     var h1 = d.querySelector('.pnl-main .pnl-page-head h1'), k1 = Array.prototype.filter.call(d.querySelectorAll('.pnl-main .pnl-card, .pnl-main .kb-bant, .pnl-main .form-layout'), function(x){ return gor(x, win) && !x.parentElement.closest('.pnl-card'); })[0];
     if(h1 && k1 && gor(h1, win) && Math.abs(h1.getBoundingClientRect().left - k1.getBoundingClientRect().left) > 1.5) out.push('hiza: sayfa başlığı ile içerik ' + Math.round(h1.getBoundingClientRect().left - k1.getBoundingClientRect().left) + 'px farklı sol çizgide');
+    /* YENİ KAYIT BOŞ AÇILIR (Beyar): ?yeni=1 ekranında formda örnek veri kalmaz — dolu metin alanı, seçili çip, örnek satır.
+       Sistemin doldurduğu değer (oturumdaki yazar, varsayılan) [data-yeni-kalir] ile işaretlenir; anahtar ve seçenekler sayılmaz. */
+    if(/[?&]yeni=1/.test(win.location.search)){
+      var F = d.querySelector('[data-form]') || d.querySelector('.pnl-main'), dolu = [];
+      Array.prototype.forEach.call(F.querySelectorAll('input.finput, textarea.ftext, .kz-alan'), function(e){
+        if(!gor(e, win) || e.closest('[data-yeni-kalir], [hidden], .kb-kap-govde, [data-ai-grup].is-ai') || e.hasAttribute('data-yeni-kalir') || e.readOnly) return;
+        var v = (e.value != null ? e.value : e.textContent).trim(); if(v) dolu.push((e.getAttribute('aria-label') || e.id || 'alan') + ': "' + v.slice(0, 24) + '"'); });
+      Array.prototype.forEach.call(F.querySelectorAll('.kb-cip-girdi .kb-cip, [data-sirali-havuz] .km-satir, [data-satir-liste] > .km-satir'), function(e){ if(gor(e, win) && !e.closest('[data-yeni-kalir]')) dolu.push('örnek ' + (e.classList.contains('kb-cip') ? 'çip' : 'satır') + ' "' + (e.textContent || '').trim().slice(0, 20) + '"'); });
+      if(dolu.length) out.push('yeni-dolu: yeni kayıt ekranında örnek veri: ' + dolu.slice(0, 3).join(' · ') + (dolu.length > 3 ? ' (+' + (dolu.length - 3) + ')' : ''));
+    }
     /* sayfalama */
     Array.prototype.forEach.call(d.querySelectorAll('[data-liste], [data-kart-liste]'), function(L){
       if(!gor(L, win) || L.dataset.gorunum === 'takvim') return;
