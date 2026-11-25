@@ -188,3 +188,4 @@ Bu bir kural değil, başvurulabilecek bir yöntem tarifidir.
 - Kaynak katmanları yeni dokümanda T1–T4 (Resmî, Kurumsal Basın, Uluslararası Medya, Düşük Öncelik); önceki dokümandaki K1–K4 tanımlarıyla farklı.
 - "Otomatik yayınla" ayarının koşulları: önceki kaynak dokümandaki "teyitsiz otomatik yayın yok" kuralıyla birlikte nasıl çalışacağı. Öneri olarak ekranda şu koşullar da gösterilsin ve Beyar ile Yasin Bey karar versin: yalnızca belirli kaynak katmanlarından gelenler, hariç tutulan kategoriler, görseli eksik haberin otomatik yayımlanmaması, günlük üst sınır.
 - Deponun herkese açık ya da kapalı olması.
+- Acil olmayan ileri işler (dikey hesaplar, kalıp motorunun panele entegrasyonu, miras): `docs/ileride.md`.
