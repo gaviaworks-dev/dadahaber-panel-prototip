@@ -611,7 +611,7 @@ def sayfa_spor():
           <button type="button" class="chip kb-cop" role="tab" aria-selected="false" data-sekme="cop">{I("fa-trash")}Çöp<span class="ch-cnt">0</span></button>
         </div>
         <div class="filter-bar">
-          <div class="fb-search">{I("fa-magnifying-glass")}<label class="sr-only" for="klAra">Kulüplerde ara</label><input id="klAra" type="search" data-liste-ara placeholder="Kulüp adı, kısa kod ya da şehir ara" autocomplete="off"></div>
+          <div class="fb-search">{I("fa-magnifying-glass")}<label class="sr-only" for="klAra">Kulüplerde Ara</label><input id="klAra" type="search" data-liste-ara placeholder="Kulüp adı, kısa kod ya da şehir ara" autocomplete="off"></div>
           {secim("klSuzLig", kl_ligler, etk="Lig:", bos="Tümü", ara="Lig ara", suz="lig")}
           <button type="button" class="kb-suz-temizle" data-suz-temizle hidden>Süzgeçleri Temizle</button>
         </div>
@@ -641,7 +641,7 @@ def sayfa_spor():
     <div class="sa-form-panel" id="spLig" role="tabpanel" hidden>
       <div data-liste data-liste-ad="lig" data-sayfa-boy="50">
         <div class="filter-bar">
-          <div class="fb-search">{I("fa-magnifying-glass")}<label class="sr-only" for="lgAra">Liglerde ara</label><input id="lgAra" type="search" data-liste-ara placeholder="Lig, sıralama ya da lider ara" autocomplete="off"></div>
+          <div class="fb-search">{I("fa-magnifying-glass")}<label class="sr-only" for="lgAra">Liglerde Ara</label><input id="lgAra" type="search" data-liste-ara placeholder="Lig, sıralama ya da lider ara" autocomplete="off"></div>
           <button type="button" class="kb-suz-temizle" data-suz-temizle hidden>Süzgeçleri Temizle</button>
         </div>
         <div class="pc-body"><div class="kb-bant bilgi">{I("fa-lock")}<span><b>Ligler ve puan tabloları API verisidir; silinmez.</b> Satıra tıklayınca puan durumu açılır; yanlış değer oradan “Düzelt” ile elle düzeltilir (gerekçe zorunlu, denetim izine yazılır). Son güncelleme 15.57.</span></div></div>
@@ -672,7 +672,7 @@ def sayfa_spor():
           </div>
         </div>
         <div class="filter-bar">
-          <div class="fb-search">{I("fa-magnifying-glass")}<label class="sr-only" for="mcAra">Karşılaşmalarda ara</label><input id="mcAra" type="search" data-liste-ara placeholder="Takım, sporcu, lig ya da yarış ara" autocomplete="off"></div>
+          <div class="fb-search">{I("fa-magnifying-glass")}<label class="sr-only" for="mcAra">Karşılaşmalarda Ara</label><input id="mcAra" type="search" data-liste-ara placeholder="Takım, sporcu, lig ya da yarış ara" autocomplete="off"></div>
           <button type="button" class="kb-suz-temizle" data-suz-temizle hidden>Süzgeçleri Temizle</button>
         </div>
         <div class="pc-body"><div class="kb-bant bilgi">{I("fa-lock")}<span><b>Maçlar ve yarışlar spor veri API'sinden gelir; silinmez.</b> Skor, sonuç ve durum “Düzelt” ile elle düzeltilir (gerekçe zorunlu, denetim izine yazılır).</span></div></div>
@@ -940,7 +940,7 @@ def tk_sablonlar(r):
   </div></div>
   <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="tkDz-{tid}">{I("fa-pen")}Düzenle</button></div>
 </template>
-<template id="tkDz-{tid}" data-baslik="{e(bas_)} · düzenle" data-alt="Değişiklik sitede takvim sayfalarında hemen görünür" data-zorunlu-kayit="ozel-dikeyler.takvim">
+<template id="tkDz-{tid}" data-baslik="{e(bas_)} · Düzenle" data-alt="Takvim kaydı · hemen yayında" data-zorunlu-kayit="ozel-dikeyler.takvim">
 {tk_form(tid, r)}  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-ghost btn-sm" data-kaydet-tur="taslak" data-sablon-ac="tkGor-{tid}" data-bildir-sonra="Taslak olarak kaydedildi; sitede görünmez">{I("fa-floppy-disk")}Taslak kaydet</button><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="tkGor-{tid}" data-bildir-sonra="Takvim kaydı güncellendi; önceki hal denetim izinde">{I("fa-check")}Kaydet ve yayımla</button></div>
 </template>
 """
@@ -1021,7 +1021,7 @@ def sayfa_takvimler():
 </main>
 </div>
 
-<template id="tkYeni" data-baslik="Yeni Takvim Kaydı" data-alt="Kayıt seçtiğiniz türün takvim sayfasında görünür" data-zorunlu-kayit="ozel-dikeyler.takvim">
+<template id="tkYeni" data-baslik="Yeni Takvim Kaydı" data-alt="Takvim kaydı · seçilen türün sayfasında" data-zorunlu-kayit="ozel-dikeyler.takvim">
 {tk_form("yeni")}  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-ghost btn-sm" data-kaydet-tur="taslak" data-sablon-ac="tkEklendi" data-bildir-sonra="Taslak olarak kaydedildi; sitede görünmez">{I("fa-floppy-disk")}Taslak kaydet</button><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="tkEklendi" data-bildir-sonra="Takvim kaydı eklendi; denetim izine yazıldı">{I("fa-plus")}Ekle ve yayımla</button></div>
 </template>
 <template id="tkEklendi" data-baslik="Kayıt eklendi" data-alt="Takvimde ve listede görünür">
@@ -1384,6 +1384,10 @@ def sayfa_ilan():
 if __name__ == "__main__":
     yaz = {"spor.html": sayfa_spor, "kulup.html": sayfa_kulup, "takvimler.html": sayfa_takvimler, "veri.html": sayfa_veri,
            "ilanlar.html": sayfa_ilanlar, "ilan.html": sayfa_ilan}
+    import sys
+    secili = [a for a in sys.argv[1:] if a in yaz]  # ör. _uret.py spor.html → yalnız o sayfa
     for ad, fn in yaz.items():
+        if secili and ad not in secili:
+            continue
         (BURA / ad).write_text(fn(), encoding="utf-8")
         print("yazıldı:", ad)
