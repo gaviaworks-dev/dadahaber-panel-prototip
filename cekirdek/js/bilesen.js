@@ -322,15 +322,18 @@
     /* KURAL · sağ sütun her düzenleme sayfasında yapışkandır, istisna yok (Beyar, 25.11.2026): üst barın altına yapışır;
        üst bar ile kaydet çubuğu arasına sığmayan sütun yine yapışkan kalır ve kendi içinde kayar (ince kaydırma çubuğu). */
     document.querySelectorAll('.side-card').forEach(function(s){
-      s.classList.remove('is-akar'); s.style.top = ''; if(getComputedStyle(s).position !== 'sticky') return;
-      s.style.maxHeight = ''; s.classList.remove('is-uzun');
-      var bos = parseFloat(getComputedStyle(s).top) || (uh + 24), h = s.scrollHeight;
-      if(bos + h + 8 > sinir){ s.style.maxHeight = Math.floor(sinir - 8 - bos) + 'px'; s.classList.add('is-uzun'); } /* uzun sütun yapışkan kalır, kendi içinde kayar */
+      s.classList.remove('is-akar'); s.style.top = '';
+      if(getComputedStyle(s).position !== 'sticky'){ s.style.maxHeight = ''; s.classList.remove('is-uzun'); return; }
+      /* içerik yüksekliği scrollHeight'ten okunur (sınır kaldırılmadan; kaydırmada yinelenince sütunun iç kaydırması sıfırlanmaz) */
+      var bos = parseFloat(getComputedStyle(s).top) || (uh + 24), h = s.scrollHeight, mx = Math.floor(sinir - 8 - bos);
+      if(bos + h + 8 > sinir){ if(s.style.maxHeight !== mx + 'px') s.style.maxHeight = mx + 'px'; s.classList.add('is-uzun'); } /* uzun sütun yapışkan kalır, kendi içinde kayar */
+      else if(s.classList.contains('is-uzun')){ s.style.maxHeight = ''; s.classList.remove('is-uzun'); }
     });
   };
   (function(){
     var bekle; function yap(){ clearTimeout(bekle); bekle = setTimeout(window.kbYapiskanSigdir, 30); }
     document.addEventListener('kb-sekme', yap);
+    window.addEventListener('scroll', function(){ if(document.querySelector('.side-card')) yap(); }, { passive:true }); /* sonradan büyüyen içerik (görsel, sekme) kaçmasın */
     window.addEventListener('resize', yap); window.addEventListener('load', yap);
     document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('.sa-form-tab, [data-sekme], .kb-onizle-sec button')) yap(); });
     if(window.ResizeObserver) document.addEventListener('DOMContentLoaded', function(){ var ro = new ResizeObserver(yap); document.querySelectorAll('.side-card').forEach(function(s){ ro.observe(s); }); });
