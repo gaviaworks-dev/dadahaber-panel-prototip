@@ -18,8 +18,17 @@ KURU = "--kuru" in sys.argv
 d = subprocess.run([sys.executable, "-I", str(KOK / "araclar" / "denetim.py")], cwd=KOK, capture_output=True, text=True)
 print("\n".join(l for l in d.stdout.splitlines() if l.startswith(("Denetim:", "Kural başına", "Çekirdek JS"))))
 kalan = sorted({l.split()[1].split("?")[0] for l in d.stdout.splitlines() if l.startswith("KALDI")})
+# ayrı sunum sayfası (kalip/): kendi denetimi ve kalıp ölçümü (çakışma, taşma) — kalan varsa yayın durur
+kalip_hata = False
+if (KOK / "kalip" / "index.html").exists():
+    dk = subprocess.run([sys.executable, "-I", str(KOK / "araclar" / "denetim.py"), "kalip/index.html"], cwd=KOK, capture_output=True, text=True)
+    print("Sunum (kalip/): " + next((l for l in dk.stdout.splitlines() if l.startswith("Denetim:")), "denetim çıktısı yok"))
+    if any(l.startswith("KALDI") for l in dk.stdout.splitlines()): kalip_hata = True
+    if (KOK / "kalip" / "_olc.py").exists():
+        ko = subprocess.run([sys.executable, "-I", str(KOK / "kalip" / "_olc.py")], cwd=KOK, capture_output=True, text=True)
+        print(next((l for l in ko.stdout.splitlines() if l.startswith("Kalıp ölçümü")), "Kalıp ölçümü: çıktı yok")); kalip_hata = kalip_hata or ko.returncode != 0
 cekirdek_hata = "Çekirdek JS tarayıcı kutusu: yok" not in d.stdout
-if not kalan and not cekirdek_hata:
+if not kalan and not cekirdek_hata and not kalip_hata:
     print("Yayın kapısı: bütün sayfalar geçti.")
     sys.exit(0)
 
@@ -41,4 +50,5 @@ for s in kalan:
     print("   " + s + ("  → hazir: false (menüden çıktı)" if s in inen else "  → kayıtta yok" if s in kayitsiz else "  → zaten hazir: false"))
 if KURU and inen: print("   (--kuru: kayda dokunulmadı)")
 if cekirdek_hata: print("   Çekirdek JS'te tarayıcı kutusu var: yayın durmalı")
-sys.exit(1 if kayitsiz or cekirdek_hata else 2)
+if kalip_hata: print("   Sunum sayfası (kalip/) denetimden ya da kalıp ölçümünden geçmedi: yayın durmalı")
+sys.exit(1 if kayitsiz or cekirdek_hata or kalip_hata else 2)
