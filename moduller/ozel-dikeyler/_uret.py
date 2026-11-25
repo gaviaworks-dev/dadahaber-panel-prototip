@@ -4,7 +4,7 @@
 Kullanım:  python3 -I moduller/ozel-dikeyler/_uret.py && python3 -I araclar/menu_yaz.py --yalniz moduller/ozel-dikeyler
 
 Kaynaklar (yalnızca okunur): public sözlük (ornek_veri.json: puan_tablosu, piyasa, hava, haberler), public sayfa metinleri
-(fikstür, canlı skor, takvimler, resmî ilanlar), moduller.json, moduller/haberler/duzenle.html (kategori listesi).
+(fikstür, canlı skor, takvimler, resmî ilanlar), moduller.json, public araclar/kategori.json (kategori ağacı, DADAHABER-10).
 Sayfalar: spor, kulup, takvimler, veri, ilanlar, ilan. Anket, Sözlük, Firma Rehberi kapalı (K1), üretilmez.
 """
 import html, json, re
@@ -17,12 +17,18 @@ SITE = "https://gaviaworks-dev.github.io/dadahaber-prototip/"
 e = lambda s: html.escape(str(s), quote=True)
 soz = json.loads((PUB / "araclar" / "ornek_veri.json").read_text(encoding="utf-8"))
 kayit = json.loads((KOK / "moduller.json").read_text(encoding="utf-8"))
-HB = (KOK / "moduller" / "haberler" / "duzenle.html").read_text(encoding="utf-8")
+KAT = json.loads((PUB / "araclar" / "kategori.json").read_text(encoding="utf-8"))  # kategori ağacı · tek kaynak (DADAHABER-10)
 I = lambda c, ek="": f'<i class="fa-solid {c}"{ek} aria-hidden="true"></i>'
 
 
-def isaret(ad):
-    return re.search(r"<!--P:%s-->(.*?)<!--/P:%s-->" % (ad, ad), HB, re.S).group(1)
+# Haber alt konusu olmayan servis sayfaları: tek liste moduller.json → haberler.ayarlar.servis_sayfalari (yalnız okunur)
+_SV = [m for m in kayit["moduller"] if m["id"] == "haberler"][0]["ayarlar"]["servis_sayfalari"]
+SERVIS_SUTUN, SERVIS_OGE = set(_SV["sutunlar"]), set(_SV["ogeler"])
+
+
+def alt_konular():
+    """{ana kategori: [alt konular]} · kategori.json sütun sırasıyla"""
+    return {b["ad"]: [o["ad"] for s in b["sutunlar"] if s["ad"] not in SERVIS_SUTUN for o in s["ogeler"] if o["ad"] not in SERVIS_OGE] for b in KAT["basliklar"]}
 
 
 def sayi(n):
@@ -78,8 +84,8 @@ def son(editor=False):
     return s + "</body>\n</html>\n"
 
 
-def secim(id_, secenekler, deger="", bos="Seçin", etk="", ara=None, ek="", suz=None):
-    """kb-secim: secenekler [(deger, ad, alt)]"""
+def secim(id_, secenekler, deger="", bos="Seçin", etk="", ara=None, ek="", suz=None, kaynak=None):
+    """kb-secim: secenekler [(deger, ad, alt)]; kaynak="tplId" → liste sayfadaki ortak <template>'ten dolar (çekirdek liste havuzu)"""
     sec = [s for s in secenekler if s[0] == deger]
     gor = sec[0][1] if sec else bos
     ops = "".join(f'<button type="button" data-deger="{e(d)}" data-ad="{e(a)}"{" class=\"is-sec\"" if d == deger and d else ""}>{e(a)}{f"<span class=\"ks-alt\">{e(al)}</span>" if al else ""}</button>' for d, a, al in secenekler)
@@ -90,7 +96,7 @@ def secim(id_, secenekler, deger="", bos="Seçin", etk="", ara=None, ek="", suz=
     et = f'<span class="ks-etk">{e(etk)}</span>' if etk else ""
     return (f'<div class="kb-secim{" is-dolu" if deger else ""}"{sz}{dg} data-bos="{e(bos)}"{ek}>'
             f'<button type="button" class="kb-secim-btn" data-acilir="{id_}" aria-expanded="false" aria-haspopup="listbox">{et}<span class="ks-deger">{e(gor)}</span>{I("fa-chevron-down")}</button>'
-            f'<div class="pnl-menu kb-secim-menu" id="{id_}">{arak}<div class="kb-secim-liste" role="listbox">{ops}</div>{bosk}</div></div>')
+            f'<div class="pnl-menu kb-secim-menu" id="{id_}">{arak}<div class="kb-secim-liste" role="listbox"{f" data-liste-kaynak=\"{kaynak}\"" if kaynak else ""}>{"" if kaynak else ops}</div>{bosk}</div></div>')
 
 
 def row_acts(gor, duz, sil, gor_ad="Görüntüle", duz_ad="Düzenle", sil_ad="Çöpe Taşı", diger=True):
@@ -567,7 +573,7 @@ def sayfa_spor():
     for k in KL:
         if (k[4], k[4], k[5]) not in kl_lig: kl_lig.append((k[4], k[4], k[5]))
     kl_ligler = [("", "Bütün Ligler", "")] + kl_lig
-    alt = json.loads(html.unescape(re.search(r'data-alt-harita="([^"]*)"', isaret("hb-df-alt")).group(1)))
+    alt = alt_konular()
     s = bas("Spor", "spor")
     s += f"""
 <!-- SPOR (D4): soldaki branş listesi (Gez kalıbı) Kulüpler · Ligler ve puan durumu · Maç merkezi sekmelerini birlikte süzer.
@@ -748,7 +754,7 @@ def sayfa_kulup():
     sira = [x["kod"] for x in tablo()].index("GS") + 1
     ligler = [("Süper Lig", "Süper Lig", "Futbol"), ("1. Lig", "1. Lig", "Futbol"), ("UEFA Şampiyonlar Ligi", "UEFA Şampiyonlar Ligi", "Futbol · Avrupa"), ("Premier Lig", "Premier Lig", "Futbol · Avrupa"),
               ("Basketbol Süper Ligi", "Basketbol Süper Ligi", "Basketbol"), ("Sultanlar Ligi", "Sultanlar Ligi", "Voleybol")]
-    alt = json.loads(html.unescape(re.search(r'data-alt-harita="([^"]*)"', isaret("hb-df-alt")).group(1)))
+    alt = alt_konular()
     spor_alt = [(a, f"Spor › {a}", "") for a in alt["Spor"]]
     sehirler = json.dumps(["İstanbul", "Ankara", "İzmir", "Trabzon", "Samsun", "Antalya", "Konya", "Rize", "Gaziantep", "Kocaeli", "Diyarbakır", "Kayseri"], ensure_ascii=False)
     renkler = "".join(f'<label class="kb-renk kat-{k}" title="{a}"><input type="radio" name="klRenk" value="{k}"><span></span><span class="sr-only">{a}</span></label>' for k, a in [("gundem", "Gündem"), ("spor", "Spor"), ("finans", "Finans"), ("savunma", "Savunma"), ("dunya", "Dünya"), ("kose", "Köşe")])
@@ -857,32 +863,34 @@ def sayfa_kulup():
 
 # ================================================================== TAKVİMLER
 TK_TUR = {"gundem": ("Gündem", "bilgi", "fa-landmark"), "ekonomik": ("Ekonomik", "ok", "fa-chart-line"), "sinav": ("Sınav", "uyari", "fa-graduation-cap"), "etkinlik": ("Etkinlik", "marka", "fa-calendar-check")}
-TK_KAT = ["Siyaset", "Ekonomi", "Eğitim", "Dünya", "Spor", "Toplum", "Sağlık", "Ulaşım", "Kültür"]
+# takvim kaydının kategorisi "Ana › Alt konu" (kategori.json); liste süzgeci ana kategoriyle çalışır
+TK_ALT = [f"{a} › {k}" for a, ks in alt_konular().items() for k in ks]
+TK_ANA = [b["ad"] for b in KAT["basliklar"]]
 ONEM = {"yuksek": ("warm", "Yüksek"), "orta": ("wait", "Orta"), "dusuk": ("off", "Düşük")}
 TAKVIM = [
     # id, tür, başlık, tarih, kategori, kurum, not, önem, durum, ekonomik (önceki, beklenti, açıklanan), sınav aşaması
-    ("tk-tuketici", "ekonomik", "Tüketici Güven Endeksi · Kasım", "23.11.2026 10.00", "Ekonomi", "TÜİK", "Önceki 84,1 · Beklenti 85,0", "yuksek", "yayinda", ("84,1", "85,0", "85,4"), ""),
-    ("tk-ppk", "ekonomik", "TCMB Para Politikası Kurulu · Faiz kararı", "23.11.2026 14.00", "Ekonomi", "TCMB", "Açıklandı %42,50 · Beklenti %42,50", "yuksek", "yayinda", ("%42,50", "%42,50", "%42,50"), ""),
-    ("tk-butce", "gundem", "Genel Kurul'da bütçe görüşmeleri", "23.11.2026 14.00", "Siyaset", "TBMM", "Bakanlık bütçeleri", "yuksek", "yayinda", None, ""),
-    ("tk-abd-issizlik", "ekonomik", "ABD Haftalık İşsizlik Başvuruları", "23.11.2026 15.30", "Ekonomi", "ABD Çalışma Bakanlığı", "Önceki 231 bin · Beklenti 228 bin", "orta", "yayinda", ("231 bin", "228 bin", ""), ""),
-    ("tk-eyds-basvuru", "sinav", "2026-e-YDS/12 İngilizce Başvuruları Son Gün", "23.11.2026 23.59", "Eğitim", "ÖSYM", "Sınav 6 Aralık", "yuksek", "yayinda", None, "basvuru"),
-    ("tk-kko", "ekonomik", "Kapasite Kullanım Oranı · Kasım", "24.11.2026 10.00", "Ekonomi", "TCMB", "Önceki %74,2 · Beklenti %74,5", "orta", "yayinda", ("%74,2", "%74,5", ""), ""),
-    ("tk-gs-atm", "etkinlik", "Şampiyonlar Ligi: Galatasaray – Atlético Madrid", "24.11.2026 20.45", "Spor", "UEFA", "5. hafta", "orta", "yayinda", None, ""),
-    ("tk-siddet", "gundem", "Kadına Yönelik Şiddete Karşı Uluslararası Mücadele Günü", "25.11.2026 10.00", "Toplum", "", "Etkinlikler 81 ilde", "yuksek", "yayinda", None, ""),
-    ("tk-ab-konsey", "gundem", "AB Dışişleri Konseyi Toplantısı", "26.11.2026 10.00", "Dünya", "AB Konseyi", "Brüksel", "orta", "yayinda", None, ""),
-    ("tk-pce", "ekonomik", "ABD Çekirdek PCE fiyat endeksi · Ekim", "26.11.2026 16.30", "Ekonomi", "ABD Ticaret Bakanlığı", "Önceki %2,7 · Beklenti %2,8", "yuksek", "yayinda", ("%2,7", "%2,8", ""), ""),
-    ("tk-basket", "etkinlik", "Basketbol: Türkiye – Macaristan", "26.11.2026 20.00", "Spor", "FIBA", "Dünya Kupası elemeleri", "orta", "yayinda", None, ""),
-    ("tk-pmi", "ekonomik", "Euro Bölgesi Öncü İmalat PMI", "27.11.2026 12.00", "Ekonomi", "S&P Global", "Önceki 49,8 · Beklenti 50,1", "orta", "yayinda", ("49,8", "50,1", ""), ""),
-    ("tk-dis-ticaret", "ekonomik", "Dış ticaret dengesi · Ekim", "28.11.2026 10.00", "Ekonomi", "TÜİK", "Önceki -6,9 milyar $ · Beklenti -6,4 milyar $", "orta", "yayinda", ("-6,9 milyar $", "-6,4 milyar $", ""), ""),
-    ("tk-kis-lastigi", "gundem", "Kış lastiği uygulaması başlıyor", "01.12.2026 00.00", "Ulaşım", "Emniyet Genel Müdürlüğü", "Ticari araçlar için 1 Nisan'a kadar", "yuksek", "yayinda", None, ""),
-    ("tk-gsyh", "ekonomik", "GSYH · 3. çeyrek (yıllık)", "01.12.2026 10.00", "Ekonomi", "TÜİK", "Önceki %4,8 · Beklenti %3,9", "yuksek", "yayinda", ("%4,8", "%3,9", ""), ""),
-    ("tk-kpss-tercih", "sinav", "KPSS-2026/7 tercih dönemi", "01.12.2026 10.00", "Eğitim", "ÖSYM", "Tercih 1–8 Aralık · Sonuç 18 Aralık", "orta", "yayinda", None, "tercih"),
-    ("tk-aids", "gundem", "Dünya AIDS Günü", "01.12.2026 09.00", "Sağlık", "Sağlık Bakanlığı", "Ücretsiz test noktaları açılıyor", "dusuk", "yayinda", None, ""),
-    ("tk-kulup-haftasi", "etkinlik", "Kış dönemi kulüp tanıtım haftası", "01.12.2026 10.00", "Kültür", "Üniversiteler", "Kampüslerde bir hafta", "dusuk", "taslak", None, ""),
-    ("tk-tufe", "ekonomik", "TÜFE · Kasım (yıllık)", "03.12.2026 10.00", "Ekonomi", "TÜİK", "Önceki %32,9 · Beklenti %31,8", "yuksek", "yayinda", ("%32,9", "%31,8", ""), ""),
-    ("tk-eyds-sinav", "sinav", "2026-e-YDS/12 İngilizce sınavı", "06.12.2026 10.15", "Eğitim", "ÖSYM", "Sonuç 10 Aralık", "orta", "yayinda", None, "sinav"),
-    ("tk-yokdil", "sinav", "2026-YÖKDİL/2 sonuçları", "18.12.2026 14.00", "Eğitim", "ÖSYM", "Sonuçlar aday işlemleri sisteminde", "orta", "yayinda", None, "sonuc"),
-    ("tk-eski", "gundem", "Bütçe görüşmeleri Plan ve Bütçe Komisyonu'nda", "02.11.2026 10.00", "Siyaset", "TBMM", "Komisyon görüşmeleri", "orta", "cop", None, ""),
+    ("tk-tuketici", "ekonomik", "Tüketici Güven Endeksi · Kasım", "23.11.2026 10.00", "Finans › Türkiye Ekonomisi", "TÜİK", "Önceki 84,1 · Beklenti 85,0", "yuksek", "yayinda", ("84,1", "85,0", "85,4"), ""),
+    ("tk-ppk", "ekonomik", "TCMB Para Politikası Kurulu · Faiz kararı", "23.11.2026 14.00", "Finans › Faiz Oranları", "TCMB", "Açıklandı %42,50 · Beklenti %42,50", "yuksek", "yayinda", ("%42,50", "%42,50", "%42,50"), ""),
+    ("tk-butce", "gundem", "Genel Kurul'da bütçe görüşmeleri", "23.11.2026 14.00", "Gündem › Siyaset", "TBMM", "Bakanlık bütçeleri", "yuksek", "yayinda", None, ""),
+    ("tk-abd-issizlik", "ekonomik", "ABD Haftalık İşsizlik Başvuruları", "23.11.2026 15.30", "Finans › Dünya Ekonomisi", "ABD Çalışma Bakanlığı", "Önceki 231 bin · Beklenti 228 bin", "orta", "yayinda", ("231 bin", "228 bin", ""), ""),
+    ("tk-eyds-basvuru", "sinav", "2026-e-YDS/12 İngilizce Başvuruları Son Gün", "23.11.2026 23.59", "Kampüs › ALES ve YDS", "ÖSYM", "Sınav 6 Aralık", "yuksek", "yayinda", None, "basvuru"),
+    ("tk-kko", "ekonomik", "Kapasite Kullanım Oranı · Kasım", "24.11.2026 10.00", "Finans › Sanayi", "TCMB", "Önceki %74,2 · Beklenti %74,5", "orta", "yayinda", ("%74,2", "%74,5", ""), ""),
+    ("tk-gs-atm", "etkinlik", "Şampiyonlar Ligi: Galatasaray – Atlético Madrid", "24.11.2026 20.45", "Spor › Galatasaray", "UEFA", "5. hafta", "orta", "yayinda", None, ""),
+    ("tk-siddet", "gundem", "Kadına Yönelik Şiddete Karşı Uluslararası Mücadele Günü", "25.11.2026 10.00", "Kadın › Kadın Hakları", "", "Etkinlikler 81 ilde", "yuksek", "yayinda", None, ""),
+    ("tk-ab-konsey", "gundem", "AB Dışişleri Konseyi Toplantısı", "26.11.2026 10.00", "Dünya › Diplomasi", "AB Konseyi", "Brüksel", "orta", "yayinda", None, ""),
+    ("tk-pce", "ekonomik", "ABD Çekirdek PCE fiyat endeksi · Ekim", "26.11.2026 16.30", "Finans › Dünya Ekonomisi", "ABD Ticaret Bakanlığı", "Önceki %2,7 · Beklenti %2,8", "yuksek", "yayinda", ("%2,7", "%2,8", ""), ""),
+    ("tk-basket", "etkinlik", "Basketbol: Türkiye – Macaristan", "26.11.2026 20.00", "Spor › Basketbol", "FIBA", "Dünya Kupası elemeleri", "orta", "yayinda", None, ""),
+    ("tk-pmi", "ekonomik", "Euro Bölgesi Öncü İmalat PMI", "27.11.2026 12.00", "Finans › Dünya Ekonomisi", "S&P Global", "Önceki 49,8 · Beklenti 50,1", "orta", "yayinda", ("49,8", "50,1", ""), ""),
+    ("tk-dis-ticaret", "ekonomik", "Dış ticaret dengesi · Ekim", "28.11.2026 10.00", "Finans › Türkiye Ekonomisi", "TÜİK", "Önceki -6,9 milyar $ · Beklenti -6,4 milyar $", "orta", "yayinda", ("-6,9 milyar $", "-6,4 milyar $", ""), ""),
+    ("tk-kis-lastigi", "gundem", "Kış lastiği uygulaması başlıyor", "01.12.2026 00.00", "Gündem › Toplum", "Emniyet Genel Müdürlüğü", "Ticari araçlar için 1 Nisan'a kadar", "yuksek", "yayinda", None, ""),
+    ("tk-gsyh", "ekonomik", "GSYH · 3. çeyrek (yıllık)", "01.12.2026 10.00", "Finans › Türkiye Ekonomisi", "TÜİK", "Önceki %4,8 · Beklenti %3,9", "yuksek", "yayinda", ("%4,8", "%3,9", ""), ""),
+    ("tk-kpss-tercih", "sinav", "KPSS-2026/7 tercih dönemi", "01.12.2026 10.00", "Kampüs › KPSS", "ÖSYM", "Tercih 1–8 Aralık · Sonuç 18 Aralık", "orta", "yayinda", None, "tercih"),
+    ("tk-aids", "gundem", "Dünya AIDS Günü", "01.12.2026 09.00", "Keşfet › Halk Sağlığı", "Sağlık Bakanlığı", "Ücretsiz test noktaları açılıyor", "dusuk", "yayinda", None, ""),
+    ("tk-kulup-haftasi", "etkinlik", "Kış dönemi kulüp tanıtım haftası", "01.12.2026 10.00", "Kampüs › Öğrenci Toplulukları", "Üniversiteler", "Kampüslerde bir hafta", "dusuk", "taslak", None, ""),
+    ("tk-tufe", "ekonomik", "TÜFE · Kasım (yıllık)", "03.12.2026 10.00", "Finans › Enflasyon", "TÜİK", "Önceki %32,9 · Beklenti %31,8", "yuksek", "yayinda", ("%32,9", "%31,8", ""), ""),
+    ("tk-eyds-sinav", "sinav", "2026-e-YDS/12 İngilizce sınavı", "06.12.2026 10.15", "Kampüs › ALES ve YDS", "ÖSYM", "Sonuç 10 Aralık", "orta", "yayinda", None, "sinav"),
+    ("tk-yokdil", "sinav", "2026-YÖKDİL/2 sonuçları", "18.12.2026 14.00", "Kampüs › ALES ve YDS", "ÖSYM", "Sonuçlar aday işlemleri sisteminde", "orta", "yayinda", None, "sonuc"),
+    ("tk-eski", "gundem", "Bütçe görüşmeleri Plan ve Bütçe Komisyonu'nda", "02.11.2026 10.00", "Gündem › Siyaset", "TBMM", "Komisyon görüşmeleri", "orta", "cop", None, ""),
 ]
 ASAMA = [("basvuru", "Başvuru", ""), ("sinav", "Sınav", ""), ("sonuc", "Sonuç", ""), ("tercih", "Tercih", "")]
 
@@ -894,7 +902,7 @@ def tk_tarih_iso(t):
 def tk_form(sid, r=None):
     tid, tur, bas_, tarih, kat, kurum, not_, onem, dur, eko, asama = r if r else ("", "", "", "", "", "", "", "orta", "taslak", None, "")
     turler = "".join(f'<label class="kb-secenek kb-secenek-kart"><input type="radio" name="tkTur-{sid}" value="{k}"{" checked" if k == tur else ""}{f" data-ac=\"tkEko-{sid}\"" if k == "ekonomik" else f" data-ac=\"tkSnv-{sid}\"" if k == "sinav" else ""}><span><b>{I(v[2])} {v[0]}</b><small>{ {"gundem": "Gündem Takvimi", "ekonomik": "Ekonomik Takvim", "sinav": "Sınav Takvimi", "etkinlik": "Gündem Takvimi · etkinlik"}[k] }</small></span></label>' for k, v in TK_TUR.items())
-    katlar = [(k, k, "") for k in TK_KAT]
+    katlar = [(k, k, "") for k in TK_ALT]
     onemler = "".join(f'<label class="kb-secenek"><input type="radio" name="tkOnem-{sid}" value="{k}"{" checked" if k == onem else ""}>{v[1]}</label>' for k, v in ONEM.items())
     e1, e2, e3 = eko if eko else ("", "", "")
     return f"""  <div class="kb-fs">
@@ -911,7 +919,7 @@ def tk_form(sid, r=None):
           <div class="pnl-menu kb-tarih-menu" id="tkTM-{sid}" role="dialog" aria-label="Tarih ve saat seç"></div></div>
         <div class="ferr">{I("fa-circle-exclamation")}Tarih ve saati seçin.</div></div>
       <div class="frow"><span class="flabel">Kategori</span>
-        {secim("tkK-" + sid, katlar, deger=kat, bos="Kategori seçin", ara="Kategori ara", ek=' data-alan-id="kategori" data-zorunlu-metin="Kategoriyi seçin"')}
+        {secim("tkK-" + sid, katlar, deger=kat, bos="Kategori seçin", ara="Kategori ara", ek=' data-alan-id="kategori" data-zorunlu-metin="Kategoriyi seçin"', kaynak="tkKatListe")}
         <div class="ferr">{I("fa-circle-exclamation")}Kategoriyi seçin.</div></div>
       <div class="frow"><label for="tkKu-{sid}">Kurum</label><input class="finput" id="tkKu-{sid}" value="{e(kurum)}" placeholder="ör. TÜİK, ÖSYM, TBMM"></div>
       <div class="frow"><label for="tkN-{sid}">Kısa Not</label><input class="finput" id="tkN-{sid}" data-sayac="60|80" value="{e(not_)}" placeholder="ör. Etkinlikler 81 ilde"><div class="char-meter"><span>Başlığın altında</span><b>0 / 60</b></div></div>
@@ -954,7 +962,7 @@ def sayfa_takvimler():
         ad, ton, ik = TK_TUR[tur]
         durum = "cop" if dur == "cop" else tur
         olay = f' data-tarih="{tarih}" data-ad="{e(bas_)}" data-ton="{ton}" data-ikon="fa-solid {ik}" data-not="{e(ad + " · " + kat + (" · " + kurum if kurum else ""))}"'
-        rows.append(f'<tr data-satir="{tid}" data-durum="{durum}" data-kategori="{e(kat)}" data-onem="{onem}" data-yayin="{dur}"{olay} data-ara="{e(bas_ + " " + kat + " " + kurum + " " + ad)}" data-baslik="{e(bas_)}"{" data-onceki=\"gundem\"" if dur == "cop" else ""}>'
+        rows.append(f'<tr data-satir="{tid}" data-durum="{durum}" data-kategori="{e(kat.split(" › ")[0])}" data-onem="{onem}" data-yayin="{dur}"{olay} data-ara="{e(bas_ + " " + kat + " " + kurum + " " + ad)}" data-baslik="{e(bas_)}"{" data-onceki=\"gundem\"" if dur == "cop" else ""}>'
                     f'<td class="kb-sec-hucre"><input type="checkbox" class="kb-onay-kutu" aria-label="Seç: {e(bas_)}"></td>'
                     f'<td class="kb-ana"><div class="rcp-id"><div class="rcp-name" title="{e(bas_)}">{e(bas_)}</div><div class="rcp-by">{I(ik)}{ad} · {e(kat)}{" · " + e(kurum) if kurum else ""}</div></div></td>'
                     f'<td><span class="kb-tarih">{e(tarih)}</span></td>'
@@ -963,7 +971,7 @@ def sayfa_takvimler():
                     f'<td><span class="pstat {"ok" if dur == "yayinda" else "off"}">{"Yayında" if dur == "yayinda" else "Taslak" if dur == "taslak" else "Çöpte"}</span></td>'
                     f'<td>{row_acts(("tanim", "tkGor-" + tid), ("tanim", "tkDz-" + tid), "sil")}</td></tr>')
     sab = "".join(tk_sablonlar(r) for r in TAKVIM)
-    katlar = [("", "Bütün Kategoriler", "")] + [(k, k, str(sum(1 for r in canli if r[4] == k))) for k in TK_KAT if any(r[4] == k for r in canli)]
+    katlar = [("", "Bütün Kategoriler", "")] + [(k, k, str(sum(1 for r in canli if r[4].split(" › ")[0] == k))) for k in TK_ANA if any(r[4].split(" › ")[0] == k for r in canli)]
     onemler = [("", "Bütün önemler", "")] + [(k, v[1], "") for k, v in ONEM.items()]
     yuksek = sum(1 for r in canli if r[7] == "yuksek")
     s = bas("Takvimler", "takvimler")
@@ -1021,6 +1029,7 @@ def sayfa_takvimler():
 </main>
 </div>
 
+<template id="tkKatListe">{"".join(f'<button type="button" data-deger="{e(k)}" data-ad="{e(k)}">{e(k)}</button>' for k in TK_ALT)}</template>
 <template id="tkYeni" data-baslik="Yeni Takvim Kaydı" data-alt="Takvim kaydı · seçilen türün sayfasında" data-zorunlu-kayit="ozel-dikeyler.takvim">
 {tk_form("yeni")}  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-ghost btn-sm" data-kaydet-tur="taslak" data-sablon-ac="tkEklendi" data-bildir-sonra="Taslak olarak kaydedildi; sitede görünmez">{I("fa-floppy-disk")}Taslak Kaydet</button><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="tkEklendi" data-bildir-sonra="Takvim kaydı eklendi; denetim izine yazıldı">{I("fa-plus")}Ekle ve Yayımla</button></div>
 </template>
