@@ -27,31 +27,31 @@ PLATFORM = {
     "telegram":  {"ad": "Telegram",  "ikon": "fa-brands fa-telegram",  "baglanti": "Bot token",                 "yeni": "Bot token · kanal"},
 }
 DIL = {"Türkçe": ("TR", True), "English": ("EN", False), "العربية": ("AR", False), "Deutsch": ("DE", False)}
-KULLANIM = [("Bütün haberler", "içeriğin dilindeki gönderilere önerilir"), ("Spor haberleri", "Spor kategorisinde önceden seçili"),
-            ("Son Dakika", "son dakika gönderilerinde"), ("Yalnız elle seçilince", "kendiliğinden seçilmez")]
+KULLANIM = [("Bütün Haberler", "içeriğin dilindeki gönderilere önerilir"), ("Spor Haberleri", "Spor kategorisinde önceden seçili"),
+            ("Son Dakika", "son dakika gönderilerinde"), ("Yalnız Elle Seçilince", "kendiliğinden seçilmez")]
 IZIN = "Gönderi yayımlama, medya yükleme, istatistik okuma"
 
 # durum: ok | hata | pasif | cop · son: son paylaşım · hata: son hata (yoksa None)
 HESAPLAR = [
-    dict(id="h1", pl="x", ad="Dada Haber", tut="@dadahaber", alt="286 B takipçi", dil="Türkçe", kul="Bütün haberler", vars=True, durum="ok",
+    dict(id="h1", pl="x", ad="Dada Haber", tut="@dadahaber", alt="286 B takipçi", dil="Türkçe", kul="Bütün Haberler", vars=True, durum="ok",
          token="12.02.2027'ye kadar", son="23.11.2026 16.06", hata=None, ay=412, baglayan="Selin Aydemir · 12.08.2026", bekleyen=4),
-    dict(id="h2", pl="x", ad="Dada Haber Spor", tut="@dadahaberspor", alt="94 B takipçi", dil="Türkçe", kul="Spor haberleri", durum="ok",
+    dict(id="h2", pl="x", ad="Dada Haber Spor", tut="@dadahaberspor", alt="94 B takipçi", dil="Türkçe", kul="Spor Haberleri", durum="ok",
          token="12.02.2027'ye kadar", son="23.11.2026 15.47", hata=None, ay=236, baglayan="Selin Aydemir · 12.08.2026", bekleyen=1),
-    dict(id="h9", pl="x", ad="Dada News", tut="@dadanews_en", alt="3,2 B takipçi", dil="English", kul="Yalnız elle seçilince", durum="ok",
+    dict(id="h9", pl="x", ad="Dada News", tut="@dadanews_en", alt="3,2 B takipçi", dil="English", kul="Yalnız Elle Seçilince", durum="ok",
          token="12.02.2027'ye kadar", son="—", hata=None, ay=0, baglayan="Selin Aydemir · 18.11.2026", bekleyen=0),
-    dict(id="h3", pl="facebook", ad="Dada Haber", tut="Facebook sayfası", alt="184 B takipçi", dil="Türkçe", kul="Bütün haberler", vars=True, durum="ok",
+    dict(id="h3", pl="facebook", ad="Dada Haber", tut="Facebook sayfası", alt="184 B takipçi", dil="Türkçe", kul="Bütün Haberler", vars=True, durum="ok",
          token="18.01.2027'ye kadar", son="23.11.2026 14.06", hata="23.11.2026 15.46 · zaman aşımı, yeniden denendi", ay=298, baglayan="Ece Demirel · 19.09.2026", bekleyen=2),
-    dict(id="h4", pl="facebook", ad="Dada Haber Spor", tut="Facebook sayfası", alt="41 B takipçi", dil="Türkçe", kul="Yalnız elle seçilince", durum="pasif",
+    dict(id="h4", pl="facebook", ad="Dada Haber Spor", tut="Facebook sayfası", alt="41 B takipçi", dil="Türkçe", kul="Yalnız Elle Seçilince", durum="pasif",
          token="18.01.2027'ye kadar", son="02.11.2026 21.10", hata=None, ay=0, baglayan="Ece Demirel · 19.09.2026", bekleyen=0),
-    dict(id="h5", pl="linkedin", ad="Dada Haber", tut="Şirket sayfası", alt="12.400 takipçi", dil="Türkçe", kul="Bütün haberler", vars=True, durum="ok",
+    dict(id="h5", pl="linkedin", ad="Dada Haber", tut="Şirket sayfası", alt="12.400 takipçi", dil="Türkçe", kul="Bütün Haberler", vars=True, durum="ok",
          token="04.01.2027'ye kadar · 42 gün kaldı", son="23.11.2026 14.10", hata=None, ay=64, baglayan="Selin Aydemir · 06.10.2026", bekleyen=3),
-    dict(id="h6", pl="instagram", ad="dadahaber", tut="İşletme hesabı", alt="132 B takipçi", dil="Türkçe", kul="Bütün haberler", vars=True, durum="hata",
+    dict(id="h6", pl="instagram", ad="dadahaber", tut="İşletme hesabı", alt="132 B takipçi", dil="Türkçe", kul="Bütün Haberler", vars=True, durum="hata",
          token="23.11.2026 15.30'da doldu", son="22.11.2026 21.40", hata="23.11.2026 15.30 · bağlantının süresi doldu", ay=141, baglayan="Ece Demirel · 24.08.2026", bekleyen=2),
-    dict(id="h7", pl="telegram", ad="Dada Haber", tut="kanal · @dadahaber", alt="48.200 abone", dil="Türkçe", kul="Bütün haberler", vars=True, durum="ok",
+    dict(id="h7", pl="telegram", ad="Dada Haber", tut="kanal · @dadahaber", alt="48.200 abone", dil="Türkçe", kul="Bütün Haberler", vars=True, durum="ok",
          token="süresiz · yenilenene kadar", son="23.11.2026 16.06", hata=None, ay=520, baglayan="Selin Aydemir · 12.08.2026", bekleyen=3),
     dict(id="h8", pl="telegram", ad="Dada Son Dakika", tut="kanal · @dadasondakika", alt="21.700 abone", dil="Türkçe", kul="Son Dakika", durum="ok",
          token="süresiz · yenilenene kadar", son="23.11.2026 15.58", hata=None, ay=188, baglayan="Selin Aydemir · 12.08.2026", bekleyen=0),
-    dict(id="h11", pl="telegram", ad="Dada Ekonomi", tut="kanal · @dadaekonomi", alt="2.100 abone", dil="Türkçe", kul="Yalnız elle seçilince", durum="cop",
+    dict(id="h11", pl="telegram", ad="Dada Ekonomi", tut="kanal · @dadaekonomi", alt="2.100 abone", dil="Türkçe", kul="Yalnız Elle Seçilince", durum="cop",
          token="bağlantı askıda", son="14.10.2026 09.30", hata=None, ay=0, baglayan="Ece Demirel · 02.09.2026", bekleyen=0),
 ]
 DURUM = {"ok": ("ok", "Bağlı"), "hata": ("warm", "Süresi Doldu"), "pasif": ("off", "Pasif"), "cop": ("warm", "Çöpte")}
@@ -124,7 +124,7 @@ def varsayilan(h):
             f'data-isaret-bildir-off="{p} için varsayılan kaldırıldı; ilk hesap otomatik varsayılan oldu" aria-pressed="{on}"></button>')
 
 
-SUTUN = 7
+SUTUN = 8
 
 
 def satir(h):
@@ -133,20 +133,24 @@ def satir(h):
     pas = " is-pasif" if h["durum"] in ("pasif", "cop") else ""
     kul = f' data-kullanim="{h["bekleyen"]} bekleyen gönderim bu hesaba gidecek; silinince bu gönderimler bekletilir"' if h["bekleyen"] else ""
     ara = f'{h["ad"]} {h["tut"]} {p["ad"]} {h["dil"]} {h["kul"]}'
+    # aynı bilgi iki görünümde: sütun başlığındaki data-kart, ızgarada hücrenin kart içindeki yerini verir (çekirdek). Boş değer çizgiyle değil yer tutucu metinle
     if h["hata"]:
         hata = f'<td class="kb-gizle-t kb-kisalt" title="{e(h["hata"])}">{I("fa-solid fa-triangle-exclamation")} <b>{e(h["hata"])}</b></td>'
     else:
         hata = f'<td class="kb-gizle-t" title="Son hata">{I("fa-solid fa-circle-check")} <span class="muted">Hata yok</span></td>'
-    # etkin/pasif: satırda anahtar yok (tablo taşmasın); "Bağlantı" rozeti Pasif yazar, anahtar düzenleme çekmecesinde ve toplu "Pasif Yap"ta
+    son = f'<span class="kb-tarih">{e(h["son"])}</span>' if h["son"] != "—" else '<span class="muted">Henüz gönderim yok</span>'
+    sonraki = '' if yayin_acik(h) else ' <span class="etk wait" title="Bu dilde yayın sonraki aşamada açılır">Sonraki Aşama</span>'
+    etkin = anahtar(h) if h["durum"] != "cop" else '<span class="muted">Çöpte</span>'
     return (f'<tr data-satir="{h["id"]}" data-durum="{h["durum"]}" data-platform="{h["pl"]}" data-dil="{e(h["dil"])}" data-ara="{e(ara)}" data-baslik="{e(adt)}"{kul}>'
             f'<td class="kb-sec-hucre"><input type="checkbox" class="kb-onay-kutu" aria-label="Seç: {e(adt)}"></td>'
             f'<td class="kb-ana"><div class="rcp-cell"><span class="kb-ava{pas}">{I(p["ikon"])}</span><div class="rcp-id">'
             f'<div class="rcp-name" title="{e(adt)}">{e(h["ad"])} <span class="muted">{e(h["tut"])}</span></div>'
-            f'<div class="rcp-by">{dil_etk(h)} {e(h["kul"])}</div></div></div></td>'
+            f'<div class="rcp-by">{dil_etk(h)}{sonraki} {e(h["kul"])}</div></div></div></td>'
             f'<td><span class="pstat {sinif}">{dad}</span></td>'
-            f'<td class="kb-gizle-m">{varsayilan(h)}</td>'
-            f'<td class="kb-gizle-m" title="Son paylaşım">{I("fa-solid fa-paper-plane")} <span class="kb-tarih">{e(h["son"])}</span></td>'
             f'{hata}'
+            f'<td class="kb-gizle-m" title="Son gönderim">{I("fa-solid fa-paper-plane")} {son}</td>'
+            f'<td class="kb-gizle-m">{varsayilan(h)}</td>'
+            f'<td class="kb-gizle-m">{etkin}</td>'
             '<td><div class="row-acts">'
             f'<button type="button" class="ia-btn" data-tanim="hsGor-{h["id"]}" aria-label="Görüntüle" title="Görüntüle">{I("fa-solid fa-eye")}</button>'
             f'<button type="button" class="ia-btn" data-tanim="hsDuz-{h["id"]}" aria-label="Düzenle" title="Düzenle">{I("fa-solid fa-pen")}</button>'
@@ -186,7 +190,7 @@ def yeni_sablon(pl=None):
     {ad_alani("hsYeniAd-" + ek)}
     <div class="frow two">
       {dil_secim("hsYeniDil-" + ek, "Türkçe")}
-      {kul_secim("hsYeniKul-" + ek, "Yalnız elle seçilince")}
+      {kul_secim("hsYeniKul-" + ek, "Yalnız Elle Seçilince")}
     </div>
   </div>
   <div class="kb-fs"><div class="kb-fs-tt">Bağlantı</div>
@@ -312,13 +316,14 @@ def ana():
       <table class="ptable">
         <thead>
           <tr>
-            <th class="kb-sec-hucre"><input type="checkbox" class="kb-onay-kutu" data-hepsini-sec aria-label="Görünen bütün hesapları seç"></th>
-            <th class="kb-ana">Hesap</th>
-            <th>Bağlantı</th>
-            <th class="kb-gizle-m">Varsayılan</th>
-            <th class="kb-gizle-m">Son paylaşım</th>
-            <th class="kb-gizle-t">Son hata</th>
-            <th><span class="sr-only">İşlemler</span></th>
+            <th class="kb-sec-hucre" data-kart="sec"><input type="checkbox" class="kb-onay-kutu" data-hepsini-sec aria-label="Görünen bütün hesapları seç"></th>
+            <th class="kb-ana" data-kart="ad">Hesap</th>
+            <th data-kart="durum">Durum</th>
+            <th class="kb-gizle-t" data-kart="neden">Son Hata</th>
+            <th class="kb-gizle-m" data-kart="zaman">Son Gönderim</th>
+            <th class="kb-gizle-m" data-kart="isaret">Varsayılan</th>
+            <th class="kb-gizle-m" data-kart="etkin">Etkin</th>
+            <th data-kart="eylem"><span class="sr-only">İşlemler</span></th>
           </tr>
         </thead>
         {"".join(grup(pl) for pl in PLATFORM)}
