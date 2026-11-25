@@ -231,7 +231,7 @@
     });
   }
   /* KURAL · açılır kutu konumu: açılan menü, tarih ve renk seçici görünür alana sığar; üst barın ya da kaydet çubuğunun üstüne binmez.
-     Önce aşağı; sığmazsa yukarı; ikisi de sığmazsa sayfa kaydırılır ve aşağı açılır. Yatayda ekrana sığacak kadar içeri kaydırılır.
+     Önce aşağı; sığmazsa yukarı; ikisi de sığmazsa görünür alanın içine yerleşir (sayfa kaydırılmaz), gerekirse kendi içinde kayar. Yatayda ekrana sığacak kadar içeri kaydırılır.
      Sabit konumlu kutu (position:fixed) top/left ile, akıştaki kutu translate ile yerleşir. */
   window.kbAcilirSigdir = function(m, b){
     m.style.translate = ''; var sabit = getComputedStyle(m).position === 'fixed';
@@ -241,13 +241,15 @@
     var kk = Array.prototype.filter.call(document.querySelectorAll('.kb-kaydet'), function(k){ var r = k.getBoundingClientRect(); return r.height && r.top < vh && getComputedStyle(k).position === 'sticky'; })[0];
     var kap = b.closest('.kb-kap-govde'), kr = kap ? kap.getBoundingClientRect() : null;
     var ust = Math.max(ub, kr ? kr.top : 0) + 8, alt = Math.min(kk && !kap ? kk.getBoundingClientRect().top : vh, kr ? kr.bottom : vh) - 8;
-    var br = b.getBoundingClientRect(), h = mr.height, hedef;
+    var br = b.getBoundingClientRect(), h = Math.max(mr.height, m.scrollHeight), hedef; /* doğal yükseklik (sınırlanmışsa içerikten) */
     if(!b || b === document.body || b === document.documentElement) hedef = Math.max(ust, Math.min(mr.top, alt - h)); /* tetik bilinmiyor: yalnız sınırlara sığdır */
     else if(br.bottom + 6 + h <= alt) hedef = br.bottom + 6;
     else if(br.top - 6 - h >= ust) hedef = br.top - 6 - h;
-    else if(!kap && !b.closest('.pnl-top')){ /* hiçbir yöne sığmıyor: sayfayı kaydır, tetiği üst barın altına getir */
-      window.scrollBy({ top: br.top - ust, behavior: 'instant' }); br = b.getBoundingClientRect(); hedef = Math.max(ust, Math.min(br.bottom + 6, alt - h)); }
-    else hedef = Math.max(ust, alt - h);
+    else { /* hiçbir yöne sığmıyor: sayfa KAYDIRILMAZ (kullanıcı zıplama görür, kapanma olur); kutu görünür alana yerleşir, gerekirse kendi içinde kayar */
+      hedef = Math.max(ust, Math.min(br.bottom + 6, alt - h));
+      if(h > alt - ust){ m.style.maxHeight = Math.floor(alt - ust) + 'px'; m.style.overflowY = 'auto'; hedef = ust; } }
+    if(h <= alt - ust && m.style.maxHeight){ m.style.maxHeight = ''; m.style.overflowY = ''; }
+
     var dx = mr.right > vw - 8 ? -(mr.right - vw + 8) : (mr.left < 8 ? 8 - mr.left : 0); if(mr.width > vw - 16) dx = 8 - mr.left;
     if(sabit){ m.style.top = hedef + 'px'; m.style.left = (mr.left + dx) + 'px'; m.style.right = 'auto'; m.style.bottom = 'auto'; }
     else { mr = m.getBoundingClientRect(); var dy = hedef - mr.top; if(dx || Math.abs(dy) > .5) m.style.translate = dx + 'px ' + dy + 'px'; }

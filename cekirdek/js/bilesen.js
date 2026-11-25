@@ -434,6 +434,7 @@
     kap.querySelectorAll('.sa-form-tab[data-panel]').forEach(function(x){ var on = x === s; x.classList.toggle('is-on', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); });
     kap.querySelectorAll('.sa-form-panel').forEach(function(p){ p.hidden = p.id !== s.getAttribute('data-panel'); });
     yanDuzen(s.getAttribute('data-panel'));
+    if(window.kbAracYerlestir) window.kbAracYerlestir(); /* gizli sekmede dar kipte kurulan araç satırı genişler */
     if(window.kbTarihHizala) window.kbTarihHizala(); if(window.kbHizala) window.kbHizala(); /* yeni görünen sekme hemen hizalanır */
   });
   /* KURAL · zaman çizgisi hizası: ilk öğesi tarih (.kb-tarih) olan satırlar (.km-satir) aynı kapta ise tarih sütunu ortak genişlik alır */
@@ -544,12 +545,23 @@
 
   /* sağ sütun sekmeye göre: önizlemesi olan sekmede önizleme en üstte ve yapışkan; data-one-cik kartı kendi sekmesinde üste çıkar */
   function yanDuzen(pid){
+    /* sayfa başı eylemleri sekmeye göre: .ph-actions [data-panel-icin="p1 p2"] yalnız o sekmede görünür */
+    document.querySelectorAll('.ph-actions [data-panel-icin]').forEach(function(x){ x.hidden = x.getAttribute('data-panel-icin').split(' ').indexOf(pid) === -1; });
     var yan = document.querySelector('.side-card'); if(!yan) return;
     var var_ = false;
     yan.querySelectorAll('[data-panel-icin]').forEach(function(x){ var on = x.getAttribute('data-panel-icin') === pid; x.hidden = !on; if(on) var_ = true; });
     yan.querySelectorAll('[data-one-cik]').forEach(function(x){ x.style.order = x.getAttribute('data-one-cik') === pid ? -1 : ''; });
     yan.classList.toggle('kb-onizlemeli', var_);
   }
+  /* sayfa içinden sekme açma: [data-sekme-git="panelId"] (ör. "Etiketleri Yönet") — sayfa yenilenmez, sekme açılır, kartın başına kayar */
+  document.addEventListener('click', function(e){
+    var g = e.target.closest && e.target.closest('[data-sekme-git]'); if(!g) return;
+    var s = document.querySelector('.sa-form-tab[data-panel="' + g.getAttribute('data-sekme-git') + '"]'); if(!s) return;
+    e.preventDefault(); s.click(); var k = s.closest('.pnl-card') || s; var ust = document.querySelector('.pnl-top');
+    window.scrollTo({ top: Math.max(0, k.getBoundingClientRect().top + window.scrollY - (ust ? ust.offsetHeight : 64) - 12), behavior: 'smooth' });
+  });
+  /* açılışta seçili sekmeye göre sayfa başı eylemleri */
+  (function(){ var on = document.querySelector('.sa-form-tab.is-on[data-panel]'); if(on) yanDuzen(on.getAttribute('data-panel')); else document.querySelectorAll('.ph-actions [data-panel-icin]').forEach(function(x){ var ilk = document.querySelector('.sa-form-tab[data-panel]'); if(ilk) x.hidden = x.getAttribute('data-panel-icin').split(' ').indexOf(ilk.getAttribute('data-panel')) === -1; }); })();
   /* sekmeye derin bağlantı: ?sekme=<panel id> (ör. site-ayarlari/index.html?sekme=sIletisim) */
   (function(){ var s = q.get('sekme'); if(!s) return; var b = document.querySelector('.sa-form-tab[data-panel="' + s + '"]'); if(b) setTimeout(function(){ b.click(); }, 0); })();
   var ilkSekme = document.querySelector('[data-sekmeli] > .sa-form-tabs .sa-form-tab.is-on, [data-sekmeli] .sa-form-tab.is-on'); if(ilkSekme) yanDuzen(ilkSekme.getAttribute('data-panel'));
@@ -592,9 +604,11 @@
   window.kbPushOnizle = function(){
     var on = document.querySelectorAll('.kb-push, .kb-web-push'); if(!on.length) return;
     function deger(s){ var e = document.querySelector(s); return e && e.value ? e.value.trim() : ''; }
-    var bas = deger('[data-alan="push-baslik"]') || deger('input[data-alan="baslik"],textarea[data-alan="baslik"]');
+    var is_ = document.querySelector('[data-icerik-sec]'), sc = is_ && is_._kbSecili; /* push: bağlı haber (içerik seçici) */
+    var bas = deger('[data-alan="push-baslik"]') || deger('input[data-alan="baslik"],textarea[data-alan="baslik"]') || (sc ? sc.baslik : '');
     var met = deger('[data-alan="push-metin"]') || deger('textarea[data-alan="spot"],input[data-alan="spot"]');
-    var kap = document.querySelector('[data-alan-id="kapak"] .kg-resim, [data-gorsel-alan$=".kapak"] .kg-resim'), gorsel = kap ? kap.style.backgroundImage : '';
+    var pg = document.querySelector('[data-push-gorsel] .kg-resim'), kap = document.querySelector('[data-alan-id="kapak"] .kg-resim, [data-gorsel-alan$=".kapak"] .kg-resim');
+    var gorsel = (pg && pg.style.backgroundImage) || (kap ? kap.style.backgroundImage : '') || (sc && sc.gorsel ? 'url(' + sc.gorsel + ')' : '');
     var ac = document.querySelector('[data-push-gorsel], input[aria-label="Bildirim Görseli"]'), goster = !ac || ac.checked;
     on.forEach(function(o){
       var b = o.querySelector('b'), p = o.querySelector('p');
@@ -607,7 +621,7 @@
   };
   (function(){
     function yap(e){ if(!e || !e.target || !e.target.matches || e.target.matches('[data-alan="push-baslik"],[data-alan="push-metin"],[data-alan="baslik"],[data-alan="spot"],[data-push-gorsel],input[aria-label="Bildirim Görseli"]')) window.kbPushOnizle(); }
-    document.addEventListener('input', yap); document.addEventListener('change', yap);
+    document.addEventListener('input', yap); document.addEventListener('change', yap); document.addEventListener('kb-icerik', function(){ window.kbPushOnizle(); });
     function kur(){ window.kbPushOnizle(); var k = document.querySelector('[data-alan-id="kapak"], [data-gorsel-alan$=".kapak"]');
       if(k && window.MutationObserver) new MutationObserver(function(){ window.kbPushOnizle(); }).observe(k, { attributes: true, subtree: true, attributeFilter: ['style', 'hidden', 'class'] }); }
     if(document.readyState !== 'loading') setTimeout(kur, 0); else document.addEventListener('DOMContentLoaded', kur);
@@ -897,8 +911,11 @@
   document.querySelectorAll('[data-liste]').forEach(function(L){
     /* liste kaydının adı: data-liste-ad="sayfa" (küçük harf, tekil); metinler buna göre yazılır. Varsayılan: haber. */
     var AD = L.dataset.listeAd || 'haber', BAD = AD.charAt(0).toLocaleUpperCase('tr') + AD.slice(1);
-    var govde = L.querySelector('tbody[data-satirlar]');
-    var satirlar = Array.prototype.slice.call(govde.querySelectorAll('tr[data-satir]'));
+    /* gruplu liste: [data-liste][data-grupla] içinde birden çok tbody[data-satirlar][data-grup]; her grubun ilk satırı tr.kb-grup-bas
+       (başlık, data-satir yok). Satırlar bütün gruplardan toplanır; görünür satırı kalmayan grup gizlenir. Gruplu listede sayfalama tek sayfa. */
+    var govdeler = Array.prototype.slice.call(L.querySelectorAll('tbody[data-satirlar]')), govde = govdeler[0], grupla = L.hasAttribute('data-grupla');
+    function satirTopla(){ return Array.prototype.slice.call(L.querySelectorAll('tbody[data-satirlar] tr[data-satir]')); }
+    var satirlar = satirTopla();
     var bosSatir = L.querySelector('tr.kb-bos-satir');
     var sekmeler = L.querySelectorAll('.chip[data-sekme]');
     var ara = L.querySelector('[data-liste-ara]');
@@ -920,8 +937,18 @@
       L.querySelector('[data-gorunum-sec]').addEventListener('click', function(e){ var b = e.target.closest('[data-gorunum]'); if(b) gorunum(b.dataset.gorunum); });
     }
     /* gez: [data-gez-suz="kategori" data-v="Savunma"] düğmesi aynı listedeki kb-secim[data-suz] süzgecini ayarlar; tekrar tıklayınca kaldırır */
+    /* dışarıdan gez (sayfa düzeyi, ?suz-): L._kbGez(anahtar, değer) — süzgeç seçimi varsa onu ayarlar, yoksa satırın data-<anahtar> eşitliği */
+    L._kbGez = function(k, v){
+      var s = L.querySelector('.kb-secim[data-suz="' + k + '"]');
+      if(s){ var o = s.querySelector('button[data-deger="' + v + '"]'); s.dataset.deger = v; s.classList.toggle('is-dolu', v !== ''); s.querySelectorAll('button[data-deger]').forEach(function(x){ x.classList.toggle('is-sec', x === o && v !== ''); });
+        var lbl = s.querySelector('.ks-deger'); if(lbl) lbl.textContent = v === '' ? (s.dataset.bos || 'Tümü') : (o ? (o.getAttribute('data-ad') || o.firstChild.textContent) : v);
+        s.dispatchEvent(new CustomEvent('kb-secim', { bubbles:true, detail:{ deger:v } })); }
+      else { suzEk[k] = v; SY.sayfa = 1; uygula(); }
+      L.querySelectorAll('[data-gez-suz="' + k + '"]').forEach(function(x){ var on = x.dataset.v === v && v !== ''; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', on); });
+    };
+    L._kbSay = function(k, v){ return satirlar.filter(function(r){ return gorunur(r) && r.dataset.durum !== 'cop' && (!v || ('|' + (r.dataset[k] || '') + '|').indexOf('|' + v + '|') > -1); }).length; };
     L.addEventListener('click', function(e){
-      var b = e.target.closest('[data-gez-suz]'); if(!b) return;
+      var b = e.target.closest('[data-gez-suz]'); if(!b || b.closest('[data-gez-kapsam]')) return;
       var k = b.dataset.gezSuz, v = b.classList.contains('is-on') ? '' : b.dataset.v, s = L.querySelector('.kb-secim[data-suz="' + k + '"]');
       L.querySelectorAll('[data-gez-suz="' + k + '"]').forEach(function(x){ x.classList.toggle('is-on', x === b && v !== ''); x.setAttribute('aria-pressed', x === b && v !== ''); });
       var o = s && s.querySelector('button[data-deger="' + v + '"]');
@@ -946,6 +973,7 @@
         r._kbGecti = g; /* sayfalamadan önce süzgeçten geçti mi (bağlı takvim görünümü bunu okur) */
       });
       gecenler = satirlar.filter(function(r){ return r._kbGecti; });
+      if(grupla) SY.boy = Math.max(SY.boy, gecenler.length || 1);
       sayfaBoy = SY.boy; SY.sinirla(gecenler.length); sayfa = SY.sayfa; sonSayfa = SY.son;
       var ilk_ = (sayfa - 1) * sayfaBoy;
       satirlar.forEach(function(r){ r.hidden = true; });
@@ -954,6 +982,7 @@
       var ar = L.querySelector('.kb-arac'); if(ar && ar._kbArac && !ar._kbYerZam){ ar._kbYerZam = setTimeout(function(){ ar._kbYerZam = null; ar._kbArac.yerlestir(); }, 30); }
       if(bosSatir) bosSatir.hidden = n > 0;
       SY.ciz(gecenler.length);
+      if(grupla) govdeler.forEach(function(g){ if(!g.hasAttribute('data-grup')) return; g.hidden = !g.querySelector('tr[data-satir]:not([hidden])'); var bas = g.querySelector('tr.kb-grup-bas .kgb-say'); if(bas) bas.textContent = g.querySelectorAll('tr[data-satir]:not([hidden])').length; });
       var tem = L.querySelector('[data-suz-temizle]'); if(tem) tem.hidden = !suzVar;
       secimGuncelle();
     }
@@ -1017,7 +1046,7 @@
 
     /* dışarıdan durum değişince (onay zinciri vb.) sayaçlar ve görünüm yenilenir */
     document.addEventListener('kb-rol', function(){ sayaclar(); uygula(); });
-    L.addEventListener('kb-liste-yenile', function(){ satirlar = Array.prototype.slice.call(govde.querySelectorAll('tr[data-satir]')); sayaclar(); uygula(); });
+    L.addEventListener('kb-liste-yenile', function(){ satirlar = satirTopla(); sayaclar(); uygula(); });
 
     /* satır: tıklama sözleşmeye göre; içindeki düğme ve bağlantılar kendi işini yapar */
     satirlar.forEach(function(r){
@@ -1108,14 +1137,14 @@
             if(window.kbKod) window.kbKod({ baslik:'Kalıcı silmeyi doğrulayın', metin:'“' + r.dataset.baslik + '” geri alınamayacak biçimde silinecek.', evet:'Doğrula ve sil', evetIs: sil }); else sil();
           } });
       });
-      window.addEventListener('scroll', function(){ if(dmBtn){ dm.classList.remove('open'); dmBtn.setAttribute('aria-expanded', 'false'); dmBtn = null; } }, true);
+      window.addEventListener('scroll', function(){ if(dmBtn && !window.kbAcilirKaydiriyor){ dm.classList.remove('open'); dmBtn.setAttribute('aria-expanded', 'false'); dmBtn = null; } }, true);
     }
 
 
     /* önizleme durumları: ?durum=yukleniyor | hata | bos */
     var dur = q.get('durum');
     if(dur === 'yukleniyor' || dur === 'hata' || dur === 'bos'){
-      govde.hidden = true;
+      govdeler.forEach(function(g){ g.hidden = true; });
       L.querySelectorAll('[data-durum-goster]').forEach(function(el){ el.hidden = el.getAttribute('data-durum-goster') !== dur; });
       satirlar = [];
     }
@@ -1123,4 +1152,32 @@
     sayaclar(); uygula();
     if(dur === 'yukleniyor' || dur === 'hata' || dur === 'bos'){ pager.classList.add('is-tek'); bilgi.textContent = bilgiK.textContent = dur === 'yukleniyor' ? 'Yükleniyor…' : '—'; if(bosSatir) bosSatir.hidden = true; }
   });
+  /* ---------------- sayfa düzeyi gez ve adresten süzgeç ----------------
+     <nav class="kb-medya-gez kb-gez-sayfa" data-gez-kapsam="#kap"> [data-gez-suz="brans" data-v="Futbol"] …: kapsamdaki BÜTÜN listelere uygulanır
+     (sekmelere bölünmüş Kulüpler / Ligler / Maçlar gibi). data-v="" temizler. Düğmedeki <span> sayısı açık sekmedeki listeye göre canlı.
+     Adres: ?suz-<anahtar>=<değer> → sayfadaki listeler (ve gez düğmeleri) o süzgeçle açılır; süzgeç etiket şeridinde görünür, Temizle kaldırır. */
+  function gezSay(N){
+    var kap = document.querySelector(N.getAttribute('data-gez-kapsam')) || document, L = Array.prototype.filter.call(kap.querySelectorAll('[data-liste]'), function(x){ return x.getClientRects().length && x._kbSay; })[0];
+    if(!L) return; N.querySelectorAll('[data-gez-suz]').forEach(function(b){ var s = b.querySelector('span'); if(s) s.textContent = sayiYaz(L._kbSay(b.dataset.gezSuz, b.dataset.v || '')); });
+  }
+  window.kbGezSayfa = function(N, k, v){
+    var kap = document.querySelector(N.getAttribute('data-gez-kapsam')) || document;
+    kap.querySelectorAll('[data-liste]').forEach(function(L){ if(L._kbGez) L._kbGez(k, v); });
+    N.querySelectorAll('[data-gez-suz="' + k + '"]').forEach(function(x){ var on = (x.dataset.v || '') === v; x.classList.toggle('is-on', on && v !== ''); x.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+  };
+  document.querySelectorAll('[data-gez-kapsam]').forEach(function(N){
+    N.addEventListener('click', function(e){ var b = e.target.closest('[data-gez-suz]'); if(!b) return; e.preventDefault();
+      var v = b.classList.contains('is-on') ? '' : (b.dataset.v || ''); window.kbGezSayfa(N, b.dataset.gezSuz, v); });
+    gezSay(N);
+    document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('.sa-form-tab, .chip[data-sekme]')) setTimeout(function(){ gezSay(N); }, 0); });
+  });
+  (function(){ /* ?suz-<anahtar>=<değer> */
+    var ver = []; q.forEach(function(v, k){ if(k.indexOf('suz-') === 0) ver.push([k.slice(4), v]); }); if(!ver.length) return;
+    setTimeout(function(){ ver.forEach(function(x){
+      var N = Array.prototype.filter.call(document.querySelectorAll('[data-gez-kapsam]'), function(n){ return n.querySelector('[data-gez-suz="' + x[0] + '"]'); })[0];
+      if(N) window.kbGezSayfa(N, x[0], x[1]); else document.querySelectorAll('[data-liste]').forEach(function(L){ if(L._kbGez) L._kbGez(x[0], x[1]); });
+    }); }, 0);
+  })();
+
+
 })();

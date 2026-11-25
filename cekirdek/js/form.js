@@ -55,7 +55,17 @@
       if(!o && liste){ o = document.createElement('button'); o.type = 'button'; o.dataset.deger = adx; o.dataset.ad = adx; o.innerHTML = adx + '<span class="ks-alt">siz</span>'; liste.insertBefore(o, liste.firstChild); }
       sc.dataset.deger = adx; sc.classList.add('is-dolu'); var l = sc.querySelector('.ks-deger'); if(l) l.textContent = adx;
     });
-    document.querySelectorAll('.kb-secim[data-yeni-deger]').forEach(function(sc){ var v = sc.getAttribute('data-yeni-deger'), o = sc.querySelector('button[data-deger="' + v + '"]'); sc.dataset.deger = v; var dl = sc.querySelector('.ks-deger'); if(dl && o) dl.textContent = o.getAttribute('data-ad') || o.textContent; });
+    document.querySelectorAll('.kb-secim[data-yeni-deger]').forEach(function(sc){ var v = sc.getAttribute('data-yeni-deger'), o = sc.querySelector('button[data-deger="' + v + '"]'); sc.dataset.deger = v;
+      sc.classList.toggle('is-dolu', v !== ''); sc.querySelectorAll('.is-sec').forEach(function(x){ x.classList.toggle('is-sec', x === o && v !== ''); }); /* "" ise seçim izi kalmaz */
+      var dl = sc.querySelector('.ks-deger'); if(dl){ if(o && v !== '') dl.textContent = o.getAttribute('data-ad') || o.textContent; else if(v === '') dl.textContent = dl.getAttribute('data-yeni-metin') || sc.dataset.bos || ''; } });
+    /* işaret kutuları ve radyolar: data-yeni-isaret="0|1" yeni kayıtta işaretli mi (anahtarlar kapalı, karar seçili gelmez…) */
+    document.querySelectorAll('input[data-yeni-isaret]').forEach(function(i){ i.checked = i.getAttribute('data-yeni-isaret') === '1'; i.dispatchEvent(new Event('change', { bubbles: true })); });
+    /* sıralı havuz ve sıralanan listelerdeki örnek satırlar kalkar (AI grubu içindeyse örnek olarak saklanır) */
+    document.querySelectorAll('[data-form] [data-sirali-havuz] [data-siralanir] > .km-satir, [data-form] [data-sirali-havuz] > .km-satir').forEach(function(s){ var g = s.closest('[data-ai-grup]'); if(g){ g._kbOrnekSatir = (g._kbOrnekSatir || []).concat([s.outerHTML]); } s.remove(); });
+    /* form içi satır listeleri (kaynaklar, bölüm zaman damgaları, taraflar…) yeni kayıtta boş: örnek satırlar kalkar ([data-yeni-kalir] hariç) */
+    document.querySelectorAll('[data-form] [data-satir-liste] > .km-satir:not([data-yeni-kalir])').forEach(function(s){ s.remove(); });
+    /* sosyal sekmesi: platform metinleri yeni kayıtta boş; AI örneği olarak saklanır ("Yeniden üret" geri yazar) */
+    document.querySelectorAll('.kb-sosyal .kb-platform[data-metin]').forEach(function(p){ p.dataset.aiMetin = p.dataset.metin; p.dataset.metin = ''; });
     document.querySelectorAll('.kb-tarih-sec[data-yeni-bos]').forEach(function(k){ k.dataset.deger = ''; });
     document.querySelectorAll('.kb-kaydet .kk-durum i').forEach(function(i){ i.className = 'fa-solid fa-circle-dot'; });
     document.title = (document.body.getAttribute('data-yeni-baslik') || 'Yeni Kayıt') + ' · ' + document.title.split(' · ').slice(1).join(' · ');
@@ -103,7 +113,7 @@
     }
     function ozetYaz(){ var o = menu.querySelector('.kt-ozet'); if(o) o.firstChild.nodeValue = ozet(tas); }
     function kapat(){ if(btn.getAttribute('aria-expanded') === 'true') btn.click(); }
-    window.addEventListener('scroll', function(){ if(menu.classList.contains('open')) kapat(); }, true);
+    window.addEventListener('scroll', function(){ if(menu.classList.contains('open') && !window.kbAcilirKaydiriyor) kapat(); }, true);
     btn.addEventListener('click', function(){ setTimeout(function(){
       if(!menu.classList.contains('open')) return;
       tas = sec ? { y:sec.y, a:sec.a, g:sec.g, h:sec.h, m:sec.m } : { y:bugun.y, a:bugun.a, g:bugun.g, h:bugun.h, m:bugun.m };
@@ -822,7 +832,7 @@
         var eksik = !paylasma && (n === 0 ? 'Metin boş' : (e.sinir && n > e.sinir) ? 'Metin sınırı aşıldı (' + n + ' / ' + e.sinir + ')' : (e.ed.etiket_siniri && et > e.ed.etiket_siniri) ? 'Etiket sınırı aşıldı (' + et + ' / ' + e.ed.etiket_siniri + ')' : '');
         p.classList.toggle('is-sorun', sorun); p.classList.toggle('is-paylasma', paylasma); p.classList.toggle('is-eksik', !!eksik && !sorun);
         var s = p.querySelector('.kp-isaret'), ip = sorun ? (p.dataset.hesapNeden || 'Bağlantı süresi doldu; hesabı yeniden bağlayın') : paylasma ? 'Bu platformda paylaşılmayacak' : eksik;
-        s.innerHTML = sorun ? '<i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>' : (eksik ? '<i class="fa-solid fa-exclamation" aria-hidden="true"></i>' : '');
+        s.innerHTML = sorun ? '<i class="fa-solid fa-exclamation" aria-hidden="true"></i>' : (eksik ? '<i class="fa-solid fa-pen" aria-hidden="true"></i>' : ''); /* sorun: kırmızı "!" · eksik: kehribar kalem · paylaşma: üstü çizili ikon */
         s.hidden = !(sorun || eksik);
         p.title = p.textContent.trim() + (ip ? ' · ' + ip : ' · bağlı, paylaşılacak');
         p.setAttribute('aria-label', p.title);
@@ -858,6 +868,30 @@
       if(aktif) veri[aktif].metin = v;
       durumlar(); onizle();
     }
+    /* platform başına hesap seçimi (gönderi oluşturucu): .kb-platform[data-hesaplar='[{"id","ad","tutamac","dil","durum","varsayilan"}]']
+       + sayfada .kb-secim[data-sosyal-hesap-sec]. Önce gönderi dilindeki hesaplar ("önerilen"), sonra başka dilde; panelde açık olmayan dil
+       (şimdilik yalnız Türkçe açık) seçilemez, "yayın sonraki aşama". Seçilen hesap önizlemeye ve hesap kutusuna yazılır. */
+    var ACIK_DIL = ['tr'];
+    function hesapSec(p){
+      var kap = S.querySelector('.kb-secim[data-sosyal-hesap-sec]'); if(!kap || !p.dataset.hesaplar) { if(kap) kap.hidden = true; return; }
+      var H = []; try{ H = JSON.parse(p.dataset.hesaplar); }catch(x){ return; }
+      var dilEl = document.querySelector('.kb-dil .is-on[data-dil], .kb-dil-sec .is-on[data-dil]'), dil = (dilEl && dilEl.dataset.dil) || 'tr';
+      var on = H.filter(function(h){ return h.dil === dil; }), baska = H.filter(function(h){ return h.dil !== dil; });
+      var sec = p.dataset.hesapId ? H.filter(function(h){ return h.id === p.dataset.hesapId; })[0] : (on.filter(function(h){ return h.varsayilan; })[0] || on[0] || H[0]);
+      function op(h){ var kapali = ACIK_DIL.indexOf(h.dil) === -1; return '<button type="button" data-deger="' + esS(h.id) + '" data-ad="' + esS(h.ad) + '"' + (kapali ? ' disabled aria-disabled="true"' : '') + (sec && sec.id === h.id ? ' class="is-sec"' : '') + '><span class="etk">' + esS((h.dil || '').toUpperCase()) + '</span>' + esS(h.ad) + ' <small>' + esS(h.tutamac || '') + '</small><span class="ks-alt">' + (kapali ? 'yayın sonraki aşama' : (h.durum === 'hata' ? 'bağlantı süresi doldu' : (h.varsayilan ? 'varsayılan' : ''))) + '</span></button>'; }
+      var id = 'kbHs' + Math.random().toString(36).slice(2, 7), yeni = document.createElement('div');
+      yeni.className = 'kb-secim is-dolu'; yeni.setAttribute('data-sosyal-hesap-sec', ''); yeni.dataset.deger = sec ? sec.id : '';
+      yeni.innerHTML = '<button type="button" class="kb-secim-btn" data-acilir="' + id + '" aria-expanded="false" aria-haspopup="listbox"><span class="ks-etk">Hesap:</span><span class="ks-deger">' + esS(sec ? sec.ad + ' ' + (sec.tutamac || '') : 'Seçin') + '</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>'
+        + '<div class="pnl-menu kb-secim-menu" id="' + id + '"><div class="kb-secim-liste" role="listbox">' + (on.length ? '<div class="ks-grup">Gönderi dilinde · önerilen</div>' + on.map(op).join('') : '') + (baska.length ? '<div class="ks-grup">Başka dilde</div>' + baska.map(op).join('') : '') + '</div></div>';
+      kap.replaceWith(yeni); window.kbSecimKur(yeni);
+      function uygulaH(h){ if(!h) return; p.dataset.hesapId = h.id; p.dataset.ad = h.ad; p.dataset.tutamac = h.tutamac || ''; p.dataset.hesapDurum = h.durum === 'hata' ? 'hata' : 'ok';
+        document.querySelectorAll('[data-sosyal-ad]').forEach(function(el){ el.textContent = h.ad; }); document.querySelectorAll('[data-sosyal-tutamac]').forEach(function(el){ el.textContent = h.tutamac || ''; });
+        if(hesap){ hesap.className = 'pstat ' + (h.durum === 'hata' ? 'warm' : 'ok'); hesap.textContent = h.durum === 'hata' ? 'Bağlantı süresi doldu' : 'Bağlı'; }
+        var uy = S.querySelector('[data-sosyal-uyari]'); if(uy) uy.hidden = h.durum !== 'hata'; durumlar(); onizle(); }
+      yeni.addEventListener('kb-secim', function(e){ uygulaH(H.filter(function(h){ return h.id === e.detail.deger; })[0]); });
+      if(sec){ p.dataset.hesapId = sec.id; p.dataset.ad = sec.ad; p.dataset.tutamac = sec.tutamac || ''; p.dataset.hesapDurum = sec.durum === 'hata' ? 'hata' : (p.dataset.hesapDurum || 'ok');
+        document.querySelectorAll('[data-sosyal-ad]').forEach(function(el){ el.textContent = sec.ad; }); document.querySelectorAll('[data-sosyal-tutamac]').forEach(function(el){ el.textContent = sec.tutamac || ''; }); }
+    }
     function sec(p){
       aktif = p.dataset.platform;
       S.querySelectorAll('.kb-platform').forEach(function(x){ x.classList.toggle('is-on', x === p); x.setAttribute('aria-selected', x === p ? 'true' : 'false'); });
@@ -869,6 +903,7 @@
       if(ek){ var ekler = (edk.araclar || []).filter(function(x){ return x === 'konum' || x === 'gorselde-etiket'; }); ek.hidden = !ekler.length; ek.querySelectorAll('[data-sosyal-ek-alan]').forEach(function(f){ f.hidden = ekler.indexOf(f.getAttribute('data-sosyal-ek-alan')) === -1; }); }
       document.querySelectorAll('[data-sosyal-ad]').forEach(function(el){ el.textContent = p.dataset.ad; });
       document.querySelectorAll('[data-sosyal-tutamac]').forEach(function(el){ el.textContent = p.dataset.tutamac; });
+      hesapSec(p);
       if(hesap){ var d = p.dataset.hesapDurum; hesap.className = 'pstat ' + (d === 'hata' ? 'warm' : 'ok'); hesap.textContent = d === 'hata' ? 'Bağlantı süresi doldu' : 'Bağlı'; }
       var uy = S.querySelector('[data-sosyal-uyari]'); if(uy) uy.hidden = p.dataset.hesapDurum !== 'hata';
       if(paylas) paylas.checked = p.dataset.paylasma !== '1';
@@ -882,7 +917,7 @@
     S.addEventListener('click', function(e){
       var p = e.target.closest('.kb-platform'); if(p){ sec(p); return; }
       var o = e.target.closest('.kb-oran'); if(o){ oranKap.querySelectorAll('.kb-oran').forEach(function(x){ x.classList.toggle('is-on', x === o); }); oran(o.dataset.oran); var ol = S.querySelector('[data-oran-not]'); if(ol) ol.textContent = o.querySelector('small').textContent + ' önerilir'; }
-      var u = e.target.closest('[data-sosyal-uret]'); if(u){ metin.value = S.querySelector('.kb-platform.is-on').dataset.metin; yaz(); window.kbBildir('Metin yeniden üretildi (AI · prototip)'); }
+      var u = e.target.closest('[data-sosyal-uret]'); if(u){ var pa = S.querySelector('.kb-platform.is-on'); metin.value = pa.dataset.metin || pa.dataset.aiMetin || ''; yaz(); window.kbBildir('Metin yeniden üretildi (AI · prototip)'); }
     });
     if(paylas) paylas.addEventListener('change', function(){ var p = S.querySelector('.kb-platform.is-on'); if(!p) return; if(paylas.checked) delete p.dataset.paylasma; else p.dataset.paylasma = '1';
       durumlar(); onizle(); window.kbBildir(p.textContent.trim() + (paylas.checked ? ': paylaşılacak' : ': bu platformda paylaşılmayacak'), function(){ paylas.checked = !paylas.checked; paylas.dispatchEvent(new Event('change', { bubbles: true })); }); });
