@@ -202,6 +202,12 @@
       var ust = d.querySelector('.pnl-top'), ub = ust ? ust.getBoundingClientRect().bottom : 64, kk = Array.prototype.filter.call(d.querySelectorAll('.kb-kaydet'), function(k){ return gor(k, win) && win.getComputedStyle(k).position === 'sticky'; })[0];
       var eskiY = win.scrollY, H = d.documentElement.scrollHeight - win.innerHeight;
       d.documentElement.style.scrollBehavior = 'auto';
+      /* kart sırası: önce sekmenin önizlemesi, sonra Yayın, hemen ardından SEO Skoru (Beyar, 25.11.2026) */
+      var kartlar = Array.prototype.filter.call(sc.children, function(x){ return gor(x, win); });
+      var adlar = kartlar.map(function(x){ var b_ = x.querySelector('.pc-title, .kc-baslik, h2, h3'); return b_ ? b_.textContent.trim() : ''; });
+      var iY = adlar.indexOf('Yayın'), iS = adlar.indexOf('SEO Skoru');
+      if(iY > -1 && iS > -1 && iS !== iY + 1) out.push('yan-sira: sağ sütunda SEO Skoru Yayın kartının hemen altında değil (' + adlar.filter(Boolean).join(' · ') + ')');
+      if(iY > -1 && kartlar.some(function(x, k){ return k > iY && x.hasAttribute('data-panel-icin'); })) out.push('yan-sira: önizleme kartı Yayın kartının altında');
       if(win.innerWidth > 1180 && win.getComputedStyle(sc).position !== 'sticky') out.push('yapiskan: sağ sütun yapışmıyor (her düzenleme sayfasında yapışkan olmalı; uzun sütun alt ucundan yapışır)');
       [0.25, 0.5, 0.75, 1].forEach(function(f){
         win.scrollTo(0, Math.round(H * f));

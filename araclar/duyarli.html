@@ -55,7 +55,7 @@ async function olc(f, s){
   if(bar && w.getComputedStyle(bar).position !== 'static'){
     d.documentElement.style.scrollBehavior = 'auto'; w.scrollTo({ top: d.documentElement.scrollHeight, behavior: 'instant' }); await bekle(120);
     var br = bar.getBoundingClientRect(), son = null;
-    Array.prototype.forEach.call(main.querySelectorAll('.form-sec, .pnl-card, .frow'), function(e){ if(gor(e) && !bar.contains(e) && !e.contains(bar)){ var er = e.getBoundingClientRect(); if(!son || er.bottom > son.bottom) son = er; } });
+    Array.prototype.forEach.call(main.querySelectorAll('.form-sec, .pnl-card, .frow'), function(e){ if(gor(e) && !bar.contains(e) && !e.contains(bar) && !e.closest('.side-card.is-uzun')){ /* kendi içinde kayan sağ sütunun kartları kabın içinde ölçülür (yapiskan) */ var er = e.getBoundingClientRect(); if(!son || er.bottom > son.bottom) son = er; } });
     if(son && son.bottom > br.top + 2 && son.top < br.top) H('kaydet-cubugu', 'son içerik çubuğun altında kalıyor (' + Math.round(son.bottom - br.top) + 'px)');
     w.scrollTo(0, 0);
   }
