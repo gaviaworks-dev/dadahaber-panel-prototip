@@ -1261,13 +1261,13 @@ def seri_duzenle():
                       toggle("Yeni Bölümde Bildirim", "Seriyi takip eden okura bölüm yayımlanınca", True, ek=' data-modul="etkilesim"')
                       + '<div class="sa-durum" data-yeni-gizle><div><span>Bölüm</span><b>42</b></div><div><span>Takipçi</span><b>6.418</b></div><div><span>Dinlenme · 30 gün</span><b>48,2 B</b></div></div>',
                       surum=(7, "20.11.2026 10.15", "Kerem Aksoy"))
+           + seo_kart(88, [(True, "Seri adı ve tanıtım dolu"), (True, "Kapak 1400 px üstü"), (True, "RSS akışı geçerli"), (False, "YouTube Music bağlantısı yok")])
            + f"""    <section class="pnl-card" data-yeni-gizle>
       <div class="pc-head"><h2 class="pc-title">{ikon("fa-microphone-lines")}Son Bölümler</h2><a class="kb-bag" data-hedef="multimedya.podcast" data-hedef-ek="?sekme=tBolum" href="#icerik">Tümü</a></div>
       <div class="act-list">{son_b}</div>
       <div class="kb-kap-alt-cubuk"><a class="btn btn-acc btn-sm" data-hedef="multimedya.bolum" data-hedef-ek="?yeni=1" href="#icerik">{ikon("fa-plus")}Yeni Bölüm</a></div>
     </section>
-"""
-           + seo_kart(88, [(True, "Seri adı ve tanıtım dolu"), (True, "Kapak 1400 px üstü"), (True, "RSS akışı geçerli"), (False, "YouTube Music bağlantısı yok")]))
+""")
     duzenle_sayfasi("seri.html", "Podcast Serisi Düzenle", "multimedya.podcast", "Yeni Podcast Serisi", "Podcast Serisi Düzenle", "Yeni Podcast Serisi",
                     f"Finans · {', '.join(sun)} · haftalık, perşembe · 42 bölüm · 30 günde 48,2 B dinlenme", "Taslak · henüz kaydedilmedi",
                     ("multimedya.podcast", "Podcast'e Dön"), SITE + "podcast-kategori.html", "srForm", "multimedya.seri",
