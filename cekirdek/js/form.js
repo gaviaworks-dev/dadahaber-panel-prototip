@@ -113,7 +113,7 @@
     }
     function ozetYaz(){ var o = menu.querySelector('.kt-ozet'); if(o) o.firstChild.nodeValue = ozet(tas); }
     function kapat(){ if(btn.getAttribute('aria-expanded') === 'true') btn.click(); }
-    window.addEventListener('scroll', function(){ if(menu.classList.contains('open') && !window.kbAcilirKaydiriyor) kapat(); }, true);
+    window.addEventListener('scroll', function(e){ if(menu.classList.contains('open') && (!window.kbAcilirKaydir || window.kbAcilirKaydir(e, menu, btn))) kapat(); }, true); /* kaydırmada kapanmaz, düğmeyi izler */
     btn.addEventListener('click', function(){ setTimeout(function(){
       if(!menu.classList.contains('open')) return;
       tas = sec ? { y:sec.y, a:sec.a, g:sec.g, h:sec.h, m:sec.m } : { y:bugun.y, a:bugun.a, g:bugun.g, h:bugun.h, m:bugun.m };

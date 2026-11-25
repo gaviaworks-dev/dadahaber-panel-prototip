@@ -82,7 +82,7 @@
   var kov = null, kodIs = null, kodOnce = null, sure = null;
   function kodKur(){
     kov = document.createElement('div'); kov.className = 'sa-modal-ov kb-kod-ov';
-    kov.innerHTML = '<div class="sa-modal kb-kod" role="alertdialog" aria-modal="true" aria-labelledby="kbKodBas"><div class="sa-modal-ico"><i class="fa-solid fa-envelope-circle-check" aria-hidden="true"></i></div>'
+    kov.innerHTML = '<div class="sa-modal kb-kod" role="alertdialog" aria-modal="true" aria-labelledby="kbKodBas"><button type="button" class="kb-kapat sa-modal-kapat" data-kod-hayir aria-label="Kapat" title="Kapat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button><div class="sa-modal-ico"><i class="fa-solid fa-envelope-circle-check" aria-hidden="true"></i></div>'
       + '<h2 id="kbKodBas"></h2><p data-kod-metin></p>'
       + '<div class="kb-kod-kutular" role="group" aria-label="6 haneli kod" data-zorunlu-kod>' + [0,1,2,3,4,5].map(function(i){ return '<input inputmode="numeric" maxlength="1" aria-label="' + (i + 1) + '. hane" autocomplete="one-time-code">'; }).join('') + '</div>'
       + '<div class="kb-kod-alt"><span data-kod-sure></span><button type="button" class="kb-bag" data-kod-yeniden disabled>Kodu yeniden gönder</button></div>'
@@ -309,7 +309,7 @@
   window.kbTasiSil = function(o){
     if(!tsOv){
       tsOv = document.createElement('div'); tsOv.className = 'sa-modal-ov kb-tasi-ov';
-      tsOv.innerHTML = '<div class="sa-modal danger kb-tasi" role="alertdialog" aria-modal="true" aria-labelledby="kbTasiBas"><div class="sa-modal-ico"><i class="fa-solid fa-folder-minus" aria-hidden="true"></i></div><h2 id="kbTasiBas"></h2><div class="kb-tasi-kullanim" data-ts-kullanim></div>'
+      tsOv.innerHTML = '<div class="sa-modal danger kb-tasi" role="alertdialog" aria-modal="true" aria-labelledby="kbTasiBas"><button type="button" class="kb-kapat sa-modal-kapat" data-ts-hayir aria-label="Kapat" title="Kapat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button><div class="sa-modal-ico"><i class="fa-solid fa-folder-minus" aria-hidden="true"></i></div><h2 id="kbTasiBas"></h2><div class="kb-tasi-kullanim" data-ts-kullanim></div>'
         + '<div class="frow"><span class="flabel" data-ts-etk></span><div class="kb-tasi-ara"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input type="search" placeholder="Ara" aria-label="Taşınacak yeri ara"></div><div class="kb-tasi-liste" role="listbox" data-ts-liste></div><div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Taşınacak yeri seçin</div></div>'
         + '<p class="fhint" data-ts-not></p><div class="sa-modal-acts"><button type="button" class="btn btn-ghost" data-ts-hayir>Vazgeç</button><button type="button" class="btn btn-danger" data-ts-evet disabled></button></div></div>';
       document.body.appendChild(tsOv);
@@ -1234,6 +1234,7 @@
   window.kbKurucu('[data-sosyal-baglanti]', function(K){
     var PL = ((window.PANEL || {}).sosyal_baglantilar || []), ad = K.dataset.ad || 'sbag', footer = K.hasAttribute('data-footer'), mid = 'kbSb' + Math.random().toString(36).slice(2, 7);
     var D = []; try{ D = JSON.parse(K.dataset.degerler || '[]'); }catch(x){}
+    if(new URLSearchParams(location.search).get('yeni') === '1' && K.closest('[data-form]') && !K.hasAttribute('data-yeni-kalir')) D = []; /* yeni kayıt boş açılır */
     function pl(id){ return PL.filter(function(p){ return p.id === id; })[0]; }
     function es(x){ return String(x == null ? '' : x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
     K.classList.add('kb-sbag');

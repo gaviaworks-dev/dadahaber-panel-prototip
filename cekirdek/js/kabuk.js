@@ -254,6 +254,16 @@
     if(sabit){ m.style.top = hedef + 'px'; m.style.left = (mr.left + dx) + 'px'; m.style.right = 'auto'; m.style.bottom = 'auto'; }
     else { mr = m.getBoundingClientRect(); var dy = hedef - mr.top; if(dx || Math.abs(dy) > .5) m.style.translate = dx + 'px ' + dy + 'px'; }
   };
+  /* KURAL · açılan kutu kaydırmada kapanmaz: kutunun içindeki kaydırma yok sayılır; sayfa kayınca kutu düğmesini izler (yeniden sığdırılır);
+     yalnız düğme görünür alandan tamamen çıkınca kapanır. Dönen: true = kapat. */
+  window.kbAcilirKaydir = function(e, m, b){
+    if(window.kbAcilirKaydiriyor) return false;
+    if(e && e.target && e.target.nodeType === 1 && (m.contains(e.target))) return false;
+    if(!b || !b.getClientRects().length) return true;
+    var r = b.getBoundingClientRect(), ust = document.querySelector('.pnl-top'), ub = ust ? ust.getBoundingClientRect().bottom : 0;
+    if(r.bottom < ub || r.top > window.innerHeight) return true;
+    window.kbAcilirSigdir(m, b); return false;
+  };
   /* bütün açılan kutular (menü, tarih, tarih aralığı, Filtreler, ⋯ menüsü, öneri listeleri): 'open' alınca ve boyu değişince yeniden sığdırılır */
   (function(){
     var SEC = '.pnl-menu, .kb-diger-menu, .kb-cip-oneri, .ket-oneri, .kb-oneri';
