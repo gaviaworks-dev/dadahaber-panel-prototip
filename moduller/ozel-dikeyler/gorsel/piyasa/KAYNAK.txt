@@ -1,0 +1,2 @@
+Piyasa logoları (örnek veri): public site prototipinden kopyalandı (dadahaber-prototip/assets/gorsel/piyasa/, Beyar 24.11.2026 "gerçek logolar").
+Gerçek sistemde bu logolar panelden yüklenir (Veri Bantları › Piyasa › enstrüman çekmecesi › Logo). Döviz: bayrak SVG; kripto: SVG; hisse: PNG.

@@ -5,7 +5,7 @@ Kullanım:  python3 -I moduller/ozel-dikeyler/_uret.py && python3 -I araclar/men
 
 Kaynaklar (yalnızca okunur): public sözlük (ornek_veri.json: puan_tablosu, piyasa, hava, haberler), public sayfa metinleri
 (fikstür, canlı skor, takvimler, resmî ilanlar), moduller.json, public araclar/kategori.json (kategori ağacı, DADAHABER-10).
-Sayfalar: spor, kulup, takvimler, veri, ilanlar, ilan. Anket, Sözlük, Firma Rehberi kapalı (K1), üretilmez.
+Sayfalar: spor, kulup, takvimler, veri, burclar, burc, ilanlar, ilan. Anket, Sözlük, Firma Rehberi kapalı (K1), üretilmez.
 """
 import html, json, re
 from pathlib import Path
@@ -169,6 +169,40 @@ def pager(n_toplam_metin=True, sayfalar=True, son_=58):
       </div>
     </div>
 """
+
+
+def gorsel_alani(anahtar, ad, baslik, ek, bos_yer, bos, web, mobil, olcu_web, olcu_mobil, ikon="fa-image", havuz=False, dolu=None, cekmece=False, nit=""):
+    """Görsel alanı (çekirdek bileşen; emsal Kulüp Düzenle › Arma, Yazar Düzenle › Fotoğraf): web ve mobil ayrı bölüm, önerilen ölçü yazılı.
+    web/mobil: [(kayıttaki oran anahtarı "web.detay", etiket, sınıf "r-1x1" ya da oran "2.9/1")]; ölçüler moduller.json → gorsel_alanlari.
+    havuz: fotoğraf (medya havuzundan seçilir, yüklemede etiketlenir); değilse kurumsal işaret (etiketsiz, havuza girmez).
+    bos: (boş kutu başlığı "Armayı sürükleyin ya da seçin", ölçü satırı) · bos_yer: yer tutucunun kendisi (rozet, ikon)
+    dolu: (görsel adresi, odak "50% 40%", yüklenen bilgisi) · cekmece: çekmecede frow kabı, sayfada form-sec kabı."""
+    def kutu(hedef, k, etk, r, ilk):
+        sinif, stil = (r, []) if r.startswith("r-") else ("", [f"aspect-ratio:{r}"])
+        if dolu: stil += [f"background-image:url({dolu[0]})", f"background-position:{dolu[1]}"]
+        st = f' style="{";".join(stil)}"' if stil else ""
+        od = f'<span class="kg-odak" style="left:{dolu[1].split()[0]};top:{dolu[1].split()[1]}"></span>' if dolu and ilk else ""
+        return f'<div class="kg-resim{" " + sinif if sinif else ""}" data-gorsel-hedef="{hedef}" data-kirp-oran="{k}"{st}>{od}<span class="kg-etk">{e(etk)}</span></div>'
+    wk = "".join(kutu("web", k, etk, r, i == 0) for i, (k, etk, r) in enumerate(web))
+    wk = f'<div class="kg-ikili">{wk}</div>' if len(web) > 1 else wk
+    mk = "".join(kutu("mobil", k, etk, r, i == 0) for i, (k, etk, r) in enumerate(mobil))
+    mk = f'<div class="kg-ikili">{mk}</div>' if len(mobil) > 1 else mk
+    hv = hv_acc = f'<button type="button" class="btn btn-ghost btn-sm" data-medya-sec>{I("fa-photo-film")}Havuzdan Seç</button>' if havuz else ""
+    bilgi = f' <span data-gorsel-bilgi>{e(dolu[2])}</span>' if dolu else ""
+    govde = (f'<div class="kb-yukle" data-gorsel-bos{" hidden" if dolu else ""}>{bos_yer}<b>{e(bos[0])}</b><span>{bos[1]}</span>'
+             f'<span class="kg-acts"><button type="button" class="btn btn-acc btn-sm" data-gorsel-yukle>{I("fa-upload")}Bilgisayardan Yükle</button>{hv_acc}</span></div>'
+             f'<div class="kb-gorsel" data-gorsel-dolu{"" if dolu else " hidden"}>'
+             f'<div class="kg-bolum"><div class="kg-bas">{I("fa-desktop")}Web</div>{wk}<div class="kg-olcu">{olcu_web}{bilgi}</div>'
+             f'<div class="kg-acts"><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac>{I("fa-crop-simple")}Kırp ve Odak</button>{hv}'
+             f'<button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle>{I("fa-upload")}Yükle</button><button type="button" class="btn btn-ghost btn-sm danger" data-gorsel-kaldir>{I("fa-trash")}Kaldır</button></div></div>'
+             f'<div class="kg-bolum"><div class="kg-bas">{I("fa-mobile-screen")}Mobil<span class="kg-oto">{I("fa-wand-magic-sparkles")} Webden kırpıldı</span></div>{mk}<div class="kg-olcu">{olcu_mobil}</div>'
+             f'<div class="kg-acts"><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac="{"mobil.kart" if any(k == "mobil.kart" for k, _, _ in mobil) else mobil[0][0]}">{I("fa-crop-simple")}Kırp</button>'
+             f'<button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle data-gorsel-kapsam="mobil">{I("fa-upload")}Ayrı Görsel Yükle</button>'
+             f'<button type="button" class="btn btn-ghost btn-sm" data-gorsel-webe-don hidden>{I("fa-rotate-left")}Webden Kırpılana Dön</button></div></div></div>')
+    at = f' data-gorsel-alan="ozel-dikeyler.{anahtar}" data-gorsel-ad="{e(ad)}" data-kirp-sonra{"" if havuz else " data-etiketsiz"}{nit}'
+    if cekmece:
+        return f'<div class="frow"{at}><span class="flabel">{e(baslik)}<span class="fhint kb-sag">{ek}</span></span>{govde}</div>'
+    return f'<div class="form-sec"{at}><div class="form-sec-tt">{I(ikon)}{e(baslik)}<span class="fs-ek">{ek}</span></div>{govde}</div>'
 
 
 def dil_secici(not_metni):
@@ -353,11 +387,19 @@ def lig_satir(L):
     pk = kol[-1][1]
     kaynak = ("info", f'{L["elle"]} elle düzeltme') if L["elle"] else ("ok", "API")
     return (f'<tr data-satir="lg-{L["id"]}" data-durum="{"elle" if L["elle"] else "api"}" data-brans="{e(L["brans"])}" data-ara="{e(L["ad"] + " " + L["brans"] + " " + lider[2])}" data-baslik="{e(L["ad"])}">'
-            f'<td class="kb-ana"><div class="rcp-cell"><span class="kb-ava k-sm">{I(B_IKON[L["brans"]])}</span><div class="rcp-id"><div class="rcp-name">{e(L["ad"])}</div><div class="rcp-by">{e(L["brans"])} · {e(L["asama"])}</div></div></div></td>'
+            f'<td class="kb-ana"><div class="rcp-cell">{lig_isaret(L)}<div class="rcp-id"><div class="rcp-name">{e(L["ad"])}</div><div class="rcp-by">{e(L["brans"])} · {e(L["asama"])}</div></div></div></td>'
             f'<td class="kb-gizle-t">{e(L["katilim"])}</td>'
             f'<td class="kb-gizle-m">{e(lider[2])} · <b>{e(lider[3][pk])}</b></td>'
             f'<td><span class="pstat {kaynak[0]}" title="Spor veri API · son güncelleme 15.57">{kaynak[1]}</span></td>'
-            f'<td>{row_acts(("tanim", "lgGor-" + L["id"]), None, None, gor_ad="Puan Durumu")}</td></tr>')
+            f'<td>{row_acts(("tanim", "lgGor-" + L["id"]), ("tanim", "lgDuz-" + L["id"]), None, gor_ad="Puan Durumu", duz_ad="Logoyu Düzenle")}</td></tr>')
+
+
+def lig_isaret(L, buyuk=False):
+    """lig logosu yüklenmişse o, yoksa branş ikonu (yedek)"""
+    k = "k-lg" if buyuk else "k-sm"
+    if L.get("logo"):
+        return f'<span class="kb-ava {k}" style="background-image:url({L["logo"]})" role="img" aria-label="{e(L["ad"])} logosu"></span>'
+    return f'<span class="kb-ava {k}" title="Lig logosu yok; branş ikonu gösteriliyor">{I(B_IKON[L["brans"]])}</span>'
 
 
 def lig_sablonlar(L):
@@ -398,6 +440,16 @@ def lig_sablonlar(L):
     <button type="button" class="btn btn-ghost btn-sm kb-sol" data-sablon-ac="lgGor-{L['id']}">{I("fa-arrow-left")}Puan Durumuna Dön</button>
     <button type="button" class="btn btn-acc btn-sm" data-onay-baslik="Puan tablosu düzeltmesi yayımlansın mı?" data-onay-metin="Değişiklik sitede puan durumunda, branş sayfasında ve skor bandında hemen görünür; önceki ve sonraki hal denetim izine yazılır." data-onay-evet="Düzeltmeyi Yayımla" data-onay-ikon="fa-pen-to-square" data-sonra-durum="elle" data-sonra-durum-ad="Elle düzeltme" data-sonra-durum-sinif="info" data-sonra-kapat data-bildir-sonra="Puan tablosu düzeltildi; sitede güncellendi">{I("fa-check")}Düzeltmeyi Kaydet</button>
   </div>
+</template>
+<template id="lgDuz-{L['id']}" data-baslik="{e(L['ad'])} · Logo" data-alt="{e(L['brans'])} · lig kimliği">
+  <div class="kb-fs">
+    <div class="kb-bant bilgi">{I("fa-lock")}<span><b>Ad, aşama ve puan tablosu spor veri API'sinden gelir.</b> Burada yalnız lig logosu yönetilir; logo yoksa listede ve sitede {e(L['brans'].lower())} ikonu görünür.</span></div>
+    {gorsel_alani("lig_logo", "Lig logosu", "Lig Logosu", "İsteğe bağlı · yoksa branş ikonu", lig_isaret(L, True),
+                  ("Lig logosunu sürükleyin ya da seçin", "1:1 · şeffaf PNG ya da SVG, en az 96×96 · medya havuzuna girmez"),
+                  [("web.detay", "Lig sayfası · 1:1", "r-1x1"), ("web.kart", "Puan durumu · 1:1", "r-1x1")], [("mobil.kart", "Mobil · 1:1", "r-1x1")],
+                  "Önerilen: lig sayfası <b>96×96</b>, puan durumu ve maç satırı <b>28×28</b>.", "Önerilen: <b>24×24</b>.", cekmece=True)}
+  </div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="lgGor-{L['id']}" data-bildir-sonra="Lig logosu kaydedildi; listede, puan durumunda ve sitede görünür">{I("fa-floppy-disk")}Kaydet</button></div>
 </template>
 """
 
@@ -544,7 +596,11 @@ def brans_sablonlar(say, alt_spor):
   <div class="kb-fs"><div class="kb-fs-tt">Temel Bilgiler</div>
     <div class="frow"><label for="brAd">Ad</label><input class="finput" id="brAd" data-alan="ad" data-alan-id="ad" data-zorunlu-metin="Branşa ad verin" data-sayac="20|30" placeholder="ör. Hentbol"><div class="char-meter"><span>Spor sayfasında, süzgeçlerde ve sitedeki spor menüsünde</span><b>0 / 20</b></div></div>
     <div class="frow"><span class="flabel">Spor Alt Konusu</span>{secim("brAlt", alt_ops, bos="Alt konu seçin", ara="Alt konu ara", ek=' data-alan="alt-konu"')}<span class="fhint">Sitedeki branş sayfası, adresi ve SEO'su bu alt konudan gelir; yeni alt konu Haberler › Kategoriler'den eklenir.</span></div>
-    <div class="frow"><span class="flabel">İkon</span><div class="kb-secim" data-alan="ikon" data-bos="İkon seçin"><button type="button" class="kb-secim-btn" data-acilir="brIkon" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">İkon seçin</span>{I("fa-chevron-down")}</button><div class="pnl-menu kb-secim-menu" id="brIkon"><div class="kb-secim-ara">{I("fa-magnifying-glass")}<input type="search" placeholder="İkon ara" aria-label="İkon ara"></div><div class="kb-secim-liste" role="listbox">{ikon_ops}</div><div class="kb-secim-bos" hidden>Bu adla ikon yok.</div></div></div><span class="fhint">Branş listesinde ve maç satırlarında.</span></div>
+    <div class="frow"><span class="flabel">İkon</span><div class="kb-secim" data-alan="ikon" data-bos="İkon seçin"><button type="button" class="kb-secim-btn" data-acilir="brIkon" aria-expanded="false" aria-haspopup="listbox"><span class="ks-deger">İkon seçin</span>{I("fa-chevron-down")}</button><div class="pnl-menu kb-secim-menu" id="brIkon"><div class="kb-secim-ara">{I("fa-magnifying-glass")}<input type="search" placeholder="İkon ara" aria-label="İkon ara"></div><div class="kb-secim-liste" role="listbox">{ikon_ops}</div><div class="kb-secim-bos" hidden>Bu adla ikon yok.</div></div></div><span class="fhint">Görsel yüklenmemişse branş listesinde, maç satırlarında ve sitede çipte bu ikon görünür.</span></div>
+    {gorsel_alani("brans_gorsel", "Branş görseli", "Branş Görseli", "İsteğe bağlı · yüklenirse ikonun yerine geçer", '<span class="kb-ava k-lg">' + I("fa-layer-group") + '</span>',
+                  ("Branş görselini sürükleyin ya da seçin", "1:1 · şeffaf PNG ya da SVG, en az 64×64 · medya havuzuna girmez"),
+                  [("web.kart", "Branş ikonu · 1:1", "r-1x1")], [("mobil.kart", "Mobil · 1:1", "r-1x1")],
+                  "Önerilen: <b>24×24</b> (branş listesi, maç satırı, sitede çip).", "Önerilen: <b>24×24</b>.", cekmece=True)}
   </div>
   <div class="kb-fs"><div class="kb-fs-tt">Veri</div>
     <div class="frow"><span class="flabel">Puan Tablosu Biçimi</span>{secim("brBicim", bic_ops, bos="Biçim seçin", ek=' data-alan="bicim"')}<span class="fhint">Ligler sekmesinde ve sitede puan tablosunun sütunlarını belirler.</span></div>
@@ -578,7 +634,8 @@ def sayfa_spor():
     s += f"""
 <!-- SPOR (D4): soldaki branş listesi (Gez kalıbı) Kulüpler · Ligler ve puan durumu · Maç merkezi sekmelerini birlikte süzer.
      Branşlar sağ üstteki çekmecede yönetilir (ekle, düzenle, taşıyarak sil). Puan tabloları ve maçlar spor veri API'sinden gelir;
-     silinmez, elle düzeltilir (çekmece, gerekçe zorunlu, denetim izi). Kulüp düzenle ayrı sayfa (kulup.html). -->
+     silinmez, elle düzeltilir (çekmece, gerekçe zorunlu, denetim izi). Kulüp düzenle ayrı sayfa (kulup.html).
+     Maç Merkezi'nin başında tek ortak "Maç Kapağı" (ozel-dikeyler.mac_kapak; Beyar 25.11.2026): bütün maç sayfalarının bannerı; maç başına alan yok. -->
 <main class="pnl-main" id="icerik">
   <div class="pnl-page-head">
     <div>
@@ -650,7 +707,7 @@ def sayfa_spor():
           <div class="fb-search">{I("fa-magnifying-glass")}<label class="sr-only" for="lgAra">Liglerde Ara</label><input id="lgAra" type="search" data-liste-ara placeholder="Lig, sıralama ya da lider ara" autocomplete="off"></div>
           <button type="button" class="kb-suz-temizle" data-suz-temizle hidden>Süzgeçleri Temizle</button>
         </div>
-        <div class="pc-body"><div class="kb-bant bilgi">{I("fa-lock")}<span><b>Ligler ve puan tabloları API verisidir; silinmez.</b> Satıra tıklayınca puan durumu açılır; yanlış değer oradan “Düzelt” ile elle düzeltilir (gerekçe zorunlu, denetim izine yazılır). Son güncelleme 15.57.</span></div></div>
+        <div class="pc-body"><div class="kb-bant bilgi">{I("fa-lock")}<span><b>Ligler ve puan tabloları API verisidir; silinmez.</b> Satıra tıklayınca puan durumu açılır; yanlış değer oradan “Düzelt” ile elle düzeltilir (gerekçe zorunlu, denetim izine yazılır). Lig logosu kalem düğmesinden yüklenir; yoksa branş ikonu görünür. Son güncelleme 15.57.</span></div></div>
         <div class="ptable-wrap"><table class="ptable">
           <thead><tr><th class="kb-ana">Lig ya da Sıralama</th><th class="kb-gizle-t">Katılımcı</th><th class="kb-gizle-m">Lider</th><th>Kaynak</th><th><span class="sr-only">İşlemler</span></th></tr></thead>
           <tbody data-satirlar>{"".join(lig_satir(L) for L in LG)}</tbody>
@@ -667,6 +724,11 @@ def sayfa_spor():
 
     <!-- ===== MAÇ MERKEZİ ===== -->
     <div class="sa-form-panel" id="spMac" role="tabpanel" hidden>
+{gorsel_alani("mac_kapak", "Maç kapağı", "Maç Kapağı (Ortak)", "Bütün maç sayfalarında aynı · yoksa varsayılan görsel görünür", I("fa-panorama"),
+              ("Maç kapağını sürükleyin ya da seçin", "Bütün maç sayfalarının başında tam genişlik · web 1440×496 (2.9:1), mobil 390×390 · değişiklik hemen sitede uygulanır"),
+              [("web.detay", "Maç sayfası · 2.9:1", "2.9/1")], [("mobil.kart", "Telefon · 1:1", "r-1x1")],
+              "Önerilen: <b>1440×496</b> (maç sayfasının başı, tam genişlik). Solda skor ve künye durur; odağı sağa koyun.", "Önerilen: <b>390×390</b> (sitenin telefon görünümü).",
+              ikon="fa-panorama", havuz=True, dolu=("../../veri/gorsel/p155.jpg", "60% 45%", "Yüklenen: 1200×800 JPG."))}
       <div data-liste data-liste-ad="karşılaşma" data-sayfa-boy="50">
         <div class="kb-liste-ust">
           <div class="chips" role="tablist" aria-label="Karşılaşma durumu">
@@ -707,6 +769,8 @@ def sayfa_spor():
 
 
 # ================================================================== KULÜP DÜZENLE
+# Arma ölçüsü (lead kararı 25.11.2026, kayıtta): sitede takım sayfası .pf-av 96 (telefonda 72), takımlar .tc-a .arma 56, maç 28, puan durumu 24
+ARMA_OLCU = ("takım sayfası 96×96, takımlar 56×56, mobil 72×72", "Önerilen: takım sayfası <b>96×96</b>, takımlar listesi <b>56×56</b>; puan durumunda 24, maç satırında 28 küçültülür.", "Önerilen: <b>72×72</b> (telefonda takım sayfası).", "Takımlar")
 def seo_bolum(pid, baslik, aciklama, onek, slug, kw, uret=True):
     cip = "".join(f'<span class="kb-cip" data-deger="{e(k)}"><span>{e(k)}</span><button type="button" aria-label="Kaldır">{I("fa-xmark")}</button></span>' for k in kw)
     return f"""    <div class="sa-form-panel" id="{pid}" role="tabpanel" data-ai-grup="seo" hidden>
@@ -761,8 +825,9 @@ def sayfa_kulup():
     renkler += f'<label class="kb-renk is-ozel" title="Özel renk {t["renk"]}"><input type="radio" name="klRenk" value="{t["renk"]}" checked><span style="--kat:{t["renk"]}"></span><span class="sr-only">Özel renk {t["renk"]}</span></label>'
     s = bas("Kulüp Düzenle", "kulup", ' data-yeni-baslik="Yeni Kulüp"')
     s += f"""
-<!-- KULÜP DÜZENLE (D4): Detay · SEO (kulüp sayfası sitede var, 8b). Arma 1:1 (ozel-dikeyler.arma; kişisel/kurumsal işaret,
-     medya havuzuna girmez, data-etiketsiz). Kurumsal renk hazır + özel (kb-renkler[data-renk-ozel]). Sitede arma yoksa renkli kısa kod rozeti görünür. -->
+<!-- KULÜP DÜZENLE (D4): Detay · SEO (kulüp sayfası sitede var, 8b). Arma 1:1 (ozel-dikeyler.arma; kurumsal işaret,
+     medya havuzuna girmez, data-etiketsiz). Takım kapağı (ozel-dikeyler.takim_kapak; fotoğraf: havuzdan seçilir, yüklemede etiketlenir):
+     takım sayfasının başı, yoksa kurumsal renkle kapak. Kurumsal renk hazır + özel (kb-renkler[data-renk-ozel]). Sitede arma yoksa renkli kısa kod rozeti. -->
 <main class="pnl-main" id="icerik">
   <div class="pnl-page-head">
     <div>
@@ -808,12 +873,15 @@ def sayfa_kulup():
         <div class="kb-renkler" role="radiogroup" aria-label="Kurumsal Renk" data-renk-ozel>{renkler}</div>
         <span class="fhint">Hazır renkler temadan; damlalık ile kulübün kendi rengi seçilir (okunurluk denetlenir).</span>
       </div>
-      <div class="form-sec" data-gorsel-alan="ozel-dikeyler.arma" data-gorsel-ad="Arma" data-kirp-sonra data-etiketsiz>
-        <div class="form-sec-tt">{I("fa-shield-halved")}Arma<span class="fs-ek">İsteğe bağlı · yoksa renkli kısa kod rozeti görünür</span></div>
-        <div class="kb-yukle" data-gorsel-bos><span class="kb-ava k-lg">GS</span><b>Armayı sürükleyin ya da seçin</b><span>1:1 · puan durumu 48×48, takım sayfası 160×160, mobil 40×40 · şeffaf PNG ya da SVG önerilir; medya havuzuna girmez</span><span class="kg-acts"><button type="button" class="btn btn-acc btn-sm" data-gorsel-yukle>{I("fa-upload")}Bilgisayardan yükle</button></span></div>
-        <div class="kb-gorsel" data-gorsel-dolu hidden><div class="kg-bolum"><div class="kg-bas">{I("fa-desktop")}Web</div><div class="kg-ikili"><div class="kg-resim" data-gorsel-hedef="web" data-kirp-oran="web.detay" style="aspect-ratio:1/1"><span class="kg-etk">Takım sayfası · 1:1</span></div><div class="kg-resim" data-gorsel-hedef="web" data-kirp-oran="web.kart" style="aspect-ratio:1/1"><span class="kg-etk">Puan durumu · 1:1</span></div></div><div class="kg-olcu">Önerilen: takım sayfası <b>160×160</b>, puan durumu <b>48×48</b>.</div><div class="kg-acts"><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac>{I("fa-crop-simple")}Kırp</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle>{I("fa-upload")}Yükle</button><button type="button" class="btn btn-ghost btn-sm danger" data-gorsel-kaldir>{I("fa-trash")}Kaldır</button></div></div>
-          <div class="kg-bolum"><div class="kg-bas">{I("fa-mobile-screen")}Mobil<span class="kg-oto">{I("fa-wand-magic-sparkles")} Webden kırpıldı</span></div><div class="kg-resim" data-gorsel-hedef="mobil" data-kirp-oran="mobil.kart" style="aspect-ratio:1/1"><span class="kg-etk">Mobil · 1:1</span></div><div class="kg-olcu">Önerilen: <b>40×40</b>.</div><div class="kg-acts"><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac="mobil.kart">{I("fa-crop-simple")}Kırp</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle data-gorsel-kapsam="mobil">{I("fa-upload")}Ayrı Görsel Yükle</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-webe-don hidden>{I("fa-rotate-left")}Webden kırpılana dön</button></div></div></div>
-      </div>
+{gorsel_alani("arma", "Arma", "Arma", "İsteğe bağlı · yoksa renkli kısa kod rozeti görünür", '<span class="kb-ava k-lg">GS</span>',
+              ("Armayı sürükleyin ya da seçin", "1:1 · " + ARMA_OLCU[0] + " · şeffaf PNG ya da SVG önerilir; medya havuzuna girmez"),
+              [("web.detay", "Takım sayfası · 1:1", "r-1x1"), ("web.kart", ARMA_OLCU[3] + " · 1:1", "r-1x1")], [("mobil.kart", "Mobil · 1:1", "r-1x1")],
+              ARMA_OLCU[1], ARMA_OLCU[2], ikon="fa-shield-halved")}
+{gorsel_alani("takim_kapak", "Takım kapağı", "Takım Kapağı", "İsteğe bağlı · yoksa kurumsal renkle kapak görünür", I("fa-panorama"),
+              ("Takım kapağını sürükleyin ya da seçin", "Takım sayfasının başında tam genişlik · web 1440×496 (2.9:1), mobil 390×390 · görselin solu yazı için koyu perdeyle örtülür"),
+              [("web.detay", "Takım sayfası · 2.9:1", "2.9/1")], [("mobil.kart", "Telefon · 1:1", "r-1x1")],
+              "Önerilen: <b>1440×496</b> (takım sayfasının başı, tam genişlik). Solda ad ve künye durur; odağı sağa koyun.", "Önerilen: <b>390×390</b> (sitenin telefon görünümü).",
+              ikon="fa-panorama", havuz=True, dolu=("../../veri/gorsel/p158.jpg", "62% 45%", "Yüklenen: 1200×800 JPG, 86 KB."))}
       <div class="form-sec">
         <div class="form-sec-tt">{I("fa-tags")}Etiket Eşleştirme<span class="fs-ek">Haberler, skor ve kulüp sayfası bu eşleşmeyle bağlanır</span></div>
         <div class="form-grid kb-iki-sutun">
@@ -1068,6 +1136,242 @@ def hata_davranis(sid, sec="son"):
 """
 
 
+# ---------------- Piyasa enstrümanları (kimlik görselleri işi, Beyar 25.11.2026)
+# Liste Piyasa sekmesinde (emsal: Canlı Masa › Akış sekmesindeki liste); kayıt çekmecede (küçük tanım → çekmece). Değerler sözlükten
+# (ornek_veri.json piyasa.araclar: şerit ve vitrin sırası) ve sitenin piyasa sayfalarından (piyasa-ekrani, doviz, altin, borsa, kripto-para).
+# Logolar sitenin assets/gorsel/piyasa/ dosyalarının kopyası (gorsel/piyasa/); logo yoksa kısa kod rozeti.
+EN_TUR = {"doviz": ("Döviz", "fa-dollar-sign"), "altin": ("Altın ve Gümüş", "fa-coins"), "endeks": ("Borsa Endeksi", "fa-chart-line"),
+          "hisse": ("Hisse", "fa-building"), "kripto": ("Kripto", "fa-coins"), "emtia": ("Emtia", "fa-oil-well")}
+ENST = [
+    # id, ad (şerit ve kutu), kısa kod (tablo ve rozet), açıklama satırı, kaynak sembolü, tür, logo, son değer, şerit sırası, widget sırası, sayfa açıklaması
+    ("xu100", "BIST 100", "X100", "Endeks", "XU100", "endeks", None, "10.248,62", 1, None, "Borsa İstanbul'un 100 hisseden oluşan ana endeksi"),
+    ("xu030", "BIST 30", "X30", "Endeks", "XU030", "endeks", None, "11.204,35", None, None, "Borsa İstanbul'un en büyük 30 hissesinden oluşan endeks"),
+    ("xbank", "BIST Banka", "XBNK", "Endeks", "XBANK", "endeks", None, "14.876,90", None, None, ""),
+    ("xusin", "BIST Sınai", "XSIN", "Endeks", "XUSIN", "endeks", None, "12.038,47", None, None, ""),
+    ("usd", "Dolar", "USD", "ABD Doları", "USDTRY", "doviz", "doviz/USD.svg", "34,5448", 2, 1, "ABD Doları'nın Türk lirası karşısındaki satış kuru"),
+    ("eur", "Euro", "EUR", "Euro", "EURTRY", "doviz", "doviz/EUR.svg", "36,2180", 3, 2, "Euro'nun Türk lirası karşısındaki satış kuru"),
+    ("gbp", "Sterlin", "GBP", "İngiliz Sterlini", "GBPTRY", "doviz", "doviz/GBP.svg", "43,1150", None, 3, ""),
+    ("chf", "İsviçre Frangı", "CHF", "İsviçre Frangı", "CHFTRY", "doviz", "doviz/CHF.svg", "39,0040", None, None, ""),
+    ("jpy", "Japon Yeni", "JPY", "Japon Yeni (100)", "JPYTRY", "doviz", "doviz/JPY.svg", "22,5320", None, None, ""),
+    ("sar", "Suudi Riyali", "SAR", "Suudi Arabistan Riyali", "SARTRY", "doviz", "doviz/SAR.svg", "9,2105", None, None, ""),
+    ("gram", "Gram Altın", "GA", "TL", "XAUTRYG", "altin", None, "2.968,40", 4, 4, "Bir gram 24 ayar altının Türk lirası satış fiyatı"),
+    ("ceyrek", "Çeyrek Altın", "ÇA", "TL", "CEYREK", "altin", None, "4.905,00", None, None, ""),
+    ("cumhuriyet", "Cumhuriyet Altını", "CA", "TL", "CUMHUR", "altin", None, "20.150,00", None, None, ""),
+    ("bilezik", "22 Ayar Bilezik", "22A", "TL · gram", "BILEZIK22", "altin", None, "2.745,10", None, None, ""),
+    ("ons", "Ons Altın", "ONS", "Dolar", "XAUUSD", "altin", None, "2.674,15", 5, None, ""),
+    ("gumus", "Gümüş", "AG", "TL · gram", "XAGTRYG", "altin", None, "34,12", 6, None, ""),
+    ("brent", "Brent", "BRT", "Petrol · dolar/varil", "BRENT", "emtia", None, "74,82", 7, None, "Kuzey Denizi Brent petrolünün varil fiyatı"),
+    ("wti", "WTI", "WTI", "Petrol · dolar/varil", "WTI", "emtia", None, "71,24", None, None, ""),
+    ("ttf", "Doğal Gaz", "TTF", "TTF · euro/MWh", "TTF", "emtia", None, "42,18", None, None, ""),
+    ("thyao", "Türk Hava Yolları", "THYAO", "Türk Hava Yolları", "THYAO", "hisse", "borsa/THYAO.png", "312,75", None, None, ""),
+    ("asels", "Aselsan", "ASELS", "Aselsan", "ASELS", "hisse", "borsa/ASELS.png", "87,90", None, None, ""),
+    ("garan", "Garanti BBVA", "GARAN", "Garanti BBVA", "GARAN", "hisse", "borsa/GARAN.png", "128,40", None, None, ""),
+    ("akbnk", "Akbank", "AKBNK", "Akbank", "AKBNK", "hisse", "borsa/AKBNK.png", "62,15", None, None, ""),
+    ("kchol", "Koç Holding", "KCHOL", "Koç Holding", "KCHOL", "hisse", "borsa/KCHOL.png", "178,20", None, None, ""),
+    ("tuprs", "Tüpraş", "TUPRS", "Tüpraş", "TUPRS", "hisse", "borsa/TUPRS.png", "154,60", None, None, ""),
+    ("bimas", "BİM Mağazalar", "BIMAS", "BİM Mağazalar", "BIMAS", "hisse", "borsa/BIMAS.png", "521,50", None, None, ""),
+    ("sise", "Şişecam", "SISE", "Şişecam", "SISE", "hisse", "borsa/SISE.png", "42,36", None, None, ""),
+    ("btc", "Bitcoin", "BTC", "Bitcoin · dolar", "BTCUSD", "kripto", "kripto/BTC.svg", "98.412", 8, None, "Bitcoin'in dolar cinsinden fiyatı"),
+    ("eth", "Ethereum", "ETH", "Ethereum · dolar", "ETHUSD", "kripto", "kripto/ETH.svg", "3.412,50", None, None, ""),
+    ("bnb", "BNB", "BNB", "BNB · dolar", "BNBUSD", "kripto", "kripto/BNB.svg", "642,30", None, None, ""),
+    ("sol", "Solana", "SOL", "Solana · dolar", "SOLUSD", "kripto", "kripto/SOL.svg", "238,15", None, None, ""),
+    ("xrp", "XRP", "XRP", "XRP · dolar", "XRPUSD", "kripto", "kripto/XRP.svg", "1,4120", None, None, ""),
+    ("bugday", "Buğday", "BGD", "Dolar/buşel", "WHEAT", "emtia", None, "5,62", None, None, ""),  # çöpte
+]
+EN_COP = {"bugday"}
+EN_SERIT = sum(1 for x in ENST if x[8])
+EN_WIDGET = sum(1 for x in ENST if x[9])
+EN_LOGO = "gorsel/piyasa/"
+
+
+def en_isaret(x, buyuk=False):
+    """enstrüman logosu yüklenmişse o, yoksa kısa kod rozeti"""
+    k = " k-lg" if buyuk else ""
+    if x[6] and not buyuk:
+        return f'<span class="kb-ava" style="background-image:url({EN_LOGO}{x[6]})" role="img" aria-label="{e(x[2])} logosu"></span>'
+    return f'<span class="kb-ava{k}" title="Logo yok; kısa kod rozeti gösteriliyor">{e(x[2])}</span>'
+
+
+def en_kullanim(x):
+    yer = ([f"şeritte {x[8]}. sırada"] if x[8] else []) + ([f"ana sayfa piyasa kutusunda {x[9]}. sırada"] if x[9] else [])
+    return ("Sitede " + " ve ".join(yer) + "; silinince oradan da kalkar, piyasa sayfalarında görünmez") if yer else ""
+
+
+def en_satir(x):
+    eid, ad, kisa, alt, sem, tur, logo, deg, ser, wid, _ = x
+    gor = "|".join((["serit"] if ser else []) + (["widget"] if wid else [])) or "sayfa"
+    kul = en_kullanim(x)
+    cop = eid in EN_COP
+    return (f'<tr data-satir="en-{eid}" data-durum="{"cop" if cop else tur}"{f" data-onceki=\"{tur}\"" if cop else ""} data-gorunum="{gor}" data-ara="{e(ad + " " + kisa + " " + alt + " " + sem + " " + EN_TUR[tur][0])}" data-baslik="{e(ad)}"{f" data-kullanim=\"{e(kul)}\"" if kul else ""}>'
+            f'<td class="kb-sec-hucre"><input type="checkbox" class="kb-onay-kutu" aria-label="Seç: {e(ad)}"></td>'
+            f'<td class="kb-ana"><div class="rcp-cell">{en_isaret(x)}<div class="rcp-id"><div class="rcp-name">{e(ad)}</div><div class="rcp-by">{e(kisa)} · {e(alt)}</div></div></div></td>'
+            f'<td class="say kb-gizle-m">{e(deg)}</td>'
+            f'<td class="say">{f"{ser}." if ser else "—"}</td>'
+            f'<td class="say kb-gizle-m">{f"{wid}." if wid else "—"}</td>'
+            f'<td>{row_acts(("tanim", "enGor-" + eid), ("tanim", "enDz-" + eid), "sil")}</td></tr>')
+
+
+def en_form(sid, x=None):
+    eid, ad, kisa, alt, sem, tur, logo, deg, ser, wid, acik = x if x else ("", "", "", "", "", "", None, "", None, None, "")
+    turler = [(k, v[0], "") for k, v in EN_TUR.items()]
+    dolu = (EN_LOGO + logo, "50% 50%", "Yüklenen: " + ("SVG" if logo.endswith(".svg") else "PNG") + " · şeffaf zemin.") if logo else None
+    bos_yer = f'<span class="kb-ava k-lg">{e(kisa) if kisa else I("fa-chart-line")}</span>'
+    slug = TR_SLUG(ad) if ad else ""
+    seo_b = f"{ad} ne kadar? Canlı {ad} fiyatı ve grafiği | Dada Haber" if ad else ""
+    seo_a = f"{ad} ({kisa}) son değeri, günlük değişimi, gün içi en düşük ve en yüksek değerleri; 15 dakika gecikmeli piyasa verisi." if ad else ""
+    sira = lambda n, ad_, v: (f'<div class="frow"><label for="en{sid}-{n}">{ad_} Sırası</label><div class="kb-birim"><input class="finput" id="en{sid}-{n}" inputmode="numeric" value="{v or ""}" placeholder="—"><span>sıra</span></div>'
+                              f'<span class="fhint">Aynı sıradaki enstrüman bir sonrakine kayar.</span></div>')
+    return f"""  <div data-sekmeli>
+    <div class="kb-form-bas kb-kap-dil">
+      <div class="kb-dil" role="group" aria-label="İçerik dili">
+        <button type="button" class="is-on" aria-pressed="true">TR · Türkçe</button>
+        <button type="button" disabled title="Çeviri ekranları sonraki aşamada">EN<span class="kd-etk">Sonraki aşama</span></button>
+        <button type="button" disabled title="Çeviri ekranları sonraki aşamada">AR<span class="kd-etk">Sonraki aşama</span></button>
+        <button type="button" disabled title="Çeviri ekranları sonraki aşamada">DE<span class="kd-etk">Sonraki aşama</span></button>
+      </div>
+      <span class="kfb-not">{I("fa-language")}Dil seçici ad, açıklama satırı, sayfa açıklaması ve SEO alanlarını değiştirir; kod, logo ve sıralar ortaktır.</span>
+    </div>
+    <div class="sa-form-tabs kb-kap-sekme" role="tablist">
+      <button type="button" class="sa-form-tab is-on" role="tab" aria-selected="true" data-panel="en{sid}Detay">{I("fa-circle-info")}Detay</button>
+      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="en{sid}Seo">{I("fa-magnifying-glass-chart")}SEO</button>
+    </div>
+    <div class="sa-form-panel" id="en{sid}Detay">
+      <div class="kb-fs">
+        <div class="kb-fs-tt">Temel Bilgiler</div>
+        <div class="frow"><label for="en{sid}-ad">Ad</label><input class="finput" id="en{sid}-ad" data-alan-id="ad" data-alan="baslik" data-sayac="20|28" value="{e(ad)}" placeholder="ör. Dolar">
+          <div class="char-meter"><span>Şeritte ve ana sayfa piyasa kutusunda</span><b>0 / 20</b></div>
+          <div class="ferr">{I("fa-circle-exclamation")}Ad zorunlu.</div></div>
+        <div class="form-grid kb-iki-sutun">
+          <div class="frow"><label for="en{sid}-kod">Kısa Kod</label><input class="finput" id="en{sid}-kod" data-alan-id="kod" data-sayac="4|5" value="{e(kisa)}" placeholder="ör. USD">
+            <div class="char-meter"><span>Tabloda ve logo yoksa rozette</span><b>0 / 4</b></div>
+            <div class="ferr">{I("fa-circle-exclamation")}Kısa kod zorunlu.</div></div>
+          <div class="frow"><span class="flabel">Tür</span>{secim("en" + sid + "Tur", turler, deger=tur, bos="Tür seçin", ek=' data-alan-id="tur" data-zorunlu-metin="Enstrümanın türünü seçin"')}
+            <span class="fhint">Sitede hangi piyasa sayfasında listeleneceğini belirler.</span>
+            <div class="ferr">{I("fa-circle-exclamation")}Enstrümanın türünü seçin.</div></div>
+        </div>
+        <div class="frow"><label for="en{sid}-alt">Açıklama Satırı</label><input class="finput" id="en{sid}-alt" data-sayac="28|36" value="{e(alt)}" placeholder="ör. ABD Doları, TL · gram">
+          <div class="char-meter"><span>Tabloda kodun altında</span><b>0 / 28</b></div></div>
+        <div class="frow"><label for="en{sid}-sem">Veri Kaynağı Sembolü</label><input class="finput" id="en{sid}-sem" value="{e(sem)}"{" readonly" if x else ' placeholder="ör. USDTRY"'}>
+          <span class="fhint">{"Piyasa veri API'sindeki eşleşme; değişmez." if x else "Piyasa veri API'sindeki sembol; kaydedince değer çekilir."}</span></div>
+      </div>
+      <div class="kb-fs">
+        <div class="kb-fs-tt">Logo</div>
+        {gorsel_alani("enstruman_logo", "Enstrüman logosu", "Logo", "İsteğe bağlı · yoksa kısa kod rozeti", bos_yer,
+                      ("Logoyu sürükleyin ya da seçin", "1:1 · şeffaf PNG ya da SVG, en az 64×64 · döviz ve kriptoda daire, hissede kare · medya havuzuna girmez"),
+                      [("web.kart", "Tablo · 1:1", "r-1x1")], [("mobil.kart", "Mobil · 1:1", "r-1x1")],
+                      "Önerilen: <b>32×32</b> (piyasa tabloları), ana sayfa kutusunda 30×30.", "Önerilen: <b>32×32</b>.", dolu=dolu, cekmece=True)}
+      </div>
+      <div class="kb-fs">
+        <div class="kb-fs-tt">Görünüm</div>
+        <div class="toggle-row"><span>Şeritte Göster<small>Sitenin üst şeridinde; kur ve altında satış fiyatı</small></span><label class="toggle"><input type="checkbox"{" checked" if ser else ""} aria-label="Şeritte göster"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
+        {sira("ser", "Şerit", ser)}
+        <div class="toggle-row"><span>Widget'ta Göster<small>Ana sayfa piyasa kutusunda</small></span><label class="toggle"><input type="checkbox"{" checked" if wid else ""} aria-label="Widget'ta göster"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
+        {sira("wid", "Widget", wid)}
+      </div>
+      <div class="kb-fs">
+        <div class="kb-fs-tt">Enstrüman Sayfası</div>
+        <div class="frow"><label for="en{sid}-acik">Sayfa Açıklaması</label><textarea class="ftext" id="en{sid}-acik" rows="2" data-sayac="90|120" placeholder="ör. Borsa İstanbul'un 100 hisseden oluşan ana endeksi">{e(acik)}</textarea>
+          <div class="char-meter"><span>Enstrüman sayfasının başında, adın üstünde</span><b>0 / 90</b></div></div>
+        {gorsel_alani("enstruman_kapak", "Sayfa kapağı", "Sayfa Kapağı", "İsteğe bağlı · yoksa koyu zemin", I("fa-panorama"),
+                      ("Sayfa kapağını sürükleyin ya da seçin", "Enstrüman sayfasının başında tam genişlik · web 1440×496, mobil 390×467"),
+                      [("web.detay", "Enstrüman sayfası · 2.9:1", "2.9/1")], [("mobil.kart", "Telefon · 5:6", "5/6")],
+                      "Önerilen: <b>1440×496</b>; solda ad durur, odağı sağa koyun.", "Önerilen: <b>390×467</b>.", havuz=True, cekmece=True,
+                      dolu=("../../veri/gorsel/p133.jpg", "60% 50%", "Yüklenen: 1200×800 JPG.") if eid == "xu100" else None)}
+      </div>
+    </div>
+    <div class="sa-form-panel" id="en{sid}Seo" hidden>
+      <div class="kb-fs">
+        <div class="kb-fs-tt">Arama Motoru</div>
+        <div class="frow"><label for="en{sid}-seob">SEO Başlığı</label>
+          <input class="finput" id="en{sid}-seob" data-alan="seo-baslik" data-sayac="60|70" value="{e(seo_b)}">
+          <div class="char-meter"><span>Arama sonucunda görünen başlık · addan üretildi</span><b>0 / 60</b></div></div>
+        <div class="frow"><label for="en{sid}-seoa">SEO Açıklaması</label>
+          <textarea class="ftext" id="en{sid}-seoa" data-alan="seo-aciklama" data-sayac="155|170">{e(seo_a)}</textarea>
+          <div class="char-meter"><span>Arama sonucunda başlığın altında</span><b>0 / 155</b></div></div>
+        <div class="frow"><label for="en{sid}-slug">Adres</label>
+          <div class="slug-wrap"><span class="slug-pre">dadahaber.com/piyasa/</span><input class="finput" id="en{sid}-slug" data-alan="slug" value="{e(slug)}"></div>
+          <span class="fhint">Değiştirilirse eski adres yeniye yönlendirilir.</span></div>
+        <div class="frow"><span class="flabel">Arama Sonucu Önizlemesi</span>
+          <div class="serp"><div class="serp-url"><span class="serp-fav kb-logo-isaret"></span><span>dadahaber.com › piyasa › <span data-alan="slug">{e(slug)}</span></span></div>
+          <div class="serp-title" data-alan="seo-baslik">{e(seo_b)}</div><div class="serp-desc" data-alan="seo-aciklama">{e(seo_a)}</div></div></div>
+      </div>
+    </div>
+  </div>
+"""
+
+
+def en_sablonlar(x):
+    eid, ad, kisa, alt, sem, tur, logo, deg, ser, wid, acik = x
+    return f"""<template id="enGor-{eid}" data-baslik="{e(ad)}" data-alt="{EN_TUR[tur][0]} · {e(kisa)} · 15 dk gecikmeli">
+  <div class="kb-fs"><div class="rcp-cell">{en_isaret(x)}<div class="rcp-id"><div class="rcp-name">{e(ad)}</div><div class="rcp-by">{e(kisa)} · {e(alt)}</div></div></div>
+    <div class="sa-durum">
+      <div><span>Son Değer</span><b>{e(deg)}</b></div><div><span>Tür</span><b>{EN_TUR[tur][0]}</b></div>
+      <div><span>Şerit</span><b>{f"{ser}. sıra" if ser else "Gösterilmiyor"}</b></div><div><span>Widget</span><b>{f"{wid}. sıra" if wid else "Gösterilmiyor"}</b></div>
+      <div><span>Logo</span><b>{"Yüklü" if logo else "Yok · kısa kod rozeti"}</b></div><div><span>Veri Kaynağı</span><b>Piyasa veri API · {e(sem)}</b></div>
+    </div></div>
+  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="enDz-{eid}">{I("fa-pen")}Düzenle</button></div>
+</template>
+<template id="enDz-{eid}" data-baslik="{e(ad)} · Düzenle" data-alt="Enstrüman · sonraki güncellemede sitede" data-zorunlu-kayit="ozel-dikeyler.enstruman">
+{en_form(eid, x)}  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="enGor-{eid}" data-bildir-sonra="Enstrüman kaydedildi; şeritte ve piyasa sayfalarında sonraki güncellemede görünür, önceki hal denetim izinde">{I("fa-floppy-disk")}Kaydet</button></div>
+</template>
+"""
+
+
+def en_liste():
+    canli = [x for x in ENST if x[0] not in EN_COP]
+    gorunum = [("", "Bütün Görünümler", ""), ("serit", "Şeritte", str(EN_SERIT)), ("widget", "Widget'ta", str(EN_WIDGET)), ("sayfa", "Yalnız Sayfada", str(sum(1 for x in canli if not x[8] and not x[9])))]
+    bos_eylem = chr(10) + '            <button type="button" class="pe-tag" data-tanim="enYeni">' + I("fa-plus") + 'Yeni Enstrüman</button>'
+    durumlar = " ".join(EN_TUR)
+    return f"""      <div class="form-sec">
+        <div class="form-sec-tt">{I("fa-coins")}Enstrümanlar<span class="fs-ek">Değer kaynaktan gelir; ad, logo, görünüm ve sıra buradan</span></div>
+        <div class="kb-bant bilgi">{I("fa-circle-info")}<span><b>{len(canli)} enstrüman · {EN_SERIT} şeritte · {EN_WIDGET} widget'ta.</b> Değişiklik bir sonraki güncellemede sitede görünür; logo yoksa kısa kod rozeti çıkar.</span><button type="button" class="btn btn-acc btn-sm kb-bant-eylem" data-tanim="enYeni">{I("fa-plus")}Yeni Enstrüman</button></div>
+        <div data-liste data-liste-ad="enstrüman" data-sayfa-boy="25" data-liste-cop-not="Enstrüman şeritten, widget'tan ve piyasa sayfalarından kalkar; Çöp sekmesine taşınır" aria-label="Piyasa enstrümanları">
+          <h2 class="sr-only">Piyasa enstrümanları</h2>
+          <div class="kb-liste-ust">
+            <div class="chips" role="tablist" aria-label="Türe göre">
+              <button type="button" class="chip is-on" role="tab" aria-selected="true" data-sekme="hepsi">Tümü<span class="ch-cnt">0</span></button>
+              {"".join(f'<button type="button" class="chip" role="tab" aria-selected="false" data-sekme="{k}">{v[0]}<span class="ch-cnt">0</span></button>' for k, v in EN_TUR.items())}
+            </div>
+            <button type="button" class="chip kb-cop" role="tab" aria-selected="false" data-sekme="cop">{I("fa-trash")}Çöp<span class="ch-cnt">0</span></button>
+          </div>
+          <div class="filter-bar">
+            <div class="fb-search">{I("fa-magnifying-glass")}<label class="sr-only" for="enAra">Enstrümanlarda Ara</label><input id="enAra" type="search" data-liste-ara placeholder="Ad, kod ya da sembol ara" autocomplete="off"></div>
+            {secim("enSuzGor", gorunum, etk="Görünüm:", bos="Tümü", suz="gorunum")}
+            <button type="button" class="kb-suz-temizle" data-suz-temizle hidden>Süzgeçleri Temizle</button>
+          </div>
+          <div class="kb-toplu" hidden>
+            <b data-secili-say>0 enstrüman seçildi</b><span class="kb-toplu-ayir"></span>
+            <button type="button" class="btn btn-ghost btn-sm danger" data-toplu="cop">{I("fa-trash")}<span>Çöpe Taşı</span></button>
+            <button type="button" class="kb-suz-temizle" data-secim-temizle>Seçimi Temizle</button>
+          </div>
+          <div class="ptable-wrap"><table class="ptable">
+            <thead><tr><th class="kb-sec-hucre"><input type="checkbox" class="kb-onay-kutu" data-hepsini-sec aria-label="Görünen bütün enstrümanları seç"></th><th class="kb-ana">Enstrüman</th><th class="say kb-gizle-m">Son Değer</th><th class="say">Şerit</th><th class="say kb-gizle-m">Widget</th><th><span class="sr-only">İşlemler</span></th></tr></thead>
+            <tbody data-satirlar>{"".join(en_satir(x) for x in ENST)}</tbody>
+{durum_govdeleri(6, "fa-coins", "Henüz enstrüman yok", "Piyasa veri API'sinden enstrüman ekleyin; şeritte ve piyasa sayfalarında görünür.", "Enstrümanlar yüklenemedi", "Piyasa veri API yanıt vermiyor. Entegrasyonlar ekranından bağlantıyı kontrol edin.", bos_eylem=bos_eylem, iskelet='<td></td><td><div class="rcp-cell"><span class="ks-gorsel"></span><div class="rcp-id"><span></span></div></div></td><td class="kb-gizle-m"><span></span></td><td><span></span></td><td class="kb-gizle-m"><span></span></td><td></td>', yeniden="veri.html")}          </table></div>
+{pager()}
+          <div class="pnl-menu kb-diger-menu" role="menu">
+            <div class="kb-dm-grup" data-durum-icin="{durumlar}">Enstrüman</div>
+            <button type="button" data-durum-icin="{durumlar}" data-bildir="Enstrüman sayfası sitede açılır (prototip)">{I("fa-arrow-up-right-from-square")}Sitede Görüntüle</button>
+            <button type="button" data-durum-icin="{durumlar}" data-onay-baslik="Değer kaynaktan yenilensin mi?" data-onay-metin="Son değer piyasa veri API'sinden yeniden çekilir; ad, logo ve sıralar korunur." data-onay-evet="Yenile" data-onay-ikon="fa-rotate" data-bildir-sonra="Enstrüman verisi kuyruğa alındı">{I("fa-rotate")}API'den Yenile</button>
+            <button type="button" data-durum-icin="{durumlar}" data-roller="super gyy" data-bildir="Denetim izi bu enstrümana süzülerek açılır (prototip)">{I("fa-clipboard-list")}Denetim İzinde Gör</button>
+            <button type="button" data-durum-icin="cop" data-geri-al>{I("fa-rotate-left")}Çöpten Geri Al</button>
+            <button type="button" class="danger" data-durum-icin="cop" data-kalici-sil>{I("fa-trash-can")}Kalıcı Olarak Sil</button>
+          </div>
+        </div>
+      </div>
+"""
+
+
+def en_yeni():
+    return f"""<template id="enYeni" data-baslik="Yeni Enstrüman" data-alt="Piyasa veri API'sinden · şeritte ve sayfalarda" data-zorunlu-kayit="ozel-dikeyler.enstruman">
+{en_form("yeni")}  <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-acc btn-sm" data-sablon-ac="enEklendi" data-bildir-sonra="Enstrüman eklendi; değer kaynaktan çekiliyor, denetim izine yazıldı">{I("fa-plus")}Ekle</button></div>
+</template>
+<template id="enEklendi" data-baslik="Enstrüman eklendi" data-alt="Listede ve piyasa sayfalarında">
+  <div class="pnl-empty"><div class="pe-ico">{I("fa-circle-check")}</div><h2>Enstrüman eklendi</h2><p>Değeri bir sonraki güncellemede kaynaktan gelir; listeden düzenleyip silebilirsiniz.</p></div>
+</template>
+{"".join(en_sablonlar(x) for x in ENST)}"""
+
+
 def sayfa_veri():
     pyasa = soz["piyasa"]["araclar"]
     serit = [a["ad"] for a in pyasa if a.get("serit")]
@@ -1078,7 +1382,10 @@ def sayfa_veri():
     s = bas("Veri Bantları", "veri")
     s += f"""
 <!-- VERİ BANTLARI (D4, ayar ekranı kalıbı): piyasa, hava, namaz vakitleri, deprem. Her birinde kaynak önceliği, güncelleme periyodu,
-     önbellek süresi, hata davranışı; durumlar kb-saglik dilinde. Bağlantı ve API anahtarı Entegrasyonlar'da (gizli değer burada yok). -->
+     önbellek süresi, hata davranışı; durumlar kb-saglik dilinde. Bağlantı ve API anahtarı Entegrasyonlar'da (gizli değer burada yok).
+     Piyasa sekmesinde enstrüman listesi (sayfadaki tek liste; emsal Canlı Masa › Akış): kayıt çekmecede (Detay · SEO), logo
+     (ozel-dikeyler.enstruman_logo; yoksa kısa kod rozeti), şerit ve widget görünürlüğü ile sırası, sayfa kapağı (enstruman_kapak).
+     Liste işlemleri anında uygulanır, kaydet çubuğuna girmez; şeritte görünenler "Şerit" sütunundan gelir (eski çip girişi kalktı). -->
 <main class="pnl-main" id="icerik">
   <div class="pnl-page-head">
     <div>
@@ -1093,7 +1400,7 @@ def sayfa_veri():
   <section class="pnl-card dash-row" aria-labelledby="vbDurum">
     <div class="pc-head"><h2 class="pc-title" id="vbDurum">{I("fa-signal")}Bant Durumu</h2><span class="kb-kap-alt">Son kontrol 16.04</span></div>
     <div class="pc-body"><div class="kb-saglik-izgara">
-      <a class="kb-saglik" href="veri.html?sekme=vbPiyasa"><span class="kb-saglik-bas"><span class="status-nokta"></span>Piyasa</span><span class="kb-saglik-deger">{soz["piyasa"]["guncelleme"]}</span><span class="kb-saglik-meta">{len(pyasa)} araç · 15 dk gecikmeli · Dolar {next(a["deger"] for a in pyasa if a["ad"] == "Dolar")}</span></a>
+      <a class="kb-saglik" href="veri.html?sekme=vbPiyasa"><span class="kb-saglik-bas"><span class="status-nokta"></span>Piyasa</span><span class="kb-saglik-deger">{soz["piyasa"]["guncelleme"]}</span><span class="kb-saglik-meta">{len(ENST) - len(EN_COP)} enstrüman · 15 dk gecikmeli · Dolar {next(a["deger"] for a in pyasa if a["ad"] == "Dolar")}</span></a>
       <a class="kb-saglik uyari" href="veri.html?sekme=vbHava"><span class="kb-saglik-bas"><span class="status-nokta"></span>Hava</span><span class="kb-saglik-deger">16.00</span><span class="kb-saglik-meta">81 il · İstanbul {h["sicaklik"]}°, {h["durum"].lower()} · turuncu kod uyarısı şeritte</span></a>
       <a class="kb-saglik" href="veri.html?sekme=vbNamaz"><span class="kb-saglik-bas"><span class="status-nokta"></span>Namaz Vakitleri</span><span class="kb-saglik-deger">00.10</span><span class="kb-saglik-meta">81 il ve 40 yurt dışı şehri · günde bir</span></a>
       <a class="kb-saglik" href="veri.html?sekme=vbDeprem"><span class="kb-saglik-bas"><span class="status-nokta"></span>Deprem</span><span class="kb-saglik-deger">13.58</span><span class="kb-saglik-meta">Son: Sındırgı (Balıkesir) 2,8 · en büyük 4,1 · AFAD</span></a>
@@ -1115,13 +1422,8 @@ def sayfa_veri():
       <div class="form-sec">
         <div class="form-sec-tt">{I("fa-clock")}Güncelleme</div>
 {periyot("vbP", 1, "Dakika", 60, "Saniye", gecikme=15)}        <div class="toggle-row kb-ust-bosluk"><span>Piyasa Kapalıyken Çekme<small>Hafta sonu ve resmî tatilde son kapanış gösterilir; kaynak kotası harcanmaz</small></span><label class="toggle"><input type="checkbox" checked aria-label="Piyasa Kapalıyken Çekme"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
-      </div>
-      <div class="form-sec">
-        <div class="form-sec-tt">{I("fa-arrow-right-arrow-left")}Şeritte Görünenler<span class="fs-ek">Sitenin üst şeridi · sırası buradaki sıra</span></div>
-        <div class="kb-cip-girdi" data-havuz-kapali data-havuz='{e(havuz)}'>{cip}<input type="text" placeholder="Araç ekle" aria-label="Şeride araç ekle"><div class="pnl-menu kb-cip-oneri"></div></div>
-        <span class="fhint">Kur ve altında satış fiyatı gösterilir ve “satış” etiketi taşır. Araç listesi kaynaktan gelir.</span>
 {hata_davranis("vbP")}      </div>
-    </div>
+{en_liste()}    </div>
 
     <div class="sa-form-panel" id="vbHava" role="tabpanel" hidden>
       <div class="form-sec">
@@ -1176,8 +1478,249 @@ def sayfa_veri():
   </div>
 </main>
 </div>
+{en_yeni()}"""
+    s += son()
+    return s
+
+
+# ================================================================== BURÇLAR (kimlik görselleri işi, Beyar 25.11.2026)
+# Alanlar public sitenin astroloji.html (12'li ızgara: ikon, ad, tarih aralığı; günlük yorum dört başlık) ve burc.html (kapak, başlık, spot,
+# yazar, element, nitelik, yönetici gezegen, sembol, günlük yorum, rehber metni) sayfalarından. 12 burç sabittir: eklenmez, silinmez.
+ELEMENT = {"Ateş": "fa-fire", "Toprak": "fa-mountain", "Hava": "fa-wind", "Su": "fa-droplet"}  # sitedeki ızgara ikonları (astroloji.html .bz-izg)
+NITELIK = ["Öncü", "Sabit", "Değişken"]
+GEZEGEN = ["Güneş", "Ay", "Merkür", "Venüs", "Mars", "Jüpiter", "Satürn", "Uranüs", "Neptün", "Plüton"]
+AY_KISA = ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"]
+AY_UZUN = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"]
+BURCLAR = [
+    # id, ad, başlangıç (gün, ay), bitiş, element, nitelik, yönetici gezegen, günlük yorum (bugün yayımlandı mı)
+    ("koc", "Koç", (21, 3), (19, 4), "Ateş", "Öncü", "Mars", True), ("boga", "Boğa", (20, 4), (20, 5), "Toprak", "Sabit", "Venüs", True),
+    ("ikizler", "İkizler", (21, 5), (20, 6), "Hava", "Değişken", "Merkür", True), ("yengec", "Yengeç", (21, 6), (22, 7), "Su", "Öncü", "Ay", True),
+    ("aslan", "Aslan", (23, 7), (22, 8), "Ateş", "Sabit", "Güneş", True), ("basak", "Başak", (23, 8), (22, 9), "Toprak", "Değişken", "Merkür", True),
+    ("terazi", "Terazi", (23, 9), (22, 10), "Hava", "Öncü", "Venüs", True), ("akrep", "Akrep", (23, 10), (21, 11), "Su", "Sabit", "Plüton", False),
+    ("yay", "Yay", (22, 11), (21, 12), "Ateş", "Değişken", "Jüpiter", True), ("oglak", "Oğlak", (22, 12), (19, 1), "Toprak", "Öncü", "Satürn", True),
+    ("kova", "Kova", (20, 1), (18, 2), "Hava", "Sabit", "Uranüs", False), ("balik", "Balık", (19, 2), (20, 3), "Su", "Değişken", "Neptün", False),
+]
+BURC_GORSEL = {"koc": "../../veri/gorsel/kucuk/p188.jpg"}  # yalnız Koç'un görseli yüklü (sitede burc.html kapağı p188); diğerlerinde element ikonu
+BURC_YORUM = [  # public burc.html · Koç · 23.11.2026 08.00 · Seda Uslu
+    ("genel", "Genel", "fa-sun", "Gün, yarım kalan işleri toparlamak için uygun. Planladığın bir konuşmayı ertelemek yerine sakin bir dille başlatabilirsin."),
+    ("ask", "Aşk ve İlişkiler", "fa-heart", "Yakın çevrende biriyle aranızdaki küçük bir yanlış anlaşılma netleşebilir. Dinlemeye ayırdığın zaman ilişkiyi rahatlatır."),
+    ("is", "İş ve Para", "fa-briefcase", "Ekip içinde sorumluluk paylaşımı gündeme gelebilir. Harcamalarda acele etmemek bu hafta için iyi bir tercih."),
+    ("saglik", "Sağlık ve Enerji", "fa-heart-pulse", "Enerjin yüksek ama dağınık. Kısa yürüyüşler ve düzenli uyku günü dengelemene yardımcı olur."),
+]
+BURC_METIN = ("<p>Koç, zodyak kuşağının ilk burcudur ve 21 Mart ile 19 Nisan arasında doğanları kapsar. Geleneksel astrolojide ateş elementiyle ve Mars gezegeniyle ilişkilendirilir.</p>"
+              "<h2>Koç burcunun genel özellikleri</h2><p>Astroloji geleneğinde Koç burcu girişkenlik, cesaret ve yeni bir işe ilk adımı atma isteğiyle tanımlanır. Aynı gelenek, sabırsızlığı ve acele karar vermeyi bu burcun zorlandığı yönler olarak sayar.</p>"
+              "<h2>Aşkta ve ilişkilerde</h2><p>Burç yorumlarında Koç, ilişkilerde açık sözlü ve doğrudan olarak anlatılır. Ateş grubundaki Aslan ve Yay burçlarıyla uyumlu kabul edilir.</p>"
+              "<h2>İş hayatında</h2><p>Liderlik gerektiren, hızlı karar verilen ve rekabetin yüksek olduğu alanlar Koç burcuyla ilişkilendirilen çalışma ortamları arasında sayılır.</p>")
+
+
+def aralik(b):
+    (g1, a1), (g2, a2) = b[2], b[3]
+    return f"{g1} {AY_KISA[a1 - 1]} – {g2} {AY_KISA[a2 - 1]}"
+
+
+def burc_isaret(bid, ad, el, buyuk=False):
+    """burç görseli yüklenmişse o, yoksa element ikonu (sitedeki ızgara yer tutucusu)"""
+    k = " k-lg" if buyuk else ""
+    if bid in BURC_GORSEL and not buyuk:
+        return f'<span class="kb-ava" style="background-image:url({BURC_GORSEL[bid]})" role="img" aria-label="{e(ad)} burcu görseli"></span>'
+    return f'<span class="kb-ava{k}" title="Burç görseli yok; {el.lower()} elementinin ikonu gösteriliyor">{I(ELEMENT[el])}</span>'
+
+
+def sayfa_burclar():
+    rows = []
+    for b in BURCLAR:
+        bid, ad, _, _, el, nit, gez, yorum = b
+        site = SITE + ("burc.html" if bid == "koc" else f"burc.html?secim={bid}")
+        rows.append(f'<tr data-satir="bz-{bid}" data-durum="{"yayinda" if yorum else "eksik"}" data-element="{el}" data-ara="{e(ad + " " + el + " " + nit + " " + gez)}" data-baslik="{e(ad)}" data-href="burc.html?id={bid}">'
+                    f'<td class="kb-ana"><div class="rcp-cell">{burc_isaret(bid, ad, el)}<div class="rcp-id"><div class="rcp-name">{e(ad)}</div><div class="rcp-by">{aralik(b)}</div></div></div></td>'
+                    f'<td class="kb-gizle-m">{I(ELEMENT[el])} {el}</td>'
+                    f'<td class="kb-gizle-t">{nit}</td>'
+                    f'<td class="kb-gizle-t">{gez}</td>'
+                    f'<td>{"<span class=\"pstat ok\">Bugün 08.00</span>" if yorum else "<span class=\"pstat wait\">Bugün girilmedi</span>"}</td>'
+                    f'<td>{row_acts(("href", site), ("href", f"burc.html?id={bid}", "ozel-dikeyler.burc"), None, gor_ad="Sitede Görüntüle")}</td></tr>')
+    elemanlar = [("", "Bütün Elementler", "")] + [(k, k, str(sum(1 for b in BURCLAR if b[4] == k))) for k in ELEMENT]
+    eksik = sum(1 for b in BURCLAR if not b[7])
+    s = bas("Burçlar", "burclar")
+    s += f"""
+<!-- BURÇLAR (kimlik görselleri işi): 12 burç sabittir (eklenmez, silinmez); satır → Burç Düzenle sayfası (satır → sayfa).
+     Burç görseli yoksa sitedeki ızgarada ve listede element ikonu görünür. Günlük yorum her gün burç sayfasından girilir. -->
+<main class="pnl-main" id="icerik">
+  <div class="pnl-page-head">
+    <div>
+      <h1>Burçlar</h1>
+      <div class="ph-sub">12 burç · bugünün yorumu {12 - eksik} burçta yayında, {eksik} burçta girilmedi · sitede Kadın › Astroloji</div>
+    </div>
+    <div class="ph-actions">
+      <a class="btn btn-ghost btn-sm" href="{SITE}astroloji.html" target="_blank" rel="noopener">{I("fa-arrow-up-right-from-square")}Astroloji Sayfası</a>
+    </div>
+  </div>
+
+  <div class="kb-bant bilgi dash-row">{I("fa-lock")}<span><b>12 burç sabittir; eklenmez ve silinmez.</b> Ad, tarih aralığı, element, görsel ve rehber metni burç sayfasından düzenlenir; günlük yorum her sabah aynı sayfadan girilir ve sitede astroloji sayfasında, burç sayfasında görünür.</span></div>
+
+  <section class="pnl-card" data-liste data-liste-ad="burç" data-sayfa-boy="25" aria-labelledby="bzListeBas">
+    <h2 class="sr-only" id="bzListeBas">Burç listesi</h2>
+    <div class="kb-liste-ust">
+      <div class="chips" role="tablist" aria-label="Günlük yoruma göre">
+        <button type="button" class="chip is-on" role="tab" aria-selected="true" data-sekme="hepsi">Tümü<span class="ch-cnt">0</span></button>
+        <button type="button" class="chip" role="tab" aria-selected="false" data-sekme="yayinda">Yorum Yayında<span class="ch-cnt">0</span></button>
+        <button type="button" class="chip" role="tab" aria-selected="false" data-sekme="eksik">Yorum Girilmedi<span class="ch-cnt">0</span></button>
+      </div>
+    </div>
+    <div class="filter-bar">
+      <div class="fb-search">{I("fa-magnifying-glass")}<label class="sr-only" for="bzAra">Burçlarda Ara</label><input id="bzAra" type="search" data-liste-ara placeholder="Burç, element ya da gezegen ara" autocomplete="off"></div>
+      {secim("bzSuzEl", elemanlar, etk="Element:", bos="Tümü", suz="element")}
+      <button type="button" class="kb-suz-temizle" data-suz-temizle hidden>Süzgeçleri Temizle</button>
+    </div>
+    <div class="ptable-wrap"><table class="ptable">
+      <thead><tr><th class="kb-ana">Burç</th><th class="kb-gizle-m">Element</th><th class="kb-gizle-t">Nitelik</th><th class="kb-gizle-t">Yönetici Gezegen</th><th>Günlük Yorum</th><th><span class="sr-only">İşlemler</span></th></tr></thead>
+      <tbody data-satirlar>{"".join(rows)}</tbody>
+{durum_govdeleri(6, "fa-star", "Burç bulunamadı", "12 burç kurulumda gelir; liste boşsa sayfayı yenileyin.", "Burçlar yüklenemedi", "Sunucuya ulaşılamadı. Bağlantınızı kontrol edip yeniden deneyin.", iskelet='<td><div class="rcp-cell"><span class="ks-gorsel"></span><div class="rcp-id"><span></span></div></div></td><td class="kb-gizle-m"><span></span></td><td class="kb-gizle-t"><span></span></td><td class="kb-gizle-t"><span></span></td><td><span></span></td><td></td>', yeniden="burclar.html")}    </table></div>
+{pager(sayfalar=False)}
+    <div class="pnl-menu kb-diger-menu" role="menu">
+      <div class="kb-dm-grup">Burç</div>
+      <button type="button" data-durum-icin="eksik" data-bildir="Dünkü yorum bugünün tarihiyle taslak olarak kopyalandı (prototip)">{I("fa-copy")}Dünkü Yorumu Kopyala</button>
+      <button type="button" data-kopyala>{I("fa-link")}Bağlantıyı Kopyala</button>
+      <button type="button" data-roller="super gyy" data-bildir="Denetim izi bu burca süzülerek açılır (prototip)">{I("fa-clipboard-list")}Denetim İzinde Gör</button>
+    </div>
+  </section>
+</main>
+</div>
 """
     s += son()
+    return s
+
+
+def sayfa_burc():
+    b = BURCLAR[0]
+    bid, ad, (g1, a1), (g2, a2), el, nit, gez, _ = b
+    elem = "".join(f'<label class="kb-secenek"><input type="radio" name="bzEl" value="{k}"{" checked" if k == el else ""}>{I(v)}{k}</label>' for k, v in ELEMENT.items())
+    nite = "".join(f'<label class="kb-secenek"><input type="radio" name="bzNit" value="{k}"{" checked" if k == nit else ""}>{k}</label>' for k in NITELIK)
+    gezo = [(g, g, "") for g in GEZEGEN]
+    yazar = [(y["ad"], y["ad"], y.get("unvan", "")) for y in soz["yazarlar"]]
+    yorum = "".join(f'<div class="frow"><label for="bzY-{k}">{I(ik)} {a}</label><textarea class="ftext" id="bzY-{k}" rows="3" data-sayac="200|260">{e(t)}</textarea>'
+                    f'<div class="char-meter"><span>Akordeonda “{a}” başlığı altında</span><b>0 / 200</b></div></div>' for k, a, ik, t in BURC_YORUM)
+    s = bas("Burç Düzenle", "burc")
+    s += f"""
+<!-- BURÇ DÜZENLE (kimlik görselleri işi): Detay · SEO (burç sayfası sitede var). Alanlar public burc.html ve astroloji.html'den.
+     Burç görseli (ozel-dikeyler.burc; fotoğraf: havuzdan seçilir, yüklemede etiketlenir): burç sayfasının başı + ızgara; yoksa element ikonu.
+     Tarih aralığı iki saatsiz özel tarih seçici (yıl dikkate alınmaz); element ve nitelik bölmeli seçici (KURAL · seçenek grubu), gezegen
+     aranabilir liste; rehber metni zengin metin editörü. Zorunlular kayıtta: ozel-dikeyler.burc. Burç eklenmez ve silinmez (?yeni yok). -->
+<main class="pnl-main" id="icerik">
+  <div class="pnl-page-head">
+    <div>
+      <h1>Burç Düzenle</h1>
+      <div class="ph-sub">{ad} · {g1} {AY_UZUN[a1 - 1]} – {g2} {AY_UZUN[a2 - 1]} · bugünün yorumu 08.00'de yayımlandı · 3,3 B görüntülenme</div>
+    </div>
+    <div class="ph-actions">
+      <a class="btn btn-ghost btn-sm" data-hedef="ozel-dikeyler.burclar" href="burclar.html">{I("fa-arrow-left")}Burçlara Dön</a>
+      <a class="btn btn-ghost btn-sm" href="{SITE}burc.html" target="_blank" rel="noopener">{I("fa-arrow-up-right-from-square")}Sitede Görüntüle</a>
+    </div>
+  </div>
+
+  <div class="form-layout">
+  <section class="pnl-card" id="bzForm" data-form data-sekmeli data-zorunlu-kayit="ozel-dikeyler.burc" aria-label="Burç formu">
+{dil_secici("Dil seçici ad, başlık, açıklama, günlük yorum, rehber metni ve SEO alanlarını birlikte değiştirir; tarih aralığı, element, gezegen ve görsel bütün dillerde ortaktır.")}
+    <div class="sa-form-tabs" role="tablist" aria-label="Düzenleme sekmeleri">
+      <button type="button" class="sa-form-tab is-on" role="tab" aria-selected="true" data-panel="pDetay">{I("fa-file-lines")}Detay</button>
+      <button type="button" class="sa-form-tab" role="tab" aria-selected="false" data-panel="pSeo">{I("fa-magnifying-glass-chart")}SEO</button>
+    </div>
+
+    <div class="sa-form-panel" id="pDetay" role="tabpanel">
+      <div class="form-sec">
+        <div class="form-grid kb-iki-sutun">
+          <div class="frow"><label for="bzAd">Ad</label>
+            <input class="finput kb-buyuk" id="bzAd" data-alan-id="ad" data-alan="baslik" data-sayac="12|16" value="{ad}">
+            <div class="char-meter"><span>Izgarada, listede ve burç sayfasında</span><b>0 / 12</b></div>
+            <div class="ferr">{I("fa-circle-exclamation")}Ad zorunlu.</div></div>
+          <div class="frow"><label for="bzSembol">Sembol</label>
+            <input class="finput" id="bzSembol" data-sayac="16|24" value="{ad}">
+            <div class="char-meter"><span>Burç sayfasının başındaki dört kutudan biri</span><b>0 / 16</b></div></div>
+        </div>
+        <div class="frow kb-ust-bosluk"><label for="bzBaslik">Sayfa Başlığı</label>
+          <input class="finput" id="bzBaslik" data-sayac="60|80" value="{ad} burcu rehberi">
+          <div class="char-meter"><span>Addan üretilir · burç sayfasının başlığı</span><b>0 / 60</b></div></div>
+        <div class="frow kb-ust-bosluk"><label for="bzSpot">Kısa Açıklama</label>
+          <textarea class="ftext" id="bzSpot" rows="2" data-sayac="160|200">{g1} {AY_UZUN[a1 - 1]} – {g2} {AY_UZUN[a2 - 1]} arasında doğanların burcu {ad}; günlük yorum, genel özellikler ve uyumlu burçlar.</textarea>
+          <div class="char-meter"><span>Burç sayfasında başlığın altında; paylaşımda açıklama</span><b>0 / 160</b></div></div>
+      </div>
+      <div class="form-sec">
+        <div class="form-sec-tt">{I("fa-calendar-days")}Tarih Aralığı<span class="fs-ek">Her yıl tekrar eder; yıl dikkate alınmaz</span></div>
+        <div class="form-grid kb-iki-sutun">
+          <div class="frow"><span class="flabel">Başlangıç</span>
+            <div class="kb-tarih-sec" id="bzBas" data-saatsiz data-alan-id="baslangic" data-deger="2026-{a1:02d}-{g1:02d}" data-bos="Gün seçin" data-zorunlu-metin="Burcun başladığı günü seçin">
+              <button type="button" class="kb-tarih-btn" data-acilir="bzBasMenu" aria-expanded="false" aria-haspopup="dialog">{I("fa-calendar-days")}<span class="kt-deger"></span></button>
+              <div class="pnl-menu kb-tarih-menu" id="bzBasMenu" role="dialog" aria-label="Başlangıç günü seç"></div></div>
+            <div class="ferr">{I("fa-circle-exclamation")}Burcun başladığı günü seçin.</div></div>
+          <div class="frow"><span class="flabel">Bitiş</span>
+            <div class="kb-tarih-sec" id="bzBit" data-saatsiz data-alan-id="bitis" data-deger="2026-{a2:02d}-{g2:02d}" data-bos="Gün seçin" data-zorunlu-metin="Burcun bittiği günü seçin">
+              <button type="button" class="kb-tarih-btn" data-acilir="bzBitMenu" aria-expanded="false" aria-haspopup="dialog">{I("fa-calendar-days")}<span class="kt-deger"></span></button>
+              <div class="pnl-menu kb-tarih-menu" id="bzBitMenu" role="dialog" aria-label="Bitiş günü seç"></div></div>
+            <div class="ferr">{I("fa-circle-exclamation")}Burcun bittiği günü seçin.</div></div>
+        </div>
+        <span class="fhint">Sitede ızgarada “{aralik(b)}”, burç sayfasında “{g1} {AY_UZUN[a1 - 1]} – {g2} {AY_UZUN[a2 - 1]}” yazar.</span>
+      </div>
+      <div class="form-sec">
+        <div class="form-sec-tt">{I("fa-star")}Burç Özellikleri<span class="fs-ek">Burç sayfasının başındaki dört kutu</span></div>
+        <div class="frow"><span class="flabel">Element</span><div class="kb-secenek-grup" role="radiogroup" aria-label="Element" data-alan-id="element" data-zorunlu-metin="Elementi seçin">{elem}</div>
+          <span class="fhint">Burç görseli yoksa ızgarada ve listede elementin ikonu görünür.</span>
+          <div class="ferr">{I("fa-circle-exclamation")}Elementi seçin.</div></div>
+        <div class="form-grid kb-iki-sutun kb-ust-bosluk">
+          <div class="frow"><span class="flabel">Nitelik</span><div class="kb-secenek-grup" role="radiogroup" aria-label="Nitelik">{nite}</div></div>
+          <div class="frow"><span class="flabel">Yönetici Gezegen</span>{secim("bzGez", gezo, deger=gez, bos="Gezegen seçin", ara="Gezegen ara")}</div>
+        </div>
+      </div>
+{gorsel_alani("burc", "Burç görseli", "Burç Görseli", "İsteğe bağlı · yoksa element ikonu görünür", burc_isaret(bid, ad, el, True),
+              ("Burç görselini sürükleyin ya da seçin", "Burç sayfasının başı ve astroloji ızgarası · web 1248×520 (2.4:1) ve 48×48, mobil 390×652 (3:5) ve 48×48"),
+              [("web.detay", "Burç sayfası · 2.4:1", "r-detay"), ("web.kart", "Izgara · 1:1", "r-1x1")], [("mobil.detay", "Burç sayfası · 3:5", "3/5"), ("mobil.kart", "Izgara · 1:1", "r-1x1")],
+              "Önerilen: burç sayfası <b>1248×520</b>, ızgara <b>48×48</b> (daire).", "Önerilen: burç sayfası <b>390×652</b> (telefonda tam ekran), ızgara <b>48×48</b>.",
+              ikon="fa-image", havuz=True, dolu=("../../veri/gorsel/p188.jpg", "50% 45%", "Yüklenen: 1200×800 JPG, 179 KB."))}
+      <div class="form-sec">
+        <div class="form-sec-tt">{I("fa-calendar-day")}Günlük Yorum<span class="fs-ek">Astroloji sayfasında “Bugün” kutusunda ve burç sayfasında</span></div>
+        <div class="frow"><span class="flabel">Yayın Zamanı</span>
+          <div class="kb-tarih-sec" id="bzYayin" data-deger="2026-11-23 08.00" data-bos="Kaydedince o anın saati">
+            <button type="button" class="kb-tarih-btn" data-acilir="bzYayinMenu" aria-expanded="false" aria-haspopup="dialog">{I("fa-calendar-days")}<span class="kt-deger"></span></button>
+            <div class="pnl-menu kb-tarih-menu" id="bzYayinMenu" role="dialog" aria-label="Tarih ve saat seç"></div></div>
+          <span class="fhint">Yorum bu saatte yayına girer ve ertesi günün yorumu gelene kadar kalır.</span></div>
+        <div class="form-grid kb-iki-sutun kb-ust-bosluk">{yorum}</div>
+        <span class="fhint">Sitede yorumların altında “Burç yorumları eğlence ve kültür içeriğidir” uyarısı sabit durur; burada girilmez.</span>
+      </div>
+      <div class="form-sec">
+        <div class="form-sec-tt">{I("fa-align-left")}Rehber Metni<span class="fs-ek">Burç sayfasında günlük yorumun altında</span></div>
+        <div class="kb-editor" data-editor-ad="Rehber Metni">
+          <div class="kz-alan ke-alan" data-alan-id="metin" data-zorunlu-metin="Rehber metnini yazın">{BURC_METIN}</div>
+          <div class="kz-alt"><span data-kz-say></span><span>Sitede burç sayfasında</span></div>
+        </div>
+      </div>
+    </div>
+
+{seo_bolum("pSeo", "Koç burcu: özellikleri, günlük yorum ve uyumlu burçlar | Dada Haber", "21 Mart – 19 Nisan arasında doğanların burcu Koç; günlük burç yorumu, genel özellikler, aşk ve iş hayatı.", "dadahaber.com/astroloji/", "koc-burcu", ["koç burcu", "koç burcu günlük yorum", "koç burcu özellikleri"])}
+  </section>
+
+  <aside class="side-card" aria-label="Yayın">
+    <section class="pnl-card">
+      <div class="pc-head"><h2 class="pc-title">{I("fa-paper-plane")}Yayın</h2><span class="status-dot" data-state="yayinda" title="Yayında"></span></div>
+      <div class="pc-body sc-stack">
+        <div class="sc-field"><span class="flabel">Yazar</span>{secim("bzYazar", yazar, deger="Seda Uslu", bos="Yazar seçin", ara="Yazar ara")}<span class="fhint">Boş bırakılırsa kaydeden editör yazılır.</span></div>
+        <div class="sa-durum">
+          <div><span>Durum</span><b><span class="pstat ok">Yayında</span></b></div>
+          <div><span>Bugünün yorumu</span><b>23.11.2026 08.00</b></div>
+          <div><span>Görüntülenme · bugün</span><b>3,3 B</b></div>
+        </div>
+      </div>
+    </section>
+{seo_skor(86)}  </aside>
+  </div>
+
+  <div class="kb-kaydet" data-form-icin="bzForm">
+    <div class="kk-durum">{I("fa-circle-check")}<span>Kaydedildi · 23.11.2026 08.00 · Seda Uslu</span></div>
+    <div class="kk-sag">
+      <button type="button" class="btn btn-acc btn-sm" data-kaydet data-kaydet-metin="Kaydedildi" data-bildir="Burç kaydedildi; sitede burç sayfası ve astroloji ızgarası güncellendi, önceki hal denetim izinde">{I("fa-floppy-disk")}Kaydet</button>
+    </div>
+  </div>
+</main>
+</div>
+"""
+    s += son(editor=True)
     return s
 
 
@@ -1392,6 +1935,7 @@ def sayfa_ilan():
 
 if __name__ == "__main__":
     yaz = {"spor.html": sayfa_spor, "kulup.html": sayfa_kulup, "takvimler.html": sayfa_takvimler, "veri.html": sayfa_veri,
+           "burclar.html": sayfa_burclar, "burc.html": sayfa_burc,
            "ilanlar.html": sayfa_ilanlar, "ilan.html": sayfa_ilan}
     import sys
     secili = [a for a in sys.argv[1:] if a in yaz]  # ör. _uret.py spor.html → yalnız o sayfa
