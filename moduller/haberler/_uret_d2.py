@@ -332,7 +332,6 @@ def liste(ad, aria, sekme_list, ara_ph, suzler, toplu, basliklar, satirlar, menu
             f'<tbody data-durum-goster="hata" hidden><tr><td colspan="{n}"><div class="pnl-empty kb-hata"><div class="pe-ico">{I("fa-triangle-exclamation")}</div><h2>{e(bos["hata"])}</h2><p>Sunucuya ulaşılamadı. Bağlantınızı kontrol edip yeniden deneyin; sorun sürerse sistem yöneticisine haber verin.</p><a class="pe-tag" href="{bos["dosya"]}">{I("fa-rotate-right")}Yeniden dene</a></div></td></tr></tbody>\n'
             f'<tbody data-durum-goster="bos" hidden><tr><td colspan="{n}"><div class="pnl-empty"><div class="pe-ico">{I(bos["ikon"])}</div><h2>{e(bos["baslik"])}</h2><p>{e(bos["metin"])}</p>{bos["eylem"]}</div></td></tr></tbody>\n'
             f'</table></div>\n'
-            f'<div class="pager"><div class="pager-info">{e(bilgi)}</div><div class="pager-btns"><button type="button" class="pg-btn" disabled aria-label="Önceki sayfa">{I("fa-chevron-left")}</button><button type="button" class="pg-btn is-on" aria-current="page">1</button><button type="button" class="pg-btn pg-sayi" data-bildir-pg>2</button><button type="button" class="pg-btn" data-bildir-pg aria-label="Sonraki sayfa">{I("fa-chevron-right")}</button></div></div>\n'
             f'<div class="pnl-menu kb-diger-menu" role="menu">{menu}</div>\n</{etk_}>\n')
 
 def tr(kimlik, durum, ara, baslik, hucreler, eylemler, href=None, secim_kutu=True, **data):
@@ -481,7 +480,7 @@ def sd_form(onek, kayit=None):
           + kfs("Son Dakika", girdi(f"{onek}B", "Başlık", b, "baslik", "90|110", "Şeritte tek satır · 90 karaktere kadar tam görünür", ph="ör. İstanbul Valiliği: okullar 24 Kasım'da da tatil", hata="Başlık zorunlu.")
                 + frow("Kategori", secim(f"{onek}K", sd_kat_secenek(), kat, "Kategori seçin", "Kategori ara", alan_id="kategori", bos_metin="Bu adla kategori yok."), ipucu="Şeritte başlığın önündeki etiket.", hata="Kategori zorunlu.")
                 + frow("Bağlı haber", secim(f"{onek}H", [("", "Bağlı haber yok")] + haber_sec_secenek(), bag, "Bağlı haber yok", "Başlık ara", bos_metin="Bu adla yayında haber yok."), ipucu="İsteğe bağlı. Bağlıysa şeritteki başlık habere gider; değilse Son Dakika sayfasında kalır.")
-                + frow("Saat", tarih(f"{onek}T", zaman, ek=' data-alan-id="Saat" data-bos="Yayımlanınca o anın saati" data-temizlenir="1"'), ipucu="Boş bırakılırsa yayımlandığı an yazılır."))
+                + frow("Saat", tarih(f"{onek}T", zaman, ek=' data-alan-id="saat" data-bos="Yayımlanınca o anın saati" data-temizlenir="1"'), ipucu="Boş bırakılırsa yayımlandığı an yazılır."))
           + kfs("Dağıtım", anahtar("Şeritte göster", "Ana sayfa ve bütün sayfaların üstündeki kayan şerit", kayit.get("serit", True) if kayit else True)
                 + (anahtar("Bildirim gönderildi", kayit["deger"][8:10] + "." + kayit["deger"][5:7] + "." + kayit["deger"][:4] + " " + kayit["deger"][11:] + "'te bütün abonelere gitti; düzenleme yeniden göndermez", True, ek=" disabled", kap_ek=' data-modul="etkilesim"')
                    if kayit and kayit.get("bildirim") else anahtar("Bildirim gönder", "Bütün abonelere telefon ve web bildirimi gider", False, kap_ek=' data-modul="etkilesim"'))))
@@ -493,12 +492,12 @@ def son_dakika():
         kb, ka = SD_KAT.get(s["kat"], (s["kat"], None))
         katad = f"{kb} › {ka}" if ka else kb
         y, a, gn = s["tarih"].split("-")
-        zaman = f"{gn}.{a}.{y} {s['Saat']}"
+        zaman = f"{gn}.{a}.{y} {s['saat']}"
         durum = "serit" if i < 4 else "bitti"
         bagli = SD_BAGLI.get(s["baslik"])
         bag_ad = next((h[0] for h in HABERLER_SEC if h[7] == bagli), None)
         bildirim = i < 3 or s["kat"] == "Savunma"
-        kayit = {"baslik": s["baslik"], "katad": katad, "bagli": bagli or "", "deger": f"{s['tarih']} {s['Saat']}", "serit": durum == "serit", "bildirim": bildirim}
+        kayit = {"baslik": s["baslik"], "katad": katad, "bagli": bagli or "", "deger": f"{s['tarih']} {s['saat']}", "serit": durum == "serit", "bildirim": bildirim}
         tid = f"sdD{i}"
         sab.append(sablon(tid, "Son dakika · düzenle", f"{zaman} · {katad}", sd_form(tid, kayit) + alt_cubuk(
             f'<button type="button" class="btn btn-ghost btn-sm danger kb-sol"{onay("Son dakika çöpe taşınsın mı?", "“" + s["baslik"] + "” şeritten ve Son Dakika sayfasından kalkar; Çöp sekmesinden geri alınabilir. İşlem denetim izine yazılır.", "Çöpe Taşı", True, sonra=("cop", "Çöpte", "warm"), bildir="Son dakika çöpe taşındı; Çöp sekmesinden geri alınabilir")}>{I("fa-trash")}Sil</button>',
@@ -601,7 +600,7 @@ def giris_form(onek, gz=None):
               f'<button type="button" class="btn btn-ghost btn-sm" data-medya-sec>{I("fa-photo-film")}Havuzdan seç</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle>{I("fa-upload")}Yükle</button><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac>{I("fa-crop-simple")}Kırp</button><button type="button" class="btn btn-ghost btn-sm danger" data-gorsel-kaldir>{I("fa-trash")}Kaldır</button></div></div></div>')
     video = f'<div class="kb-dosya" data-tur="video" data-ad="Giriş videosu" data-sinir="200">' + (f'<div class="kb-dosya-oge" data-ad="{medya[1]}" data-boyut="18874368" data-sure="{medya[2]}"></div>' if m_v else "") + '</div>'
     return (dil("Dil seçici başlığı ve metni birlikte değiştirir; saat, görsel ve kaynak bütün dillerde ortaktır.", kap=True)
-            + kfs("Giriş", frow("Saat", tarih(f"{onek}T", f"2026-11-23 {saat}" if saat else "", ek=' data-alan-id="Saat" data-bos="Yayımlanınca o anın saati" data-temizlenir="1"'), ipucu="Boş bırakılırsa yayımlandığı an yazılır; akış saate göre sıralanır.")
+            + kfs("Giriş", frow("Saat", tarih(f"{onek}T", f"2026-11-23 {saat}" if saat else "", ek=' data-alan-id="saat" data-bos="Yayımlanınca o anın saati" data-temizlenir="1"'), ipucu="Boş bırakılırsa yayımlandığı an yazılır; akış saate göre sıralanır.")
                   + girdi(f"{onek}B", "Başlık", bsl, "baslik", "70|90", "Akışta kalın satır; isteğe bağlı", ph="ör. Havalimanlarında 46 sefer iptal edildi")
                   + f'<div class="frow"><span class="flabel">Metin</span>' + editor("Giriş metni", f"<p>{e(mtn)}</p>" if mtn else "<p></p>", "metin", kisa=True, zm="Giriş metnini yazın") + ferr("Giriş metni zorunlu.") + '</div>'
                   + frow("Kaynak", cip_girdi([kyn] if kyn else [], KURUMLAR, "Kurum ara", ek=' data-havuz-yonet data-kullanim-birim="girişte"'), ipucu="Akışta “Kaynak: …” satırı. Havuzda yoksa yazıp ekleyin."))
@@ -945,7 +944,7 @@ SAYI = {}
 for h in soz["haberler"]:
     if h.get("yazar"): SAYI[h["yazar"]] = SAYI.get(h["yazar"], 0) + 1
 SON = {}
-for h in sorted(soz["haberler"], key=lambda h: (h["tarih"], h["Saat"])):
+for h in sorted(soz["haberler"], key=lambda h: (h["tarih"], h["saat"])):
     if h.get("yazar"): SON[h["yazar"]] = h
 def yazarlar():
     satir = []
@@ -955,7 +954,7 @@ def yazarlar():
         sl = tr_slug(ad); n = SAYI.get(ad, 0); son = SON.get(ad)
         d = "pasif" if ad == "Pınar Okyay" else "aktif"
         kose = alan_ == "Köşe"
-        st = f'{son["tarih"][8:]}.{son["tarih"][5:7]}.{son["tarih"][:4]} {son["Saat"]}' if son else "—"
+        st = f'{son["tarih"][8:]}.{son["tarih"][5:7]}.{son["tarih"][:4]} {son["saat"]}' if son else "—"
         hed = "|".join(x for x in adlar if x != ad)
         sil = (f'<button type="button" class="ia-btn danger" data-tasi-sil data-sonra-kaldir data-tasi-ad="{e(ad)}" data-tasi-sayi="{n}" data-tasi-birim="haber" data-tasi-birim-cogul="haberler" data-tasi-ikon="fa-newspaper" '
                f'data-tasi-soru="Haberler hangi yazara taşınsın?" data-tasi-hedefler="{e(hed)}" data-tasi-not="Haberlerin imzası seçilen yazara geçer; yazar sayfası kapanır, eski adres yeni yazara yönlendirilir. “{e(ad)}” çöpe gider, oradan geri alınabilir; işlem denetim izine yazılır." '
@@ -999,11 +998,9 @@ def yazar():
             f'<div class="kg-acts"><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac>{I("fa-crop-simple")}Kırp ve odak</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle>{I("fa-upload")}Yükle</button><button type="button" class="btn btn-ghost btn-sm danger" data-gorsel-kaldir>{I("fa-trash")}Kaldır</button></div></div>'
             f'<div class="kg-bolum"><div class="kg-bas">{I("fa-mobile-screen")}Mobil<span class="kg-oto">{I("fa-wand-magic-sparkles")} Webden kırpıldı</span></div><div class="kg-resim r-1x1" data-gorsel-hedef="mobil" data-kirp-oran="mobil.kart"><span class="kg-etk">Mobil · 1:1</span></div>'
             f'<div class="kg-olcu">Önerilen: <b>72×72</b> (sitenin telefon görünümü).</div><div class="kg-acts"><button type="button" class="btn btn-ghost btn-sm" data-kirp-ac="mobil.kart">{I("fa-crop-simple")}Kırp</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-yukle data-gorsel-kapsam="mobil">{I("fa-upload")}Ayrı görsel yükle</button><button type="button" class="btn btn-ghost btn-sm" data-gorsel-webe-don hidden>{I("fa-rotate-left")}Webden kırpılana dön</button></div></div></div></div>')
-    sosyal = grid(
-        f'<div class="frow"><label for="yzX">X</label><div class="slug-wrap"><span class="slug-pre">x.com/</span><input class="finput" id="yzX" value="aylinsezer_dh"></div></div>',
-        f'<div class="frow"><label for="yzLi">LinkedIn</label><div class="slug-wrap"><span class="slug-pre">linkedin.com/in/</span><input class="finput" id="yzLi" value="aylin-sezer"></div></div>',
-        f'<div class="frow"><label for="yzIg">Instagram</label><div class="slug-wrap"><span class="slug-pre">instagram.com/</span><input class="finput" id="yzIg" value="" placeholder="kullanıcı adı"></div></div>',
-        f'<div class="frow"><label for="yzEp">Okur e-postası</label><div class="kb-eposta"><input class="finput" id="yzEp" type="email" data-eposta value="aylin.sezer@dadahaber.ornek">{I("fa-circle-check")}</div><span class="fhint">Yazar sayfasında “Yazara yaz” bağlantısı · isteğe bağlı</span>{ferr("Geçerli bir e-posta yazın.")}</div>', cls="kb-iki-sutun")
+    # sosyal bağlantılar: çekirdek "sosyal bağlantı listesi" (Beyar K2); okur e-postası ayrı alan
+    sosyal = ('<div class="kb-sbag" data-sosyal-baglanti data-ad="yzSosyal" data-degerler=\'[{"p":"x","k":"aylinsezer_dh"},{"p":"linkedin","k":"in/aylin-sezer"}]\'></div>'
+              + grid(f'<div class="frow"><label for="yzEp">Okur e-postası</label><div class="kb-eposta"><input class="finput" id="yzEp" type="email" data-eposta value="aylin.sezer@dadahaber.ornek">{I("fa-circle-check")}</div><span class="fhint">Yazar sayfasında “Yazara yaz” bağlantısı · isteğe bağlı</span>{ferr("Geçerli bir e-posta yazın.")}</div>'))
     tur = ''.join(f'<label class="kb-secenek kb-secenek-kart"><input type="radio" name="yzTur" value="{v}"{" checked" if v == "kose" else ""}{' data-ac="yzKosesi"' if v == "kose" else ""} data-yeni-isaret="{1 if v == "kadro" else 0}"><span><b>{b}</b><small>{s}</small></span></label>' for v, b, s in [
         ("kadro", "Kadro", "Editör ya da muhabir; haber imzası"), ("kose", "Köşe yazarı", "Köşe yazıları, Yazarlar sayfasında öne çıkar"), ("konuk", "Konuk yazar", "Farklı Bakışlar ve uzman görüşü")])
     detay = (fs("Kimlik", "fa-id-card", grid(
@@ -1025,7 +1022,7 @@ def yazar():
     onz = kart("Yazar kartı", "fa-eye", f'<div class="kb-onizle-kap"><p class="fhint" data-yeni-goster hidden>Ad Soyad girilince görünür.</p><div class="rcp-cell" data-yeni-gizle><span class="kb-ava k-lg">{bas_harf(ad)}</span><div class="rcp-id"><div class="rcp-name" data-alan="baslik">{e(ad)}</div><div class="rcp-by">{e(unvan)} · {n} yazı</div></div></div><p class="kb-onizle-not" data-yeni-gizle>Sitede Yazarlar sayfası ve haber imzasında böyle görünür.</p></div>')
     kk = KOSE_SAYI.get(ad, 0); son_k = next((x for x in KOSE_YAYINDA if x["yazar"] == ad), None)
     kosesi = (f'<section class="pnl-card" id="yzKosesi"><div class="pc-head"><h2 class="pc-title">{I("fa-feather-pointed")}Köşesi</h2></div>'
-              f'<div class="pc-body sa-durum"><div data-yeni-gizle><span>Köşe Yazısı</span><b>{kk}</b></div><div data-yeni-gizle><span>Son yazı</span><b>{tarih_tr(son_k["tarih"], son_k["Saat"]) if son_k else "—"}</b></div><div data-yeni-gizle><span>Konuları</span><b>{e(", ".join(kose_konulari(ad)))}</b></div>'
+              f'<div class="pc-body sa-durum"><div data-yeni-gizle><span>Köşe Yazısı</span><b>{kk}</b></div><div data-yeni-gizle><span>Son yazı</span><b>{tarih_tr(son_k["tarih"], son_k["saat"]) if son_k else "—"}</b></div><div data-yeni-gizle><span>Konuları</span><b>{e(", ".join(kose_konulari(ad)))}</b></div>'
               f'<p class="fhint" data-yeni-goster hidden>Kaydedince köşe yazarları listesinde görünür; köşe yazısı formunda yazar olarak seçilir.</p>'
               f'<div><a class="kb-bag" data-hedef="haberler.kose" data-hedef-ek="{kose_suz(ad)}" href="#" data-yeni-gizle>Köşe yazıları</a><a class="kb-bag" data-hedef="haberler.kose-duzenle" data-hedef-ek="?yeni=1" href="#">Yeni köşe yazısı</a></div></div></section>')
     ist = kart("Özet", "fa-chart-simple", govde_cls=None, ic=durum_dl([("Yazı", f"{n}"), ("Son yazı", "23.11.2026 15.30"), ("Takipçi", "48,2 B"), ("Yazmaya başladı", "2014"), ("Son değişiklik", "18.11.2026 · Selin Aydemir")]))
@@ -1140,11 +1137,11 @@ _TUM_ADLAR = {y["ad"] for y in YAZARLAR}
 def kose_konu(h):
     a = h.get("alt_konu") or ""
     return "Görüş" if (not a or a in _TUM_ADLAR) else a  # sözlükte 4 yazıda alt_konu bir yazar adı: sitede konu etiketi "Görüş"
-KOSE_YAYINDA = sorted([h for h in soz["haberler"] if h.get("detay") == "kose-yazisi.html"], key=lambda h: (h["tarih"], h["Saat"]), reverse=True)
+KOSE_YAYINDA = sorted([h for h in soz["haberler"] if h.get("detay") == "kose-yazisi.html"], key=lambda h: (h["tarih"], h["saat"]), reverse=True)
 KOSE_EK = [  # panele özgü örnek kayıtlar (taslak, zamanlanmış, çöp); sitede henüz yok
-    {"id": "esnek-calisma-kadinlar-icin-gercekten-esnek-mi", "baslik": "Esnek çalışma kadınlar için gerçekten esnek mi?", "yazar": "Füsun Erdem", "alt_konu": "Kadın Yazarlar", "tarih": "2026-11-23", "Saat": "15.50", "durum": "taslak", "not": "taslak"},
-    {"id": "yeni-yilda-kira-artisi-hesabi", "baslik": "Yeni yılda kira artışı hesabı: sözleşmeden önce bakılacak üç kalem", "yazar": "Aylin Sezer", "alt_konu": "Enflasyon", "tarih": "2026-11-24", "Saat": "07.00", "durum": "zamanli"},
-    {"id": "goc-pazarliginin-ikinci-perdesi", "baslik": "Göç pazarlığının ikinci perdesi", "yazar": "Leyla Sarıgül", "alt_konu": "Görüş", "tarih": "2026-11-20", "Saat": "18.40", "durum": "cop", "onceki": "taslak"}]
+    {"id": "esnek-calisma-kadinlar-icin-gercekten-esnek-mi", "baslik": "Esnek çalışma kadınlar için gerçekten esnek mi?", "yazar": "Füsun Erdem", "alt_konu": "Kadın Yazarlar", "tarih": "2026-11-23", "saat": "15.50", "durum": "taslak", "not": "taslak"},
+    {"id": "yeni-yilda-kira-artisi-hesabi", "baslik": "Yeni yılda kira artışı hesabı: sözleşmeden önce bakılacak üç kalem", "yazar": "Aylin Sezer", "alt_konu": "Enflasyon", "tarih": "2026-11-24", "saat": "07.00", "durum": "zamanli"},
+    {"id": "goc-pazarliginin-ikinci-perdesi", "baslik": "Göç pazarlığının ikinci perdesi", "yazar": "Leyla Sarıgül", "alt_konu": "Görüş", "tarih": "2026-11-20", "saat": "18.40", "durum": "cop", "onceki": "taslak"}]
 KOSE_SAYI = {}
 for h in KOSE_YAYINDA: KOSE_SAYI[h["yazar"]] = KOSE_SAYI.get(h["yazar"], 0) + 1
 KOSE_KONULAR = []
@@ -1169,7 +1166,7 @@ def kose_yazilari():
         sl, ad, d = h["id"], h["yazar"], h["durum"]
         konu = kose_konu(h)
         cls, dad = KOSE_DURUM[d]
-        zaman = tarih_tr(h["tarih"], h["Saat"])
+        zaman = tarih_tr(h["tarih"], h["saat"])
         href = f"kose-duzenle.html?id={sl}"
         alt = f'<b>{e(ad)}</b> · {e(konu)}' + (f' · {e(h["sure"])}' if h.get("sure") else "")
         ava = f'<span class="kb-ava{" is-pasif" if ad in KOSE_PASIF else ""}" title="{e(ad)} · kapak yoksa kartta bu fotoğraf görünür">{bas_harf(ad)}</span>'
@@ -1277,7 +1274,7 @@ def kose_duzenle():
         f'<div class="rcp-cell"><span class="kb-ava k-lg">{bas_harf(ad)}</span><div class="rcp-id"><div class="rcp-name">{e(ad)}</div><div class="rcp-by">{e(yazar_unvan(ad))} · {n} köşe yazısı</div></div></div>'
         f'<p class="fhint"><a class="kb-bag" data-hedef="haberler.kose" data-hedef-ek="{kose_suz(ad)}" href="#">Bütün köşe yazıları</a> · <a class="kb-bag" data-hedef="haberler.yazar" data-hedef-ek="?id={tr_slug(ad)}" href="#">Yazar bilgileri</a></p>')
     yazar_kart = yazar_kart.replace('<section class="pnl-card">', '<section class="pnl-card" data-yeni-gizle>', 1)
-    govde = bas("Köşe yazısı düzenle", f'Köşe · {e(ad)} · {tarih_tr(h["tarih"], h["Saat"])}’de yayımlandı · 09.30’da güncellendi · {h["goruntulenme"]} okunma',
+    govde = bas("Köşe yazısı düzenle", f'Köşe · {e(ad)} · {tarih_tr(h["tarih"], h["saat"])}’de yayımlandı · 09.30’da güncellendi · {h["goruntulenme"]} okunma',
                 [a_hedef("Köşe yazılarına dön", "fa-arrow-left", "haberler.kose"), a_dis("Sitede Görüntüle", "fa-arrow-up-right-from-square", SITE + "kose-yazisi.html", " data-yeni-gizle")],
                 h1_yeni="Yeni köşe yazısı", alt_yeni="Köşe · taslak · henüz kaydedilmedi · köşe yazarını seçin")
     govde += f'  <div class="form-layout">\n  {form}\n  {yan(yan_onizleme("", "Aylin Sezer yazdı: Kütüphaneler gece de açık kalmalı", "Sınav haftalarındaki kuyruklar geçici bir yoğunluk değil, yapısal bir eksiklik. Yeni köşe yazısı Dada Haber\'de.", "p163", 50, 45, baslik), yk, seo_skor(84, [(True, "Başlık 50–60 karakter"), (True, "Açıklama 120–155 karakter"), (True, "Kapak görseli 1200 px üstü"), (False, "Yazının içinde başka yazıya bağlantı yok")]), yazar_kart)}\n  </div>\n'

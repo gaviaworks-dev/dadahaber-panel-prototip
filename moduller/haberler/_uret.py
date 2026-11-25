@@ -71,7 +71,7 @@ def duz_href(kimlik, tur=None):
     return os.path.relpath(KOK / kayit["yakinda_sayfasi"], SAYFA.parent) + "?s=haberler." + d_["id"]
 
 # ---- satırlar ----
-yayinda = sorted(soz["haberler"], key=lambda h: (h["tarih"], h["Saat"]), reverse=True)
+yayinda = sorted(soz["haberler"], key=lambda h: (h["tarih"], h["saat"]), reverse=True)
 kayitlar = [dict(h, durum="yayinda", tur=TUR.get(h["detay"], "Haber"), gorsel=gorsel.get(h["baslik"])) for h in yayinda[:LISTEDE]]
 kayitlar = [dict(x) for x in ek if x["durum"] != "cop"] + kayitlar + [dict(x) for x in ek if x["durum"] == "cop"]
 
@@ -89,7 +89,7 @@ def satir(h, i):
     alt_satir = ai_etk + f'<i class="fa-solid {TUR_IKON.get(tur, "fa-newspaper")}" aria-hidden="true"></i>{e(tur)} · {e(h.get("yazar", ""))}'
     if h.get("sure"): alt_satir += f' · {e(h["sure"])}'
     if h.get("not"): alt_satir += f' · {e(h["not"])}'
-    zaman = tarih(h["tarih"], h["Saat"])
+    zaman = tarih(h["tarih"], h["saat"])
     if h["durum"] == "zamanli": zaman_hucre = f'<span class="kb-tarih">{zaman}</span>'
     elif h["durum"] in ("taslak", "cop"): zaman_hucre = f'<span class="kb-tarih muted">{zaman}</span>'
     else: zaman_hucre = f'<span class="kb-tarih">{zaman}</span>'

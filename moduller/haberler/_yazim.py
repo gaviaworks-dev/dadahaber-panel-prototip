@@ -48,7 +48,7 @@ def _hedef(st):
     if not st: return False
     t, a = st[-1]
     c = _sinif(a)
-    if "sr-only" in c or _icerik(a): return False
+    if _icerik(a): return False
     kap = next((x for x in reversed(st) if "kb-secim" in _sinif(x[1])), None)
     if "ks-deger" in c and kap and _icerik(kap[1]): return False
     ust = st[-2] if len(st) > 1 else (None, {})
