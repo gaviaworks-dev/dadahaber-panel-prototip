@@ -980,7 +980,7 @@ def sayfa_cron():
     </div>
     <div class="filter-bar">
       <div class="fb-search">{I("fa-magnifying-glass")}
-        <label class="sr-only" for="crAra">Görevlerde ara</label>
+        <label class="sr-only" for="crAra">Görevlerde Ara</label>
         <input id="crAra" type="search" data-liste-ara placeholder="Görev adı ya da komut ara" autocomplete="off">
       </div>
       <button type="button" class="kb-suz-temizle" data-suz-temizle hidden>Süzgeçleri temizle</button>
