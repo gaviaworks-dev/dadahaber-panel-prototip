@@ -195,9 +195,9 @@
 .kd-secenek b{font-family:var(--font-vurgu);font-weight:var(--fw-ekstra);font-variant-numeric:tabular-nums}
 
 /* derleme listesi: kalıbın iç sayfa listesinin sıkı hali */
-.kd-tuval .kd-liste{gap:0}
-.kd-tuval .kd-liste li{grid-template-columns:4.6cqmin minmax(0,1fr);gap:1.6cqmin;padding:.8cqmin 0;font-size:3cqmin;line-height:1.2;text-align:left}
-.kd-tuval .kd-liste-gun li{grid-template-columns:7.5cqmin minmax(0,1fr)}
+.kd-tuval[data-tip] .kd-liste{gap:0}
+.kd-tuval[data-tip] .kd-liste li{grid-template-columns:4.6cqmin minmax(0,1fr);gap:1.6cqmin;padding:.8cqmin 0;font-size:3cqmin;line-height:1.2;text-align:left}
+.kd-tuval[data-tip] .kd-liste-gun li{grid-template-columns:7.5cqmin minmax(0,1fr)}
 .kd-tuval:is([data-durum="gun5"],[data-durum="hafta"],[data-durum="puan"],[data-durum="hava"]) .kp-ic-bas{font-size:4.8cqmin}
 
 /* soru kartı: uygulamanın soru kutusu için yer */
@@ -207,3 +207,21 @@
 /* C · Manşet'te yoğun iç sayfa (puan, piyasa, hava, derleme, anket): fotoğraf şeridi biraz daralır */
 .kd-tuval.kp-c[data-tip="ic"]{--gi:70% 0 0 0}
 .kd-tuval.kp-c[data-tip="ic"] .kp-blok{bottom:31%}
+
+/* Hepsini Yan Yana Gör: her alternatifte yalnız kartlar (öneri tablosu ve kart yazıları tekli görünümde) */
+.kp-hk .kd-giris,.kp-hk .kd-oneri,.kp-hk .kd>.kb-bant,.kp-hk .kd-yazi{display:none}
+.kp-hk .kd{gap:14px}
+.kp-hk .kd-grup{padding-top:10px}
+
+/* M · Çerçeve'de yoğun iç sayfa: beyaz kutu çerçevenin içinde; fotoğraf şeridi biraz daha daralır */
+.kd-tuval.kp-m[data-tip="ic"]{--gi:var(--frt) var(--fr) 76% var(--fr)}
+.kd-tuval.kp-m[data-tip="ic"] .kp-blok{top:calc(24% + 2cqmin)}
+
+/* veri tipi durumlar (Tek Veri, Deprem): dar bloklu iskeletlerde (G sütun, K bant, L dev kelime) rakam bloğa sığar */
+.kd-tuval[data-durum="veri"]{--fs-s:15cqmin}
+.kd-tuval[data-durum="deprem"]{--fs-s:20cqmin}
+.kd-tuval[data-tip="veri"]{--cap:62cqmin;--cy:-14cqmin}
+.kd-tuval.kp-b[data-tip="veri"]{--bl:64%}
+/* H · Künye 9:16 soru kartı: soru kutusuna yer (alt sınır güvenli alanın %35'inin üstünde kalır) */
+.kd-tuval.kp-h[data-durum="soru"]{--gi:58% 0 0 0}
+.kd-tuval.kp-h[data-durum="soru"] .kp-blok{bottom:calc(42% + 2cqw)}

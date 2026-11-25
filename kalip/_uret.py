@@ -196,13 +196,13 @@ ALT = [
          oz="Her fotoğrafta okunur ve hızlı; renk kutuları akışta kalabalık görünebilir.", guc="guclu",
          orn=dict(logo="plaka", etiket="nokta", oge="yok", bvurgu="yok", islem="sb", kose="keskin"),
          yz=dict(_="kat", ic="koyu"), lz=dict(_="koyu")),
-    dict(id="m", harf="M", ad="Çerçeve", aile="Özgün birleşim: paspartu + zemin vurgulu başlık",
+    dict(id="m", harf="M", ad="Çerçeve", aile="Paspartu + kutu başlık",
          fikir="Fotoğraf kategori renginde kalın çerçevede; başlık fotoğrafın sol altına oturan beyaz kutuda.",
          kaynak="Sabit çerçeve fikri NowThis'ten (kısmen); fotoğrafa saygı Reuters'tan (görüldü); tek renkli etiket The New York Times'tan (görüldü).",
          oz="Renk ve okunurluk bir arada; akışta çerçeveler düzenli bir ızgara kurar. Çerçeve fotoğrafı biraz küçültür.", guc="guclu",
          orn=dict(logo="duz", etiket="dolu", oge="kalin", bvurgu="renkli", islem="dogal", kose="keskin"),
          yz=dict(_="acik"), lz=dict(_="kat")),
-    dict(id="n", harf="N", ad="Mercek", aile="Özgün birleşim: kesik geometri + tipografik",
+    dict(id="n", harf="N", ad="Mercek", aile="Daire kesit + tipografi",
          fikir="Beyaz zeminde fotoğraf büyük bir dairenin içinden köşeye taşar; başlık altta büyük.",
          kaynak="Geometrik şekil seti DW'den (kısmen); tek kalın vurgu Sky Sports'tan (kısmen); başlığın önde olması GDH Dijital'den (toplantı ekranı).",
          oz="Akışta en farklı duran kalıp; fotoğrafın daireye uygun bir odak noktası olmasını ister.", guc="guclu",
@@ -331,24 +331,31 @@ SEKME = [("akis", "Akışta Nasıl Durur", "fa-table-cells"), ("haber", "Haber G
          ("durum", "Durumlar", "fa-layer-group"), ("kisi", "Kişi Haberleri", "fa-user")]
 
 
+def diger(alt, tip, slot, bicim="kare", mecrali=False):
+    """aynı kart öbür kategorilerde (2×2); seçili kategoriyle aynı olanı kalip.js gizler"""
+    t = "".join(tuval(alt, tip, sabit=dict(c["s"][slot], kat=c["k"], ad=c["ad"], r=c["s"][slot].get("r", "Türkiye")), bicim=bicim, mecrali=mecrali).replace(
+        'class="kp-tuval', f'data-kat-sabit="{c["k"]}" class="kp-tuval', 1) for c in KAT)
+    return f'<figure class="kp-sekil-kap kp-diger"><div class="kp-diger-izgara">{t}</div><figcaption class="fhint">Diğer kategoriler</figcaption></figure>'
+
+
 def tek_icerik(sk, alt="a"):
     """tekli görünümde bir sekmenin tuvalleri (alternatiften bağımsız; iskeleti kalip.js değiştirir)"""
     if sk == "akis":
         return f'<div class="kp-akis" aria-label="Profil akışı">{"".join(tuval(alt, a["tip"], sabit=a) for a in AKIS)}</div>'
     if sk == "haber":
-        return ('<div class="kp-sira" data-tur="mecra">' + sekil(tuval(alt, "haber", "haber_koyu", mecrali=True), "Koyu fotoğrafla")
-                + sekil(tuval(alt, "haber", "haber_acik", mecrali=True), "Açık fotoğrafla") + '</div>')
+        return ('<div class="kp-sira">' + sekil(tuval(alt, "haber", "haber_koyu", mecrali=True), "Koyu fotoğraf")
+                + sekil(tuval(alt, "haber", "haber_acik", mecrali=True), "Açık fotoğraf") + diger(alt, "haber", "haber_koyu", mecrali=True) + '</div>')
     if sk == "sd":
-        return ('<div class="kp-sira" data-tur="mecra">' + sekil(tuval(alt, "sd", "sd", mecrali=True), "Son Dakika: kategori rengi yerine kırmızı, fotoğraf siyah-beyaz, saat etikette") + '</div>')
+        return '<div class="kp-sira">' + sekil(tuval(alt, "sd", "sd", mecrali=True), "Son Dakika") + diger(alt, "sd", "sd", mecrali=True) + '</div>'
     if sk == "kaydir":
-        return ('<div class="kp-sira" data-tur="kare">' + sekil(tuval(alt, "kapak", "kapak"), "1. sayfa · kapak, “Kaydır” işaretli")
-                + sekil(tuval(alt, "ic", "ic"), "2. sayfa · metin ağırlıklı iç sayfa, üstte görsel şeridi") + '</div>')
+        return ('<div class="kp-sira">' + sekil(tuval(alt, "kapak", "kapak"), "1. sayfa · kapak")
+                + sekil(tuval(alt, "ic", "ic"), "2. sayfa · iç sayfa") + diger(alt, "kapak", "kapak") + '</div>')
     if sk == "dikey":
-        return ('<div class="kp-sira" data-tur="uzun">' + sekil(tuval(alt, "hikaye", "hikaye", bicim="uzun"), "Hikâye · 9:16")
-                + sekil(tuval(alt, "reels", "reels", bicim="uzun"), "Reels ve Shorts kapağı · 9:16") + '</div>')
+        return ('<div class="kp-sira">' + sekil(tuval(alt, "hikaye", "hikaye", bicim="uzun"), "Hikâye · 9:16")
+                + sekil(tuval(alt, "reels", "reels", bicim="uzun"), "Reels ve Shorts kapağı · 9:16") + diger(alt, "hikaye", "hikaye", bicim="uzun") + '</div>')
     if sk == "alinti":
-        return ('<div class="kp-sira" data-tur="mecra">' + sekil(tuval(alt, "alinti", "alinti", mecrali=True), "Alıntı kartı · kişi ve söz kurgudur; görsel kişisiz")
-                + sekil(tuval(alt, "veri", "veri", mecrali=True), "Veri kartı · dev rakam önde, görsel geri planda") + '</div>')
+        return ('<div class="kp-sira">' + sekil(tuval(alt, "alinti", "alinti", mecrali=True), "Alıntı · kişi ve söz kurgudur")
+                + sekil(tuval(alt, "veri", "veri", mecrali=True), "Veri") + diger(alt, "alinti", "alinti", mecrali=True) + '</div>')
     return ""
 
 
@@ -360,6 +367,9 @@ def _dis(modul, islev):
     except Exception as ex:  # modül henüz yoksa sayfa yine üretilir; bölümde "hazırlanıyor" yazar
         print(f"uyarı: {modul}.{islev} yok ({ex.__class__.__name__}: {ex})")
         return None
+
+
+ARA_GIZLI = {"kisi"}  # ara sürümde ölçümü henüz 0 olmayan bölüm gizli (Kişi Haberleri: yüz × başlık, G 9:16); temizlenince boşalt
 
 
 def dis_hazir(sk):
@@ -383,6 +393,8 @@ def dis_bolum(sk):
     ad = "Durumlar" if sk == "durum" else "Kişi Haberleri"
     if not fn:
         return f'<div class="kb-bant bilgi">{ikon("fa-hourglass-half")}<span><b>{ad} hazırlanıyor.</b> Bölüm seçili iskeletin diliyle çizilecek.</span></div>'
+    if sk == "durum":  # Durumlar tuvalleri iskelete göre değişmez; iskelet ve zemini kalip.js yazar → tek kopya (boyut)
+        return f'<div class="kp-dis">{fn("a")}</div>'
     return "".join(f'<div class="kp-dis" data-alt-icerik="{a["id"]}"{"" if a["id"] == "a" else " hidden"}>{fn(a["id"])}</div>' for a in ALT)
 
 
@@ -391,79 +403,52 @@ def dis_css():
 
 
 # ------------------------------------------------------------------ bilgi parçaları
-def alt_bilgi():
-    """Akış sekmesinin yanında: seçili alternatifin adı, ailesi, fikri, kaynakları, özdeğerlendirmesi (kalip.js doldurur)"""
-    return (f'<aside class="pnl-card kp-bilgi" aria-label="Seçili alternatif">'
-            f'<div class="pc-body"><div class="kp-bilgi-bas"><span class="kp-harf" data-kp-yaz="harf">A</span><div><h2 class="kp-bilgi-ad" data-kp-yaz="ad">Vitrin</h2><span class="fhint" data-kp-yaz="aile">{e(ALT[0]["aile"])}</span></div>'
-            f'<span class="pstat ok" data-kp-yaz="guc">Güçlü</span></div>'
-            f'<dl class="kp-bilgi-dl"><dt>Fikir</dt><dd data-kp-yaz="fikir">{e(ALT[0]["fikir"])}</dd>'
-            f'<dt>Fikirlerin kaynağı</dt><dd data-kp-yaz="kaynak">{e(ALT[0]["kaynak"])}</dd>'
-            f'<dt>Özdeğerlendirme</dt><dd data-kp-yaz="oz">{e(ALT[0]["oz"])}</dd></dl>'
-            f'<p class="kp-bilgi-not">Dokuz gönderi profil ızgarasında: Dünya, Spor, Kampüs, Finans, Gündem, Savunma, Kadın; haber, Son Dakika, alıntı ve veri karışık. Görseller tekli örneklerden farklıdır.</p>'
-            f'</div></aside>')
+def acilir(g, ad, ops, sec):
+    """Süsleme satırındaki açılır liste (çekirdek .kb-secim + .pnl-menu biçimi); seçenek listesi, pasif seçenek soluk + nedeni"""
+    dd = f"kpDd-{g}"
+    lis = "".join(f'<button type="button" role="option" data-kp-sec="{g}" data-v="{v_}" aria-selected="{"true" if v_ == sec else "false"}"{" class=\"is-sec\"" if v_ == sec else ""}>{e(a)}</button>' for v_, a in ops)
+    return (f'<div class="kp-sus-alan"><span class="kp-sus-et" id="{dd}-et">{e(ad)}</span>'
+            f'<div class="kb-secim kp-acilir is-dolu" data-kp-acilir="{g}"><button type="button" class="kb-secim-btn" data-acilir="{dd}" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="{dd}-et {dd}-d">'
+            f'<span class="ks-deger" id="{dd}-d">{e(dict(ops)[sec])}</span>{ikon("fa-chevron-down")}</button>'
+            f'<div class="pnl-menu kb-secim-menu" id="{dd}"><div class="kb-secim-liste" role="listbox" aria-labelledby="{dd}-et">{lis}</div></div></div></div>')
 
 
-def guvenli_bolum():
-    satir = "".join(f'<tr><td>{e(g["mecra"])}</td><td class="num">{e(g["ust"])}</td><td class="num">{e(g["alt"])}</td><td class="num">{e(g["sol"])}</td><td class="num">{e(g["sag"])}</td>'
-                    f'<td><span class="pstat {"ok" if g["durum"] == "Doğrulandı" else "wait"}">{e(g["durum"])}</span></td></tr>' for g in GUVENLI)
-    b = BIRLESIK
-    satir += (f'<tr class="kp-birlesik"><td><b>Kalıpların uyduğu alan</b></td><td class="num">{b["ust"]} px</td><td class="num">{b["alt"]} px</td><td class="num">{b["sol"]} px</td><td class="num">{b["sag"]} px</td>'
-              f'<td><span class="pstat ok">En kısıtlayıcı birleşim</span></td></tr>')
-    kart = "".join(f'<a class="pnl-card kp-kaynak-kart" href="{e(g["adres"])}" target="_blank" rel="noopener"><div class="pc-body"><span class="kp-kk-ust">{ikon("fa-arrow-up-right-from-square")}{e(g["mecra"])}</span>'
-                   f'<b>{e(g["kaynak"])}</b><span class="fhint">{e(g["adres"].split("//")[1].split("/")[0])}</span></div></a>' for g in GUVENLI)
-    olcu = "".join(f'<span class="chip kp-olcu-cip">{e(m)}<b>{e(o)}</b></span>' for m, o in OLCU)
-    return (f'<section class="kp-guvenli-bilgi" aria-labelledby="kpGuvBas"><h2 class="kp-alt-bas" id="kpGuvBas">{ikon("fa-mobile-screen")}Uygulama düğmelerinin kapattığı alan</h2>'
-            f'<span class="fhint">Dikey 9:16 kalıplarda logo, başlık, etiket, “Kaydır” ve Son Dakika işareti bu alanın içinde kalır; Görünüm › Güvenli Alan ile tuvalde gösterilir. Değerler 1080×1920 içindir.</span>'
-            f'<div class="tbl-wrap"><table class="tbl kp-guv-tbl"><thead><tr><th>Mecra</th><th class="num">Üst</th><th class="num">Alt</th><th class="num">Sol</th><th class="num">Sağ</th><th>Durum</th></tr></thead><tbody>{satir}</tbody></table></div>'
-            f'<div class="kp-kaynak-serit" role="list" aria-label="Ölçü kaynakları">{kart}</div>'
-            f'<div class="chips kp-olcu-cipler" aria-label="Gönderi ölçüleri">{olcu}</div></section>')
-
-
-# ------------------------------------------------------------------ araç çubuğu (sağda, yapışkan)
-def secenekler(ad, ad_g, ops, ozel=""):
-    return (f'<div class="kb-secenek-grup kp-cipler" data-secenek-serbest role="radiogroup" aria-label="{e(ad_g)}">'
-            + "".join(f'<label class="kb-secenek"><input type="radio" name="{ad}" value="{v}" {ozel}>{e(a)}</label>' for v, a in ops) + '</div>')
-
-
-def arac():
-    sus = "".join(f'<div class="kp-yan-satir"><span class="flabel">{e(ad)}</span>{secenekler("kpO-" + k, ad, ops, f"data-orn={k}")}<span class="fhint kp-pasif-not" data-pasif-not="{k}" hidden></span></div>'
-                  for k, ad, ops in SUSLEME)
-    return f"""  <aside class="kp-yan" id="kpArac" aria-label="Görünüm ve süsleme">
-    <div class="kp-yan-ic pnl-card">
-      <div class="kp-yan-bas">
-        <button type="button" class="btn btn-ghost btn-sm kp-yan-kapat" data-kp-yan-kapat aria-label="Kapat">{ikon("fa-xmark")}</button>
-        <span class="kp-harf kp-harf-b" data-kp-yaz="harf">A</span>
-        <div class="kp-yan-ad"><b data-kp-yaz="ad">Vitrin</b><span class="fhint" data-kp-yaz="aile">{e(ALT[0]["aile"])}</span></div>
+def kontrol(sekmeler):
+    """Üst kontrol alanı (yapışkan): 1 şerit + Bunu Seç + Hepsini Yan Yana Gör · 2 mecra + güvenli alan · 3 sekmeler · 4 süsleme"""
+    a0 = ALT[0]
+    mecra = "".join(f'<button type="button" class="chip{" is-on" if m == "ig" else ""}" data-kp-mecra="{m}" aria-pressed="{"true" if m == "ig" else "false"}">{e(ad)}</button>' for m, ad, b in MECRA)
+    sus = acilir("kat", "Kategori", KATSEC, "gundem") + "".join(acilir(k, ad, ops, a0["orn"][k]) for k, ad, ops in SUSLEME)
+    return f"""      <div class="kp-kontrol" id="kpKontrol">
+        <div class="kp-k-satir kp-k-serit">{serit()}
+          <div class="kp-k-sag">
+            <label class="kp-sec-anahtar"><span>Bunu Seç</span><span class="toggle"><input type="checkbox" id="kpSec" aria-label="Bu alternatifi seç"><span class="toggle-track"></span><span class="toggle-thumb"></span></span></label>
+            <span class="kp-sayac" id="kpSayac" title="" hidden>{ikon("fa-circle-check")}<b>0</b></span>
+            <button type="button" class="btn btn-ghost btn-sm kp-hepsi-btn" data-kp-hepsi aria-pressed="false">{ikon("fa-table-columns")}Hepsini Yan Yana Gör</button>
+          </div>
+        </div>
+        <div class="kp-k-satir kp-k-mecra">
+          <div class="chips kp-mecra" role="group" aria-label="Mecra">{mecra}</div>
+          <label class="kp-guv-anahtar" id="kpGuvAnahtar"><span>Güvenli Alan</span><span class="toggle"><input type="checkbox" data-kp="guvenli" aria-label="Güvenli alanı göster"><span class="toggle-track"></span><span class="toggle-thumb"></span></span></label>
+        </div>
+        <div class="pnl-card kp-sekme-kart">
+          <div class="sa-form-tabs" role="tablist" aria-label="İçerik çeşitleri">{sekmeler}</div>
+          <div class="kp-k-satir kp-k-sus" role="group" aria-label="Süsleme">{sus}
+            <button type="button" class="btn btn-ghost btn-sm kp-varsayilan" data-kp-varsayilan>{ikon("fa-rotate-left")}Varsayılan</button>
+          </div>
+        </div>
       </div>
-      <div class="toggle-row kp-sec-satir"><span>Bunu Seç<small>Birden fazla seçilebilir; seçilenler aşağıda süslemeleriyle görünür</small></span><label class="toggle"><input type="checkbox" id="kpSec" aria-label="Bu alternatifi seç"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
-      <details class="kp-katman" open><summary>{ikon("fa-chevron-right")}Görünüm</summary>
-        <div class="kp-yan-satir"><span class="flabel">Kategori Rengi</span>{secenekler("kpKat", "Kategori rengi", KATSEC, "data-kp=kat")}<span class="fhint">Renk kategori kaydından; görseller ve başlıklar da değişir</span></div>
-        <div class="kp-yan-satir"><span class="flabel">Mecra</span>{secenekler("kpMecra", "Mecra", [(m, a) for m, a, b in MECRA], "data-kp=mecra")}<span class="fhint">Gönderi, Son Dakika, alıntı ve veri bu ölçüde yeniden dizilir; kırpılmaz</span></div>
-        <div class="toggle-row"><span>Güvenli Alan<small>Dikeyde uygulama düğmelerinin kapattığı alan</small></span><label class="toggle"><input type="checkbox" data-kp="guvenli" aria-label="Güvenli alanı göster"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
-      </details>
-      <details class="kp-katman" open><summary>{ikon("fa-chevron-right")}Süsleme<button type="button" class="btn btn-ghost btn-sm kp-varsayilan" data-kp-varsayilan>{ikon("fa-rotate-left")}Varsayılan</button></summary>
-        <span class="fhint kp-sus-not" data-kp-sus-not>İskelet aynı kalır; yalnız süsleme değişir. Her alternatif kendi varsayılanından başlar.</span>
-        {sus}
-      </details>
-      <details class="kp-katman"><summary>{ikon("fa-chevron-right")}Notunuz ve Seçilenler</summary>
-        <div class="kp-yan-satir"><label class="flabel" for="kpNot">Notunuz</label><textarea class="ftext" id="kpNot" rows="3" placeholder="ör. sütun iyi, başlık biraz daha büyük olsun"></textarea><span class="fhint">Bu sayfada kalır, kaydedilmez</span></div>
-        <div class="kb-bant bilgi kp-secilen" id="kpOzet">{ikon("fa-circle-check")}<span><b>Seçilen:</b> <span class="kp-secilen-metin">henüz seçilmedi</span></span></div>
-      </details>
-    </div>
-  </aside>
 """
 
 
 def serit():
     oge = "".join(f'<button type="button" class="kp-serit-oge{" is-on" if i == 0 else ""}" data-alt="{a["id"]}" aria-pressed="{"true" if i == 0 else "false"}" title="{e(a["harf"])} · {e(a["ad"])} · {e(a["aile"])}">'
                   f'<span class="kp-minik kp-orn" data-alt="{a["id"]}" {" ".join(f"data-o-{k}={v}" for k, v in a["orn"].items())}>{tuval(a["id"], "haber", "haber_koyu")}</span>'
-                  f'<span class="kp-serit-yazi"><span class="kp-harf">{e(a["harf"])}</span><span class="kp-serit-ad">{e(a["ad"])}<small>{e(a["aile"].replace("Özgün birleşim: ", "Birleşim · "))}</small></span></span></button>'
+                  f'<span class="kp-serit-yazi"><span class="kp-harf">{e(a["harf"])}</span><span class="kp-serit-ad">{e(a["ad"])}<small>{e(a["aile"])}</small></span></span></button>'
                   for i, a in enumerate(ALT))
     return (f'<div class="kp-secici">'
             f'<button type="button" class="btn btn-ghost btn-sm kp-serit-ok" data-kp-kaydir="-1" aria-label="Önceki alternatifler">{ikon("fa-chevron-left")}</button>'
-            f'<div class="kp-serit" id="kpSerit" role="group" aria-label="Alternatifler">{oge}</div>'
-            f'<button type="button" class="btn btn-ghost btn-sm kp-serit-ok" data-kp-kaydir="1" aria-label="Sonraki alternatifler">{ikon("fa-chevron-right")}</button>'
-            f'<button type="button" class="btn btn-ghost kp-hepsi-btn" data-kp-hepsi aria-pressed="false">{ikon("fa-table-columns")}<span>Hepsini Yan Yana Gör</span></button></div>')
+            f'<div class="kp-serit" id="kpSerit" role="group" aria-label="Alternatifler" data-kp-say-kutu>{oge}</div>'
+            f'<button type="button" class="btn btn-ghost btn-sm kp-serit-ok" data-kp-kaydir="1" aria-label="Sonraki alternatifler">{ikon("fa-chevron-right")}</button></div>')
 
 
 def v(yol):
@@ -471,7 +456,7 @@ def v(yol):
 
 
 def sayfa():
-    sekme_liste = [x for x in SEKME if x[0] not in ("durum", "kisi") or dis_hazir(x[0])]
+    sekme_liste = [x for x in SEKME if x[0] not in ("durum", "kisi") or (x[0] not in ARA_GIZLI and dis_hazir(x[0]))]
     sekmeler = "".join(f'<button type="button" class="sa-form-tab{" is-on" if i == 0 else ""}" role="tab" aria-selected="{"true" if i == 0 else "false"}" data-panel="kpT-{s}" data-sekme="{s}">{ikon(ik)}{e(a)}</button>'
                        for i, (s, a, ik) in enumerate(sekme_liste))
     orn0 = " ".join(f'data-o-{k}="{v_}"' for k, v_ in ALT[0]["orn"].items())
@@ -480,16 +465,15 @@ def sayfa():
         if s in ("durum", "kisi"):
             ic_ = f'<div class="kp-tek kp-orn kp-dis-kap" {orn0}>{dis_bolum(s)}</div>'
         elif s == "akis":
-            ic_ = f'<div class="kp-tek kp-akis-duzen"><div class="kp-orn kp-akis-kap" {orn0}>{tek_icerik(s)}</div>{alt_bilgi()}</div>'
-        elif s == "dikey":
-            ic_ = f'<div class="kp-tek kp-orn" {orn0}>{tek_icerik(s)}</div>{guvenli_bolum()}'
+            ic_ = (f'<div class="kp-tek kp-orn kp-akis-duzen" {orn0}>{sekil(tek_icerik(s), "Profil ızgarası", " kp-akis-sekil")}'
+                   f'{sekil(tuval("a", "haber", sabit=AKIS[0]), "Açılan gönderi")}{sekil(tuval("a", "hikaye", sabit=AKIS[2], bicim="uzun"), "Aynı haber hikâyede")}</div>')
         else:
             ic_ = f'<div class="kp-tek kp-orn" {orn0}>{tek_icerik(s)}</div>'
         paneller += (f'    <div class="sa-form-panel" id="kpT-{s}" role="tabpanel" data-sekme="{s}"{"" if i == 0 else " hidden"}>\n      {ic_}\n'
                      f'      <div class="kp-hepsi-izgara" data-sekme="{s}" hidden></div>\n    </div>\n')
-    veri = dict(alt=[dict(id=a["id"], harf=a["harf"], ad=a["ad"], aile=a["aile"], fikir=a["fikir"], kaynak=a["kaynak"], oz=a["oz"], guc=a["guc"],
+    veri = dict(alt=[dict(id=a["id"], harf=a["harf"], ad=a["ad"], aile=a["aile"],
                           orn=a["orn"], yz=a["yz"], lz=a["lz"], pasif=a.get("pasif", {})) for a in ALT],
-                mecra={m: b for m, a, b in MECRA}, susleme={k: [o for o, _ in ops] for k, _, ops in SUSLEME},
+                mecra={m: b for m, a, b in MECRA}, guvenli=BIRLESIK, susleme={k: [o for o, _ in ops] for k, _, ops in SUSLEME},
                 ad={k: dict(ops) for k, _, ops in SUSLEME}, grupad={k: ad for k, ad, _ in SUSLEME})
     css = ["../assets/vendor/fontawesome-6.5.2/css/all.min.css", "../tema/dadahaber.css", "../cekirdek/css/kabuk.css", "../cekirdek/css/bilesen.css"]
     js = ["../cekirdek/js/bilesen.js"]
@@ -508,23 +492,16 @@ def sayfa():
 <body class="kp-sunum">
 <!-- KALIP ALTERNATİFLERİ (DADAHABER-13) · ayrı sunum sayfası, panel kabuğu yok. Üretici kalip/_uret.py; çizim kalip.css; davranış kalip.js.
      Karar değil; Yasin Bey seçecek. Alıntı kartlarındaki kişi ve sözler kurgudur. Görsel lisansları: veri/gorsel/LISANSLAR.md -->
-<main class="kp-sayfa" id="kpSahne" data-kat="gundem" data-mecra="ig" data-alt="a" data-sekme="akis">
-  <div class="kp-duzen">
-    <div class="kp-ana">
-      <div class="pnl-page-head kp-bas">
-        <div>
-          <h1>Kalıp Alternatifleri</h1>
-          <div class="ph-sub">Dada Haber sosyal medya · {len(ALT)} iskelet, üstüne süsleme · aynı haberler her kalıpta, her çeşitte ve her mecrada · karar değil, Yasin Bey seçecek · 25.11.2026</div>
-        </div>
-        <div class="ph-actions"><button type="button" class="btn btn-ghost btn-sm kp-yan-ac" data-kp-yan-ac aria-controls="kpArac" aria-expanded="false">{ikon("fa-sliders")}Görünüm</button></div>
-      </div>
-      {serit()}
-      <section class="pnl-card kp-icerik" data-sekmeli aria-label="İçerik çeşitleri">
-        <div class="sa-form-tabs" role="tablist" aria-label="İçerik çeşitleri">{sekmeler}</div>
-{paneller}      </section>
+<main class="kp-sayfa" id="kpSahne" data-sekmeli data-kat="gundem" data-mecra="ig" data-alt="a" data-sekme="akis">
+  <div class="pnl-page-head kp-bas">
+    <div>
+      <h1>Kalıp Alternatifleri</h1>
+      <div class="ph-sub">Dada Haber sosyal medya · <span data-kp-say="iskelet">{len(ALT)}</span> iskelet · karar değil, Yasin Bey seçecek · 25.11.2026</div>
     </div>
-{arac()}  </div>
-  <div class="kp-perde" data-kp-yan-kapat hidden></div>
+  </div>
+{kontrol(sekmeler)}
+  <section class="pnl-card kp-icerik" aria-label="İçerik çeşitleri">
+{paneller}  </section>
 </main>
 <script type="application/json" id="kpVeri">{json.dumps(veri, ensure_ascii=False)}</script>
 {bet}
@@ -535,5 +512,21 @@ def sayfa():
     print("yazıldı: kalip/index.html", len(s.encode()) // 1024, "KB")
 
 
+def belge():
+    """Alternatiflerin fikir, kaynak ve özdeğerlendirmesi sayfada gösterilmez (Beyar: yalnız tasarımlar konuşur); bu dokümanda durur."""
+    satir = []
+    for a in ALT:
+        satir.append(f"## {a['harf']} · {a['ad']}\n\n- **Aile:** {a['aile']}\n- **Fikir:** {a.get('fikir', '—')}\n- **Kaynaklar:** {a.get('kaynak', '—')}\n"
+                     f"- **Özdeğerlendirme:** {a.get('oz', '—')} ({'güçlü' if a.get('guc') == 'guclu' else 'orta'})\n- **Varsayılan süsleme:** "
+                     + ", ".join(f"{dict((k, ad) for k, ad, _ in SUSLEME)[k]} {dict(next(o for kk, _, o in SUSLEME if kk == k))[v_]}" for k, v_ in a["orn"].items()) + "\n")
+    yol = KOK / "docs" / "kaynak" / "DADAHABER-13-kalip-alternatifleri.md"
+    yol.write_text("# DADAHABER-13 — Kalıp Alternatifleri (açıklamalar)\n\n"
+                   "Üretilen dosya: kalip/_uret.py her çalışmada yazar; elle düzenlemeyin. Sunum sayfasında (kalip/) yalnız tasarımlar ve "
+                   "harf + kısa ad görünür; fikir, kaynak ve özdeğerlendirme yalnız burada ve raporda durur. Karar değil; Yasin Bey seçecek. "
+                   "Kaynak düzeyleri docs/kaynak/DADAHABER-13-referans-notlari.md'deki gibidir (görüldü / kısmen / toplantı ekranı).\n\n"
+                   + f"Toplam: {len(ALT)} alternatif.\n\n" + "\n".join(satir), encoding="utf-8")
+
+
 if __name__ == "__main__":
     sayfa()
+    belge()

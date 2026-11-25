@@ -1,0 +1,145 @@
+/* =====================================================================
+   KALIP ALTERNATİFLERİ · KİŞİ HABERLERİ (t-kalip2) — kalip.css ve kl.css'ten SONRA yüklenir; üretici kalip/_kisi.py
+   1 Bölüm düzeni   2 Kişi katmanı (iskeletin fotoğraf alanı .kp-gorsel içinde)   3 Altı çeşit   4 İskeletlere göre yer açma
+   Kişi katmanı .kp-gorsel'in içindedir; ölçüler o alana göre (container ksg: cqw/cqh = fotoğraf alanı).
+   Renk: yalnız tuvalin değişkenleri (--vr kategori, --kont ikinci ton, --kat-on, --ink, --paper); sabit renk yok.
+   ===================================================================== */
+
+/* ---------- 1 · bölüm ---------- */
+.ks{display:flex;flex-direction:column;gap:18px;min-width:0}
+.ks-giris{display:flex;flex-direction:column;gap:6px}
+.ks-giris .fhint{line-height:var(--lh-body);max-width:90ch}
+.ks-yazi{display:flex;flex-direction:column;gap:4px}
+.ks-yazi .fhint{line-height:var(--lh-body)}
+.ks-ad{font-size:var(--fs-13-5);color:var(--slate)}
+.ks-not{font-size:var(--fs-12);line-height:var(--lh-body);color:var(--muted)}
+
+/* ---------- 2 · kişi katmanı ---------- */
+.ks-tuval{--gbg:var(--vr)}
+.ks-tuval .kp-gorsel{container:ksg / size}
+.ks-zemin{position:absolute;inset:0;overflow:hidden}
+.ks-kisi{--kw:92;--kh:94;--kx:50%;--kb:0px;--kt:translateX(-50%);
+  position:absolute;bottom:var(--kb);left:var(--kx);aspect-ratio:var(--ko);
+  width:min(calc(var(--kw) * 1cqw),calc(var(--kh) * 1cqh * var(--ko)));
+  background:var(--ki) center / 100% 100% no-repeat;transform:var(--kt);filter:var(--gf-t,var(--gf,none))}
+.ks-kisi.ks-ayna{--kt:translateX(-50%) scaleX(-1)}
+.ks-yuz{position:absolute;pointer-events:none}
+
+/* ---------- 3 · çeşitler ---------- */
+/* Düz Zemin: kategori renginde düz zemin; kişi ortada */
+
+/* Dev Soyadı: soyadı kişinin ARKASINDAN geçer (katman: zemin < yazı < kişi) */
+.ks-dev{--dl:0cqw;--dr:0cqw;position:absolute;left:var(--dl);right:var(--dr);top:var(--dy,16cqh);text-align:center;white-space:nowrap;
+  font-family:var(--font-vurgu);font-weight:var(--fw-ekstra);line-height:.8;letter-spacing:-.02em;
+  font-size:min(calc((96cqw - var(--dl) - var(--dr)) / (var(--n) * .66)),30cqh);color:var(--kont)}
+
+/* Siyah-Beyaz ve Geometri: nötr zemin, kategori renginde daire ve ince beyaz şerit; kişi siyah-beyaz */
+.ks-tuval[data-ks="geometri"]{--gbg:var(--ink)}
+.ks-daire{position:absolute;left:50%;top:var(--dy,6cqh);width:min(76cqw,62cqh);aspect-ratio:1;transform:translateX(-50%);border-radius:var(--radius-circle);background:var(--vr)}
+.ks-serit{position:absolute;left:-10cqw;right:-10cqw;top:58cqh;height:2.2cqh;background:var(--paper);transform:rotate(-14deg);opacity:.9}
+.ks-tuval[data-ks="geometri"] .ks-kisi{filter:grayscale(1) contrast(1.06)}
+
+/* Karşı Karşıya: zemin ortadan ikiye (kategori | ikinci ton); iki kişi birbirine bakar */
+.ks-bol{position:absolute;inset:0 0 0 50%;background:var(--kont)}
+.ks-tuval[data-ks="karsi"] .ks-kisi[data-ks-sira="0"]{--kx:22%;--kw:100;--kh:84}
+.ks-tuval[data-ks="karsi"] .ks-kisi[data-ks-sira="1"]{--kx:74%;--kw:62;--kh:84}
+
+/* Kemerli Çerçeve: nötr zeminde kategori renginde kemer; baş kemerin üstünden taşar */
+.ks-tuval[data-ks="kemer"]{--gbg:var(--ink)}
+.ks-kemer{position:absolute;left:50%;bottom:0;width:min(66cqw,48cqh);height:min(80cqh,92cqw);transform:translateX(-50%);
+  border-radius:999px 999px 0 0;background:var(--vr)}
+.ks-tuval[data-ks="kemer"] .ks-kisi{--kh:90;--kw:70}
+
+/* Kişi ve Söz: büyük tırnak ve söz önde, ad ve unvan altta; kişi yanda */
+.ks-tuval[data-ks="soz"] .ks-kisi{--kx:70%;--kh:84;--kw:64}
+.ks-tirnak{position:absolute;left:var(--tx,8cqw);top:var(--ty,17cqh);font-size:min(30cqw,24cqh);line-height:1;color:var(--kont)}
+.ks-soz{--fs-b:6.4cqmin;-webkit-line-clamp:4;line-height:1.08}
+.ks-kim{order:4;display:flex;flex-direction:column;gap:.4cqmin;font-size:2.9cqmin;flex:none}
+.ks-kim b{font-family:var(--font-vurgu);font-weight:var(--fw-ekstra);font-size:3.4cqmin}
+.ks-kim span{opacity:.82}
+
+/* Hikâye 9:16: ölçüler tuvale göre (cqw/cqh = tuval). Kişi düğmelerin kapattığı alt bandın (%35) üstünde biter;
+   alt bant kategori renginin koyu tonu, kişinin alt kenarı banda yumuşak geçer. Yüz üst %15 ile alt %35 arasında kalır. */
+.ks-tuval[data-bicim="uzun"] .kp-gorsel{container:none}
+.ks-tuval[data-bicim="uzun"] .ks-zemin::after{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--ub,35cqh);
+  background:color-mix(in srgb,var(--vr) 45%,var(--ink))}
+.ks-tuval[data-bicim="uzun"] .ks-kisi{--kb:var(--ub,35cqh);--kw:100;--kh:48;
+  -webkit-mask-image:linear-gradient(to top,transparent 0,var(--ink) 12%);mask-image:linear-gradient(to top,transparent 0,var(--ink) 12%)}
+
+/* ---------- 4 · iskeletlere göre yer açma (yüz başlığın, etiketin ve logonun altında kalmaz) ---------- */
+/* C · Manşet: fotoğraf alanındaki sönme maskesi kişiyi silmesin */
+.kp-c.ks-tuval{--gm:none}
+/* E · Kart ve K/M · kutu: kişi kartın arkasından yükselir */
+.kp-e.ks-tuval:not([data-bicim="uzun"]) .ks-kisi,.kp-m.ks-tuval:not([data-bicim="uzun"]) .ks-kisi{--kb:12cqh}
+/* F · Ton: başlık ortada; kişi bir adım küçük */
+.kp-f.ks-tuval:not([data-bicim="uzun"]) .ks-kisi{--kh:82}
+/* J · Şerit: başlık üstte; kişi alttan, başı başlığın altında */
+.kp-j.ks-tuval:not([data-bicim="uzun"]) .ks-kisi{--kh:62}
+/* L · Sırt: sağdaki dev kelimeye yer; kişi sola */
+.kp-l.ks-tuval .ks-kisi{--kx:40%}
+.kp-l.ks-tuval[data-ks="karsi"] .ks-kisi[data-ks-sira="0"]{--kx:16%}
+.kp-l.ks-tuval[data-ks="karsi"] .ks-kisi[data-ks-sira="1"]{--kx:58%}
+/* N · Mercek: daire tuvalin üstünden taşar; zemin parçaları aşağı */
+.kp-n.ks-tuval{--dy:30cqh;--ty:30cqh;--tx:22cqw}
+
+/* 9:16 iskelet ayarları: fotoğraf alanı tuvalin altına inmeyen ya da başlığı üstte olan iskeletlerde kişi küçülür */
+.kp-b.ks-tuval[data-bicim="uzun"]{--ub:0px}
+.kp-b.ks-tuval[data-bicim="uzun"] .ks-kisi{--kh:30}
+.kp-b.ks-tuval[data-bicim="uzun"] .ks-zemin::after{display:none}
+.kp-c.ks-tuval[data-bicim="uzun"] .ks-kisi{--kh:14}
+.kp-d.ks-tuval[data-bicim="uzun"]{--ub:32cqh}
+.kp-d.ks-tuval[data-bicim="uzun"] .ks-kisi{--kh:16}
+.kp-h.ks-tuval[data-bicim="uzun"] .ks-kisi{--kh:10}
+.kp-j.ks-tuval[data-bicim="uzun"] .ks-kisi{--kh:28}
+.kp-n.ks-tuval[data-bicim="uzun"]{--ub:56cqh}
+.kp-n.ks-tuval[data-bicim="uzun"] .ks-kisi{--kh:11}
+/* F · Ton: logo üstte ortada; kişili kartta başlık bloğu ortadan alta iner, yüz logo ile başlık arasında kalır */
+.kp-f.ks-tuval .kp-blok{justify-content:safe flex-end}
+.kp-f.ks-tuval[data-ks="soz"] .ks-kisi{--kh:100;--kx:80%}
+.kp-f.ks-tuval .ks-soz,.kp-g.ks-tuval .ks-soz{--fs-b:5.6cqmin}
+.kp-f.ks-tuval:not([data-bicim="uzun"]) .ks-kisi{--kh:92}
+/* G · Sütun: fotoğraf alanı dar; söz kartında kişi büyür */
+.kp-g.ks-tuval[data-ks="soz"] .ks-kisi{--kh:100;--kw:74}
+.kp-g.ks-tuval[data-ks="karsi"] .ks-kisi{--kh:100}
+/* I · Kesik: söz eğik yüzeye sığsın */
+.kp-i.ks-tuval .ks-soz{--fs-b:5.8cqmin}
+/* K · Bant: soldaki bant ve bayrağa yer; iki kişi sağa */
+.kp-k.ks-tuval[data-ks="karsi"] .ks-kisi[data-ks-sira="0"]{--kx:42%}
+.kp-k.ks-tuval[data-ks="karsi"] .ks-kisi[data-ks-sira="1"]{--kx:84%}
+/* N · Mercek: iki kişi dairenin içinde */
+.kp-n.ks-tuval[data-ks="karsi"] .ks-kisi[data-ks-sira="0"]{--kx:28%;--kw:70}
+.kp-n.ks-tuval[data-ks="karsi"] .ks-kisi[data-ks-sira="1"]{--kx:58%;--kw:46}
+.kp-n.ks-tuval .ks-kisi{--kh:80}
+.kp-n.ks-tuval[data-ks="soyad"] .ks-kisi{--kx:42%}
+.kp-n.ks-tuval[data-ks="soz"] .ks-kisi{--kx:56%}
+.kp-n.ks-tuval[data-ks="soz"]{--tx:8cqw;--ty:34cqh}
+/* I · Kesik: eğik yüzey gövdeyi örter; söz kartında kişi büyür ki yüz okunsun */
+.kp-i.ks-tuval[data-ks="soz"] .ks-kisi{--kh:100;--kw:80;--kx:72%}
+/* J · Şerit: dev soyadı başlık kutularının altına, başın arkasına iner */
+.kp-j.ks-tuval{--dy:42cqh}
+/* G · Sütun: karşı karşıya kartında iki kişi bir adım yukarı (alt kenar koyu geçişte kaybolur) */
+.kp-g.ks-tuval[data-ks="karsi"] .ks-kisi{--kb:6cqh}
+/* L · Sırt ve N · Mercek: dev soyadı, dev dikey kelimeye ve dairenin görünmeyen kısmına binmesin */
+.kp-l.ks-tuval .ks-dev{--dr:26cqw}
+.kp-n.ks-tuval .ks-dev{--dl:8cqw;--dr:26cqw}
+/* Kişi ve Söz: yazının fotoğraf üstüne bindiği iskeletlerde söz sol sütunda kalır, yüz sağda serbest (uzun sözde de) */
+.ks-tuval[data-ks="soz"]:is(.kp-a,.kp-f,.kp-l) .kp-blok{right:38%}
+#kpSahne .ks-tuval[data-ks="soz"]:is(.kp-g,.kp-k) .kp-blok{right:30%}
+.ks-tuval[data-ks="soz"]:is(.kp-g,.kp-k) .ks-kisi{--kx:86%;--kw:54}
+.kp-f.ks-tuval[data-ks="soz"] .kp-blok{align-items:flex-start;text-align:left}
+.kp-f.ks-tuval[data-ks="soz"] .kp-baslik{text-align:left}
+/* tırnak logonun altında; K'de bandın sağında, J'de başlık kutularının altında */
+.kp-k.ks-tuval{--tx:30cqw}
+.kp-j.ks-tuval{--ty:58cqh}
+/* F · Ton ve G · Sütun: uzun başlıkta etiket yükselir; karşı karşıya kartında iki kişi en büyük boyda */
+.kp-f.ks-tuval[data-ks="karsi"] .ks-kisi,.kp-g.ks-tuval[data-ks="karsi"] .ks-kisi{--kh:100}
+.kp-f.ks-tuval[data-ks="karsi"] .ks-kisi[data-ks-sira="0"]{--kw:112}
+.kp-f.ks-tuval:not([data-bicim="uzun"]) .ks-kisi,.kp-g.ks-tuval:is([data-ks="geometri"],[data-ks="kemer"]) .ks-kisi{--kh:100}
+.kp-f.ks-tuval[data-ks="soyad"] .ks-kisi{--kh:86}
+.kp-g.ks-tuval:not([data-bicim="uzun"]) .ks-kisi{--kh:100}
+#kpSahne .kp-g.ks-tuval[data-ks="soz"] .kp-blok{right:20%}
+.kp-g.ks-tuval:not([data-bicim="uzun"]) .ks-kisi{--kb:6cqh}
+.ks-tuval:is(.kp-b,.kp-i) .ks-soz{--fs-b:5.6cqmin}
+#kpSahne .kp-k.ks-tuval[data-ks="soz"] .kp-blok{right:26%}
+.ks-tuval:is(.kp-b,.kp-i) .ks-kim{flex-direction:row;flex-wrap:wrap;align-items:baseline;column-gap:1.6cqmin}
+.kp-g.ks-tuval:is([data-ks="geometri"],[data-ks="kemer"],[data-ks="zemin"],[data-ks="soyad"]) .ks-kisi{--kb:10cqh}
