@@ -175,14 +175,10 @@ def ai_adim(kaynak, secenekler, durum="Başlığı ve spotu yazın; işaretli b�
             f'<div class="kaa-secim" role="group" aria-label="Üretilecek bölümler">{ops}</div>'
             f'<div class="kaa-alt"><button type="button" class="btn btn-acc btn-sm" data-ai-uret disabled>{I("fa-wand-magic-sparkles")}Gerisini Üret</button><span class="fhint" data-ai-neden>{e(neden)}</span></div></div>')
 
-BOLUMLER = ["Gündem", "Spor", "Finans", "Kadın", "Savunma", "Dünya", "Kampüs", "Keşfet", "Köşe"]
-ALTLAR = {"Gündem": ["Siyaset", "Türkiye", "Toplum", "Hukuk", "Güvenlik", "Eğitim", "Çevre", "Afet", "Yerel Haberler", "İstanbul", "Ankara", "İzmir"],
-          "Finans": ["Türkiye Ekonomisi", "Bankacılık", "Kişisel Finans", "Enflasyon", "Çalışma Hayatı", "Enerji", "Gayrimenkul", "Faiz Oranları"],
-          "Savunma": ["Savunma Sanayii", "Millî Projeler", "Hava Platformları", "Deniz Platformları"],
-          "Dünya": ["Avrupa", "Orta Doğu", "Diplomasi", "Göç", "Küresel Siyaset"],
-          "Kampüs": ["Eğitim ve Sınavlar", "YKS", "KPSS", "Üniversiteler"],
-          "Keşfet": ["İklim", "Teknoloji", "Yapay Zekâ", "Bilim", "Sağlık", "Otomobil", "Dada Bağlam", "Dada Doğrula", "Günün 5'i"],
-          "Spor": ["Futbol", "Basketbol", "Millî Takım", "Süper Lig"], "Kadın": ["Kadın Gündemi", "Kadın ve Çalışma Hayatı"], "Köşe": []}
+# kategori ağacı tek kaynaktan (site araclar/kategori.json → _kategori.py); servis sayfaları haber formunda çıkmaz
+_skp = _iu.spec_from_file_location("_kategori", Path(__file__).resolve().parent / "_kategori.py"); _kat = _iu.module_from_spec(_skp); _skp.loader.exec_module(_kat)
+BOLUMLER = _kat.ANALAR
+ALTLAR = _kat.ALTLAR
 def kat_secenek(): return [(b, b, f"{len(ALTLAR.get(b, []))} alt konu") for b in BOLUMLER]
 def kategori_alanlari(id_, ana, altlar):
     return (f'<div class="frow two"><div class="frow"><span class="flabel">Ana Kategori</span>'
@@ -193,6 +189,7 @@ def kategori_alanlari(id_, ana, altlar):
             + '<span class="fhint">İlk seçilen ana alt konudur; yeni alt konu Kategoriler’den eklenir.</span></div></div>')
 
 YAZARLAR = soz["yazarlar"]
+YAZAR_ALANLAR = list(dict.fromkeys(y["alan"] for y in YAZARLAR))  # yazarın bölümü (kategori ağacından ayrı; "Köşe" dahil)
 def yazar_secenek():
     o, son = [], None
     for y in YAZARLAR:
@@ -395,17 +392,17 @@ YAZILDI = []
 
 # ======================================================================= 1 · VİTRİN (manşet; K16)
 HABERLER_SEC = [  # yayındaki haberler (public sözlük) · manşet ve Günün 5'i adayları
-    ("Asgari ücret görüşmelerinde ilk toplantı 4 Aralık'ta yapılacak", "Gündem", "Türkiye", "Hakan Uysal", "23.11 14.05", "24,6 B", "p188", "asgari-ucret-gorusmelerinde-ilk-toplanti-4-aralikta-yapilacak"),
+    ("Asgari ücret görüşmelerinde ilk toplantı 4 Aralık'ta yapılacak", "Gündem", "Toplum", "Hakan Uysal", "23.11 14.05", "24,6 B", "p188", "asgari-ucret-gorusmelerinde-ilk-toplanti-4-aralikta-yapilacak"),
     ("İstanbul Valiliği: okullar 24 Kasım'da da tatil", "Gündem", "İstanbul", "Sibel Arslan", "23.11 16.05", "52,1 B", "p183", "istanbul-valiligi-okullar-24-kasimda-da-tatil"),
     ("Merkez Bankası politika faizini yüzde 42,5'te sabit tuttu", "Finans", "Faiz Oranları", "Elif Aras", "23.11 14.00", "27,5 B", "p192", "merkez-bankasi-politika-faizini-yuzde-42-5te-sabit-tuttu"),
     ("KAAN'ın ikinci prototipi ilk test uçuşunu gerçekleştirdi", "Savunma", "Hava Platformları", "Mert Yalın", "23.11 13.20", "1,4 B", "p195", "kaanin-ikinci-prototipi-ilk-test-ucusunu-gerceklestirdi"),
-    ("Marmara'da yoğun kar yağışı: gelişmeler dakika dakika", "Gündem", "Canlı Anlatım", "Mehmet Koçak", "23.11 16.05", "64,3 B", "p180", "marmarada-yogun-kar-yagisi"),
+    ("Marmara'da yoğun kar yağışı: gelişmeler dakika dakika", "Gündem", "Çevre ve Afet", "Mehmet Koçak", "23.11 16.05", "64,3 B", "p180", "marmarada-yogun-kar-yagisi"),
     ("Millî takımın aday kadrosu açıklandı", "Spor", "Millî Takım", "Burak Tan", "23.11 13.48", "18,2 B", "p203", "milli-takimin-aday-kadrosu-aciklandi"),
     ("Rüzgâr enerjisinde yeni yatırım ihalesi", "Finans", "Enerji", "Can Demir", "23.11 12.00", "19,6 B", "p117", "ruzgar-enerjisinde-yeni-yatirim-ihalesi"),
     ("AB dışişleri bakanları göç paketini görüştü", "Dünya", "Avrupa", "Zeynep Ak", "23.11 13.25", "23,1 B", "p133", "ab-disisleri-bakanlari-goc-paketini-gorustu"),
-    ("Doğuda kar yağışı: 214 köy yolu kapalı", "Gündem", "Afet", "Ayşe Yıldız", "23.11 15.35", "4,4 B", "p182", "doguda-kar-yagisi-214-koy-yolu-kapali"),
+    ("Doğuda kar yağışı: 214 köy yolu kapalı", "Gündem", "Çevre ve Afet", "Ayşe Yıldız", "23.11 15.35", "4,4 B", "p182", "doguda-kar-yagisi-214-koy-yolu-kapali"),
     ("YKS 2027 tarihleri tek ekranda", "Kampüs", "YKS", "Aslı Gür", "23.11 14.50", "3,8 B", "p163", "yks-2027-tarihleri-tek-ekranda"),
-    ("Asgari ücret desteği 2027 bütçesinde yer aldı", "Gündem", "Finans", "Sibel Arslan", "23.11 15.50", "12,5 B", "p178", "asgari-ucret-destegi-2027-butcesinde-yer-aldi"),
+    ("Asgari ücret desteği 2027 bütçesinde yer aldı", "Gündem", "Siyaset", "Sibel Arslan", "23.11 15.50", "12,5 B", "p178", "asgari-ucret-destegi-2027-butcesinde-yer-aldi"),
     ("Dolar/TL güne yatay başladı, gözler enflasyon verisinde", "Finans", "Döviz", "Elif Aras", "23.11 15.00", "18,4 B", "p164", "dolar-tl-gune-yatay-basladi"),
 ]
 def haber_sec_secenek(haric=()):
@@ -459,7 +456,7 @@ def vitrin():
     YAZILDI.append(sayfa("vitrin.html", "Vitrin", "haberler.vitrin", govde))
 
 # ======================================================================= 2 · SON DAKİKA
-SD_KAT = {"Siyaset": ("Gündem", "Siyaset"), "Türkiye": ("Gündem", "Türkiye")}
+SD_KAT = {"Siyaset": ("Gündem", "Siyaset"), "Türkiye": ("Gündem", None)}  # "Türkiye" alt kategorisi kalktı (DADAHABER-10 §2)
 SD_BAGLI = {"İstanbul Valiliği: okullar 24 Kasım'da da tatil": "istanbul-valiligi-okullar-24-kasimda-da-tatil",
             "Asgari ücret görüşmelerinde ilk toplantı 4 Aralık'ta yapılacak": "asgari-ucret-gorusmelerinde-ilk-toplanti-4-aralikta-yapilacak",
             "Merkez Bankası politika faizini yüzde 42,5'te sabit tuttu": "merkez-bankasi-politika-faizini-yuzde-42-5te-sabit-tuttu",
@@ -537,7 +534,7 @@ def son_dakika():
 
 # ======================================================================= 3 · CANLI ANLATIM LİSTESİ
 CANLI = [
-    ("marmara", "Marmara'da yoğun kar yağışı: gelişmeler dakika dakika", "Gündem", "Afet", "Mehmet Koçak", "canli", "23.11.2026 16.05", "10 giriş · 06.10'dan beri", "64,3 B", "p180", "dakika-dakika.html"),
+    ("marmara", "Marmara'da yoğun kar yağışı: gelişmeler dakika dakika", "Gündem", "Çevre ve Afet", "Mehmet Koçak", "canli", "23.11.2026 16.05", "10 giriş · 06.10'dan beri", "64,3 B", "p180", "dakika-dakika.html"),
     ("butce", "TBMM'de 2027 bütçesi görüşmeleri: gelişmeler dakika dakika", "Gündem", "Siyaset", "Ayşe Yıldız", "canli", "23.11.2026 15.42", "14 giriş · 10.00'dan beri", "21,7 B", "p178", "dakika-dakika-butce.html"),
     ("ab", "Türkiye–AB yüksek düzeyli diyalog toplantısı: dakika dakika", "Dünya", "Diplomasi", "Kaan Yücel", "bitti", "22.11.2026 17.40", "18 giriş · 17.40'ta kapandı", "15,3 B", "p133", "dakika-dakika-zirve.html"),
     ("komisyon", "Plan ve Bütçe Komisyonu'nda son gün oturumu", "Gündem", "Siyaset", "Ozan Er", "bitti", "22.11.2026 19.20", "22 giriş · 19.20'de kapandı", "7,1 B", "p193", "canli-gundem.html"),
@@ -554,7 +551,7 @@ def canli():
             (f'<span class="kb-tarih{"" if d != "taslak" else " muted"}">{son}</span>', "kb-gizle-m"), (gor, "say kb-gizle-t")],
             gorl + ia_a(href, "Düzenle", "fa-pen") + SIL + DIGER, href=href, kategori=kb, yerler="manset" if k == "marmara" else ""))
     satir.append(tr("eski", "cop", "Deprem tatbikatı: gelişmeler dakika dakika Kerem Aksoy", "Deprem tatbikatı: gelişmeler dakika dakika",
-        [ana_hucre("Deprem tatbikatı: gelişmeler dakika dakika", "Kerem Aksoy · 4 giriş · yanlışlıkla açıldı", "p192"), kat_hucre("Gündem", "Afet"), (rozet("warm", "Çöpte"), ""), ('<span class="kb-tarih muted">18.11.2026 10.20</span>', "kb-gizle-m"), ("—", "say kb-gizle-t")],
+        [ana_hucre("Deprem tatbikatı: gelişmeler dakika dakika", "Kerem Aksoy · 4 giriş · yanlışlıkla açıldı", "p192"), kat_hucre("Gündem", "Çevre ve Afet"), (rozet("warm", "Çöpte"), ""), ('<span class="kb-tarih muted">18.11.2026 10.20</span>', "kb-gizle-m"), ("—", "say kb-gizle-t")],
         ia_a("canli-masa.html?id=eski", "Görüntüle", "fa-eye") + ia_a("canli-masa.html?id=eski", "Düzenle", "fa-pen") + SIL + DIGER, href="canli-masa.html?id=eski", kategori="Gündem", onceki="bitti"))
     menu = (m_grup("Anlatım", "canli bitti taslak")
             + m_a("Masayı aç (yeni giriş)", "fa-pen-to-square", "haberler.canli-masa", "?sekme=pAkis", ' data-durum-icin="canli"')
@@ -641,7 +638,7 @@ def canli_masa():
                 girdi("cmBaslik", "Başlık", "Marmara'da yoğun kar yağışı: gelişmeler dakika dakika", "baslik", "70|90", "Sitede başlık; SEO başlığı buradan üretilir", cls="finput kb-buyuk", ek=' data-alan="baslik"', hata="Başlık zorunlu."),
                 alan("cmSpot", "Spot", "Meteoroloji'nin turuncu kodlu uyarısının ardından Marmara Bölgesi'nde etkili olan kar yağışı ulaşımı ve eğitimi etkiliyor. Valilik ve kurum açıklamalarını geldikçe bu sayfada topluyoruz.", "spot", "220|280", "Başlığın altındaki giriş cümlesi", ek=' data-alan="spot"', hata="Spot zorunlu.")))
              + ai_adim("#cmBaslik,#cmSpot", [("ozet", "Dada Özet", True, None), ("sinif", "Kategori ve Alt Konular", True, None), ("seo", "SEO", True, None), ("bildirim", "Bildirim Metni", True, "etkilesim"), ("sosyal", "Sosyal Medya Metinleri", True, "sosyal-medya")])
-             + fs("Sınıflandırma", "fa-sitemap", grid(kategori_alanlari("cm", "Gündem", ["Afet", "İstanbul"]), yazar_alani("cmYazar", "Mehmet Koçak")), attr=' data-ai-grup="sinif"')
+             + fs("Sınıflandırma", "fa-sitemap", grid(kategori_alanlari("cm", "Gündem", ["Çevre ve Afet", "İstanbul"]), yazar_alani("cmYazar", "Mehmet Koçak")), attr=' data-ai-grup="sinif"')
              + kapak(kp, "p180", (50, 45), "Kaynak: Dada Haber arşivi", "Kar yağışı sabah saatlerinde İstanbul'da etkili oldu · Dada Haber arşivi")
              + fs("Dada Özet", "fa-bolt", '<div class="kb-madde">' + "".join(f'<div class="km-satir"><span class="km-no">{n}</span><input value="{e(v)}" aria-label="Özet maddesi {n}"></div>' for n, v in enumerate([
                  "Marmara'da 14 ilde okullar tatil; İstanbul'da tatil yarın da sürecek.", "Havalimanlarında 46 iç hat seferi iptal edildi, otoyolda tır geçişi kısıtlandı.", "Yağışın gece kuvvetlenmesi, 24 Kasım öğle saatlerinde zayıflaması bekleniyor."], 1)) + '</div><p class="fhint">Sitede akışın üstünde 15 sn özet olarak görünür; gelişme oldukça güncelleyin.</p>', ek_bas="İsteğe bağlı", attr=' data-ai-grup="ozet"')
@@ -689,7 +686,7 @@ DOSYALAR = [
     ("kaan", "KAAN programı: prototipten seri üretime takvim", "Savunma", "Millî Projeler", "Mert Yalın", "yayinda", "22.11.2026 18.10", "9 olay · 2 taraf · 4 terim · 7 haber", "5,5 B", "p195", True),
     ("goc", "AB göç paketi: Türkiye için ne değişir?", "Dünya", "Göç", "Hande Polat", "yayinda", "22.11.2026 16.40", "7 olay · 4 taraf · 3 terim · 5 haber", "10,8 B", "p133", True),
     ("yks", "YKS 2027 rehberi: başvurudan tercihe", "Kampüs", "YKS", "Ozan Er", "yayinda", "22.11.2026 11.00", "6 olay · 2 taraf · 7 terim · 3 haber", "4,1 B", "p163", False),
-    ("deprem", "Deprem bölgesinde konut: rakamlarla iki yıl", "Gündem", "Afet", "Kerem Aksoy", "yayinda", "21.11.2026 17.30", "10 olay · 3 taraf · 2 terim · 8 haber", "9,4 B", "p193", False),
+    ("deprem", "Deprem bölgesinde konut: rakamlarla iki yıl", "Gündem", "Çevre ve Afet", "Kerem Aksoy", "yayinda", "21.11.2026 17.30", "10 olay · 3 taraf · 2 terim · 8 haber", "9,4 B", "p193", False),
     ("emisyon", "Emisyon ticaret sistemi nedir, kimleri kapsar?", "Keşfet", "İklim", "İrem Su", "taslak", "23.11.2026 15.10", "3 olay · 2 taraf · 6 terim · 2 haber", "—", "p155", False),
 ]
 INCELEMELER = [
@@ -786,7 +783,7 @@ def dosya():
                 girdi("dsBaslik", "Başlık", "İstanbul’un su sorunu: barajlardan musluğa bir yıl", "baslik", "70|90", "Sitede dosya başlığı; SEO başlığı buradan üretilir", cls="finput kb-buyuk", ek=' data-alan="baslik"', hata="Başlık zorunlu."),
                 alan("dsSpot", "Spot", "Barajlarda doluluk iki yıldır normalin altında. Kuraklığın nasıl başladığını, alınan önlemleri ve tarafların görüşlerini zaman çizgisi ve sözlükle anlatıyoruz.", "spot", "220|280", "Başlığın altındaki giriş cümlesi", ek=' data-alan="spot"', hata="Spot zorunlu.")))
              + ai_adim("#dsBaslik,#dsSpot", [("ozet", "Özet metni taslağı", True, None), ("sinif", "Kategori ve Alt Konular", True, None), ("sozluk", "Sözlük önerileri", True, None), ("seo", "SEO", True, None), ("sosyal", "Sosyal Medya Metinleri", True, "sosyal-medya")])
-             + fs("Sınıflandırma", "fa-sitemap", grid(kategori_alanlari("ds", "Keşfet", ["İklim", "Dada Bağlam"]), yazar_alani("dsYazar", "İrem Su")), attr=' data-ai-grup="sinif"')
+             + fs("Sınıflandırma", "fa-sitemap", grid(kategori_alanlari("ds", "Keşfet", ["İklim"]), yazar_alani("dsYazar", "İrem Su")), attr=' data-ai-grup="sinif"')
              + kapak(kp, "p158", (50, 50), "Kaynak: Dada Haber arşivi", "Ömerli Barajı, kasım 2026 · Dada Haber arşivi")
              + fs("Özet", "fa-align-left", editor("Dosya özeti", "<p>İstanbul’un içme suyunu sağlayan barajlarda doluluk iki yıldır mevsim normallerinin altında seyrediyor. Bu dosya, sorunun nasıl başladığını, hangi adımların atıldığını ve önümüzdeki dönemde neyin değişeceğini tek yerde topluyor.</p>", "ozet", zm="Dosyanın özet metnini yazın", alt="Sitede başlığın altında; “Dinle” bu metinden okunur"), ek_bas="Dosyanın asıl metni", attr=' data-ai-grup="ozet"')
              + fs("Kaynaklar", "fa-link", satir_liste("Kaynak", "Kaynak adı (kurum, belge)", "Açıklama, tarih ya da bağlantı", [
@@ -807,7 +804,7 @@ def dosya():
                     ("Kademeli tarife", "Tüketim arttıkça metreküp fiyatının yükseldiği fiyatlandırma.")], "Terim ekle"), ek_bas="Sitede alfabetik; terim metinde altı çizili görünür", attr=' data-ai-grup="sozluk"'))
     bagli_h = [("Barajlardaki doluluk oranı İstanbul’da yüzde 38’e geriledi", "Keşfet", "İklim", "Ayşe Yıldız", "23.11 11.40", "", "p158", "barajlarda-doluluk-yuzde-38"),
                ("Konya Ovası’nda yeraltı suyu seviyesi bir yılda 3 metre düştü", "Keşfet", "İklim", "Ozan Er", "23.11 10.15", "", "p164", "konya-ovasi-yeralti-suyu"),
-               ("Büyükşehirlerde su tüketimi tek tabloda", "Keşfet", "Veri ve Harita", "Ozan Er", "22.11 16.20", "", "p155", "buyuksehirlerde-su-tuketimi"),
+               ("Büyükşehirlerde su tüketimi tek tabloda", "Keşfet", "İklim", "Ozan Er", "22.11 16.20", "", "p155", "buyuksehirlerde-su-tuketimi"),
                ("İstanbul’da kademeli su tarifesi yürürlüğe girdi", "Gündem", "İstanbul", "Sibel Arslan", "01.07 09.30", "", "p183", "kademeli-su-tarifesi")]
     bagli = (fs("Bağlı haberler", "fa-newspaper", sirali("dsBagli", bagli_h, bagli_h + HABERLER_SEC, 20, "Haber", "Yayındaki haberlerde ara", alan_id="bagli")
                  + '<p class="fhint kb-ust-bosluk">Yalnız yayındaki haberler seçilir; sıra dosyadaki “İlgili içerikler” sırasıdır. Bağlı haberin sonunda “Dosyanın devamı” kutusu görünür. Haberler listesindeki ⋯ → “Olay dosyasına bağla” da buraya ekler.</p>'
@@ -843,9 +840,9 @@ G5 = [("Asgari ücret komisyonu 4 Aralık’ta toplanıyor", "İşçi ve işvere
       ("AB göç paketinde oylama ocağa kaldı", "Dışişleri bakanları uzlaşamadı; Türkiye ile geri kabul maddesi yeniden yazılacak.", "Dünya · 3 dk", "p133"),
       ("YKS 2027 başvuru tarihleri belli oldu", "Başvurular 6 Şubat'ta başlıyor; sınav 20-21 Haziran'da yapılacak.", "Kampüs · 2 dk", "p163")]
 def gunun_5():
-    G5H = [("Asgari ücret komisyonu 4 Aralık’ta toplanıyor", "Gündem", "Türkiye", "Hakan Uysal", "23.11 14.05", "", "p188", "asgari-ucret-gorusmelerinde-ilk-toplanti-4-aralikta-yapilacak"),
+    G5H = [("Asgari ücret komisyonu 4 Aralık’ta toplanıyor", "Gündem", "Toplum", "Hakan Uysal", "23.11 14.05", "", "p188", "asgari-ucret-gorusmelerinde-ilk-toplanti-4-aralikta-yapilacak"),
            ("Politika faizi yüzde 42,5’te sabit kaldı", "Finans", "Faiz Oranları", "Elif Aras", "23.11 14.00", "", "p192", "merkez-bankasi-politika-faizini-yuzde-42-5te-sabit-tuttu"),
-           ("Doğuda kar yağışı: 214 köy yolu kapalı", "Gündem", "Afet", "Ayşe Yıldız", "23.11 15.35", "", "p182", "doguda-kar-yagisi-214-koy-yolu-kapali"),
+           ("Doğuda kar yağışı: 214 köy yolu kapalı", "Gündem", "Çevre ve Afet", "Ayşe Yıldız", "23.11 15.35", "", "p182", "doguda-kar-yagisi-214-koy-yolu-kapali"),
            ("AB göç paketinde oylama ocağa kaldı", "Dünya", "Avrupa", "Zeynep Ak", "23.11 13.25", "", "p133", "ab-disisleri-bakanlari-goc-paketini-gorustu"),
            ("YKS 2027 başvuru tarihleri belli oldu", "Kampüs", "YKS", "Aslı Gür", "23.11 14.50", "", "p163", "yks-2027-tarihleri-tek-ekranda")]
     kp = "g5Kapak"
@@ -972,7 +969,7 @@ def yazarlar():
             + m_a("Köşe yazıları", "fa-feather-pointed", "haberler.kose", "", ' data-durum-icin="aktif pasif" data-kosul-icin="tur:kose"')
             + m_btn("Bağlantıyı kopyala", "fa-link", "aktif pasif", " data-kopyala")
             + m_ayir("aktif pasif") + m_grup("Kayıt") + DENETIM + COP_MENU)
-    bolum_ops = [("", "Bütün bölümler")] + [(b, b) for b in BOLUMLER]
+    bolum_ops = [("", "Bütün bölümler")] + [(b, b) for b in YAZAR_ALANLAR]
     govde = bas("Yazarlar", "36 yazar · 8 bölüm ve köşe · 4 köşe yazarı · imza bilgisi sitedeki yazar sayfası ve haber kartlarında",
                 [a_dis("Yazarlar sayfası", "fa-arrow-up-right-from-square", SITE + "yazarlar.html"), a_hedef("Yeni yazar", "fa-plus", "haberler.yazar", "?yeni=1", "btn-acc")])
     govde += liste("yazar", "Yazar listesi", [("hepsi", "Tümü", 0), ("aktif", "Etkin", 0), ("pasif", "Pasif", 0)], "Ad, Unvan ya da Bölüm Ara",
@@ -1006,7 +1003,7 @@ def yazar():
     detay = (fs("Kimlik", "fa-id-card", grid(
                 f'<div class="frow two">' + girdi("yzAd", "Ad Soyad", ad, "ad", "40|60", "İmza olarak haberlerde ve yazar sayfasında", ek=' data-alan="baslik" data-slug-hedef="sSlug"', hata="Ad soyad zorunlu.")
                 + girdi("yzUnvan", "Unvan", unvan, "unvan", "40|60", "Adın altında; yazar kartında", hata="Unvan zorunlu.") + '</div>',
-                f'<div class="frow two">' + frow("Bölüm", secim("yzBolum", [(b, b) for b in BOLUMLER], bolum, "Bölüm seçin", "Bölüm ara", alan_id="bolum", yeni_deger="", bos_metin="Bu adla bölüm yok."), ipucu="Yazarlar sayfasında bu bölümün altında listelenir.")
+                f'<div class="frow two">' + frow("Bölüm", secim("yzBolum", [(b, b) for b in YAZAR_ALANLAR], bolum, "Bölüm seçin", "Bölüm ara", alan_id="bolum", yeni_deger="", bos_metin="Bu adla bölüm yok."), ipucu="Yazarlar sayfasında bu bölümün altında listelenir.")
                 + frow("Panel hesabı", secim("yzHesap", [("", "Bağlı hesap yok"), ("aylin.sezer", "Aylin Sezer", "Editör · aylin.sezer@dadahaber.ornek"), ("ayse.yildiz", "Ayşe Yıldız", "Genel Yayın Yönetmeni"), ("mehmet.kocak", "Mehmet Koçak", "Editör")], "aylin.sezer", "Bağlı hesap yok", "Kullanıcı ara", yeni_deger="", bos_metin="Bu adla kullanıcı yok."), ipucu="Bağlıysa bu kullanıcının yazdıkları kendiliğinden bu imzayla çıkar.") + '</div>',
                 frow("Tür", f'<div class="kb-kart-sec">{tur}</div>')))
              + foto
@@ -1241,8 +1238,8 @@ def kose_duzenle():
                  + '</div>',
                  frow("Konular", cip_girdi([kose_konu(h)], KOSE_KONULAR, "Konu ara ya da yazıp ekleyin", ek=' data-alan-id="konu" data-birincil data-havuz-yonet data-kullanim-birim="yazıda"'),
                       ipucu="İlk seçilen ana konudur; sitede başlığın üstündeki etikette görünür. Havuzda yoksa yazıp Enter’la eklenir."),
-                 frow("Ek kategori ve alt konular", cip_girdi(["Kampüs › Üniversiteler"], ["Kadın › Kadın Yazarlar", "Kampüs › Üniversiteler", "Finans › Kişisel Finans", "Gündem › Toplum", "Gündem › Eğitim"], "Kategori ara"),
-                      ipucu="İsteğe bağlı; yazı bu sayfalarda da listelenir (ör. kadın yazarların yazıları Kadın › Kadın Yazarlar’da).")), attr=' data-ai-grup="sinif"')
+                 frow("Ek kategori ve alt konular", cip_girdi(["Kampüs › Üniversiteler"], [f"{a} › {x}" for a in BOLUMLER for x in ALTLAR[a]], "Kategori ara", ek=" data-havuz-kapali"),
+                      ipucu="İsteğe bağlı; yazı seçilen alt kategori sayfalarında da listelenir.")), attr=' data-ai-grup="sinif"')
              + kapak(kp, "p163", (50, 45), "İsteğe bağlı · yoksa yazar fotoğrafı", "Sınav haftasında gece de açık kalan bir üniversite kütüphanesi · Dada Haber arşivi")
              + fs("Kartta görünen görsel", "fa-id-badge", grid(anahtar("Kapak yerine yazar fotoğrafı", "Açıksa sitede köşe kartında ve Yazarlar bandında yazarın fotoğrafı görünür; kapak yalnız yazının sayfasında kalır. Kapak boşsa kendiliğinden açıktır.", False)))
              + fs("Yazı metni", "fa-align-left", editor("Yazı metni", KY_METIN, "metin", medya=True, zm="Yazının metnini yazın", alt="Sitede “Yazıyı dinle” bu metinden okunur"), ek_bas="Ara başlık, bağlantı, alıntı ve görsel")
