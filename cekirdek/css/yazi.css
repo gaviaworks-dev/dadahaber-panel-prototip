@@ -1,0 +1,85 @@
+/* =====================================================================
+   ÇEKİRDEK · YAZI — panelin TEK yazı tipi ve ölçek kaynağı
+   kabuk.css'in ilk satırında @import edilir; sayfalar ayrıca bağlamaz.
+   Yazı tipi panelin kendisine aittir (CLAUDE.md "Referans kabuk"): tema
+   dosyası yalnızca renk ve logo taşır, burada proje değişmez.
+
+   Kaynak (25.11.2026, Yasin Bey: "Dada Gastro yönetim paneliyle aynı olsun"):
+   Dada Gastro yönetim paneli = dadagastro deposu (Laravel)
+     · resources/views/admin/layout.blade.php → yükleme sırası
+     · public/reference/admin/sa-shell.css :17-20, :78-82 → "Gilroy" YALNIZ Medium (500),
+       gövde 500 / satır 1.55; h1-h4 700 / satır 1.12 / harf -.02em
+     · resources/css/tokens.css :14-66, :104-107, :271 → --font zinciri, --lh-*, --ls-head,
+       vurgu (strong, b) için ayrı aile GilroyBd = ExtraBold dosyası
+   Dosyalar Gastro'nun public/fonts/gilroy/ dosyalarıyla bayt bayt aynıdır (sha1 eşit).
+
+   AĞIRLIK EŞLEMESİ (Gastro ile aynı):
+     · "Gilroy" ailesinde tek yüz vardır: Medium. 600/700/800 istenen yazı (başlık,
+       düğme, menü, sayı) Medium'un tarayıcı kalınıdır; ExtraBold'a GEÇMEZ.
+       Ayrı ExtraBold yüzü %3 daha geniştir ve kutuları taşırıyordu.
+     · Gerçek kalın yüz (ExtraBold) yalnızca vurguya, strong ve b'ye verilir.
+       Gastro'dan tek fark: b/strong bileşende 500'e indirilmişse Medium çizilir.
+     · Light yalnızca --font-ince ile (telefon kilit ekranı saati gibi önizlemeler).
+
+   ÖLÇEK: Gastro panelinde boyut değişkeni yoktur; değerler sa-*.css'te sabit px'tir.
+   Aynı değer kümesi burada kapalı bir ölçek olarak tanımlıdır; --fs-12-5 = 12.5px.
+   Modül ve sayfa yazı boyutu, kalınlığı ve ailesini YALNIZ bu değişkenlerle verir.
+   ===================================================================== */
+
+@font-face{font-family:"Gilroy";src:url("../../assets/font/Gilroy-Medium.ttf") format("truetype");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"GilroyBd";src:url("../../assets/font/Gilroy-Medium.ttf") format("truetype");font-weight:100 500;font-style:normal;font-display:swap}
+@font-face{font-family:"GilroyBd";src:url("../../assets/font/Gilroy-ExtraBold.otf") format("opentype");font-weight:600 900;font-style:normal;font-display:swap}
+@font-face{font-family:"GilroyLt";src:url("../../assets/font/Gilroy-Light.otf") format("opentype");font-weight:300;font-style:normal;font-display:swap}
+
+:root{
+  /* aileler */
+  --font:"Gilroy",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-vurgu:"GilroyBd","Gilroy",system-ui,sans-serif;
+  --font-ince:"GilroyLt","Gilroy",system-ui,sans-serif;
+  --font-mono:ui-monospace,Menlo,monospace;
+  --font-sistem:system-ui,-apple-system,"Segoe UI",sans-serif;   /* platform kartı önizlemesi (sosyal medya) */
+  --font-ikon:"Font Awesome 6 Free";
+
+  /* kalınlık */
+  --fw-ince:300;     /* yalnız --font-ince ile */
+  --fw-orta:500;     /* gövde (Gastro: body 500) */
+  --fw-yari:600;
+  --fw-kalin:700;    /* başlık, düğme, etiket (Gastro: h1-h4, .btn) */
+  --fw-ekstra:800;   /* Gilroy'da 700 ile aynı çizilir; büyük sayı ve marka vurgusu */
+  --fw-ikon:900;     /* Font Awesome dolu ikon */
+  --fw-ikon-cizgi:400;
+
+  /* satır ve harf aralığı (Gastro tokens.css adlarıyla) */
+  --lh-body:1.55;
+  --lh-head:1.12;
+  --ls-head:-.02em;
+
+  /* boyut ölçeği (px; Gastro sa-*.css değer kümesi + panelin ek adımları 7, 9, 22, 30, 46) */
+  --fs-7:7px;
+  --fs-9:9px;
+  --fs-9-5:9.5px;
+  --fs-10:10px;
+  --fs-10-5:10.5px;
+  --fs-11:11px;
+  --fs-11-5:11.5px;   /* tablo başlığı, durum rozeti, sayaç değişimi */
+  --fs-12:12px;
+  --fs-12-5:12.5px;   /* alan etiketi, sayaç etiketi */
+  --fs-13:13px;       /* küçük düğme, sekme */
+  --fs-13-5:13.5px;   /* tablo hücresi, form alanı, menü kalemi */
+  --fs-14:14px;
+  --fs-14-5:14.5px;   /* düğme */
+  --fs-15:15px;
+  --fs-16:16px;
+  --fs-17:17px;
+  --fs-18:18px;       /* pencere başlığı */
+  --fs-19:19px;
+  --fs-20:20px;
+  --fs-21:21px;
+  --fs-22:22px;
+  --fs-23:23px;
+  --fs-24:24px;
+  --fs-26:26px;       /* sayfa başlığı, sayaç değeri */
+  --fs-28:28px;
+  --fs-30:30px;
+  --fs-46:46px;
+}
