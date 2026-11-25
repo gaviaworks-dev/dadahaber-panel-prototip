@@ -564,7 +564,7 @@ window.PANEL = {
    "baslik": "Köşe Yazıları",
    "ikon": "fa-feather-pointed",
    "modul_ad": "Haberler ve Vitrin",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -576,7 +576,7 @@ window.PANEL = {
    "baslik": "Köşe Yazısı Düzenle",
    "ikon": "fa-feather-pointed",
    "modul_ad": "Haberler ve Vitrin",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -597,7 +597,7 @@ window.PANEL = {
    ]
   },
   "haberler.canli-masa": {
-   "baslik": "Canlı anlatım masası",
+   "baslik": "Canlı Anlatım Masası",
    "ikon": "fa-tower-broadcast",
    "modul_ad": "Haberler ve Vitrin",
    "hazir": true,
@@ -610,7 +610,7 @@ window.PANEL = {
    ]
   },
   "haberler.dosya": {
-   "baslik": "Olay dosyası düzenle",
+   "baslik": "Olay Dosyası Düzenle",
    "ikon": "fa-folder-open",
    "modul_ad": "Haberler ve Vitrin",
    "hazir": true,
@@ -634,7 +634,7 @@ window.PANEL = {
    ]
   },
   "haberler.inceleme": {
-   "baslik": "Doğrulama incelemesi düzenle",
+   "baslik": "Doğrulama İncelemesi Düzenle",
    "ikon": "fa-scale-balanced",
    "modul_ad": "Haberler ve Vitrin",
    "hazir": true,
@@ -646,7 +646,7 @@ window.PANEL = {
    ]
   },
   "haberler.yazar": {
-   "baslik": "Yazar düzenle",
+   "baslik": "Yazar Düzenle",
    "ikon": "fa-pen-nib",
    "modul_ad": "Haberler ve Vitrin",
    "hazir": true,
@@ -870,7 +870,7 @@ window.PANEL = {
    ]
   },
   "multimedya.sesli-duzenle": {
-   "baslik": "Sesli bülten düzenle",
+   "baslik": "Sesli Bülten Düzenle",
    "ikon": "fa-headphones",
    "modul_ad": "Multimedya ve Medya Havuzu",
    "hazir": true,
@@ -908,7 +908,7 @@ window.PANEL = {
    ]
   },
   "multimedya.sablon": {
-   "baslik": "Marka şablonu",
+   "baslik": "Marka Şablonu",
    "ikon": "fa-stamp",
    "modul_ad": "Multimedya ve Medya Havuzu",
    "hazir": true,
@@ -1120,7 +1120,7 @@ window.PANEL = {
    ]
   },
   "etkilesim.bulten-duzenle": {
-   "baslik": "Bülten düzenle",
+   "baslik": "Bülten Düzenle",
    "ikon": "fa-envelope-open-text",
    "modul_ad": "Etkileşim",
    "hazir": true,
@@ -1132,7 +1132,7 @@ window.PANEL = {
    ]
   },
   "etkilesim.push-duzenle": {
-   "baslik": "Push bildirimi düzenle",
+   "baslik": "Push Bildirimi Düzenle",
    "ikon": "fa-bell",
    "modul_ad": "Etkileşim",
    "hazir": true,
@@ -1144,7 +1144,7 @@ window.PANEL = {
    ]
   },
   "etkilesim.reklam-duzenle": {
-   "baslik": "Reklam alanı düzenle",
+   "baslik": "Reklam Alanı Düzenle",
    "ikon": "fa-rectangle-ad",
    "modul_ad": "Etkileşim",
    "hazir": true,
@@ -1166,7 +1166,7 @@ window.PANEL = {
    ]
   },
   "kullanicilar.uye": {
-   "baslik": "Ekip üyesi",
+   "baslik": "Ekip Üyesi",
    "ikon": "fa-user",
    "modul_ad": "Kullanıcılar",
    "hazir": true,
@@ -1199,7 +1199,7 @@ window.PANEL = {
    ]
   },
   "kullanicilar.okur": {
-   "baslik": "Okur detayı",
+   "baslik": "Okur Detayı",
    "ikon": "fa-user",
    "modul_ad": "Kullanıcılar",
    "hazir": true,
@@ -1340,7 +1340,7 @@ window.PANEL = {
    ]
   },
   "kimlik-yetki.sifremi-unuttum": {
-   "baslik": "Şifremi unuttum",
+   "baslik": "Şifremi Unuttum",
    "ikon": "fa-key",
    "modul_ad": "Kimlik ve Yetki",
    "hazir": true,
@@ -1370,7 +1370,7 @@ window.PANEL = {
    ]
   },
   "kimlik-yetki.davet-kabul": {
-   "baslik": "Davet ve e-posta onayı",
+   "baslik": "Davet ve E-posta Onayı",
    "ikon": "fa-envelope-circle-check",
    "modul_ad": "Kimlik ve Yetki",
    "hazir": true,
@@ -1385,7 +1385,7 @@ window.PANEL = {
    ]
   },
   "kimlik-yetki.dogrulama-kurulum": {
-   "baslik": "2FA kurulumu",
+   "baslik": "2FA Kurulumu",
    "ikon": "fa-shield",
    "modul_ad": "Kimlik ve Yetki",
    "hazir": true,
@@ -1411,7 +1411,7 @@ window.PANEL = {
    ]
   },
   "kimlik-yetki.baglanti-gecersiz": {
-   "baslik": "Bağlantı geçersiz",
+   "baslik": "Bağlantı Geçersiz",
    "ikon": "fa-link-slash",
    "modul_ad": "Kimlik ve Yetki",
    "hazir": true,
@@ -1426,7 +1426,7 @@ window.PANEL = {
    ]
   },
   "kimlik-yetki.yetki-yok": {
-   "baslik": "Yetki yok (403)",
+   "baslik": "Yetki Yok (403)",
    "ikon": "fa-ban",
    "modul_ad": "Kimlik ve Yetki",
    "hazir": true,
@@ -1441,7 +1441,7 @@ window.PANEL = {
    ]
   },
   "kimlik-yetki.bulunamadi": {
-   "baslik": "Sayfa bulunamadı (404)",
+   "baslik": "Sayfa Bulunamadı (404)",
    "ikon": "fa-circle-question",
    "modul_ad": "Kimlik ve Yetki",
    "hazir": true,
@@ -1477,7 +1477,7 @@ window.PANEL = {
    ]
   },
   "entegrasyonlar.ayar": {
-   "baslik": "Entegrasyon ayarı",
+   "baslik": "Entegrasyon Ayarı",
    "ikon": "fa-gear",
    "modul_ad": "Entegrasyonlar",
    "hazir": true,
@@ -1563,7 +1563,7 @@ window.PANEL = {
    ]
   },
   "raporlar.liste": {
-   "baslik": "Sistem raporu",
+   "baslik": "Sistem Raporu",
    "ikon": "fa-chart-pie",
    "modul_ad": "Raporlar",
    "hazir": true,
@@ -1578,10 +1578,10 @@ window.PANEL = {
    ]
   },
   "raporlar.site": {
-   "baslik": "Site istatistikleri",
+   "baslik": "Site İstatistikleri",
    "ikon": "fa-chart-line",
    "modul_ad": "Raporlar",
-   "hazir": false,
+   "hazir": true,
    "acik": true,
    "roller": [
     "super",
@@ -1590,7 +1590,7 @@ window.PANEL = {
    ]
   },
   "raporlar.disa-aktarim": {
-   "baslik": "Dışa aktarımlar",
+   "baslik": "Dışa Aktarımlar",
    "ikon": "fa-file-export",
    "modul_ad": "Raporlar",
    "hazir": true,
@@ -2259,7 +2259,101 @@ window.PANEL = {
    "Çalışma ve Sosyal Güvenlik Bakanlığı, Ankara"
   ]
  },
+ "sosyal_baglantilar": [
+  {
+   "id": "x",
+   "ad": "X",
+   "ikon": "fa-brands fa-x-twitter",
+   "onek": "x.com/",
+   "acik": true
+  },
+  {
+   "id": "facebook",
+   "ad": "Facebook",
+   "ikon": "fa-brands fa-facebook",
+   "onek": "facebook.com/",
+   "acik": true
+  },
+  {
+   "id": "instagram",
+   "ad": "Instagram",
+   "ikon": "fa-brands fa-instagram",
+   "onek": "instagram.com/",
+   "acik": true
+  },
+  {
+   "id": "linkedin",
+   "ad": "LinkedIn",
+   "ikon": "fa-brands fa-linkedin",
+   "onek": "linkedin.com/",
+   "acik": true
+  },
+  {
+   "id": "youtube",
+   "ad": "YouTube",
+   "ikon": "fa-brands fa-youtube",
+   "onek": "youtube.com/@",
+   "acik": true
+  },
+  {
+   "id": "tiktok",
+   "ad": "TikTok",
+   "ikon": "fa-brands fa-tiktok",
+   "onek": "tiktok.com/@",
+   "acik": true
+  },
+  {
+   "id": "telegram",
+   "ad": "Telegram",
+   "ikon": "fa-brands fa-telegram",
+   "onek": "t.me/",
+   "acik": true
+  },
+  {
+   "id": "whatsapp",
+   "ad": "WhatsApp Kanalı",
+   "ikon": "fa-brands fa-whatsapp",
+   "onek": "whatsapp.com/channel/",
+   "acik": true
+  },
+  {
+   "id": "threads",
+   "ad": "Threads",
+   "ikon": "fa-brands fa-threads",
+   "onek": "threads.net/@",
+   "acik": true
+  },
+  {
+   "id": "bluesky",
+   "ad": "Bluesky",
+   "ikon": "fa-brands fa-bluesky",
+   "onek": "bsky.app/profile/",
+   "acik": true
+  },
+  {
+   "id": "web",
+   "ad": "Kişisel Web Sitesi",
+   "ikon": "fa-solid fa-globe",
+   "onek": "https://",
+   "acik": true
+  }
+ ],
  "zorunlu": {
+  "haberler.kose": {
+   "taslak": [
+    "baslik"
+   ],
+   "yayin": [
+    "baslik",
+    "spot",
+    "metin",
+    "yazar"
+   ],
+   "sistem": [
+    "kategori",
+    "kapak"
+   ]
+  },
   "haberler.son-dakika": {
    "taslak": [
     "baslik"
@@ -2421,6 +2515,23 @@ window.PANEL = {
    ],
    "sistem": []
   },
+  "multimedya.havuz-kisi": {
+   "taslak": [
+    "ad"
+   ],
+   "yayin": [
+    "ad",
+    "tur"
+   ]
+  },
+  "multimedya.havuz-etiket": {
+   "taslak": [
+    "ad"
+   ],
+   "yayin": [
+    "ad"
+   ]
+  },
   "multimedya.video": {
    "taslak": [
     "baslik"
@@ -2536,6 +2647,15 @@ window.PANEL = {
     "ad",
     "kategori"
    ]
+  },
+  "ozel-dikeyler.brans": {
+   "taslak": [
+    "ad"
+   ],
+   "yayin": [
+    "ad"
+   ],
+   "sistem": []
   },
   "ozel-dikeyler.kulup": {
    "taslak": [

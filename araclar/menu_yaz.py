@@ -189,6 +189,7 @@ def kayit_js():
         "sosyal_platformlar": [x for x in moduller.get("sosyal-medya", {}).get("ayarlar", {}).get("platformlar", []) if x.get("acik")] if "sosyal-medya" in acik else [],
         "sosyal_oranlar": [{"oran": o, "ad": "Sosyal " + o, "px": px} for o, px in moduller.get("sosyal-medya", {}).get("ayarlar", {}).get("oran_olculeri", {}).items()] if "sosyal-medya" in acik else [],
         "sosyal_oneriler": veri.get("sosyal_hesap_onerileri", {}),
+        "sosyal_baglantilar": [x for x in kayit.get("sosyal_baglantilar", {}).get("platformlar", []) if x.get("acik")],
         # zorunlu alanlar tek yerden (modül kaydı → ayarlar.zorunlu); anahtar "modul.form"
         "zorunlu": {f"{k}.{f}": v for k, m in moduller.items() for f, v in (m.get("ayarlar", {}) or {}).get("zorunlu", {}).items()},
     }
