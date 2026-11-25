@@ -41,7 +41,7 @@ for x in ham:
         y = donustur(s)
         if y != s: esle[s] = y
 dosyalar = sorted(set(list(KOK.glob("moduller/**/*.html")) + list(KOK.glob("cekirdek/**/*.html")) + [KOK / "ui-kit.html"]
-               + list(KOK.glob("cekirdek/js/*.js")) + list(KOK.glob("moduller/*/_uret*.py")) + [KOK / "moduller.json"]))
+               + list(KOK.glob("cekirdek/js/*.js")) + list(KOK.glob("moduller/*/_uret*.py")) + list(KOK.glob("moduller/*/_veri*.py")) + [KOK / "moduller.json"]))
 dosyalar = [f for f in dosyalar if "screenshots" not in str(f) and f.name != "kayit.js"]
 uygula = "--uygula" in sys.argv
 toplam, bulunan = 0, set()
@@ -54,7 +54,12 @@ for f in dosyalar:
         e = re.escape(eski)
         desen = [r"(?<=>)(\s*)" + e + r"(\s*)(?=<)"]                      # >Metin<
         desen += [r'(?<=\b' + n + r'=")' + e + r'(?=")' for n in NITELIK]  # nitelik
-        if f.suffix in (".js", ".py"): desen += [r"(?<=')" + e + r"(?=')", r'(?<=")' + e + r'(?=")']  # tırnaklı dizgi
+        if f.suffix in (".js", ".py"):
+            # veri anahtarı korunur: dosyada ["x"], "x": ya da 'x': biçiminde geçen tek kelime anahtar sayılır, hiç değiştirilmez
+            # (saat → Saat üreticileri bozmuştu: h["saat"] KeyError)
+            if " " not in eski and re.search(r"""\[\s*['"]""" + e + r"""['"]\s*\]|['"]""" + e + r"""['"]\s*:""", y): continue
+            desen += [r"(?<=')" + e + r"(?=')", r'(?<=")' + e + r'(?=")']  # tırnaklı dizgi
+            desen += [r"(?<=\})" + e + r"(?=<)", r"(?<=>)" + e + r"(?=\{)", r"(?<=\})" + e + r"(?=\{)"]  # f-string içinde {…}Metin< ya da >Metin{…}
         if f.name == "moduller.json": desen = [r'(?<="baslik": ")' + e + r'(?=")', r'(?<="ad": ")' + e + r'(?=")']
         for d_ in desen:
             y2, n = re.subn(d_, lambda m: (m.group(1) if m.groups() else "") + yeni + (m.group(2) if m.groups() and len(m.groups()) > 1 else ""), y)
