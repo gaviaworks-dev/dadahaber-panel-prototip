@@ -2183,6 +2183,30 @@ window.PANEL = {
     "editor"
    ]
   },
+  "ozel-dikeyler.burclar": {
+   "baslik": "Burçlar",
+   "ikon": "fa-star",
+   "modul_ad": "Özel Widgetlar",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor"
+   ]
+  },
+  "ozel-dikeyler.burc": {
+   "baslik": "Burç Düzenle",
+   "ikon": "fa-star",
+   "modul_ad": "Özel Widgetlar",
+   "hazir": true,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor"
+   ]
+  },
   "ozel-dikeyler.veri": {
    "baslik": "Veri Bantları",
    "ikon": "fa-chart-line",
@@ -3187,20 +3211,20 @@ window.PANEL = {
   },
   "ozel-dikeyler": {
    "arma": {
-    "_kaynak": "varsayım (lead): kulüp arması (puan durumu satırı, takım sayfası)",
+    "_kaynak": "sitedeki gerçek kullanım: sablonlar.css .pf-av 96 (telefonda 72), ortak.css .tc-a .arma 56, konu.css .sw-arma 28 / .k 24",
     "web": {
-     "kart": {
-      "oran": "1:1",
-      "px": [
-       48,
-       48
-      ]
-     },
      "detay": {
       "oran": "1:1",
       "px": [
-       160,
-       160
+       96,
+       96
+      ]
+     },
+     "kart": {
+      "oran": "1:1",
+      "px": [
+       56,
+       56
       ]
      }
     },
@@ -3208,8 +3232,183 @@ window.PANEL = {
      "kart": {
       "oran": "1:1",
       "px": [
-       40,
-       40
+       72,
+       72
+      ]
+     }
+    },
+    "mobil_webden_kirpilir": true
+   },
+   "takim_kapak": {
+    "_kaynak": "public sablonlar.css .bn.pf + liste.css .bn (kap en az 380 + dolgu 28/88); ölçüm galatasaray.html: 1440→1440×496, 390→390×403; solda koyu perde (.bn::before), odak sağda",
+    "web": {
+     "detay": {
+      "oran": "2.9:1",
+      "px": [
+       1440,
+       496
+      ]
+     }
+    },
+    "mobil": {
+     "kart": {
+      "oran": "1:1",
+      "px": [
+       390,
+       390
+      ]
+     }
+    },
+    "mobil_webden_kirpilir": true
+   },
+   "mac_kapak": {
+    "_kaynak": "Beyar 25.11.2026: bütün maçlar için tek ortak stadyum görseli (Spor › Maç Merkezi başında); site mac-detay.html section.bn.pf (takım sayfasıyla aynı kalıp: 1440→1440×496, 390→390×403); örnek p155",
+    "web": {
+     "detay": {
+      "oran": "2.9:1",
+      "px": [
+       1440,
+       496
+      ]
+     }
+    },
+    "mobil": {
+     "kart": {
+      "oran": "1:1",
+      "px": [
+       390,
+       390
+      ]
+     }
+    },
+    "mobil_webden_kirpilir": true
+   },
+   "lig_logo": {
+    "_kaynak": "varsayım: sitede lig logosunun yeri yok (lig adı metin + branş ikonu: super-lig.html .bn-one .cip i, puan-durumu.html .sw-bas .ust i); ölçüler sitedeki takım rozetlerinden: konu.css .sw-arma 28, .sw-arma.k 24, sablonlar.css .pf-av 96",
+    "web": {
+     "kart": {
+      "oran": "1:1",
+      "px": [
+       28,
+       28
+      ]
+     },
+     "detay": {
+      "oran": "1:1",
+      "px": [
+       96,
+       96
+      ]
+     }
+    },
+    "mobil": {
+     "kart": {
+      "oran": "1:1",
+      "px": [
+       24,
+       24
+      ]
+     }
+    },
+    "mobil_webden_kirpilir": true
+   },
+   "brans_gorsel": {
+    "_kaynak": "varsayım: sitede branş ikonu yalnız çipte ve bölüm başlığında ikon boyutunda (super-lig.html .bn-one .cip i 13×13, ortak.css .gs .ust i 12.8 px)",
+    "web": {
+     "kart": {
+      "oran": "1:1",
+      "px": [
+       24,
+       24
+      ]
+     }
+    },
+    "mobil": {
+     "kart": {
+      "oran": "1:1",
+      "px": [
+       24,
+       24
+      ]
+     }
+    },
+    "mobil_webden_kirpilir": true
+   },
+   "burc": {
+    "_kaynak": "burc.html .dt-ana.genis .dt-ana-g (detay.css 2.4:1; ölçüm 1440→1248×520), telefonda tam genişlik max(560px,78svh) (390→390×652); ızgara astroloji.html .bz-izg a i 48×48",
+    "web": {
+     "detay": {
+      "oran": "2.4:1",
+      "px": [
+       1248,
+       520
+      ]
+     },
+     "kart": {
+      "oran": "1:1",
+      "px": [
+       48,
+       48
+      ]
+     }
+    },
+    "mobil": {
+     "detay": {
+      "oran": "3:5",
+      "px": [
+       390,
+       652
+      ]
+     },
+     "kart": {
+      "oran": "1:1",
+      "px": [
+       48,
+       48
+      ]
+     }
+    },
+    "mobil_webden_kirpilir": true
+   },
+   "enstruman_logo": {
+    "_kaynak": "konu.css .dv-kod 36, tabloda 32 (piyasa-ekrani.html, borsa.html 1440/390: 32×32); finans.html .sw-pk-ik 30; döviz/kripto daire, hisse kare; logo yoksa .dv-kod.harf kısa kod rozeti",
+    "web": {
+     "kart": {
+      "oran": "1:1",
+      "px": [
+       32,
+       32
+      ]
+     }
+    },
+    "mobil": {
+     "kart": {
+      "oran": "1:1",
+      "px": [
+       32,
+       32
+      ]
+     }
+    },
+    "mobil_webden_kirpilir": true
+   },
+   "enstruman_kapak": {
+    "_kaynak": "enstruman-detay.html .bn (1440→1440×496, 390→390×467); kimlik taraması bulgusu",
+    "web": {
+     "detay": {
+      "oran": "2.9:1",
+      "px": [
+       1440,
+       496
+      ]
+     }
+    },
+    "mobil": {
+     "kart": {
+      "oran": "5:6",
+      "px": [
+       390,
+       467
       ]
      }
     },
@@ -4110,6 +4309,39 @@ window.PANEL = {
    "sistem": [
     "zaman",
     "yazar"
+   ]
+  },
+  "ozel-dikeyler.burc": {
+   "taslak": [
+    "ad"
+   ],
+   "yayin": [
+    "ad",
+    "baslangic",
+    "bitis",
+    "element",
+    "metin"
+   ],
+   "sistem": [
+    "baslik",
+    "slug",
+    "seo",
+    "yazar"
+   ]
+  },
+  "ozel-dikeyler.enstruman": {
+   "taslak": [
+    "ad"
+   ],
+   "yayin": [
+    "ad",
+    "kod",
+    "tur"
+   ],
+   "sistem": [
+    "sira",
+    "slug",
+    "seo"
    ]
   },
   "sosyal-medya.gonderi": {
