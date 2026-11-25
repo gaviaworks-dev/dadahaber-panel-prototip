@@ -85,7 +85,7 @@
       {
         "baslik": "PPK kararı sonrası piyasalarda ilk tepki: BIST 100 yükselişte",
         "kaynak": "Reuters",
-        "grup": "T3",
+        "grup": "T4",
         "skor": 88,
         "kategori": "Finans",
         "saat": "15.20",
@@ -104,7 +104,7 @@
       {
         "baslik": "AB genişleme toplantısının sonuç bildirgesi yayımlandı",
         "kaynak": "Associated Press",
-        "grup": "T3",
+        "grup": "T4",
         "skor": 76,
         "kategori": "Dünya",
         "saat": "14.35",
@@ -293,7 +293,7 @@
         "durum": "zamanli",
         "baslik": "Günün 5'i: 23 Kasım akşamının öne çıkan gelişmeleri",
         "bolum": "Gündem",
-        "alt_konu": "Türkiye",
+        "alt_konu": "",
         "yazar": "Ayşe Yıldız",
         "tarih": "2026-11-23",
         "saat": "19.00",
@@ -303,8 +303,8 @@
       {
         "durum": "zamanli",
         "baslik": "Kar yağışı sonrası sürücülere 10 öneri",
-        "bolum": "Keşfet",
-        "alt_konu": "Otomobil",
+        "bolum": "Finans",
+        "alt_konu": "Otomotiv",
         "yazar": "Ozan Er",
         "tarih": "2026-11-24",
         "saat": "07.30",
@@ -315,7 +315,8 @@
         "durum": "zamanli",
         "baslik": "Haftanın ekonomi takvimi: 24–28 Kasım",
         "bolum": "Finans",
-        "alt_konu": "Ekonomi Analizi",
+        "alt_konu": "Türkiye Ekonomisi",
+        "bicim": "analiz",
         "yazar": "Elif Aras",
         "tarih": "2026-11-24",
         "saat": "08.00",
@@ -353,37 +354,37 @@
     "kayitlar": {
       "istanbul-valiligi-okullar-24-kasim-da-da-tatil": {
         "kaynak": "İstanbul Valiliği",
-        "grup": "T1",
+        "grup": "T11",
         "skor": 96,
         "onay": "Sibel Arslan"
       },
       "savunma-sanayiinde-2027-yatirim-programi-aciklandi": {
         "kaynak": "Savunma Sanayii Başkanlığı",
-        "grup": "T1",
+        "grup": "T8",
         "skor": 94,
         "onay": "Mert Yalın"
       },
       "ab-disisleri-bakanlari-bruksel-de-genisleme-gundemini-ele-aldi": {
         "kaynak": "Associated Press",
-        "grup": "T3",
+        "grup": "T4",
         "skor": 88,
         "onay": "Zeynep Ak"
       },
       "turkiye-ile-japonya-arasinda-ekonomik-ortaklik-gorusmeleri-suruyor": {
         "kaynak": "Anadolu Ajansı",
-        "grup": "T2",
+        "grup": "T3",
         "skor": 90,
         "onay": "Kaan Yücel"
       },
       "g7-ulkeleri-kritik-mineraller-icin-ortak-tedarik-plani-hazirladi": {
         "kaynak": "Reuters",
-        "grup": "T3",
+        "grup": "T4",
         "skor": 87,
         "onay": "Merve Çınar"
       },
       "hindistan-da-eyalet-secimlerinin-sonuclari-aciklandi": {
         "kaynak": "Reuters",
-        "grup": "T3",
+        "grup": "T4",
         "skor": 84,
         "onay": "Merve Çınar"
       },
@@ -395,7 +396,7 @@
       },
       "besiktas-turk-telekom-u-84-80-gecti": {
         "kaynak": "Anadolu Ajansı",
-        "grup": "T2",
+        "grup": "T3",
         "skor": 91,
         "onay": "Emre Sönmez"
       },
