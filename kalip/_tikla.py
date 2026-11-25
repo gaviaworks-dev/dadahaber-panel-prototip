@@ -67,6 +67,10 @@ try {
     const it = d.querySelector('.sa-diger-menu [data-sekme-hedef="' + t.dataset.panel + '"]'); if(!it) return 'Diğer menüsünde yok';
     return await tikla(it);
   };
+  /* 0 · açılış: motor Seçilen birleşimiyle açılır (Yasin Bey) — şeridin ilk öğesi, "Seçilen" etiketli, bütün seçenekler onun değerinde */
+  { const s0 = S.querySelector('.kp-serit-oge'), sv = V.alt.find(a => a.id === V.varsayilan), ac = panel().querySelector('.kp-orn');
+    ok('açılış Seçilen', s0 && s0.hasAttribute('data-hazir') && s0.classList.contains('is-on') && /Seçilen/.test(s0.textContent) && S.dataset.alt === V.varsayilan
+       && Object.keys(sv.orn).every(g => ac.getAttribute('data-o-' + g) === sv.orn[g]) && !!panel().querySelector('.kp-tuval.kp-' + sv.iskelet), 'ilk öğe ya da açılış değerleri yanlış'); }
   /* 1 · içerik sekmeleri × mecra: tıklama + yerleşim */
   const sekmeler = [...S.querySelectorAll('.sa-form-tab[data-sekme]')], mecralar = [...S.querySelectorAll('[data-kp-mecra]')];
   for(const t of sekmeler){
@@ -108,7 +112,8 @@ try {
   const serit = d.getElementById('kpSerit');
   for(const b of S.querySelectorAll('.kp-serit-oge')){
     const id = b.dataset.alt, h = await tikla(b);
-    ok('şerit ' + id, !h && b.classList.contains('is-on') && S.dataset.alt === id && !!panel().querySelector('.kp-tuval.kp-' + id), h || 'iskelet değişmedi');
+    const ai = V.alt.find(a => a.id === id), isk = ai.iskelet || id;
+    ok('şerit ' + (ai.hazir ? 'Seçilen' : id), !h && b.classList.contains('is-on') && S.dataset.alt === id && !!panel().querySelector('.kp-tuval.kp-' + isk) && (!ai.hazir || Object.keys(ai.orn).every(g => panel().querySelector('.kp-orn').getAttribute('data-o-' + g) === ai.orn[g])), h || 'iskelet ya da süsleme değişmedi');
   }
   const oklar = [...S.querySelectorAll('[data-kp-kaydir]')];
   if(serit.scrollWidth > serit.clientWidth + 2 && oklar.every(o => !gor(o))){
@@ -135,12 +140,19 @@ try {
       h = await tikla(o); await bekle(60);
       const deger = g === 'kat' ? S.dataset.kat : (panel().querySelector('.kp-orn') || {}).getAttribute && panel().querySelector('.kp-orn').getAttribute('data-o-' + g);
       ok('menü ' + g + ' · ' + v, !h && deger === v && btn.textContent.trim() === o.textContent.trim() && !menu.classList.contains('open'), h || ('değer ' + deger + ', düğme "' + btn.textContent.trim() + '"'));
+      const tv = [...panel().querySelectorAll('.kp-tuval')].find(gor);
+      if(g === 'islem' && v === 'kgecis' && tv){ const bi = w.getComputedStyle(tv.querySelector('.kp-karart')).backgroundImage;
+        ok('Kategori Geçişi görünüyor', /radial-gradient/.test(bi) && /linear-gradient/.test(bi), 'geçiş katmanı yok'); }
+      if(g === 'logo' && v === 'beyaz' && tv){ const lm = tv.querySelector('.kp-l-maske'), bc = w.getComputedStyle(lm).backgroundColor;
+        ok('Beyaz logo görünüyor', gor(lm) && /255, 255, 255/.test(bc) && !gor(tv.querySelector('.kp-l-sari')), 'logo ' + bc); }
     }
   }
   /* 5 · Varsayılan */
-  const vb = S.querySelector('[data-kp-varsayilan]'); let h = await tikla(vb); const a0 = V.alt.find(a => a.id === S.dataset.alt);
+  /* Varsayılan = Seçilen (Yasin Bey): başka iskeletteyken de Seçilen birleşimine döner */
+  await tikla(S.querySelector('.kp-serit-oge[data-alt="c"]'));
+  const vb = S.querySelector('[data-kp-varsayilan]'); let h = await tikla(vb); const a0 = V.alt.find(a => a.id === V.varsayilan);
   const fark = Object.keys(a0.orn).filter(g => panel().querySelector('.kp-orn').getAttribute('data-o-' + g) !== a0.orn[g]);
-  ok('Varsayılan', !h && !fark.length, h || ('dönmeyen: ' + fark.join(',')));
+  ok('Varsayılan (Seçilen)', !h && S.dataset.alt === V.varsayilan && !fark.length && S.querySelector('.kp-serit-oge.is-on').dataset.alt === V.varsayilan, h || ('alt ' + S.dataset.alt + ' · dönmeyen: ' + fark.join(',')));
   /* 6 · Bunu Seç */
   const si = d.getElementById('kpSec'), sl = si.closest('label') || si, say = d.getElementById('kpSayac');
   h = await tikla(sl); const s1 = si.checked && gor(say) && say.textContent.indexOf('1') > -1;
