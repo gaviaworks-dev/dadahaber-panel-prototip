@@ -12,3 +12,13 @@
     if(e.target.closest('[data-kit-bildir]')){ window.kbBildir('Haber çöpe taşındı', function(){ window.kbBildir('Geri alındı'); }); }
   });
 })();
+
+/* kit · sosyal medya önizlemeleri: açık mecraların hepsi, kayıttaki sırayla, kendi şablonuyla (yazı mecraları yatay görsel, video mecraları dikey 9:16) */
+(function(){
+  var K = document.querySelector('[data-kit-sosyal]'); if(!K || !window.kbSosyalOnizle) return;
+  var pl = (window.PANEL || {}).sosyal_platformlar || [], h = '';
+  pl.forEach(function(p){ h += '<div class="kit-sosyal-oge"><span class="kit-etk">' + p.ad + '</span><div class="kb-sosyal-kart" data-kit-sosyal-p="' + p.id + '"></div></div>'; });
+  K.innerHTML = h;
+  pl.forEach(function(p){ var el = K.querySelector('[data-kit-sosyal-p="' + p.id + '"]'); var vid = p.tur === 'video';
+    window.kbSosyalOnizle(el, { platform: p.id, ad: 'Dada Haber', tutamac: p.id === 'bluesky' ? '@dadahaber.bsky.social' : '@dadahaber', metin: "Asgari ücret görüşmelerinde ilk toplantı 4 Aralık'ta. Komisyon taraflarla ilk kez masaya oturuyor. #AsgariÜcret", gorsel: 'veri/gorsel/p195.jpg', oran: vid ? '9:16' : ((p.oranlar || ['16:9'])[0] === 'serbest' ? '16:9' : (p.oranlar || ['16:9'])[0]), baslik: "Asgari ücrette ilk toplantı 4 Aralık'ta" }); });
+})();

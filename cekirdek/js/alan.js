@@ -163,6 +163,9 @@
     var nBos = A.getAttribute('data-ai-neden-bos') || 'Önce başlık ve spot', nDolu = A.getAttribute('data-ai-neden-dolu') || 'Başlık ve spot hazır';
     function bak(){ if(A.classList.contains('is-bitti')) return; var h = hazir() && !!A.querySelector('.kaa-secim input:checked'); btn.disabled = false; btn.classList.toggle('is-pasif', !h); btn.setAttribute('aria-disabled', !h); neden.textContent = hazir() ? nDolu : nBos; }
     kaynak.forEach(function(k){ ['input', 'change', 'kb-secim', 'kb-icerik'].forEach(function(o){ k.addEventListener(o, bak); }); });
+    /* "Sosyal Medya Metinleri": açık mecra sayısı kayıttan (Site Ayarları › Sosyal Mecralar); video mecraları yalnız içeriğin videosu varsa üretilir */
+    (function(){ var so = A.querySelector('.kaa-secim input[value="sosyal"]'); var pl = (window.PANEL || {}).sosyal_platformlar || []; if(!so || !pl.length) return; var lb = so.closest('label');
+      if(lb && !lb.querySelector('.ks-alt')){ var sp = document.createElement('span'); sp.className = 'ks-alt'; sp.textContent = pl.length + ' mecra'; lb.appendChild(sp); lb.title = pl.map(function(x){ return x.ad; }).join(', ') + ' · video mecraları yalnız videolu içerikte'; } })();
     A.querySelector('.kaa-secim').addEventListener('change', bak); bak();
     function doldur(g){
       g.querySelectorAll('[data-ai-ornek]').forEach(function(el){
@@ -475,9 +478,9 @@
   window.kbKurucu('.kb-yatay-cubuk[data-degerler]', function(G){
     var v = G.dataset.degerler.split(',').map(Number), et = (G.dataset.etiketler || '').split(','), top = v.reduce(function(a, b){ return a + b; }, 0) || 1, mx = Math.max.apply(null, v) || 1;
     G.setAttribute('role', 'list');
-    var kisa = G.dataset.bicim === 'kisa';
+    var kisa = G.dataset.bicim === 'kisa', ik = (G.dataset.ikonlar || '').split(','); /* data-ikonlar: etiketin önünde ikon (ör. sosyal mecralar, kayıttaki ikon) */
     function yaz(d){ if(!kisa || d < 10000) return d.toLocaleString('tr'); if(d >= 1e6) return (Math.round(d / 1e4) / 100).toLocaleString('tr') + ' Mn'; return (Math.round(d / 100) / 10).toLocaleString('tr') + ' B'; }
-    G.innerHTML = v.map(function(d, i){ return '<div class="kyc-satir" role="listitem"><span class="kyc-ad" title="' + (et[i] || '') + '">' + (et[i] || '') + '</span><span class="kyc-cubuk"><span style="width:' + (d / mx * 100).toFixed(1) + '%"></span></span><b' + (kisa ? ' title="' + d.toLocaleString('tr') + '"' : '') + '>' + yaz(d) + '</b><small>%' + (Math.round(d / top * 1000) / 10).toLocaleString('tr') + '</small></div>'; }).join('');
+    G.innerHTML = v.map(function(d, i){ return '<div class="kyc-satir" role="listitem"><span class="kyc-ad" title="' + (et[i] || '') + '">' + (ik[i] ? '<i class="' + ik[i] + '" aria-hidden="true"></i>' : '') + (et[i] || '') + '</span><span class="kyc-cubuk"><span style="width:' + (d / mx * 100).toFixed(1) + '%"></span></span><b' + (kisa ? ' title="' + d.toLocaleString('tr') + '"' : '') + '>' + yaz(d) + '</b><small>%' + (Math.round(d / top * 1000) / 10).toLocaleString('tr') + '</small></div>'; }).join('');
   });
 
   /* ---------------- e-posta önizleme kabı ----------------
@@ -1246,6 +1249,7 @@
     K.innerHTML = '<div class="kb-sbag-liste" data-siralanir></div><div class="kb-sbag-bos fhint">Henüz bağlantı yok.</div>'
       + '<div class="kb-sbag-ekle"><button type="button" class="btn btn-ghost btn-sm" data-acilir="' + mid + '" aria-expanded="false" aria-haspopup="menu"><i class="fa-solid fa-plus" aria-hidden="true"></i>Bağlantı Ekle</button><div class="pnl-menu" id="' + mid + '" role="menu"></div></div>';
     var L = K.querySelector('.kb-sbag-liste'), M = K.querySelector('.pnl-menu');
+    M.style.left = '0'; M.style.right = 'auto'; /* menü "Bağlantı Ekle" düğmesinin sol kenarından açılır (sağdan hizalanınca sola, yan menünün altına taşıyordu) */
     function satir(d){
       var p = pl(d.p); if(!p) return null; var s = document.createElement('div'); s.className = 'kb-sbag-satir'; s.setAttribute('data-sira', ''); s.dataset.p = p.id;
       s.innerHTML = '<button type="button" class="kb-tutamac" aria-label="Sırayı değiştir (ok tuşları)"><i class="fa-solid fa-grip-vertical" aria-hidden="true"></i></button>'

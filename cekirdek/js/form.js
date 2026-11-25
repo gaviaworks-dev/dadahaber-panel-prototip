@@ -76,7 +76,58 @@
 
   /* ---------------- tarih-saat seçici ---------------- */
   var GUNLER = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
-  window.kbKurucu('.kb-tarih-sec', function(kt){
+  /* ---------------- dönem seçici: .kb-tarih-sec[data-donem] (ay · çeyrek · yıl) ----------------
+     Değer data-deger="2026-10" | "2026-Q3" | "2026"; düğmede "Ekim 2026" | "2026 3. Çeyrek" | "2026".
+     data-donem-etiket="#girdi": seçilen dönemin etiketi bu girdiye yazılır; girdi elle düzeltildiyse üstüne yazılmaz.
+     Izgara sütunları bilesen.css'te (.kt-donem-ay/-ceyrek/-yil). */
+  window.kbKurucu('.kb-tarih-sec[data-donem]', function(kt){
+    var btn = kt.querySelector('.kb-tarih-btn'), menu = kt.querySelector('.kb-tarih-menu'), yazi = kt.querySelector('.kt-deger');
+    if(!btn || !menu || !yazi) return;
+    document.body.appendChild(menu);
+    var KIP = { ay: 'Ay', ceyrek: 'Çeyrek', yil: 'Yıl' }, bugunY = 2026;
+    function coz(v){ var m; v = v || ''; if((m = v.match(/^(\d{4})-Q([1-4])$/))) return { k: 'ceyrek', y: +m[1], v: +m[2] }; if((m = v.match(/^(\d{4})-(\d{2})$/))) return { k: 'ay', y: +m[1], v: +m[2] - 1 }; if((m = v.match(/^(\d{4})$/))) return { k: 'yil', y: +m[1], v: 0 }; return null; }
+    function etiket(s){ return !s ? '' : s.k === 'ay' ? AYLAR[s.v] + ' ' + s.y : s.k === 'ceyrek' ? s.y + ' ' + s.v + '. Çeyrek' : String(s.y); }
+    function deger(s){ return s.k === 'ay' ? s.y + '-' + iki(s.v + 1) : s.k === 'ceyrek' ? s.y + '-Q' + s.v : String(s.y); }
+    var sec = coz(kt.dataset.deger), tas = null, gorY = bugunY;
+    var hedef = kt.dataset.donemEtiket ? document.querySelector(kt.dataset.donemEtiket) : null;
+    if(hedef) hedef.addEventListener('input', function(){ hedef.dataset.elle = hedef.value.trim() && hedef.value.trim() !== etiket(sec) ? '1' : ''; });
+    function yaz(){ if(!sec){ yazi.innerHTML = '<span class="kt-bos">' + (kt.dataset.bos || 'Ay, çeyrek ya da yıl seçin') + '</span>'; return; } yazi.textContent = etiket(sec); }
+    function ciz(){
+      var h = '<div class="kt-hizli-ust" role="group" aria-label="Dönem türü">' + Object.keys(KIP).map(function(k){ return '<button type="button" data-kip="' + k + '" aria-pressed="' + (tas.k === k) + '">' + KIP[k] + '</button>'; }).join('') + '</div><div class="kt-govde">';
+      if(tas.k === 'yil'){ var bas = gorY - 5;
+        h += '<div class="kt-ay"><button type="button" data-kt="geri" aria-label="Önceki yıllar"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button><b>' + bas + '–' + (bas + 11) + '</b><button type="button" data-kt="ileri" aria-label="Sonraki yıllar"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button></div><div class="kt-gunler kt-donem-yil">';
+        for(var y = bas; y < bas + 12; y++) h += '<button type="button" data-sec="' + y + '"' + (tas.y === y ? ' class="is-sec"' : y === bugunY ? ' class="is-bugun"' : '') + '>' + y + '</button>';
+      } else {
+        h += '<div class="kt-ay"><button type="button" data-kt="geri" aria-label="Önceki yıl"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button><b>' + gorY + '</b><button type="button" data-kt="ileri" aria-label="Sonraki yıl"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button></div>';
+        if(tas.k === 'ay'){ h += '<div class="kt-gunler kt-donem-ay">'; AYLAR.forEach(function(ad, i){ h += '<button type="button" data-sec="' + i + '"' + (tas.y === gorY && tas.v === i ? ' class="is-sec"' : '') + '>' + ad + '</button>'; }); }
+        else { h += '<div class="kt-gunler kt-donem-ceyrek">'; for(var q = 1; q <= 4; q++) h += '<button type="button" data-sec="' + q + '"' + (tas.y === gorY && tas.v === q ? ' class="is-sec"' : '') + '>' + q + '. Çeyrek</button>'; }
+      }
+      h += '</div></div><div class="kt-alt"><span class="kt-ozet">' + etiket(tas) + '<small>Dönem etiketi</small></span><button type="button" class="btn btn-ghost btn-sm" data-kt="vazgec">Vazgeç</button><button type="button" class="btn btn-acc btn-sm" data-kt="tamam">Uygula</button></div>';
+      menu.innerHTML = h;
+    }
+    function kapat(){ if(btn.getAttribute('aria-expanded') === 'true') btn.click(); }
+    window.addEventListener('scroll', function(e){ if(menu.classList.contains('open') && (!window.kbAcilirKaydir || window.kbAcilirKaydir(e, menu, btn))) kapat(); }, true);
+    btn.addEventListener('click', function(){ setTimeout(function(){
+      if(!menu.classList.contains('open')) return;
+      tas = sec ? { k: sec.k, y: sec.y, v: sec.v } : { k: 'ay', y: bugunY, v: 10 }; gorY = tas.y; ciz();
+      var b0 = btn.getBoundingClientRect(); menu.style.position = 'fixed'; menu.style.top = (b0.bottom + 8) + 'px'; menu.style.left = b0.left + 'px'; menu.style.bottom = 'auto'; menu.style.right = 'auto';
+      menu._kbTetik = btn; if(window.kbAcilirSigdir) window.kbAcilirSigdir(menu, btn);
+    }, 0); });
+    menu.addEventListener('click', function(e){
+      e.stopPropagation(); var b = e.target.closest('button'); if(!b) return;
+      if(b.dataset.kip){ tas.k = b.dataset.kip; tas.y = gorY; tas.v = tas.k === 'ay' ? 0 : tas.k === 'ceyrek' ? 1 : 0; ciz(); }
+      else if(b.dataset.kt === 'geri'){ gorY -= tas.k === 'yil' ? 12 : 1; ciz(); }
+      else if(b.dataset.kt === 'ileri'){ gorY += tas.k === 'yil' ? 12 : 1; ciz(); }
+      else if(b.dataset.sec != null){ if(tas.k === 'yil'){ tas.y = +b.dataset.sec; gorY = tas.y; } else { tas.y = gorY; tas.v = +b.dataset.sec; } ciz(); }
+      else if(b.dataset.kt === 'vazgec') kapat();
+      else if(b.dataset.kt === 'tamam'){ sec = tas; kt.dataset.deger = deger(sec); kt.dataset.secili = kt.dataset.deger; yaz();
+        if(hedef && !hedef.dataset.elle){ hedef.value = etiket(sec); hedef.dispatchEvent(new Event('input', {bubbles:true})); hedef.dataset.elle = ''; }
+        kapat(); kt.dispatchEvent(new Event('input', {bubbles:true})); kt.dispatchEvent(new CustomEvent('kb-tarih', { bubbles:true })); }
+    });
+    yaz();
+  });
+
+  window.kbKurucu('.kb-tarih-sec:not([data-donem])', function(kt){
     var btn = kt.querySelector('.kb-tarih-btn'), menu = kt.querySelector('.kb-tarih-menu'), yazi = kt.querySelector('.kt-deger');
     if(!btn || !menu || !yazi) return;
     document.body.appendChild(menu);  /* kökte açılır: hiçbir kapsayıcı konumunu ya da kırpmasını bozmaz */
@@ -161,12 +212,18 @@
   var h_ = function(s){ return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
   window.kbKurucu('.kb-cip-girdi', function(cg){
     var inp = cg.querySelector('input'), oneri = cg.querySelector('.kb-cip-oneri');
+    /* tek satır ipucu (Beyar 25.11.2026): bileşenin altında ipucu yoksa çekirdek yazar; kapalı havuzda "ekleyin" denmez */
+    if(!cg.hasAttribute('data-ipucu-yok') && !(cg.nextElementSibling && cg.nextElementSibling.classList.contains('fhint'))){ var ip_ = document.createElement('span'); ip_.className = 'fhint kb-cip-ipucu';
+      ip_.textContent = cg.hasAttribute('data-serbest') ? 'Yazıp Enter ile ekleyin. Birden fazla eklenebilir.' : cg.hasAttribute('data-havuz-kapali') ? (cg.hasAttribute('data-tek') ? 'Yazıp listeden seçin.' : 'Yazıp listeden seçin. Birden fazla eklenebilir.') : (cg.hasAttribute('data-tek') ? 'Yazıp seçin; listede yoksa Enter ile ekleyin.' : 'Yazıp seçin; listede yoksa Enter ile ekleyin. Birden fazla eklenebilir.');
+      cg.parentNode.insertBefore(ip_, cg.nextSibling); }
+    cg.kbDegerYaz = function(v){ Array.prototype.forEach.call(cg.querySelectorAll('.kb-cip'), function(x){ x.remove(); }); String(v || '').split('|').filter(Boolean).forEach(function(x){ ekle(x); }); }; /* dışarıdan değer yazma (çekmecede düzenleme): "a|b" */
     var serbest = cg.hasAttribute('data-serbest'), yonet = cg.hasAttribute('data-havuz-yonet'), kapali = cg.hasAttribute('data-havuz-kapali'), birincil = cg.hasAttribute('data-birincil'), birim = cg.getAttribute('data-kullanim-birim') || 'haberde';
     var havuz = []; try{ havuz = JSON.parse(cg.dataset.havuz || '[]'); }catch(e){}
     var acikYonet = null;
     function mevcut(){ return Array.prototype.map.call(cg.querySelectorAll('.kb-cip'), function(c){ return c.dataset.deger; }); }
     function ekle(v){
       v = v.trim().replace(/,$/, ''); if(!v || mevcut().indexOf(v) > -1) return;
+      if(cg.hasAttribute('data-tek')) Array.prototype.forEach.call(cg.querySelectorAll('.kb-cip'), function(x){ x.remove(); }); /* tek değerli: yeni seçim eskisinin yerine geçer */
       var c = document.createElement('span'); c.className = 'kb-cip'; c.dataset.deger = v;
       c.innerHTML = '<span></span><button type="button" aria-label="Kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>';
       c.firstChild.textContent = v; cg.insertBefore(c, inp); inp.value = ''; goster(); cg.dispatchEvent(new Event('input', {bubbles:true}));
@@ -174,7 +231,7 @@
     function goster(){
       if(serbest || !oneri) return;
       var v = inp.value.trim();
-      if(!v && !yonet){ oneri.classList.remove('open'); return; }
+      if(!v && !yonet && document.activeElement !== inp){ oneri.classList.remove('open'); return; } /* tıklayınca hemen öneri (yazmayı beklemeden) */
       var var_ = mevcut(), h = '';
       havuz.filter(function(x){ return var_.indexOf(x) === -1 && (!v || tr(x).indexOf(tr(v)) > -1); }).slice(0, yonet ? 8 : 6).forEach(function(x){
         if(yonet && acikYonet === x){
@@ -186,7 +243,7 @@
         h += '<div class="kco-satir"><button type="button" data-ekle="' + h_(x) + '"><i class="fa-solid fa-tag" aria-hidden="true"></i>' + h_(x) + '</button>'
           + (yonet ? '<button type="button" class="kco-diger" data-yonet="' + h_(x) + '" aria-label="' + h_(x) + ': düzelt ya da sil" title="Adını düzelt, sil"><i class="fa-solid fa-ellipsis" aria-hidden="true"></i></button>' : '') + '</div>';
       });
-      if(v && !kapali && havuz.map(tr).indexOf(tr(v)) === -1) h += '<button type="button" class="kb-ekle" data-ekle="' + h_(v) + '" data-havuza="1"><i class="fa-solid fa-plus" aria-hidden="true"></i>Havuza ekle: “' + h_(v) + '”</button>';
+      if(v && !kapali && havuz.map(tr).indexOf(tr(v)) === -1) h += '<button type="button" class="kb-ekle" data-ekle="' + h_(v) + '" data-havuza="1"><i class="fa-solid fa-plus" aria-hidden="true"></i>“' + h_(v) + '” Olarak Ekle</button>';
       if(yonet) h += '<div class="kco-not">⋯ ile adını düzeltin ya da havuzdan silin; değişiklik bütün haberlerde geçerli olur</div>';
       if(kapali && v && !h) h = '<div class="kco-not">Bu adla seçenek yok. ' + (cg.dataset.havuzKapaliNot || 'Yeni alt konu Kategoriler\'den eklenir.') + '</div>';
       oneri.innerHTML = h; oneri.classList.toggle('open', !!h);
@@ -220,10 +277,10 @@
       if(!e.target.closest('.kb-cip-oneri')) inp.focus();
     });
     inp.addEventListener('input', function(e){ e.stopPropagation(); acikYonet = null; goster(); });
-    inp.addEventListener('focus', function(){ if(yonet) goster(); });
+    inp.addEventListener('focus', function(){ goster(); });
     inp.addEventListener('keydown', function(e){
-      if(e.key === 'Enter' || e.key === ','){ e.preventDefault(); if(serbest){ ekle(inp.value); return; } var ilk = oneri && oneri.querySelector('[data-ekle]'); if(ilk && ilk.dataset.havuza) havuz.push(ilk.dataset.ekle); if(ilk) ekle(ilk.dataset.ekle); else if(!kapali) ekle(inp.value); }
-      if(e.key === 'Backspace' && !inp.value){ var s = cg.querySelectorAll('.kb-cip'); if(s.length) s[s.length - 1].remove(); }
+      if(e.key === 'Enter' || e.key === ','){ e.preventDefault(); if(serbest){ ekle(inp.value); return; } var tam = oneri && Array.prototype.filter.call(oneri.querySelectorAll('[data-ekle]'), function(x){ return tr(x.dataset.ekle) === tr(inp.value.trim()); })[0], ilk = tam || (oneri && (oneri.querySelector('[data-havuza]') || oneri.querySelector('[data-ekle]'))); if(ilk && ilk.dataset.havuza) havuz.push(ilk.dataset.ekle); if(ilk) ekle(ilk.dataset.ekle); else if(!kapali) ekle(inp.value); }
+      if(e.key === 'Backspace' && !inp.value){ var s = cg.querySelectorAll('.kb-cip'); if(s.length){ var sc_ = s[s.length - 1]; sc_.remove(); cg.dispatchEvent(new Event('input', {bubbles:true})); window.kbBildir('“' + sc_.dataset.deger + '” kaldırıldı', function(){ cg.insertBefore(sc_, inp); cg.dispatchEvent(new Event('input', {bubbles:true})); }); } }
       if(e.key === 'Escape' && oneri) oneri.classList.remove('open');
     });
     inp.addEventListener('blur', function(){ setTimeout(function(){ if(oneri && !oneri.contains(document.activeElement)){ oneri.classList.remove('open'); acikYonet = null; } }, 150); });
@@ -392,7 +449,7 @@
     if(!eOv){
       eOv = document.createElement('div'); eOv.className = 'kb-medya-ov kb-etiketle-ov';
       eOv.innerHTML = '<div class="kb-medya kb-etiketle" role="dialog" aria-modal="true" aria-labelledby="kbEtBas">'
-        + '<div class="kb-kap-bas"><div><h2 id="kbEtBas">Görseli etiketleyin</h2><div class="kb-kap-alt">Yükleme tamam · etiketsiz görsel medya havuzuna girmez · sonra kırpma</div></div><button type="button" class="kb-kapat" data-et-kapat aria-label="Kapat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div>'
+        + '<div class="kb-kap-bas"><div><h2 id="kbEtBas">Görseli Etiketleyin</h2><div class="kb-kap-alt">Yükleme tamam · etiketsiz görsel medya havuzuna girmez · sonra kırpma</div></div><button type="button" class="kb-kapat" data-et-kapat aria-label="Kapat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div>'
         + '<div class="ket-govde"><div class="ket-sol"><div class="ket-resim" data-et-resim></div><div class="ket-bilgi" data-et-bilgi></div></div>'
         + '<div class="ket-sag">'
         + '<div class="frow"><span class="flabel">Telif</span><div class="kb-secenek-grup ket-telif">'
@@ -402,11 +459,11 @@
         + '<div class="frow"><label for="ketAd">Görsel adı</label><input class="finput" id="ketAd" data-et-ad></div>'
         + '<div class="frow"><span class="flabel">Kategori <span class="zorunlu">*</span></span><div class="ket-kategori" role="radiogroup" aria-label="Kategori" data-et-kategori data-zorunlu data-zorunlu-metin="Kategori seçin"></div><div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>Kategori seçin</div></div>'
         + '<div class="frow ket-en-az"><div class="ket-en-az-ic" data-et-enaz data-zorunlu-cip data-zorunlu-metin="En az bir kişi/kurum ya da etiket ekleyin">'
-        + '<div class="frow"><label for="ketKisi">Kişi ve kurum</label><div class="ket-cip" data-et-cip="kisiler"><input id="ketKisi" placeholder="Ad ya da kısaltma: RTE, MGK…" autocomplete="off"><div class="pnl-menu ket-oneri"></div></div></div>'
-        + '<div class="frow"><label for="ketEt">Etiketler</label><div class="ket-cip" data-et-cip="etiketler"><input id="ketEt" placeholder="Etiket ara ya da yaz" autocomplete="off"><div class="pnl-menu ket-oneri"></div></div><span class="fhint">Medya havuzunun etiketleri; haberin etiketlerinden ayrıdır.</span></div>'
+        + '<div class="frow"><label for="ketKisi">Kişi ve Kurum</label><div class="ket-cip" data-et-cip="kisiler"><input id="ketKisi" placeholder="Ad ya da kısaltma: MGK, TCMB…" autocomplete="off"><div class="pnl-menu ket-oneri"></div></div><span class="fhint">Yazıp seçin; listede yoksa Enter ile ekleyin. Birden fazla eklenebilir.</span></div>'
+        + '<div class="frow"><label for="ketEt">Etiketler</label><div class="ket-cip" data-et-cip="etiketler"><input id="ketEt" placeholder="Medya havuzu etiketi ara ya da yaz" autocomplete="off"><div class="pnl-menu ket-oneri"></div></div><span class="fhint">Yazıp seçin; listede yoksa Enter ile ekleyin. Birden fazla eklenebilir.</span></div>'
         + '</div><div class="ferr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>En az bir kişi/kurum ya da etiket ekleyin</div></div>'
         + '</div></div></div>'
-        + '<div class="kb-kap-alt-cubuk"><span class="kb-sol fhint" data-et-neden></span><button type="button" class="btn btn-acc btn-sm" data-et-tamam data-dogrula=".kb-etiketle"><i class="fa-solid fa-crop-simple" aria-hidden="true"></i>Devam: kırp</button></div></div>';
+        + '<div class="kb-kap-alt-cubuk"><span class="kb-sol fhint" data-et-neden></span><button type="button" class="btn btn-acc btn-sm" data-et-tamam data-dogrula=".kb-etiketle"><i class="fa-solid fa-crop-simple" aria-hidden="true"></i>Devam: Kırp</button></div></div>';
       document.body.appendChild(eOv);
       if(window.kbKapDuzenle) kbKapDuzenle(eOv);
       eOv.querySelector('[data-et-kategori]').innerHTML = (EH.kategoriler || []).map(function(k){ return '<label class="ket-kat"><input type="radio" name="ketKat" value="' + esc(k) + '"><span>' + esc(k) + '</span></label>'; }).join('');
@@ -422,7 +479,7 @@
           liste = liste.filter(function(x){ return s.indexOf(x.v) === -1; }).slice(0, 7);
           liste.forEach(function(x){ h += '<button type="button" data-v="' + esc(x.v) + '">' + x.h + '</button>'; });
           var var_ = (tur === 'kisiler' ? (EH.kisiler || []).map(function(k){ return tr(k.ad); }) : (EH.etiketler || []).map(tr)).indexOf(q) > -1;
-          if(q && !var_) h += '<button type="button" class="kb-ekle" data-yeni="' + esc(inp.value.trim()) + '"><i class="fa-solid fa-plus" aria-hidden="true"></i>Medya havuzuna ekle: “' + esc(inp.value.trim()) + '”</button>';
+          if(q && !var_) h += '<button type="button" class="kb-ekle" data-yeni="' + esc(inp.value.trim()) + '"><i class="fa-solid fa-plus" aria-hidden="true"></i>“' + esc(inp.value.trim()) + '” Olarak Ekle</button>';
           on.innerHTML = h; on.classList.toggle('open', !!h && document.activeElement === inp);
         }
         /* havuzda olmayan kişi/kurum: alanın altında küçük satır — ad, kısaltma (isteğe bağlı), tür. Pencerenin diğer alanları değişmez. */
@@ -447,7 +504,7 @@
           r.addEventListener('keydown', function(e){ if(e.key === 'Enter' && e.target.matches('input.finput')){ e.preventDefault(); r.querySelector('[data-kyk-ekle]').click(); } if(e.key === 'Escape'){ e.stopPropagation(); r.remove(); inp.focus(); } });
         }
         inp.addEventListener('input', ciz); inp.addEventListener('focus', ciz);
-        inp.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); var b = on.querySelector('button'); if(b) b.dispatchEvent(new MouseEvent('mousedown', { bubbles:true })); } if(e.key === 'Backspace' && !inp.value){ var c = C.querySelectorAll('.kb-cip'); if(c.length){ c[c.length - 1].remove(); kontrol(); } } });
+        inp.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); ciz(); var q_ = tr(inp.value.trim()), b = Array.prototype.filter.call(on.querySelectorAll('button[data-v]'), function(x){ return tr(x.dataset.v) === q_; })[0] || on.querySelector('button[data-yeni]') || on.querySelector('button'); if(b) b.dispatchEvent(new MouseEvent('mousedown', { bubbles:true })); } if(e.key === 'Backspace' && !inp.value){ var c = C.querySelectorAll('.kb-cip'); if(c.length){ c[c.length - 1].remove(); kontrol(); } } });
         inp.addEventListener('blur', function(){ setTimeout(function(){ on.classList.remove('open'); }, 120); });
         on.addEventListener('mousedown', function(e){
           var b = e.target.closest('button'); if(!b) return; e.preventDefault();
@@ -456,7 +513,7 @@
             EH.etiketler.push(v); window.kbBildir('“' + v + '” medya havuzunun etiketlerine eklendi'); ekle(v); }
           else ekle(b.dataset.v);
         });
-        C.addEventListener('click', function(e){ var x = e.target.closest('.kb-cip button'); if(x){ x.closest('.kb-cip').remove(); kontrol(); } else inp.focus(); });
+        C.addEventListener('click', function(e){ var x = e.target.closest('.kb-cip button'); if(x){ var c = x.closest('.kb-cip'), sonra = c.nextSibling; c.remove(); kontrol(); window.kbBildir('“' + c.dataset.deger + '” kaldırıldı', function(){ C.insertBefore(c, sonra); kontrol(); }); } else { inp.focus(); ciz(); } });
       });
       eOv.addEventListener('change', kontrol);
       eOv.addEventListener('click', function(e){
@@ -483,7 +540,7 @@
     }
     eIs = tamam;
     eOv.querySelector('[data-et-resim]').style.backgroundImage = 'url("' + g.url + '")';
-    eOv.querySelector('[data-et-bilgi]').innerHTML = '<b>' + esc(g.olcu) + '</b> · ' + g.kb + ' KB' + (g.kucukMu ? '<span class="ket-uyari"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Önerilen 1280 px genişliğin altında</span>' : '');
+    eOv.querySelector('[data-et-bilgi]').innerHTML = '<span class="ket-olcu">' + esc(String(g.olcu).replace(/\s*[x×]\s*/, '×')) + ' · ' + g.kb + ' KB</span>' + (g.kucukMu ? '<span class="ket-uyari"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Önerilen 1280 px genişliğin altında</span>' : '');
     eOv.querySelector('[data-et-ad]').value = g.ad;
     eOv.querySelector('input[name=ketTelif][value=biz]').checked = true;
     eOv.querySelectorAll('.kb-etiketle .frow.has-error').forEach(function(r){ r.classList.remove('has-error'); });
@@ -751,7 +808,7 @@
      KURAL · önizleme: her platform kendi gönderi düzeninde, ayrı şablon (X, Facebook, LinkedIn, Instagram, Telegram). Ortak: yuvarlak
        profil resmi (tema logosu), hesap adı, platforma özgü ikinci satır; ikonlar kitteki ikon setinden; platform logosu/marka varlığı
        kopyalanmaz, yalnız düzen benzer. Yazılan metin, oran, konum ve etiketler canlı güncellenir. */
-  var PLAT_AD = { x: ['fa-brands fa-x-twitter', 'X gönderisi'], facebook: ['fa-brands fa-facebook', 'Facebook gönderisi'], linkedin: ['fa-brands fa-linkedin', 'LinkedIn gönderisi'], instagram: ['fa-brands fa-instagram', 'Instagram gönderisi'], telegram: ['fa-brands fa-telegram', 'Telegram mesajı'] };
+  var PLAT_AD = { x: ['fa-brands fa-x-twitter', 'X gönderisi'], facebook: ['fa-brands fa-facebook', 'Facebook gönderisi'], linkedin: ['fa-brands fa-linkedin', 'LinkedIn gönderisi'], instagram: ['fa-brands fa-instagram', 'Instagram gönderisi'], telegram: ['fa-brands fa-telegram', 'Telegram mesajı'], threads: ['fa-brands fa-threads', 'Threads gönderisi'], bluesky: ['fa-brands fa-bluesky', 'Bluesky gönderisi'], 'youtube-shorts': ['fa-brands fa-youtube', 'YouTube Shorts videosu'], 'instagram-reels': ['fa-brands fa-instagram', 'Instagram Reels videosu'], tiktok: ['fa-brands fa-tiktok', 'TikTok videosu'] };
   function esS(s){ return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
   /* önizleme şablonu (dışarıdan da çağrılır: UI kit) — o: { pid, ad, tut, mt (biçimli metin), kes, gor (görsel html), orS, oranAkt, alan, lb, konum } */
   function sosyalSablon(o){
@@ -777,6 +834,26 @@
       + '<div class="ksp-pad ksp-ig-alt"><b class="ksp-begeni">1.284 beğenme</b><div class="ksp-metin"><b>' + ad + '</b> ' + mt + (kes ? '<span class="ksp-devam">… devamı</span>' : '') + '</div><span class="ksp-mut">12 yorumun tümünü gör</span><span class="ksp-mut ksp-kucuk">1 dakika önce</span></div></div>';
     else if(pid === 'telegram') h = '<div class="ksp ksp-tg"><div class="ksp-balon">' + gor + '<div class="ksp-pad"><b class="ksp-kanal">' + ad + '</b><div class="ksp-metin">' + mt + '</div>'
       + '<div class="ksp-tg-link"><b>Dada Haber</b><span>' + lb + '</span></div><span class="ksp-tg-alt"><i class="fa-solid fa-eye" aria-hidden="true"></i>2,1 B · 16.05</span></div></div></div>';
+    else if(pid === 'threads') h = '<div class="ksp ksp-th">' + ava + '<div class="ksp-ic"><div class="ksp-x-bas"><b>' + ad + '</b><i class="fa-solid fa-circle-check ksp-tik" aria-hidden="true"></i><span class="ksp-mut">1 dk</span><i class="fa-solid fa-ellipsis ksp-mut ksp-sag" aria-hidden="true"></i></div>'
+      + '<div class="ksp-metin">' + mt + (kes ? '<span class="ksp-devam">… daha fazla</span>' : '') + '</div>' + gor
+      + '<div class="ksp-eylem ksp-th-eylem"><span><i class="fa-regular fa-heart" aria-hidden="true"></i>96</span><span><i class="fa-regular fa-comment" aria-hidden="true"></i>8</span><span><i class="fa-solid fa-retweet" aria-hidden="true"></i>5</span><span><i class="fa-regular fa-paper-plane" aria-hidden="true"></i></span></div></div></div>';
+    else if(pid === 'bluesky') h = '<div class="ksp ksp-bs">' + ava + '<div class="ksp-ic"><div class="ksp-x-bas"><b>' + ad + '</b><span class="ksp-mut">' + (tut || '@dadahaber') + ' · 1 dk</span></div>'
+      + '<div class="ksp-metin">' + mt + (kes ? '<span class="ksp-devam">…</span>' : '') + '</div>'
+      + '<div class="ksp-x-kart ksp-bs-kart">' + gor + '<div class="ksp-pad"><b>' + lb + '</b><span class="ksp-mut">' + alan + '</span></div></div>'
+      + '<div class="ksp-eylem ksp-x-eylem"><span><i class="fa-regular fa-comment" aria-hidden="true"></i>4</span><span><i class="fa-solid fa-retweet" aria-hidden="true"></i>11</span><span><i class="fa-regular fa-heart" aria-hidden="true"></i>58</span><span><i class="fa-solid fa-ellipsis" aria-hidden="true"></i></span></div></div></div>';
+    else if(pid === 'youtube-shorts' || pid === 'instagram-reels' || pid === 'tiktok'){
+      /* dikey video çerçevesi (9:16): kapak karesi arka planda; sağda eylem sütunu, altta hesap ve açıklama — her mecranın kendi düzeni */
+      var kare = o.kare || gor.replace(/^.*?style="([^"]*)".*$/, '$1');
+      var sag = pid === 'youtube-shorts' ? '<span><i class="fa-solid fa-thumbs-up" aria-hidden="true"></i>1,2 B</span><span><i class="fa-solid fa-thumbs-down" aria-hidden="true"></i>Beğenme</span><span><i class="fa-solid fa-comment" aria-hidden="true"></i>48</span><span><i class="fa-solid fa-share" aria-hidden="true"></i>Paylaş</span>'
+        : pid === 'instagram-reels' ? '<span><i class="fa-regular fa-heart" aria-hidden="true"></i>2.304</span><span><i class="fa-regular fa-comment" aria-hidden="true"></i>36</span><span><i class="fa-regular fa-paper-plane" aria-hidden="true"></i></span><span><i class="fa-solid fa-ellipsis" aria-hidden="true"></i></span>'
+        : '<span class="ksp-dk-ava"><span class="ksp-ava kb-logo-isaret" aria-hidden="true"></span><i class="fa-solid fa-circle-plus" aria-hidden="true"></i></span><span><i class="fa-solid fa-heart" aria-hidden="true"></i>8,1 B</span><span><i class="fa-solid fa-comment-dots" aria-hidden="true"></i>112</span><span><i class="fa-solid fa-bookmark" aria-hidden="true"></i>640</span><span><i class="fa-solid fa-share" aria-hidden="true"></i>301</span>';
+      var alt = pid === 'youtube-shorts' ? '<div class="ksp-dk-hesap">' + ava + '<b>' + (tut || '@dadahaber') + '</b><span class="ksp-dk-dug">Abone Ol</span></div><div class="ksp-dk-baslik">' + (o.baslik || lb) + '</div>'
+        : pid === 'instagram-reels' ? '<div class="ksp-dk-hesap">' + ava + '<b>' + ad + '</b><span class="ksp-dk-dug">Takip Et</span></div><div class="ksp-dk-metin">' + mt + '</div><div class="ksp-dk-ses"><i class="fa-solid fa-music" aria-hidden="true"></i>' + ad + ' · Orijinal ses</div>'
+        : '<b class="ksp-dk-tut">' + (tut || '@dadahaber') + '</b><div class="ksp-dk-metin">' + mt + '</div><div class="ksp-dk-ses"><i class="fa-solid fa-music" aria-hidden="true"></i>Orijinal ses · ' + ad + '</div>';
+      h = '<div class="ksp ksp-dikey ksp-' + (pid === 'youtube-shorts' ? 'ys' : pid === 'instagram-reels' ? 'ir' : 'tt') + '"><div class="ksp-dk-kare" style="' + kare + '"></div>'
+        + (pid === 'youtube-shorts' ? '<span class="ksp-dk-ust">Shorts</span>' : pid === 'instagram-reels' ? '<span class="ksp-dk-ust">Reels</span>' : '<span class="ksp-dk-ust">Takip · Sana Özel</span>')
+        + '<div class="ksp-dk-sag">' + sag + '</div><div class="ksp-dk-alt">' + alt + '</div></div>';
+    }
     return h;
   }
   window.kbSosyalOnizle = function(kap, o){ /* UI kit ve başka sayfalar: tek önizleme çiz */
@@ -784,7 +861,7 @@
     var gor = '<div class="ksp-gorsel" style="background-image:url(' + esS(o.gorsel) + ');aspect-ratio:' + orS + '"></div>';
     var mt = esS(o.metin).replace(/(https?:\/\/\S+)/g, '<span class="ksp-link">$1</span>').replace(/(#[\wçğıöşüÇĞİÖŞÜ]+)/g, '<span class="ksp-link">$1</span>');
     kap.className = 'kb-sosyal-kart p-' + o.platform;
-    kap.innerHTML = sosyalSablon({ pid: o.platform, ad: esS(o.ad || 'Dada Haber'), tut: esS(o.tutamac || ''), mt: mt, kes: !!o.kes, gor: gor, orS: orS, oranAkt: o.oran || '16:9', alan: 'dadahaber.com', lb: esS(o.baslik || ''), konum: esS(o.konum || '') });
+    kap.innerHTML = sosyalSablon({ pid: o.platform, ad: esS(o.ad || 'Dada Haber'), tut: esS(o.tutamac || ''), mt: mt, kes: !!o.kes, gor: gor, orS: orS, oranAkt: o.oran || '16:9', alan: 'dadahaber.com', lb: esS(o.baslik || ''), konum: esS(o.konum || ''), baslik: esS(o.baslik || '') });
   };
   document.querySelectorAll('.kb-sosyal').forEach(function(S){
     var metin = S.querySelector('[data-sosyal-metin]'), kart = document.querySelector('[data-sosyal-onizle]') || S.querySelector('.kb-sosyal-kart');
@@ -794,7 +871,26 @@
     /* görsel ve bağlantı bilgisi: sayfadaki ilk önizlemeden okunur (kırpma bileşeni sonradan [data-kirp-izle] öğesini günceller) */
     var g0 = kart && kart.querySelector('.ksk-gorsel, .ksp-gorsel'), gorsel = { img: g0 ? g0.style.backgroundImage : '', pos: g0 ? g0.style.backgroundPosition : '' };
     var alt0 = kart && kart.querySelector('.ksk-kart-alt'), linkBaslik = alt0 ? alt0.textContent.split(' · ').slice(1).join(' · ').trim() : '';
-    S.querySelectorAll('.kb-platform').forEach(function(p){
+    /* mecralar kayıttan (sosyal-medya.ayarlar.platformlar; Site Ayarları › Sosyal Mecralar açar/kapatır, sıralar): sayfada olmayan açık mecra
+       eklenir, kapalı mecra kalkar, sıra kayıttaki gibi. Video mecraları içeriğin videosu yoksa soluk: "Bu mecra video ister". */
+    var PLR = (window.PANEL || {}).sosyal_platformlar || [], plKap = S.querySelector('.kb-platformlar');
+    if(PLR.length && plKap){
+      var mevcut_ = {}, ilk_ = plKap.querySelector('.kb-platform');
+      plKap.querySelectorAll('.kb-platform').forEach(function(b){ mevcut_[b.dataset.platform] = b; if(!PLR.some(function(x){ return x.id === b.dataset.platform; })) b.remove(); });
+      var baz = (mevcut_.facebook || ilk_ || {}).dataset || {};
+      PLR.forEach(function(x){ var b = mevcut_[x.id];
+        if(!b){ b = document.createElement('button'); b.type = 'button'; b.className = 'kb-platform'; b.setAttribute('role', 'tab'); b.dataset.platform = x.id;
+          b.dataset.ad = baz.ad || 'Dada Haber'; b.dataset.tutamac = x.tur === 'video' || x.id === 'threads' || x.id === 'bluesky' ? (x.id === 'bluesky' ? '@dadahaber.bsky.social' : '@dadahaber') : (baz.tutamac || '');
+          b.dataset.hesapDurum = x.onay_gerekir ? 'onay' : 'ok'; b.dataset.metin = baz.metin || '';
+          b.dataset.oranlar = (x.oranlar || ['serbest']).map(function(o){ var px = ((window.PANEL || {}).sosyal_oranlar || []).filter(function(r){ return r.oran === o; })[0]; return o + (px ? '=' + px.px.join('×') : ''); }).join(',');
+          b.innerHTML = '<i class="' + (x.ikon || 'fa-solid fa-share-nodes') + '" aria-hidden="true"></i>' + esS(x.ad); }
+        if(x.tur === 'video') b.dataset.video = '1';
+        plKap.appendChild(b); });
+      var vidAlan = document.querySelector('[data-alan-id="video"]');
+      var videoVar = plKap.dataset.video === 'var' || (plKap.dataset.video !== 'yok' && !!vidAlan && !(window.kbAlanBos && window.kbAlanBos(vidAlan)));
+      plKap.querySelectorAll('.kb-platform[data-video]').forEach(function(b){ b.classList.toggle('is-video-yok', !videoVar); if(!videoVar){ b.setAttribute('aria-disabled', 'true'); b.title = 'Bu mecra video ister'; } });
+    }
+    S.querySelectorAll('.kb-platform:not(.kb-platform-diger)').forEach(function(p){
       veri[p.dataset.platform] = { metin: p.dataset.metin || '' };
       var d = p.querySelector('.kp-durum'); if(d) d.remove();
       if(!p.querySelector('.kp-isaret')){ var s = document.createElement('span'); s.className = 'kp-isaret'; p.appendChild(s); }
@@ -806,6 +902,23 @@
       var tr_ = document.createElement('div'); tr_.className = 'toggle-row kb-sosyal-paylas';
       tr_.innerHTML = '<span>Bu Platformda Paylaş<small>Kapalıysa gönderi bu platforma gitmez; metin ve kırpım saklanır</small></span><label class="toggle"><input type="checkbox" data-sosyal-paylas checked aria-label="Bu platformda paylaş"><span class="toggle-track"></span><span class="toggle-thumb"></span></label>';
       var pl = S.querySelector('.kb-platformlar'); pl.parentNode.insertBefore(tr_, pl.nextSibling); paylas = tr_.querySelector('input');
+    }
+    /* video mecraları (tur: video): başlık (sınır varsa), etiketler, kapak karesi; oran yalnız 9:16. TikTok gibi onay isteyen mecrada bilgi satırı. */
+    var vidK = document.createElement('div'); vidK.className = 'kb-sosyal-video'; vidK.hidden = true;
+    vidK.innerHTML = '<div class="kb-bant bilgi" data-sv-onay hidden><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span></span></div>'
+      + '<div class="frow" data-sv-baslik-satir><label for="svBaslik' + Math.random().toString(36).slice(2, 6) + '">Video Başlığı</label><input class="finput" data-sv-baslik><div class="char-meter"><span>Videonun üstünde ve aramada görünür</span><b data-sv-sayac>0</b></div></div>'
+      + '<div class="frow"><span class="flabel">Etiketler</span><div class="kb-cip-girdi" data-serbest data-sv-etiket><input type="text" placeholder="#etiket yazıp Enter" aria-label="Etiketler"></div></div>'
+      + '<div class="frow"><span class="flabel">Kapak Karesi</span><div class="kb-sv-kareler" role="radiogroup" aria-label="Kapak karesi"></div><span class="fhint">Videodan bir kare seçin; önizlemede kapak olarak görünür. Dikey 9:16 kırpım kırpma penceresinden.</span></div>';
+    (paylas.closest('.toggle-row') || paylas).insertAdjacentElement('afterend', vidK);
+    if(window.kbKur) window.kbKur(vidK);
+    vidK.addEventListener('input', function(e){ if(!aktif) return; if(e.target.matches('[data-sv-baslik]')){ veri[aktif].baslik = e.target.value; var sn = +(((PL[aktif] || {}).editor || {}).baslik_sinir || 0); vidK.querySelector('[data-sv-sayac]').textContent = e.target.value.length + (sn ? ' / ' + sn : ''); onizle(); } });
+    vidK.addEventListener('click', function(e){ var k = e.target.closest('[data-sv-kare]'); if(!k || !aktif) return; veri[aktif].kare = +k.dataset.svKare; vidK.querySelectorAll('[data-sv-kare]').forEach(function(x){ x.setAttribute('aria-checked', x === k); x.classList.toggle('is-on', x === k); }); onizle(); });
+    function videoAlanlari(){
+      var plk = PL[aktif] || {}, ed = plk.editor || {}, vid = plk.tur === 'video'; vidK.hidden = !vid; if(!vid) return;
+      var v = veri[aktif]; if(v.baslik == null) v.baslik = (document.querySelector('[data-alan-id="baslik"]') || {}).value || linkBaslik || '';
+      var bs = vidK.querySelector('[data-sv-baslik-satir]'); bs.hidden = !ed.baslik_sinir; var bi = vidK.querySelector('[data-sv-baslik]'); bi.value = v.baslik; bi.maxLength = ed.baslik_sinir || 500; vidK.querySelector('[data-sv-sayac]').textContent = v.baslik.length + (ed.baslik_sinir ? ' / ' + ed.baslik_sinir : '');
+      var on = vidK.querySelector('[data-sv-onay]'); on.hidden = !plk.onay_gerekir; if(plk.onay_gerekir) on.querySelector('span').textContent = plk.onay_gerekir + ': uygulama onaylanana kadar gönderi yalnız özel görünür. Durum Entegrasyonlar\'da.';
+      vidK.querySelector('.kb-sv-kareler').innerHTML = [0, 1, 2, 3, 4].map(function(i){ var pos = ['50% 50%', '20% 50%', '40% 40%', '65% 55%', '85% 50%'][i]; return '<button type="button" class="kb-sv-kare' + ((v.kare || 0) === i ? ' is-on' : '') + '" role="radio" aria-checked="' + ((v.kare || 0) === i) + '" data-sv-kare="' + i + '" aria-label="' + (i + 1) + '. kare" style="background-image:' + (gorsel.img || 'none').replace(/"/g, "'") + ';background-position:' + pos + '"><span>' + ['0:00', '0:04', '0:09', '0:15', '0:22'][i] + '</span></button>'; }).join('');
     }
     function oran(o){
       oranAkt = o;
@@ -826,7 +939,7 @@
     function uzunluk(v, ed){ var lu = +(ed.link_uzunluk || 0); return v.replace(/https?:\/\/\S+/g, function(u){ return lu ? new Array(lu + 1).join('x') : u; }).length; }
     /* düğme durumları */
     function durumlar(){
-      S.querySelectorAll('.kb-platform').forEach(function(p){
+      S.querySelectorAll('.kb-platform:not(.kb-platform-diger)').forEach(function(p){
         var pid = p.dataset.platform, e = edit(pid), v = (veri[pid] || {}).metin || '', n = uzunluk(v, e.ed), et = (v.match(/#[\wçğıöşüÇĞİÖŞÜ]+/g) || []).length;
         var sorun = p.dataset.hesapDurum === 'hata', paylasma = p.dataset.paylasma === '1';
         var eksik = !paylasma && (n === 0 ? 'Metin boş' : (e.sinir && n > e.sinir) ? 'Metin sınırı aşıldı (' + n + ' / ' + e.sinir + ')' : (e.ed.etiket_siniri && et > e.ed.etiket_siniri) ? 'Etiket sınırı aşıldı (' + et + ' / ' + e.ed.etiket_siniri + ')' : '');
@@ -851,7 +964,8 @@
       var orS = oranAkt === 'serbest' ? '3/2' : oranAkt.replace(':', '/');
       var gor = '<div class="ksp-gorsel" data-kirp-izle="sosyal.' + oranAkt + '" style="background-image:' + esS(gorsel.img) + ';background-position:' + esS(gorsel.pos || '50% 50%') + ';' + (gorsel.size ? 'background-size:' + esS(gorsel.size) + ';' : '') + 'aspect-ratio:' + orS + '"></div>';
       var alan = 'dadahaber.com', lb = esS(linkBaslik || (document.querySelector('[data-alan="baslik"]') || {}).value || '');
-      var h = sosyalSablon({ pid: pid, ad: ad, tut: tut, mt: mt, kes: kes, gor: gor, orS: orS, oranAkt: oranAkt, alan: alan, lb: lb, konum: konum });
+      var vd = veri[pid] || {}, kareSt = gorsel.img ? 'background-image:' + gorsel.img.replace(/"/g, "'") + ';background-position:' + (['50% 50%', '20% 50%', '40% 40%', '65% 55%', '85% 50%'][vd.kare || 0]) : '';
+      var h = sosyalSablon({ pid: pid, ad: ad, tut: tut, mt: mt, kes: kes, gor: gor, orS: orS, oranAkt: oranAkt, alan: alan, lb: lb, konum: konum, baslik: esS(vd.baslik || lb), kare: kareSt });
       kart.className = 'kb-sosyal-kart p-' + pid + (p.classList.contains('is-paylasma') ? ' is-paylasma' : '');
       kart.innerHTML = h + (p.classList.contains('is-paylasma') ? '<div class="ksp-perde"><i class="fa-solid fa-ban" aria-hidden="true"></i>Bu platformda paylaşılmayacak</div>' : '');
       document.querySelectorAll('[data-sosyal-ad-platform]').forEach(function(el){ var a = PLAT_AD[pid] || ['fa-solid fa-share-nodes', p.textContent.trim()]; el.innerHTML = '<i class="' + a[0] + '" aria-hidden="true"></i>' + a[1]; el.classList.add('kb-sosyal-plat-ad'); });
@@ -894,7 +1008,7 @@
     }
     function sec(p){
       aktif = p.dataset.platform;
-      S.querySelectorAll('.kb-platform').forEach(function(x){ x.classList.toggle('is-on', x === p); x.setAttribute('aria-selected', x === p ? 'true' : 'false'); });
+      S.querySelectorAll('.kb-platform:not(.kb-platform-diger)').forEach(function(x){ x.classList.toggle('is-on', x === p); x.setAttribute('aria-selected', x === p ? 'true' : 'false'); });
       metin.value = veri[aktif].metin;
       var plk = PL[aktif] || { ad: p.textContent.trim(), editor: {} }, edk = plk.editor || {};
       if(arac) window.kbSosyalArac(arac, metin, plk);
@@ -904,7 +1018,7 @@
       document.querySelectorAll('[data-sosyal-ad]').forEach(function(el){ el.textContent = p.dataset.ad; });
       document.querySelectorAll('[data-sosyal-tutamac]').forEach(function(el){ el.textContent = p.dataset.tutamac; });
       hesapSec(p);
-      if(hesap){ var d = p.dataset.hesapDurum; hesap.className = 'pstat ' + (d === 'hata' ? 'warm' : 'ok'); hesap.textContent = d === 'hata' ? 'Bağlantı süresi doldu' : 'Bağlı'; }
+      if(hesap){ var d = p.dataset.hesapDurum; hesap.className = 'pstat ' + (d === 'hata' || d === 'onay' ? 'warm' : 'ok'); hesap.textContent = d === 'hata' ? 'Bağlantı süresi doldu' : d === 'onay' ? 'Onay Bekliyor' : 'Bağlı'; }
       var uy = S.querySelector('[data-sosyal-uyari]'); if(uy) uy.hidden = p.dataset.hesapDurum !== 'hata';
       if(paylas) paylas.checked = p.dataset.paylasma !== '1';
       var oranlar = (p.dataset.oranlar || '').split(','), h = '';
@@ -912,10 +1026,31 @@
       oranKap.innerHTML = h;
       var ol = S.querySelector('[data-oran-not]'); if(ol) ol.textContent = (oranlar[0].split('=')[1] || '') + ' önerilir';
       oranAkt = oranlar[0].split('=')[0];
-      yaz(); oran(oranAkt);
+      videoAlanlari(); yaz(); oran(oranAkt);
     }
+    /* taşma: tek satıra sığmayan mecra düğmeleri "Diğer" menüsüne girer; seçili mecra her zaman görünür (sekme taşması kuralı) */
+    var digerB = null, digerM = null;
+    function tasma(){
+      if(!plKap) return; plKap.classList.add('is-tek-satir');
+      var bl = Array.prototype.slice.call(plKap.querySelectorAll('.kb-platform:not(.kb-platform-diger)')); bl.forEach(function(b){ b.hidden = false; });
+      if(!digerB){ digerB = document.createElement('button'); digerB.type = 'button'; digerB.className = 'kb-platform kb-platform-diger'; digerB.setAttribute('aria-haspopup', 'menu'); digerB.setAttribute('aria-expanded', 'false');
+        digerM = document.createElement('div'); digerM.className = 'pnl-menu kb-diger-menu kb-platform-menu'; digerM.setAttribute('role', 'menu'); document.body.appendChild(digerM);
+        digerB.addEventListener('click', function(e){ e.stopPropagation(); var ac = !digerM.classList.contains('open'); digerM.classList.toggle('open', ac); digerB.setAttribute('aria-expanded', ac); if(ac){ var r = digerB.getBoundingClientRect(); digerM.style.position = 'fixed'; digerM.style.top = (r.bottom + 6) + 'px'; digerM.style.left = Math.max(8, r.right - 220) + 'px'; digerM._kbTetik = digerB; if(window.kbAcilirSigdir) window.kbAcilirSigdir(digerM, digerB); } });
+        digerM.addEventListener('click', function(e){ var o = e.target.closest('[data-diger-platform]'); if(!o) return; digerM.classList.remove('open'); var p = plKap.querySelector('.kb-platform[data-platform="' + o.dataset.digerPlatform + '"]'); if(p && !p.classList.contains('is-video-yok')) sec(p); else if(p) window.kbBildir('Bu mecra video ister', null, 'bilgi'); });
+        document.addEventListener('click', function(e){ if(digerM.classList.contains('open') && !digerM.contains(e.target) && e.target !== digerB) { digerM.classList.remove('open'); digerB.setAttribute('aria-expanded', 'false'); } }); }
+      plKap.appendChild(digerB); digerB.hidden = true;
+      var W = plKap.clientWidth, topW = bl.reduce(function(s, b){ return s + b.offsetWidth + 10; }, 0); if(!W || topW <= W + 1) return; /* genişlik toplamla ölçülür (scrollWidth taşmayı her zaman göstermiyor) */
+      digerB.hidden = false; var dw = digerB.offsetWidth + 10, gizli = [], on = plKap.querySelector('.kb-platform.is-on:not(.kb-platform-diger)');
+      var sira = bl.filter(function(b){ return b !== on; }), kalan = W - dw - (on ? on.offsetWidth + 10 : 0), top = 0;
+      sira.forEach(function(b){ var w = b.offsetWidth + 10; if(top + w <= kalan){ top += w; } else { b.hidden = true; gizli.push(b); } });
+      digerB.innerHTML = '<i class="fa-solid fa-ellipsis" aria-hidden="true"></i>Diğer <span class="kb-say">' + gizli.length + '</span>';
+      digerM.innerHTML = gizli.map(function(b){ return '<button type="button" role="menuitem" data-diger-platform="' + b.dataset.platform + '"' + (b.classList.contains('is-video-yok') ? ' class="is-soluk" title="Bu mecra video ister"' : '') + '>' + b.innerHTML.replace(/<span class="kp-isaret[^>]*>.*?<\/span>/, '') + '</button>'; }).join('');
+    }
+    var tasmaW = -1, tasmaZ = 0; /* ResizeObserver döngüsü olmasın: yalnız genişlik değişince, bir sonraki karede */
+    if(window.ResizeObserver && plKap) new ResizeObserver(function(en){ var w_ = Math.round(en[0].contentRect.width); if(w_ === tasmaW) return; tasmaW = w_; cancelAnimationFrame(tasmaZ); tasmaZ = requestAnimationFrame(tasma); }).observe(plKap);
     S.addEventListener('click', function(e){
-      var p = e.target.closest('.kb-platform'); if(p){ sec(p); return; }
+      var pv = e.target.closest('.kb-platform.is-video-yok'); if(pv){ window.kbBildir('Bu mecra video ister: içeriğe video eklenince açılır', null, 'bilgi'); return; }
+      var p = e.target.closest('.kb-platform:not(.kb-platform-diger)'); if(p){ sec(p); tasma(); return; }
       var o = e.target.closest('.kb-oran'); if(o){ oranKap.querySelectorAll('.kb-oran').forEach(function(x){ x.classList.toggle('is-on', x === o); }); oran(o.dataset.oran); var ol = S.querySelector('[data-oran-not]'); if(ol) ol.textContent = o.querySelector('small').textContent + ' önerilir'; }
       var u = e.target.closest('[data-sosyal-uret]'); if(u){ var pa = S.querySelector('.kb-platform.is-on'); metin.value = pa.dataset.metin || pa.dataset.aiMetin || ''; yaz(); window.kbBildir('Metin yeniden üretildi (AI · prototip)'); }
     });

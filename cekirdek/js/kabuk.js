@@ -238,6 +238,7 @@
     /* kendi içinde kayan kabın (uzun sağ sütun) içindeki kutu kaba kırpılmasın diye ekrana sabitlenir; düğmenin kenarına hizalanır */
     b = b || document.body;
     var kayan = b !== document.body && b.closest && b.closest('.side-card.is-uzun');
+    if(kayan){ var kr0 = kayan.getBoundingClientRect(), bb0 = b.getBoundingClientRect(); if(bb0.bottom > kr0.bottom - 4) kayan.scrollTop += bb0.bottom - kr0.bottom + 12; else if(bb0.top < kr0.top + 4) kayan.scrollTop -= kr0.top - bb0.top + 12; } /* düğme sütunun görünen kısmına gelsin */
     if(kayan && !m.dataset.kbSabit){ var cs0 = getComputedStyle(m); m.dataset.kbSabit = cs0.right !== 'auto' && cs0.left === 'auto' ? 'sag' : 'sol'; m.style.position = 'fixed'; }
     else if(!kayan && m.dataset.kbSabit){ delete m.dataset.kbSabit; ['position', 'top', 'left', 'right', 'bottom'].forEach(function(p){ m.style[p] = ''; }); }
     var sabit = getComputedStyle(m).position === 'fixed';
@@ -250,13 +251,16 @@
     var br = b.getBoundingClientRect(), h = Math.max(mr.height, m.scrollHeight), hedef; /* doğal yükseklik (sınırlanmışsa içerikten) */
     if(!b || b === document.body || b === document.documentElement) hedef = Math.max(ust, Math.min(mr.top, alt - h)); /* tetik bilinmiyor: yalnız sınırlara sığdır */
     else if(br.bottom + 6 + h <= alt) hedef = br.bottom + 6;
-    else if(br.top - 6 - h >= ust) hedef = br.top - 6 - h;
+    else if(br.top - 6 - h >= ust && br.top - 6 <= alt) hedef = br.top - 6 - h; /* yukarı açılırken alt kenar da sınırın içinde */
     else { /* hiçbir yöne sığmıyor: sayfa KAYDIRILMAZ (kullanıcı zıplama görür, kapanma olur); kutu görünür alana yerleşir, gerekirse kendi içinde kayar */
       hedef = Math.max(ust, Math.min(br.bottom + 6, alt - h));
       if(h > alt - ust){ m.style.maxHeight = Math.floor(alt - ust) + 'px'; m.style.overflowY = 'auto'; hedef = ust; } }
     if(h <= alt - ust && m.style.maxHeight){ m.style.maxHeight = ''; m.style.overflowY = ''; }
 
-    var dx = mr.right > vw - 8 ? -(mr.right - vw + 8) : (mr.left < 8 ? 8 - mr.left : 0); if(mr.width > vw - 16) dx = 8 - mr.left;
+    /* sol sınır: açık yan menünün sağ kenarı (kutu yan menünün altına girmez); yan menünün içindeki kutu için ekranın kenarı */
+    var sol = 8, sm = document.getElementById('saMenu');
+    if(sm && !(b && b.closest && b.closest('#saMenu'))){ var sr = sm.getBoundingClientRect(); if(sr.width && sr.right > 0 && sr.right < vw / 2 && getComputedStyle(sm).visibility !== 'hidden') sol = Math.round(sr.right) + 8; }
+    var dx = mr.right > vw - 8 ? -(mr.right - vw + 8) : (mr.left < sol ? sol - mr.left : 0); if(mr.width > vw - sol - 8) dx = sol - mr.left;
     if(sabit){ m.style.top = hedef + 'px'; m.style.left = (mr.left + dx) + 'px'; m.style.right = 'auto'; m.style.bottom = 'auto'; }
     else { mr = m.getBoundingClientRect(); var dy = hedef - mr.top; if(dx || Math.abs(dy) > .5) m.style.translate = dx + 'px ' + dy + 'px'; }
   };
