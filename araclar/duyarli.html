@@ -13,7 +13,7 @@ function gor(e){ return e && e.getClientRects().length && !e.closest('[hidden],t
 function kes(a, b){ return a.left < b.right - 1 && a.right > b.left + 1 && a.top < b.bottom - 1 && a.bottom > b.top + 1; }
 function bekle(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
 async function olc(f, s){
-  var d = f.contentDocument, w = f.contentWindow, r = { sayfa:s, w:W, hata:[] }, H = function(k, m){ r.hata.push(k + ': ' + m); };
+  var d = f.contentDocument, w = f.contentWindow, r = { sayfa:s, w:W, hata:[] }, IST = ((d && d.body && d.body.getAttribute('data-denetim-istisna')) || '').split(/\s+/), H = function(k, m){ if(IST.indexOf(k) > -1) return; /* açık istisna (UI kit vitrini) */ r.hata.push(k + ': ' + m); };
   if(!d || !d.body) { H('test', 'sayfa yüklenemedi'); return r; }
   var main = d.querySelector('.pnl-main') || d.body;
   function tasma(et){ if(d.documentElement.scrollWidth > W + 1) H('tasma', (et || '') + 'sayfa ' + d.documentElement.scrollWidth + 'px'); }
