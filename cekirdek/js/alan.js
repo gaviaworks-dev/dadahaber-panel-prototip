@@ -197,7 +197,7 @@
     });
     btn.addEventListener('click', function(){
       if(A.classList.contains('is-bitti')) return;
-      var eks = kaynak.filter(function(k){ return !k.value.trim(); });
+      var eks = kaynak.filter(function(k){ return !dolu(k); }); /* içerik seçicide value yok */
       if(eks.length){ eks.forEach(function(k){ if(!k.hasAttribute('data-zorunlu-metin')) k.setAttribute('data-zorunlu-metin', (k.closest('.frow').querySelector('label') || {}).textContent ? 'Üretim için ' + k.closest('.frow').querySelector('label').textContent.replace('*', '').trim().toLocaleLowerCase('tr') + ' gerekli' : 'Bu alan gerekli'); }); window.kbEksikGoster(eks); return; }
       if(!A.querySelector('.kaa-secim input:checked')){ window.kbBildir('Üretilecek en az bir bölüm seçin', null, 'uyari'); return; }
       var secilen = Array.prototype.map.call(A.querySelectorAll('.kaa-secim input:checked'), function(i){ return i.value; });
@@ -316,7 +316,7 @@
       tsOv.querySelector('input').addEventListener('input', function(e){ var q = (e.target.value || '').toLocaleLowerCase('tr'); tsOv.querySelectorAll('[data-ts-liste] button').forEach(function(b){ b.hidden = q && b.textContent.toLocaleLowerCase('tr').indexOf(q) === -1; }); });
       tsOv.addEventListener('click', function(e){
         if(e.target === tsOv || e.target.closest('[data-ts-hayir]')){ tsOv.classList.remove('open'); return; }
-        var b = e.target.closest('[data-ts-liste] button'); if(b){ tsOv.querySelectorAll('[data-ts-liste] button').forEach(function(x){ x.classList.toggle('is-sec', x === b); x.setAttribute('aria-selected', x === b); }); var o_ = tsOv._o || {}, oz_ = tsOv.querySelector('[data-ts-ozet]'); if(oz_ && o_.ozet){ oz_.hidden = false; oz_.textContent = o_.ozet.replace('{ad}', o_.ad).replace('{hedef}', b.dataset.v).replace('{n}', (o_.sayi || 0).toLocaleString('tr')).replace('{birim}', o_.birim || 'kayıt'); } var ev = tsOv.querySelector('[data-ts-evet]'); ev.classList.remove('is-pasif'); ev.setAttribute('aria-disabled', 'false'); tsOv.querySelector('[data-ts-liste]').closest('.frow').classList.remove('has-error'); tsOv._hedef = b.dataset.v; return; }
+        var b = e.target.closest('[data-ts-liste] button'); if(b){ tsOv.querySelectorAll('[data-ts-liste] button').forEach(function(x){ x.classList.toggle('is-sec', x === b); x.setAttribute('aria-selected', x === b); }); var o_ = tsOv._o || {}, oz_ = tsOv.querySelector('[data-ts-ozet]'); if(oz_ && o_.ozet){ oz_.hidden = false; oz_.textContent = o_.ozet.split('{ad}').join(o_.ad).split('{hedef}').join(b.dataset.v).split('{n}').join((o_.sayi || 0).toLocaleString('tr')).split('{birim}').join(o_.birim || 'kayıt') /* her geçtiği yerde */; } var ev = tsOv.querySelector('[data-ts-evet]'); ev.classList.remove('is-pasif'); ev.setAttribute('aria-disabled', 'false'); tsOv.querySelector('[data-ts-liste]').closest('.frow').classList.remove('has-error'); tsOv._hedef = b.dataset.v; return; }
         if(e.target.closest('[data-ts-evet]')){
           if(!tsOv._hedef){ var fr = tsOv.querySelector('[data-ts-liste]').closest('.frow'); fr.classList.add('has-error'); fr.querySelector('.kb-tasi-ara input').focus(); return; }
           tsOv.classList.remove('open'); if(tsIs) tsIs(tsOv._hedef); }
@@ -461,18 +461,23 @@
   window.kbKurucu('.kb-halka[data-degerler]', function(G){
     var v = G.dataset.degerler.split(',').map(Number), et = (G.dataset.etiketler || '').split(','), top = v.reduce(function(a, b){ return a + b; }, 0) || 1;
     var r = 42, c = 2 * Math.PI * r, bas = 0, yuz = function(d){ return Math.round(d / top * 1000) / 10; };
+    /* ortadaki değer halkanın iç boşluğuna sığar: uzun değerde yazı küçülür (iç çap ≈ 70 birim, rakam ≈ 0,6 em) */
+    var orta = G.dataset.orta || top.toLocaleString('tr'), ortaBoy = Math.min(18, Math.floor(68 / (String(orta).length * 0.62)));
     var dil = v.map(function(d, i){ var u = d / top * c, s = '<circle r="' + r + '" cx="60" cy="60" class="kh-dilim kh-r' + (i % 6) + '" stroke-dasharray="' + u.toFixed(2) + ' ' + (c - u).toFixed(2) + '" stroke-dashoffset="' + (-bas).toFixed(2) + '"/>'; bas += u; return s; }).join('');
     G.innerHTML = '<svg viewBox="0 0 120 120" role="img" aria-label="' + (G.dataset.ad || 'Pay grafiği') + ': ' + et.map(function(e, i){ return e + ' %' + yuz(v[i]); }).join(', ') + '"><circle r="' + r + '" cx="60" cy="60" class="kh-zemin"/><g transform="rotate(-90 60 60)">' + dil + '</g>'
-      + '<text x="60" y="58" class="kh-orta">' + (G.dataset.orta || top.toLocaleString('tr')) + '</text><text x="60" y="74" class="kh-orta-ad">' + (G.dataset.ortaAd || '') + '</text></svg>'
+      + '<text x="60" y="58" class="kh-orta" style="font-size:' + ortaBoy + 'px">' + orta + '</text><text x="60" y="74" class="kh-orta-ad">' + (G.dataset.ortaAd || '') + '</text></svg>'
       + '<ul class="kh-lejant">' + et.map(function(e, i){ return '<li><span class="kh-r' + (i % 6) + '"></span>' + e + '<b>%' + yuz(v[i]).toLocaleString('tr') + '</b></li>'; }).join('') + '</ul>';
   });
 
   /* ---------------- yatay çubuk listesi (harita yerine il/ülke, tarayıcı, yönlendiren…) ----------------
-     .kb-yatay-cubuk[data-degerler="1200,800"][data-etiketler="İstanbul,Ankara"][data-birim="kullanıcı"]: ad · çubuk · değer · pay. */
+     .kb-yatay-cubuk[data-degerler="1200,800"][data-etiketler="İstanbul,Ankara"][data-birim="kullanıcı"]: ad · çubuk · değer · pay.
+     [data-bicim="kisa"]: değer kısaltılır (1.331.520 → 1,33 Mn · 48.200 → 48,2 B); tam değer ipucunda. */
   window.kbKurucu('.kb-yatay-cubuk[data-degerler]', function(G){
     var v = G.dataset.degerler.split(',').map(Number), et = (G.dataset.etiketler || '').split(','), top = v.reduce(function(a, b){ return a + b; }, 0) || 1, mx = Math.max.apply(null, v) || 1;
     G.setAttribute('role', 'list');
-    G.innerHTML = v.map(function(d, i){ return '<div class="kyc-satir" role="listitem"><span class="kyc-ad" title="' + (et[i] || '') + '">' + (et[i] || '') + '</span><span class="kyc-cubuk"><span style="width:' + (d / mx * 100).toFixed(1) + '%"></span></span><b>' + d.toLocaleString('tr') + '</b><small>%' + (Math.round(d / top * 1000) / 10).toLocaleString('tr') + '</small></div>'; }).join('');
+    var kisa = G.dataset.bicim === 'kisa';
+    function yaz(d){ if(!kisa || d < 10000) return d.toLocaleString('tr'); if(d >= 1e6) return (Math.round(d / 1e4) / 100).toLocaleString('tr') + ' Mn'; return (Math.round(d / 100) / 10).toLocaleString('tr') + ' B'; }
+    G.innerHTML = v.map(function(d, i){ return '<div class="kyc-satir" role="listitem"><span class="kyc-ad" title="' + (et[i] || '') + '">' + (et[i] || '') + '</span><span class="kyc-cubuk"><span style="width:' + (d / mx * 100).toFixed(1) + '%"></span></span><b' + (kisa ? ' title="' + d.toLocaleString('tr') + '"' : '') + '>' + yaz(d) + '</b><small>%' + (Math.round(d / top * 1000) / 10).toLocaleString('tr') + '</small></div>'; }).join('');
   });
 
   /* ---------------- e-posta önizleme kabı ----------------

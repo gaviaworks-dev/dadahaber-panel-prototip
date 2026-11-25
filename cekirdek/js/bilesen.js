@@ -976,12 +976,19 @@
       var v = ara ? tr(ara.value.trim()) : '', n = 0, suzVar = !!v;
       var sz = {}; suzler.forEach(function(s){ if(s.dataset.deger){ sz[s.dataset.suz] = s.dataset.deger; suzVar = true; } });
       Object.keys(suzEk).forEach(function(k){ if(suzEk[k]){ sz[k] = suzEk[k]; coklu[k] = true; suzVar = true; } });
+      function gec(r){ /* arama ve süzgeçlerden geçiyor mu (sekmeden bağımsız) */
+        if(v && tr(r.dataset.ara).indexOf(v) < 0) return false;
+        return Object.keys(sz).every(function(k){ var rv = r.dataset[k] || '', istek = sz[k].split('|'); return istek.some(function(x){ return coklu[k] ? ('|' + rv + '|').indexOf('|' + x + '|') > -1 : rv === x; }); });
+      }
       satirlar.forEach(function(r){
-        var d = r.dataset.durum, g = gorunur(r) && (sekme === 'hepsi' ? d !== 'cop' : d === sekme);
-        if(g && v) g = tr(r.dataset.ara).indexOf(v) > -1;
-        if(g) Object.keys(sz).forEach(function(k){ var rv = r.dataset[k] || '', istek = sz[k].split('|'); if(!istek.some(function(v){ return coklu[k] ? ('|' + rv + '|').indexOf('|' + v + '|') > -1 : rv === v; })) g = false; });
+        var d = r.dataset.durum, g = gorunur(r) && (sekme === 'hepsi' ? d !== 'cop' : d === sekme) && gec(r);
         r._kbGecti = g; /* sayfalamadan önce süzgeçten geçti mi (bağlı takvim görünümü bunu okur) */
       });
+      /* sekme sayaçları süzgeci izler: süzgeç ya da arama varken her sekme, süzgeçten geçen kayıtları sayar */
+      if(suzVar) sekmeler.forEach(function(c){ if(c.dataset.sabit) return; var s = c.dataset.sekme, e = c.querySelector('.ch-cnt'); if(!e) return;
+        e.textContent = sayiYaz(satirlar.filter(function(r){ return gorunur(r) && (s === 'hepsi' ? r.dataset.durum !== 'cop' : r.dataset.durum === s) && gec(r); }).length); });
+      else if(L._kbSuzSayac) sayaclar();
+      L._kbSuzSayac = suzVar;
       gecenler = satirlar.filter(function(r){ return r._kbGecti; });
       if(grupla) SY.boy = Math.max(SY.boy, gecenler.length || 1);
       sayfaBoy = SY.boy; SY.sinirla(gecenler.length); sayfa = SY.sayfa; sonSayfa = SY.son;

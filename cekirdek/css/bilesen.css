@@ -1926,3 +1926,6 @@ body.kb-giris-sayfa{min-height:100vh;margin:0;display:grid;grid-template-columns
 /* onay penceresinde de sağ üstte kapat (×): çekmece ve pencerelerdeki kb-kapat ile aynı düğme */
 .sa-modal{position:relative}
 .sa-modal .sa-modal-kapat{position:absolute;top:14px;right:14px}
+
+/* süzgeç şeridi görünürken araç satırındaki "Süzgeçleri Temizle" gizli: tek temizle düğmesi (şeritteki "Temizle") */
+[data-liste]:has(.kb-arac-etiket:not([hidden])) .kb-suz-temizle[data-suz-temizle]{display:none}
