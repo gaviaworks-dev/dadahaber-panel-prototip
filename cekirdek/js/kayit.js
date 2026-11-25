@@ -560,6 +560,30 @@ window.PANEL = {
     "editor"
    ]
   },
+  "haberler.kose": {
+   "baslik": "Köşe Yazıları",
+   "ikon": "fa-feather-pointed",
+   "modul_ad": "Haberler ve Vitrin",
+   "hazir": false,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor"
+   ]
+  },
+  "haberler.kose-duzenle": {
+   "baslik": "Köşe Yazısı Düzenle",
+   "ikon": "fa-feather-pointed",
+   "modul_ad": "Haberler ve Vitrin",
+   "hazir": false,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
+    "editor"
+   ]
+  },
   "haberler.son-dakika": {
    "baslik": "Son Dakika",
    "ikon": "fa-bolt",
@@ -634,7 +658,7 @@ window.PANEL = {
    ]
   },
   "haberler.surumler": {
-   "baslik": "Sürüm geçmişi",
+   "baslik": "Sürüm Geçmişi",
    "ikon": "fa-clock-rotate-left",
    "modul_ad": "Haberler ve Vitrin",
    "hazir": true,
@@ -684,7 +708,7 @@ window.PANEL = {
    ]
   },
   "ai-havuz.duzenle": {
-   "baslik": "AI haber düzenle",
+   "baslik": "AI Haber Düzenle",
    "ikon": "fa-robot",
    "modul_ad": "AI Haber Havuzu",
    "hazir": true,
@@ -698,7 +722,7 @@ window.PANEL = {
    ]
   },
   "ai-havuz.cron": {
-   "baslik": "Cron ve hat sağlığı",
+   "baslik": "Cron ve Hat Sağlığı",
    "ikon": "fa-heart-pulse",
    "modul_ad": "AI Haber Havuzu",
    "hazir": true,
@@ -708,7 +732,7 @@ window.PANEL = {
    ]
   },
   "ai-havuz.ayarlar": {
-   "baslik": "Otomatik yayın ve onay ayarları",
+   "baslik": "Otomatik Yayın ve Onay Ayarları",
    "ikon": "fa-sliders",
    "modul_ad": "AI Haber Havuzu",
    "hazir": true,
@@ -783,7 +807,7 @@ window.PANEL = {
    ]
   },
   "multimedya.video-duzenle": {
-   "baslik": "Video düzenle",
+   "baslik": "Video Düzenle",
    "ikon": "fa-video",
    "modul_ad": "Multimedya ve Medya Havuzu",
    "hazir": true,
@@ -796,7 +820,7 @@ window.PANEL = {
    ]
   },
   "multimedya.akis-duzenle": {
-   "baslik": "Akış videosu düzenle",
+   "baslik": "Akış Videosu Düzenle",
    "ikon": "fa-mobile-screen",
    "modul_ad": "Multimedya ve Medya Havuzu",
    "hazir": true,
@@ -809,7 +833,7 @@ window.PANEL = {
    ]
   },
   "multimedya.canli-duzenle": {
-   "baslik": "Canlı yayın düzenle",
+   "baslik": "Canlı Yayın Düzenle",
    "ikon": "fa-tower-broadcast",
    "modul_ad": "Multimedya ve Medya Havuzu",
    "hazir": true,
@@ -822,7 +846,7 @@ window.PANEL = {
    ]
   },
   "multimedya.seri": {
-   "baslik": "Podcast serisi düzenle",
+   "baslik": "Podcast Serisi Düzenle",
    "ikon": "fa-podcast",
    "modul_ad": "Multimedya ve Medya Havuzu",
    "hazir": true,
@@ -834,7 +858,7 @@ window.PANEL = {
    ]
   },
   "multimedya.bolum": {
-   "baslik": "Podcast bölümü düzenle",
+   "baslik": "Podcast Bölümü Düzenle",
    "ikon": "fa-microphone-lines",
    "modul_ad": "Multimedya ve Medya Havuzu",
    "hazir": true,
@@ -858,7 +882,7 @@ window.PANEL = {
    ]
   },
   "multimedya.galeri-duzenle": {
-   "baslik": "Galeri düzenle",
+   "baslik": "Galeri Düzenle",
    "ikon": "fa-images",
    "modul_ad": "Multimedya ve Medya Havuzu",
    "hazir": true,
@@ -871,7 +895,7 @@ window.PANEL = {
    ]
   },
   "multimedya.infografik": {
-   "baslik": "İnfografik düzenle",
+   "baslik": "İnfografik Düzenle",
    "ikon": "fa-chart-pie",
    "modul_ad": "Multimedya ve Medya Havuzu",
    "hazir": true,
@@ -941,7 +965,7 @@ window.PANEL = {
    ]
   },
   "ozel-dikeyler.kulup": {
-   "baslik": "Kulüp düzenle",
+   "baslik": "Kulüp Düzenle",
    "ikon": "fa-shield-halved",
    "modul_ad": "Özel Widgetlar",
    "hazir": true,
@@ -953,7 +977,7 @@ window.PANEL = {
    ]
   },
   "ozel-dikeyler.ilan": {
-   "baslik": "İlan düzenle",
+   "baslik": "İlan Düzenle",
    "ikon": "fa-bullhorn",
    "modul_ad": "Özel Widgetlar",
    "hazir": true,
@@ -1153,7 +1177,7 @@ window.PANEL = {
    ]
   },
   "kullanicilar.davet": {
-   "baslik": "Ekip üyesi davet et",
+   "baslik": "Ekip Üyesi Davet Et",
    "ikon": "fa-user-plus",
    "modul_ad": "Kullanıcılar",
    "hazir": true,
@@ -1197,7 +1221,7 @@ window.PANEL = {
    ]
   },
   "kimlik-yetki.rol": {
-   "baslik": "Rol düzenle",
+   "baslik": "Rol Düzenle",
    "ikon": "fa-user-shield",
    "modul_ad": "Kimlik ve Yetki",
    "hazir": true,
@@ -1208,7 +1232,7 @@ window.PANEL = {
    ]
   },
   "kimlik-yetki.izin-gruplari": {
-   "baslik": "İzin grupları",
+   "baslik": "İzin Grupları",
    "ikon": "fa-layer-group",
    "modul_ad": "Kimlik ve Yetki",
    "hazir": true,
@@ -1219,7 +1243,7 @@ window.PANEL = {
    ]
   },
   "kimlik-yetki.izin-grubu": {
-   "baslik": "İzin grubu düzenle",
+   "baslik": "İzin Grubu Düzenle",
    "ikon": "fa-layer-group",
    "modul_ad": "Kimlik ve Yetki",
    "hazir": true,
@@ -1230,7 +1254,7 @@ window.PANEL = {
    ]
   },
   "kimlik-yetki.oturumlar": {
-   "baslik": "Aktif oturumlar",
+   "baslik": "Aktif Oturumlar",
    "ikon": "fa-laptop",
    "modul_ad": "Kimlik ve Yetki",
    "hazir": true,
@@ -1260,7 +1284,7 @@ window.PANEL = {
    ]
   },
   "kimlik-yetki.guvenlik": {
-   "baslik": "Güvenlik politikası",
+   "baslik": "Güvenlik Politikası",
    "ikon": "fa-shield-halved",
    "modul_ad": "Kimlik ve Yetki",
    "hazir": true,
@@ -1301,7 +1325,7 @@ window.PANEL = {
    ]
   },
   "kimlik-yetki.dogrulama": {
-   "baslik": "İki adımlı doğrulama",
+   "baslik": "İki Adımlı Doğrulama",
    "ikon": "fa-shield",
    "modul_ad": "Kimlik ve Yetki",
    "hazir": true,
@@ -1331,7 +1355,7 @@ window.PANEL = {
    ]
   },
   "kimlik-yetki.yeni-sifre": {
-   "baslik": "Yeni şifre",
+   "baslik": "Yeni Şifre",
    "ikon": "fa-key",
    "modul_ad": "Kimlik ve Yetki",
    "hazir": true,
@@ -1376,7 +1400,7 @@ window.PANEL = {
    ]
   },
   "kimlik-yetki.davet-eposta": {
-   "baslik": "Davet e-postası önizlemesi",
+   "baslik": "Davet E-postası Önizlemesi",
    "ikon": "fa-envelope",
    "modul_ad": "Kimlik ve Yetki",
    "hazir": true,
@@ -1463,7 +1487,7 @@ window.PANEL = {
    ]
   },
   "entegrasyonlar.api": {
-   "baslik": "API anahtarları",
+   "baslik": "API Anahtarları",
    "ikon": "fa-key",
    "modul_ad": "Entegrasyonlar",
    "hazir": true,
@@ -1484,7 +1508,7 @@ window.PANEL = {
    ]
   },
   "yasal-metinler.duzenle": {
-   "baslik": "Yasal metin düzenle",
+   "baslik": "Yasal Metin Düzenle",
    "ikon": "fa-file-pen",
    "modul_ad": "Yasal Metinler",
    "hazir": true,
@@ -1495,7 +1519,7 @@ window.PANEL = {
    ]
   },
   "yasal-metinler.surumler": {
-   "baslik": "Sürüm geçmişi",
+   "baslik": "Sürüm Geçmişi",
    "ikon": "fa-clock-rotate-left",
    "modul_ad": "Yasal Metinler",
    "hazir": true,
@@ -1506,7 +1530,7 @@ window.PANEL = {
    ]
   },
   "yasal-metinler.onaylar": {
-   "baslik": "Onay kayıtları",
+   "baslik": "Onay Kayıtları",
    "ikon": "fa-list-check",
    "modul_ad": "Yasal Metinler",
    "hazir": true,
@@ -1528,7 +1552,7 @@ window.PANEL = {
    ]
   },
   "sayfalar.duzenle": {
-   "baslik": "Sayfa düzenle",
+   "baslik": "Sayfa Düzenle",
    "ikon": "fa-file-pen",
    "modul_ad": "Sayfalar",
    "hazir": true,
@@ -1539,7 +1563,7 @@ window.PANEL = {
    ]
   },
   "raporlar.liste": {
-   "baslik": "Raporlar",
+   "baslik": "Sistem raporu",
    "ikon": "fa-chart-pie",
    "modul_ad": "Raporlar",
    "hazir": true,
@@ -1550,6 +1574,18 @@ window.PANEL = {
     "editor",
     "kat-ed",
     "sosyal",
+    "analist"
+   ]
+  },
+  "raporlar.site": {
+   "baslik": "Site istatistikleri",
+   "ikon": "fa-chart-line",
+   "modul_ad": "Raporlar",
+   "hazir": false,
+   "acik": true,
+   "roller": [
+    "super",
+    "gyy",
     "analist"
    ]
   },
@@ -1581,7 +1617,7 @@ window.PANEL = {
    ]
   },
   "denetim-izi.loglar": {
-   "baslik": "Sistem logları",
+   "baslik": "Sistem Logları",
    "ikon": "fa-terminal",
    "modul_ad": "Denetim İzi",
    "hazir": true,
@@ -1593,7 +1629,7 @@ window.PANEL = {
    ]
   },
   "denetim-izi.kayit": {
-   "baslik": "Denetim kaydı",
+   "baslik": "Denetim Kaydı",
    "ikon": "fa-file-lines",
    "modul_ad": "Denetim İzi",
    "hazir": true,
@@ -1605,7 +1641,7 @@ window.PANEL = {
    ]
   },
   "denetim-izi.log": {
-   "baslik": "Log kaydı",
+   "baslik": "Log Kaydı",
    "ikon": "fa-terminal",
    "modul_ad": "Denetim İzi",
    "hazir": true,
@@ -1627,7 +1663,7 @@ window.PANEL = {
    ]
   },
   "sistem-sagligi.onbellek": {
-   "baslik": "Önbellek ve rutin temizlik",
+   "baslik": "Önbellek ve Rutin Temizlik",
    "ikon": "fa-broom",
    "modul_ad": "Sistem Sağlığı",
    "hazir": true,

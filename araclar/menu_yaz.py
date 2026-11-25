@@ -78,7 +78,7 @@ def menu_html(sayfa_yolu):
         linkler = []
         for m in mods:
             for s in m.get("sayfalar", []):
-                if not s.get("menude"):
+                if not s.get("menude") or not s.get("hazir"):  # yarım sayfa (hazir: false) menüde görünmez (Beyar, 25.11.2026)
                     continue
                 anahtar = f'{m["id"]}.{s["id"]}'
                 roller = " ".join(s.get("roller", m.get("roller", [])))
@@ -101,7 +101,7 @@ def menu_html(sayfa_yolu):
     parca.append('</div>')
     cikis = oturum_href("oturum.cikis", sayfa_yolu)
     parca.append('<div class="sa-menu-foot">'
-                 f'<a class="sa-mlink" href="{esc(cikis)}" data-tip="Çıkış"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i><span class="ml-ad">Çıkış</span></a>'
+                 f'<a class="sa-mlink" href="{esc(cikis)}" data-cikis data-tip="Çıkış"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i><span class="ml-ad">Çıkış</span></a>'
                  f'<a class="sa-sig" href="https://gaviaworks.com" target="_blank" rel="noopener" aria-label="Gaviaworks" data-tip="Gaviaworks"><img src="{esc(goreli("assets/gavia-isaret.png", sayfa_yolu))}" alt=""></a>'
                  '</div></nav>'
                  '<button class="sa-divider" id="saDivider" type="button" aria-controls="saMenu" aria-label="Menüyü daralt"><span class="sa-grip" aria-hidden="true"></span></button>')
@@ -159,7 +159,7 @@ def ust_html(sayfa_yolu):
         f'<a href="{esc(oturum_href("oturum.oturumlar", sayfa_yolu))}"><i class="fa-solid fa-laptop" aria-hidden="true"></i>Aktif oturumlar</a>'
         f'<a class="kb-yalniz-tel" href="{esc(kayit["site_adresi"])}" target="_blank" rel="noopener"><i class="fa-solid fa-globe" aria-hidden="true"></i>Siteyi görüntüle</a>'
         '<div class="pmenu-div"></div>'
-        f'<a class="danger" href="{esc(oturum_href("oturum.cikis", sayfa_yolu))}"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>Çıkış</a>'
+        f'<a class="danger" href="{esc(oturum_href("oturum.cikis", sayfa_yolu))}" data-cikis><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>Çıkış</a>'
         '</div></div>'
         '</div></header>'
     )
