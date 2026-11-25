@@ -225,3 +225,13 @@
 /* H · Künye 9:16 soru kartı: soru kutusuna yer (alt sınır güvenli alanın %35'inin üstünde kalır) */
 .kd-tuval.kp-h[data-durum="soru"]{--gi:58% 0 0 0}
 .kd-tuval.kp-h[data-durum="soru"] .kp-blok{bottom:calc(42% + 2cqw)}
+
+/* PANEL İÇERİĞİ kartın güvenli alt kenarına kadar iner (Beyar, 25.11.2026) — her kartta aynı kural:
+   satırlı panel (tablo, madde listesi, çubuk grafik, anket seçenekleri, gelişme akışı, skor) büyür ve satırları eşit aralıkla dağıtır;
+   tek parça panel (hava günleri, maç bilgisi ve maç saati, düğme satırı, ses çubuğu, soru kutusu) alt kenara oturur.
+   Ölçüm: kalip/_olc.py "altta boşluk" (içerik ile güvenli alt kenar arası ≤ kart yüksekliğinin %6'sı) */
+.kd-tuval .kp-blok:has(> :is(.kd-tablo,.kd-liste,.kp-liste,.kd-grafik,.kd-secenekler,.kd-akis,.kd-skor,.kd-hava-gunler,.kd-bilgi,.kd-cagri,.kd-ses,.kd-soru-kutu,.kd-zaman)){justify-content:flex-start}
+.kd-tuval .kp-blok > :is(.kd-tablo,.kd-liste,.kp-liste,.kd-grafik,.kd-secenekler,.kd-akis,.kd-skor){flex:1 1 auto;min-height:0;justify-content:space-between}
+.kd-tuval .kp-blok > :is(.kd-hava-gunler,.kd-bilgi,.kd-cagri,.kd-ses,.kd-soru-kutu,.kd-zaman){margin-top:auto}
+.kd-tuval .kp-blok > :is(.kd-tablo,.kd-liste,.kp-liste,.kd-grafik,.kd-secenekler,.kd-akis,.kd-skor) ~ :is(.kd-hava-gunler,.kd-bilgi,.kd-cagri,.kd-ses,.kd-soru-kutu,.kd-zaman){margin-top:0}
+.kd-tuval[data-tip] .kd-liste li{font-size:3.4cqmin}

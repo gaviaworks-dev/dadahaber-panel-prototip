@@ -260,10 +260,11 @@ body{overflow-anchor:none} /* kontrol alanı küçülünce tarayıcı kaydırmay
 
 /* başlık vurgusu: renk zemine göre (kategori zemininde açık/koyu ikinci ton; beyazda koyulaştırılmış kategori) */
 .kp-orn[data-o-bvurgu="renkli"] .kp-vurgu{color:var(--zr)}
-/* zeminli: boya yazının içerik kutusunu (taban çizgisinin .96em üstü – .27em altı) değil, harf bandını boyar: tabanın .77em üstünden .08em altına.
-   Böylece üst satırın kuyrukları (g y ş ç p) ve alt satırın şapkaları (Ğ İ Ö Ü) boyanın altında kalmaz; satır aralığı en az 1,07. Ölçüm: kalip/_olc.py "boya" */
-.kp-orn[data-o-bvurgu="zeminli"] .kp-vurgu{--vzr:var(--zz);background:linear-gradient(var(--vzr),var(--vzr)) 0 .19em / 100% .85em no-repeat;color:var(--zzy);padding:0 .14em;border-radius:calc(var(--kose) * .2)}
-.kp-orn[data-o-bvurgu="zeminli"] .kp-tuval:not(.kp-j) .kp-baslik{line-height:1.07}
+/* zeminli: boya harfin tamamını kapsar: şapkadan (Ğ İ Ö Ü, i noktası) kuyruğa (g y ş ç p) — tabanın .96em üstünden .26em altına (Yasin Bey/Beyar).
+   Satır aralığı 1,26: üst satırın kuyrukları ve alt satırın şapkaları komşu boyaya değmez. Ölçüm: kalip/_olc.py "boya" (iki yönlü) */
+.kp-orn[data-o-bvurgu="zeminli"] .kp-vurgu{--vzr:var(--zz);background:linear-gradient(var(--vzr),var(--vzr)) 0 .01em / 100% 1.22em no-repeat;color:var(--zzy);padding:0 .14em;border-radius:calc(var(--kose) * .2)}
+.kp-orn[data-o-bvurgu="zeminli"] .kp-tuval:not(.kp-j) .kp-baslik{line-height:1.26}
+.kp-orn[data-o-bvurgu="zeminli"] .kp-sayi .kp-vurgu{background-position:0 .17em;background-size:100% .98em} /* rakam ve virgül kuyruğu dahil */ /* rakamda kuyruk yok: bant kısa, açıklama satırına inmez */
 .kp-orn[data-o-bvurgu="alti"] .kp-vurgu{text-decoration:underline;text-decoration-thickness:.09em;text-underline-offset:.13em;text-decoration-color:var(--za);text-decoration-skip-ink:none}
 /* kategori tonu açıkken fotoğraf da kategori renginde: zeminli beyaz zemin + kategori yazısı, renkli açık ton */
 .kp-orn:is([data-o-islem="ton"],[data-o-islem="kgecis"])[data-o-bvurgu="zeminli"] .kp-tuval[data-yz="koyu"] .kp-vurgu{--vzr:var(--paper);color:var(--renk-acik)}
@@ -276,9 +277,9 @@ body{overflow-anchor:none} /* kontrol alanı küçülünce tarayıcı kaydırmay
 /* kategori geçişi (Yasin Bey, Seçilen): kategori rengi fotoğrafın tamamını kaplar; sol altta çok yoğun (beyaz yazı okunur: koyulaştırılmış ton),
    sağa ve yukarı hafifler, üstte fotoğraf renkli ve seçilir; sol üstten (logo köşesi) ikinci hafif geçiş */
 .kp-orn[data-o-islem="kgecis"] .kp-tuval{
-  --kg-a:lch(from var(--vr) min(l, 40) c h / .93);--kg-b:lch(from var(--vr) min(l, 48) c h / .64);--kg-c:lch(from var(--vr) l c h / .32);--kg-d:lch(from var(--vr) l c h / .14);
-  --kg-l:lch(from var(--vr) min(l, 34) c h / .5);--kg-l0:lch(from var(--vr) min(l, 34) c h / 0);
-  --gecis:radial-gradient(ellipse 62% 46% at 0% 0%,var(--kg-l) 0%,var(--kg-l0) 100%),linear-gradient(34deg,var(--kg-a) 0%,var(--kg-a) 18%,var(--kg-b) 40%,var(--kg-c) 66%,var(--kg-d) 100%);
+  --kg-a:lch(from var(--vr) min(l, 40) c h / .84);--kg-b:lch(from var(--vr) min(l, 48) c h / .5);--kg-c:lch(from var(--vr) l c h / .16);--kg-d:lch(from var(--vr) l c h / .06);
+  --kg-l:lch(from var(--vr) min(l, 34) c h / .4);--kg-l0:lch(from var(--vr) min(l, 34) c h / 0);
+  --gecis:radial-gradient(ellipse 62% 46% at 0% 0%,var(--kg-l) 0%,var(--kg-l0) 100%),linear-gradient(34deg,var(--kg-a) 0%,var(--kg-a) 14%,var(--kg-b) 34%,var(--kg-c) 54%,var(--kg-d) 72%,var(--kg-d) 100%);
   --scrim:linear-gradient(transparent,transparent)}
 .kp-orn[data-o-islem="sb"] .kp-tuval{--gf:grayscale(1) contrast(1.12)}
 
@@ -314,6 +315,7 @@ body{overflow-anchor:none} /* kontrol alanı küçülünce tarayıcı kaydırmay
 /* C · MANŞET — kategori renginde zemin, dev başlık üstte; fotoğraf altta renge karışarak söner */
 .kp-c{--tz:var(--vr);--gi:46% 0 0 0;--gm:linear-gradient(180deg,transparent 0%,var(--ink) 52%);--fs-b:9cqmin}
 .kp-c .kp-blok{justify-content:flex-start;bottom:calc(54% + 1cqmin)}
+.kp-c[data-tip="sd"]:is([data-bicim="kare"],:not([data-bicim])){--gi:52% 0 0 0} .kp-c[data-tip="sd"]:is([data-bicim="kare"],:not([data-bicim])) .kp-blok{bottom:calc(48% + 1cqmin)} /* Son Dakika işareti + 4 satırlık uzun başlık */
 .kp-c .kp-baslik{line-height:.99;letter-spacing:-.03em}
 .kp-c .kp-kaydir{background:rgba(var(--golge-rgb),.38)}
 .kp-c{--dkt:calc(var(--st) + var(--lh) + 6cqmin);--dkb:auto;--kc:var(--kont)}

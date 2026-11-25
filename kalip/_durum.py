@@ -298,8 +298,10 @@ def puan_tablo():
 
 
 def piyasa_tablo():
-    ad = [("Dolar", "Dolar", "₺"), ("Euro", "Euro", "₺"), ("Gram Altın", "Gram altın", "₺"), ("BIST 100", "BIST 100", "")]
-    yedek = {"Dolar": ("34,5448", "0,12", "y"), "Euro": ("36,2180", "0,21", "y"), "Gram Altın": ("2.968,40", "0,64", "y"), "BIST 100": ("10.248,62", "0,43", "d")}
+    # 6 satır (Beyar): dolar, euro, sterlin, gram altın, BIST 100, bitcoin — liste kartın alt kenarına kadar iner
+    ad = [("Dolar", "Dolar", "₺"), ("Euro", "Euro", "₺"), ("Sterlin", "Sterlin", "₺"), ("Gram Altın", "Gram altın", "₺"), ("BIST 100", "BIST 100", ""), ("Bitcoin", "Bitcoin", "$")]
+    yedek = {"Dolar": ("34,5448", "0,12", "y"), "Euro": ("36,2180", "0,21", "y"), "Sterlin": ("43,1150", "0,08", "y"), "Gram Altın": ("2.968,40", "0,64", "y"),
+             "BIST 100": ("10.248,62", "0,43", "d"), "Bitcoin": ("98.412", "2,04", "y")}
     sat = []
     for k, gor, br in ad:
         a = (_pyasa or {}).get(k)
@@ -429,7 +431,7 @@ def icerik(d):
         p.append(hava_satir())
     if x == "gun5":
         p.append('<ol class="kp-liste kd-liste">' + "".join(f'<li><span class="kp-no">{i + 1}</span><span>{e(t)}</span></li>' for i, t in enumerate(d["liste"])) + '</ol>')
-    if x == "hafta":
+    if x in ("hafta", "ay"):
         p.append('<ol class="kp-liste kd-liste kd-liste-gun">' + "".join(f'<li><span class="kp-no">{e(g)}</span><span>{e(t)}</span></li>' for g, t in d["gunler"]) + '</ol>')
     if x == "infografik":
         p.append('<span class="kd-grafik" role="img" aria-label="Çubuk grafik">' + "".join(
