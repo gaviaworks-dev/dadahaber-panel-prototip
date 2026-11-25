@@ -51,5 +51,12 @@
 @media(max-width:1180px){.kit-duzen{grid-template-columns:minmax(0,1fr)}.kit-icindekiler{display:none}}
 @media(max-width:760px){.kit-durumlar,.kit-onizleme,.kit-sok{grid-template-columns:minmax(0,1fr)}.kit-durumlar .pnl-empty{border-right:none;border-bottom:1px solid var(--line)}.kit-yazi>div{grid-template-columns:1fr}.kit-skala{grid-template-columns:repeat(6,minmax(0,1fr))}}
 .kit-iki{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.kit-iki>div,.kit-satirlar>div>.kit-etk{display:flex;flex-direction:column;gap:8px}
+.kit-iki>div,.kit-satirlar>div>.kit-etk{display:flex;flex-direction:column;gap:var(--b-3)}
 @media(max-width:760px){.kit-iki{grid-template-columns:1fr}}
+
+/* kap başlığı kalıbı örnekleri (en dar çekmece genişliği) */
+.kit-kap-ornekler{flex-wrap:wrap;align-items:flex-start;gap:var(--b-4)}
+.kit-kap{width:min(390px,100%);border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--paper);display:flex;flex-direction:column;overflow:hidden;box-shadow:var(--sh-sm,none)}
+.kit-kap .kb-kap-govde{flex:none}
+.kit-sayfala-ornek{display:flex;flex-direction:column;gap:var(--b-2)}
+.kit-kap-yazi{font-size:12px;line-height:1.5;color:var(--muted)}
