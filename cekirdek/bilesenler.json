@@ -649,6 +649,159 @@
    "durum": "hazir",
    "ui_kit": "yayin",
    "not": "Multimedya › Marka şablonu; d2-medya isteği"
+  },
+  {
+   "id": "konum-secici",
+   "ad": "Konum seçici (3×3)",
+   "kanca": "[data-konum] · data-ad, data-deger, data-mo",
+   "dosya": "alan.js · bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": "Marka şablonu logo konumu"
+  },
+  {
+   "id": "icerik-secici",
+   "ad": "İçerik seçici",
+   "kanca": "[data-icerik-sec] · kategori + liste, gizli girdi",
+   "dosya": "alan.js · bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": "Push bağlı haber, medya İlişkili Haber"
+  },
+  {
+   "id": "satir-isaret",
+   "ad": "Satır içi işaret",
+   "kanca": "[data-isaret] · data-isaret-on/off/zorunlu/oto",
+   "dosya": "alan.js · bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "tablo",
+   "not": "Varsayılan, kapak, sabitle; geri alınabilir"
+  },
+  {
+   "id": "sayfalama",
+   "ad": "Sayfalama",
+   "kanca": "[data-liste] alt satırı · sabit 25, 5 kutulu kayan pencere",
+   "dosya": "bilesen.js · bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "sayfala",
+   "not": "Bütün listeler"
+  },
+  {
+   "id": "secenek-grubu",
+   "ad": "Seçenek grubu",
+   "kanca": ".kb-secenek-grup · .kb-kart-sec · bölmeli / kutu / alt alta / açılır; data-bosaltilir",
+   "dosya": "bilesen.js · bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": "Yalnız kutu kalmaz"
+  },
+  {
+   "id": "sosyal-baglanti",
+   "ad": "Sosyal bağlantı listesi",
+   "kanca": "[data-sosyal-baglanti] · data-degerler, data-footer",
+   "dosya": "alan.js · bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": "Site Ayarları, yazar formu"
+  },
+  {
+   "id": "halka-grafik",
+   "ad": "Halka grafik",
+   "kanca": ".kb-halka[data-degerler][data-etiketler][data-orta]",
+   "dosya": "alan.js · bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "grafik",
+   "not": "Orta değer sığar"
+  },
+  {
+   "id": "yatay-cubuk",
+   "ad": "Yatay çubuk listesi",
+   "kanca": ".kb-yatay-cubuk[data-degerler][data-etiketler] · data-bicim=kisa · data-ikonlar",
+   "dosya": "alan.js · bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "grafik",
+   "not": "Site İstatistikleri"
+  },
+  {
+   "id": "cizgi-grafik",
+   "ad": "Çizgi grafik (karşılaştırmalı)",
+   "kanca": ".kb-cizgi[data-degerler] · data-karsi",
+   "dosya": "alan.js · bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "grafik",
+   "not": ""
+  },
+  {
+   "id": "gruplu-liste",
+   "ad": "Gruplu liste ve kart alanları",
+   "kanca": "[data-liste][data-grupla] · tbody[data-grup] · th[data-kart]",
+   "dosya": "bilesen.js · bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "tablo",
+   "not": "Kart sütunu kart sayısına göre; yalnız kart kalmaz"
+  },
+  {
+   "id": "birlestir",
+   "ad": "Taşıyarak sil / birleştir",
+   "kanca": "kbTasiSil({birlestir:true …}) · [data-birlestir]",
+   "dosya": "alan.js",
+   "durum": "hazir",
+   "ui_kit": "pencere",
+   "not": "Medya havuzu kişi ve etiketleri"
+  },
+  {
+   "id": "donem-secici",
+   "ad": "Dönem seçici",
+   "kanca": ".kb-tarih-sec[data-donem] · 2026-10 | 2026-Q3 | 2026 · data-donem-etiket",
+   "dosya": "form.js · bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": "İnfografik dönem etiketi"
+  },
+  {
+   "id": "liste-havuzu",
+   "ad": "Ortak liste havuzu",
+   "kanca": "<template id> + .kb-secim-liste[data-liste-kaynak]",
+   "dosya": "bilesen.js",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": "Uzun listeyi formlarda tekrarlamamak için"
+  },
+  {
+   "id": "belge-onizleme",
+   "ad": "Belge (PDF kapağı) önizlemesi",
+   "kanca": ".kb-belge-onizleme > .kbo-sayfa",
+   "dosya": "bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "onizleme",
+   "not": "Rapor dışa aktarımı"
+  },
+  {
+   "id": "zaman-cizelgesi",
+   "ad": "Zaman çizelgesi",
+   "kanca": "tarih sütunu sabit satırlar (.km-satir.is-zaman, kbTarihHizala)",
+   "dosya": "bilesen.js · bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "kart",
+   "not": ""
+  },
+  {
+   "id": "etiket-girisi",
+   "ad": "Etiket girişi",
+   "kanca": ".kb-cip-girdi · data-havuz, data-havuz-yonet/-kapali, data-serbest, data-tek",
+   "dosya": "form.js · bilesen.css",
+   "durum": "hazir",
+   "ui_kit": "form",
+   "not": "Tıklayınca öneri, Olarak Ekle satırı, ipucu, Geri Al"
+  },
+  {
+   "id": "sayfa-gerek",
+   "ad": "Kapalı sayfaya bağlı parça",
+   "kanca": "[data-sayfa-gerek='modul.sayfa']",
+   "dosya": "bilesen.js",
+   "durum": "hazir",
+   "ui_kit": "soktak",
+   "not": "Reklamlar gizliyken"
   }
  ]
 }
