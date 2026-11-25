@@ -14,12 +14,14 @@ Yazdığı işaretler (moduller/haberler/index.html):
 """
 import glob, html, json, os, re
 from pathlib import Path
+import importlib.util as _iu
+_sp = _iu.spec_from_file_location("_yazim", Path(__file__).resolve().parent / "_yazim.py"); _yazim = _iu.module_from_spec(_sp); _sp.loader.exec_module(_yazim)  # yazım kuralı (Beyar)
 
 KOK = Path(__file__).resolve().parents[2]
 PUB = KOK.parent / "dadahaber-prototip"
 SAYFA = KOK / "moduller" / "haberler" / "index.html"
 SITE = "https://gaviaworks-dev.github.io/dadahaber-prototip/"
-LISTEDE = 25
+LISTEDE = 72
 
 soz = json.loads((PUB / "araclar" / "ornek_veri.json").read_text(encoding="utf-8"))
 _pv = json.loads((KOK / "veri" / "panel.json").read_text(encoding="utf-8"))
@@ -40,13 +42,13 @@ for f in sorted(glob.glob(str(PUB / "*.html"))):
             if b in basliklar and b not in gorsel:
                 gorsel[b] = m.group(1)
 
-TUR = {"video-detay.html": "Video", "haber-dinle-detay.html": "Sesli haber", "kose-yazisi.html": "Köşe yazısı",
+TUR = {"video-detay.html": "Video", "haber-dinle-detay.html": "Sesli Haber", "kose-yazisi.html": "Köşe Yazısı",
        "foto-fokus-detay.html": "Galeri", "infografik-detay.html": "İnfografik", "podcast-detay.html": "Podcast",
-       "dada-dogrula-inceleme.html": "Dada Doğrula", "dada-baglam-dosya.html": "Dosya", "resmi-ilan-detay.html": "Resmî ilan",
-       "dakika-dakika.html": "Canlı anlatım", "dakika-dakika-butce.html": "Canlı anlatım"}
-TUR_IKON = {"Haber": "fa-newspaper", "Video": "fa-video", "Sesli haber": "fa-headphones", "Köşe yazısı": "fa-pen-nib",
+       "dada-dogrula-inceleme.html": "Dada Doğrula", "dada-baglam-dosya.html": "Dosya", "resmi-ilan-detay.html": "Resmî İlan",
+       "dakika-dakika.html": "Canlı Anlatım", "dakika-dakika-butce.html": "Canlı Anlatım"}
+TUR_IKON = {"Haber": "fa-newspaper", "Video": "fa-video", "Sesli Haber": "fa-headphones", "Köşe Yazısı": "fa-pen-nib",
             "Galeri": "fa-images", "İnfografik": "fa-chart-simple", "Podcast": "fa-podcast", "Dada Doğrula": "fa-circle-check",
-            "Dosya": "fa-folder-open", "Resmî ilan": "fa-bullhorn", "Canlı anlatım": "fa-tower-broadcast"}
+            "Dosya": "fa-folder-open", "Resmî İlan": "fa-bullhorn", "Canlı Anlatım": "fa-tower-broadcast"}
 DURUM = {"yayinda": ("ok", "Yayında"), "taslak": ("off", "Taslak"), "zamanli": ("info", "Zamanlanmış"), "cop": ("warm", "Çöpte")}
 
 def sayi(s):
@@ -60,13 +62,16 @@ def tarih(t, s):
 
 # ---- düzenleme ekranının adresi (kayıttan; hazır değilse yapım aşaması sayfası) ----
 duz = next(s for m in kayit["moduller"] if m["id"] == "haberler" for s in m["sayfalar"] if s["id"] == "duzenle")
-def duz_href(kimlik):
-    if duz.get("hazir"):
-        return os.path.relpath(KOK / duz["dosya"], SAYFA.parent) + "?id=" + kimlik
-    return os.path.relpath(KOK / kayit["yakinda_sayfasi"], SAYFA.parent) + "?s=haberler.duzenle"
+# köşe yazısı kendi düzenleme sayfasında açılır (Köşe Yazıları bölümü, t-kose); kayıtta yoksa haber düzenlemeye düşer
+kose_duz = next((s for m in kayit["moduller"] if m["id"] == "haberler" for s in m["sayfalar"] if s["id"] == "kose-duzenle"), None)
+def duz_href(kimlik, tur=None):
+    d_ = kose_duz if (tur == "Köşe Yazısı" and kose_duz and kose_duz.get("hazir")) else duz
+    if d_.get("hazir"):
+        return os.path.relpath(KOK / d_["dosya"], SAYFA.parent) + "?id=" + kimlik
+    return os.path.relpath(KOK / kayit["yakinda_sayfasi"], SAYFA.parent) + "?s=haberler." + d_["id"]
 
 # ---- satırlar ----
-yayinda = sorted(soz["haberler"], key=lambda h: (h["tarih"], h["saat"]), reverse=True)
+yayinda = sorted(soz["haberler"], key=lambda h: (h["tarih"], h["Saat"]), reverse=True)
 kayitlar = [dict(h, durum="yayinda", tur=TUR.get(h["detay"], "Haber"), gorsel=gorsel.get(h["baslik"])) for h in yayinda[:LISTEDE]]
 kayitlar = [dict(x) for x in ek if x["durum"] != "cop"] + kayitlar + [dict(x) for x in ek if x["durum"] == "cop"]
 
@@ -84,19 +89,19 @@ def satir(h, i):
     alt_satir = ai_etk + f'<i class="fa-solid {TUR_IKON.get(tur, "fa-newspaper")}" aria-hidden="true"></i>{e(tur)} · {e(h.get("yazar", ""))}'
     if h.get("sure"): alt_satir += f' · {e(h["sure"])}'
     if h.get("not"): alt_satir += f' · {e(h["not"])}'
-    zaman = tarih(h["tarih"], h["saat"])
+    zaman = tarih(h["tarih"], h["Saat"])
     if h["durum"] == "zamanli": zaman_hucre = f'<span class="kb-tarih">{zaman}</span>'
     elif h["durum"] in ("taslak", "cop"): zaman_hucre = f'<span class="kb-tarih muted">{zaman}</span>'
     else: zaman_hucre = f'<span class="kb-tarih">{zaman}</span>'
     gor = h.get("goruntulenme", "—") if h["durum"] == "yayinda" else "—"
     if h["durum"] == "yayinda":
-        bak = f'<a class="ia-btn" href="{SITE}{e(h["detay"])}" target="_blank" rel="noopener" aria-label="Sitede görüntüle" title="Sitede görüntüle"><i class="fa-solid fa-eye" aria-hidden="true"></i></a>'
+        bak = f'<a class="ia-btn" href="{SITE}{e(h["detay"])}" target="_blank" rel="noopener" aria-label="Sitede Görüntüle" title="Sitede Görüntüle"><i class="fa-solid fa-eye" aria-hidden="true"></i></a>'
     else:
-        bak = f'<a class="ia-btn" href="{e(duz_href(kimlik))}" aria-label="Önizle" title="Önizle"><i class="fa-solid fa-eye" aria-hidden="true"></i></a>'
+        bak = f'<a class="ia-btn" href="{e(duz_href(kimlik, tur))}" aria-label="Önizle" title="Önizle"><i class="fa-solid fa-eye" aria-hidden="true"></i></a>'
     ara = f'{h["baslik"]} {h.get("yazar","")} {h["bolum"]} {alt}'
     nit = {
         "satir": kimlik, "durum": h["durum"], "kategori": h["bolum"], "yazar": h.get("yazar", ""), "tur": tur,
-        "ara": ara, "baslik": h["baslik"], "href": duz_href(kimlik), "kat": f'{h["bolum"]}' + (f' › {alt}' if alt and alt != h["bolum"] else ""),
+        "ara": ara, "baslik": h["baslik"], "href": duz_href(kimlik, tur), "kat": f'{h["bolum"]}' + (f' › {alt}' if alt and alt != h["bolum"] else ""),
         "yayin": zaman, "goruntulenme": gor, "tur-ad": tur, "durum-ad": d_ad,
         # B4/B6: haberin kullanıldığı yerler (örnek): manşet, Günün 5'i, bülten
         "yerler": ("manset gunun5" if h["durum"] == "yayinda" and i % 6 == 0 else "bulten" if h["durum"] == "yayinda" and i % 6 == 3 else ""),
@@ -113,8 +118,8 @@ def satir(h, i):
             f'<td class="kb-gizle-m">{zaman_hucre}</td>'
             f'<td class="say kb-gizle-t">{e(gor)}</td>'
             f'<td><div class="row-acts">{bak}'
-            f'<a class="ia-btn" href="{e(duz_href(kimlik))}" aria-label="Düzenle" title="Düzenle"><i class="fa-solid fa-pen" aria-hidden="true"></i></a>'
-            f'<button type="button" class="ia-btn danger" data-sil aria-label="Çöpe taşı" title="Çöpe taşı"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>'
+            f'<a class="ia-btn" href="{e(duz_href(kimlik, tur))}" aria-label="Düzenle" title="Düzenle"><i class="fa-solid fa-pen" aria-hidden="true"></i></a>'
+            f'<button type="button" class="ia-btn danger" data-sil aria-label="Çöpe Taşı" title="Çöpe Taşı"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>'
             f'<button type="button" class="ia-btn" data-diger aria-haspopup="true" aria-expanded="false" aria-label="Diğer işlemler" title="Diğer"><i class="fa-solid fa-ellipsis" aria-hidden="true"></i></button>'
             f'</div></td></tr>')
 
@@ -173,13 +178,13 @@ ust_secenek = "".join(
 # ---- süzgeç seçenekleri ----
 def secenek(deger, ad, alt=""):
     return f'<button type="button" data-deger="{e(deger)}" data-ad="{e(ad)}">{e(ad)}' + (f'<span class="ks-alt">{e(alt)}</span>' if alt else "") + "</button>"
-suz_kat = secenek("", "Bütün kategoriler") + "".join(secenek(b, b, fmt(say_b.get(b, 0))) for b in agac)
+suz_kat = secenek("", "Bütün Kategoriler") + "".join(secenek(b, b, fmt(say_b.get(b, 0))) for b in agac)
 yazarlar = {}
 for y in soz["yazarlar"]:
     yazarlar.setdefault(y["alan"], []).append(y["ad"])
 suz_yaz = secenek("", "Bütün yazarlar") + "".join(f'<div class="ks-grup">{e(b)}</div>' + "".join(secenek(a, a) for a in ads) for b, ads in yazarlar.items())
-turler = ["Haber", "Köşe yazısı", "Video", "Sesli haber", "Galeri", "İnfografik", "Podcast", "Canlı anlatım", "Dosya", "Dada Doğrula", "Resmî ilan"]
-suz_tur = secenek("", "Bütün türler") + "".join(secenek(t, t) for t in turler)
+turler = ["Haber", "Köşe Yazısı", "Video", "Sesli Haber", "Galeri", "İnfografik", "Podcast", "Canlı Anlatım", "Dosya", "Dada Doğrula", "Resmî İlan"]
+suz_tur = secenek("", "Bütün Türler") + "".join(secenek(t, t) for t in turler)
 
 # ---- yaz ----
 t = SAYFA.read_text(encoding="utf-8")
@@ -196,7 +201,7 @@ t = yaz(t, "hb-kat-ust", ust_secenek)
 toplam = len(soz["haberler"])
 t = re.sub(r'(data-sekme="hepsi"[^>]*data-taban=")\d*(")', rf"\g<1>{toplam - LISTEDE}\2", t)
 t = re.sub(r'(data-sekme="yayinda"[^>]*data-taban=")\d*(")', rf"\g<1>{toplam - LISTEDE}\2", t)
-SAYFA.write_text(t, encoding="utf-8")
+SAYFA.write_text(_yazim.duzelt(t), encoding="utf-8")
 
 # ---- düzenleme sayfası: ana kategori, alt konu, yazar, tür seçenekleri ----
 DUZ = KOK / "moduller" / "haberler" / "duzenle.html"
@@ -211,6 +216,13 @@ d = yaz(d, "hb-df-alt", (f'<div class="kb-cip-girdi" data-alan-id="alt-konu" dat
     f'data-havuz="{e(json.dumps(agac["Gündem"], ensure_ascii=False))}" data-alt-harita="{e(json.dumps(alt_harita, ensure_ascii=False))}">'
     + cip("Türkiye") + cip("Siyaset") + '<input type="text" placeholder="Alt konu ara" aria-label="Alt konu ara"><div class="pnl-menu kb-cip-oneri"></div></div>'))
 d = yaz(d, "hb-df-yazar", "".join(f'<div class="ks-grup">{e(b_)}</div>' + "".join(sec_isaretli(a_, a_, "", a_ == "Hakan Uysal") for a_ in ads) for b_, ads in yazarlar.items()))
-d = yaz(d, "hb-df-tur", "".join(sec_isaretli(x, x, "", x == "Haber") for x in turler))
-DUZ.write_text(d, encoding="utf-8")
+d = yaz(d, "hb-df-tur", "".join(sec_isaretli(x, x, "", x == "Haber") for x in turler if x != "Köşe Yazısı"))
+# yeni kayıt boş açılır (Beyar): örnek kaynak satırları gizlenir, zamanlama tarihleri boşalır; bildirim önizlemesini çekirdek doldurur
+d = d.replace('<div class="km-satir" data-sira>', '<div class="km-satir" data-sira data-yeni-gizle>')
+d = re.sub(r'(<div class="kb-tarih-sec" id="(?:bTarih|soTarih)" data-deger="[^"]*")(?! data-yeni-bos)', r'\1 data-yeni-bos', d)
+d = re.sub(r'(data-alan="push-(?:baslik|metin)">)[^<]*(<)', r'\1\2', d)
+d = re.sub(r'<span class="kp-resim" style="[^"]*"></span>', '<span class="kp-resim"></span>', d)
+d = re.sub(r'(<div class="ksk-kart-alt">dadahaber\.com · )([^<]+)(</div>)', r'\1<span data-alan="baslik" data-yeni-metin="">\2</span>\3', d)
+d = d.replace("Köşe yazısı, röportaj, analiz ve Farklı Bakışlar da buradan seçilir.", "Röportaj, analiz ve Farklı Bakışlar da buradan seçilir; köşe yazısı Köşe Yazıları bölümünden yazılır.")
+DUZ.write_text(_yazim.duzelt(d), encoding="utf-8")
 print(f"satır {len(kayitlar)} · görselli {sum(1 for h in kayitlar if h.get('gorsel'))} · kategori {len(agac)} · yayında toplam {toplam}")
