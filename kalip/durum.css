@@ -226,12 +226,21 @@
 .kd-tuval.kp-h[data-durum="soru"]{--gi:58% 0 0 0}
 .kd-tuval.kp-h[data-durum="soru"] .kp-blok{bottom:calc(42% + 2cqw)}
 
-/* PANEL İÇERİĞİ kartın güvenli alt kenarına kadar iner (Beyar, 25.11.2026) — her kartta aynı kural:
-   satırlı panel (tablo, madde listesi, çubuk grafik, anket seçenekleri, gelişme akışı, skor) büyür ve satırları eşit aralıkla dağıtır;
-   tek parça panel (hava günleri, maç bilgisi ve maç saati, düğme satırı, ses çubuğu, soru kutusu) alt kenara oturur.
-   Ölçüm: kalip/_olc.py "altta boşluk" (içerik ile güvenli alt kenar arası ≤ kart yüksekliğinin %6'sı) */
-.kd-tuval .kp-blok:has(> :is(.kd-tablo,.kd-liste,.kp-liste,.kd-grafik,.kd-secenekler,.kd-akis,.kd-skor,.kd-hava-gunler,.kd-bilgi,.kd-cagri,.kd-ses,.kd-soru-kutu,.kd-zaman)){justify-content:flex-start}
-.kd-tuval .kp-blok > :is(.kd-tablo,.kd-liste,.kp-liste,.kd-grafik,.kd-secenekler,.kd-akis,.kd-skor){flex:1 1 auto;min-height:0;justify-content:space-between}
-.kd-tuval .kp-blok > :is(.kd-hava-gunler,.kd-bilgi,.kd-cagri,.kd-ses,.kd-soru-kutu,.kd-zaman){margin-top:auto}
-.kd-tuval .kp-blok > :is(.kd-tablo,.kd-liste,.kp-liste,.kd-grafik,.kd-secenekler,.kd-akis,.kd-skor) ~ :is(.kd-hava-gunler,.kd-bilgi,.kd-cagri,.kd-ses,.kd-soru-kutu,.kd-zaman){margin-top:0}
-.kd-tuval[data-tip] .kd-liste li{font-size:3.4cqmin}
+/* PANEL İÇERİĞİ (Beyar 26.11): satırlar yayılmaz, aralık sabit ve sınırlı; içerik iskeletin olağan yerinde (altta) durur.
+   Fotoğraf şeridi + koyu panelli kartlarda artan yer fotoğrafa verilir (kalip.js panelSigdir: panel içeriğe göre kısalır).
+   Ölçüm: kalip/_olc.py "altta boşluk" (≤ %6) ve "satır arası" sınırı */
+.kd-tuval[data-tip] .kd-liste li{font-size:3.6cqmin}
+/* fotoğraf üstündeki küçük yazılar okunur: koyu (fotoğraf) zeminde kategori rengi değil beyaz (Beyar 26.11: hiçbir yazı katman altında kalmaz) */
+.kd-tuval[data-yz="koyu"] .kd-ust{color:var(--paper)}
+.kd-tuval[data-yz="koyu"] .kd-skor-satir b{color:var(--paper)}
+.kd-skor-satir.kd-kaybeden{opacity:.78}
+#kpSahne .kd-vs{background:none;color:inherit;padding:0 .18em;text-decoration:none}
+
+/* okunurluk (Beyar 26.11): fotoğraf ve renkli zeminde soluk küçük yazı yok */
+.kd-yon-d{opacity:1}
+.kd-tuval:is([data-yz="kat"],[data-yz="koyu"]) .kd-bilgi small{opacity:1}
+.kd-tuval[data-yz="koyu"] .kd-akis b{color:var(--paper)}
+.kd-program span{opacity:1}
+.kd-secenek-on::before{background:color-mix(in srgb,var(--za) 34%,transparent)}
+#kpSahne .kd-tuval.kp-f[data-notr]{--scrim:radial-gradient(ellipse 80% 66% at 50% 58%,rgba(var(--golge-rgb),.7),rgba(var(--golge-rgb),.42) 72%,rgba(var(--golge-rgb),.18))}
+.kd-tuval[data-yz="koyu"] .kd-program{align-self:flex-start;padding:.8cqmin 2.4cqmin .8cqmin .8cqmin;border-radius:var(--radius-pill);background:rgba(var(--golge-rgb),.55)} /* fotoğrafın açık yerinde de okunur */

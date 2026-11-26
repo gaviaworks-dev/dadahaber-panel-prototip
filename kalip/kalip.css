@@ -262,9 +262,9 @@ body{overflow-anchor:none} /* kontrol alanı küçülünce tarayıcı kaydırmay
 .kp-orn[data-o-bvurgu="renkli"] .kp-vurgu{color:var(--zr)}
 /* zeminli: boya harfin tamamını kapsar: şapkadan (Ğ İ Ö Ü, i noktası) kuyruğa (g y ş ç p) — tabanın .96em üstünden .26em altına (Yasin Bey/Beyar).
    Satır aralığı 1,26: üst satırın kuyrukları ve alt satırın şapkaları komşu boyaya değmez. Ölçüm: kalip/_olc.py "boya" (iki yönlü) */
-.kp-orn[data-o-bvurgu="zeminli"] .kp-vurgu{--vzr:var(--zz);background:linear-gradient(var(--vzr),var(--vzr)) 0 .01em / 100% 1.22em no-repeat;color:var(--zzy);padding:0 .14em;border-radius:calc(var(--kose) * .2)}
-.kp-orn[data-o-bvurgu="zeminli"] .kp-tuval:not(.kp-j) .kp-baslik{line-height:1.26}
-.kp-orn[data-o-bvurgu="zeminli"] .kp-sayi .kp-vurgu{background-position:0 .17em;background-size:100% .98em} /* rakam ve virgül kuyruğu dahil */ /* rakamda kuyruk yok: bant kısa, açıklama satırına inmez */
+.kp-orn[data-o-bvurgu="zeminli"] .kp-vurgu{--vzr:var(--zz);background:linear-gradient(var(--vzr),var(--vzr)) 0 .01em / 100% 1.22em no-repeat;color:var(--zzy);padding:0 .14em;border-radius:.14em} /* köşe yumuşak (Beyar 26.11) */
+.kp-orn[data-o-bvurgu="zeminli"] .kp-tuval:not(.kp-j) .kp-baslik:has(.kp-vurgu:not(.kd-vs)){line-height:1.26} /* yalnız içinde kutu olan başlık (Beyar 26.11) */
+.kp-orn[data-o-bvurgu="zeminli"] .kp-sayi .kp-vurgu{display:inline-block;line-height:1.06;padding:0 .1em;background:var(--vzr);border-radius:.1em} /* rakam kutusu: tek satır, düz zemin, yumuşak köşe; virgül kuyruğu içinde */ /* rakam ve virgül kuyruğu dahil */ /* rakamda kuyruk yok: bant kısa, açıklama satırına inmez */
 .kp-orn[data-o-bvurgu="alti"] .kp-vurgu{text-decoration:underline;text-decoration-thickness:.09em;text-underline-offset:.13em;text-decoration-color:var(--za);text-decoration-skip-ink:none}
 /* kategori tonu açıkken fotoğraf da kategori renginde: zeminli beyaz zemin + kategori yazısı, renkli açık ton */
 .kp-orn:is([data-o-islem="ton"],[data-o-islem="kgecis"])[data-o-bvurgu="zeminli"] .kp-tuval[data-yz="koyu"] .kp-vurgu{--vzr:var(--paper);color:var(--renk-acik)}
@@ -277,10 +277,11 @@ body{overflow-anchor:none} /* kontrol alanı küçülünce tarayıcı kaydırmay
 /* kategori geçişi (Yasin Bey, Seçilen): kategori rengi fotoğrafın tamamını kaplar; sol altta çok yoğun (beyaz yazı okunur: koyulaştırılmış ton),
    sağa ve yukarı hafifler, üstte fotoğraf renkli ve seçilir; sol üstten (logo köşesi) ikinci hafif geçiş */
 .kp-orn[data-o-islem="kgecis"] .kp-tuval{
-  --kg-a:lch(from var(--vr) min(l, 40) c h / .84);--kg-b:lch(from var(--vr) min(l, 48) c h / .5);--kg-c:lch(from var(--vr) l c h / .16);--kg-d:lch(from var(--vr) l c h / .06);
-  --kg-l:lch(from var(--vr) min(l, 34) c h / .4);--kg-l0:lch(from var(--vr) min(l, 34) c h / 0);
-  --gecis:radial-gradient(ellipse 62% 46% at 0% 0%,var(--kg-l) 0%,var(--kg-l0) 100%),linear-gradient(34deg,var(--kg-a) 0%,var(--kg-a) 14%,var(--kg-b) 34%,var(--kg-c) 54%,var(--kg-d) 72%,var(--kg-d) 100%);
-  --scrim:linear-gradient(transparent,transparent)}
+  --kg-a:lch(from var(--vr) min(l, 40) c h / .95);--kg-b:lch(from var(--vr) min(l, 46) c h / .6);--kg-c:lch(from var(--vr) l c h / .2);--kg-d:lch(from var(--vr) l c h / .08);
+  --kg-l:lch(from var(--vr) min(l, 34) c h / .6);--kg-l0:lch(from var(--vr) min(l, 34) c h / 0);
+  --gecis:radial-gradient(ellipse 70% 52% at 0% 0%,var(--kg-l) 0%,var(--kg-l0) 100%),linear-gradient(34deg,var(--kg-a) 0%,var(--kg-a) 14%,var(--kg-b) 34%,var(--kg-c) 54%,var(--kg-d) 72%,var(--kg-d) 100%);
+  --scrim:linear-gradient(0deg,rgba(var(--golge-rgb),.5) 0%,rgba(var(--golge-rgb),.3) 38%,rgba(var(--golge-rgb),0) 62%)} /* yazı bölgesinin altında koyu taban: açık fotoğrafta da yazı okunur (Beyar 26.11) */
+.kp-orn[data-o-islem="kgecis"] .kp-tuval[data-bicim="uzun"]{--scrim:linear-gradient(0deg,rgba(var(--golge-rgb),.15) 0%,rgba(var(--golge-rgb),.62) 30%,rgba(var(--golge-rgb),.62) 72%,rgba(var(--golge-rgb),0) 86%)} /* 9:16: yazı ortada (güvenli alan) */
 .kp-orn[data-o-islem="sb"] .kp-tuval{--gf:grayscale(1) contrast(1.12)}
 
 /* köşe: tuval genişliğinin %2,75'i; iç öğeler orantılı */
@@ -414,7 +415,7 @@ body{overflow-anchor:none} /* kontrol alanı küçülünce tarayıcı kaydırmay
 .kp-i[data-bicim="yatay"] .kp-blok{top:calc(var(--st) + var(--lh) + 6cqmin);right:60%;justify-content:safe flex-end}
 
 /* J · ŞERİT — siyah-beyaz fotoğraf; başlığın her satırı ayrı renkli kutuda, üstte; logo sol altta */
-.kp-j{--fs-b:6.4cqmin;--scrim:linear-gradient(180deg,rgba(var(--golge-rgb),.55) 0%,rgba(var(--golge-rgb),.18) 42%,rgba(var(--golge-rgb),0) 62%);--dkt:var(--st);--dkb:auto}
+.kp-j{--fs-b:6.4cqmin;--scrim:linear-gradient(180deg,rgba(var(--golge-rgb),.72) 0%,rgba(var(--golge-rgb),.6) 48%,rgba(var(--golge-rgb),.2) 72%,rgba(var(--golge-rgb),0) 85%);--dkt:var(--st);--dkb:auto}
 .kp-j .kp-blok{top:var(--st);bottom:calc(var(--sb) + var(--lh) + 5cqmin);right:calc(var(--se) + 8cqmin);justify-content:flex-start}
 .kp-j .kp-logo{top:auto;bottom:var(--sb)}
 .kp-j .kp-baslik{line-height:1.36}
@@ -471,10 +472,10 @@ body{overflow-anchor:none} /* kontrol alanı küçülünce tarayıcı kaydırmay
 .kp-tuval[data-tip="ic"][data-yz="koyu"]{--tz:var(--ink)}
 .kp-tuval[data-tip="ic"][data-yz="acik"]{--tz:var(--paper)}
 .kp-tuval[data-tip="ic"][data-yz="kat"]{--tz:var(--vr)}
-.kp-tuval[data-tip="ic"] .kp-blok{top:calc(36% + 5cqmin);justify-content:flex-start}
+.kp-tuval[data-tip="ic"] .kp-blok{top:calc(36% + 5cqmin);justify-content:flex-end}
 :where(.kp-tuval[data-tip="ic"]) .kp-blok{bottom:calc(var(--sb) + 3cqmin)} /* liste sayfanın sonuna iner (sayfa noktalarının üstü); iskeletin kendi alt sınırı (alttaki logo) önceliklidir */
 .kp-tuval[data-tip="ic"] .kp-ic-bas{display:block;order:-1;font-family:var(--font-vurgu);font-weight:var(--fw-ekstra);font-size:5.6cqmin;letter-spacing:-.02em;line-height:1.05}
-.kp-tuval[data-tip="ic"] .kp-liste{display:flex;order:1;flex:1 1 auto;min-height:0;flex-direction:column;justify-content:space-between;gap:1.6cqmin;margin:0;padding:0;list-style:none;width:100%} /* 5 madde, boşluk eşit dağılır (Yasin Bey) */
+.kp-tuval[data-tip="ic"] .kp-liste{display:flex;order:1;flex:none;flex-direction:column;gap:2cqmin;margin:0;padding:0;list-style:none;width:100%} /* 5 madde; satır aralığı sabit (Beyar 26.11), artan yer fotoğrafa (kalip.js panelSigdir) */
 .kp-liste li{display:grid;grid-template-columns:7cqmin minmax(0,1fr);gap:2cqmin;align-items:baseline;font-size:3.6cqmin;font-weight:var(--fw-yari);line-height:1.22;
   padding-top:2.2cqmin;border-top:.3cqmin solid color-mix(in srgb,currentColor 25%,transparent)}
 .kp-no{font-family:var(--font-vurgu);font-weight:var(--fw-ekstra);color:var(--za)}
@@ -615,3 +616,17 @@ body{overflow-anchor:none} /* kontrol alanı küçülünce tarayıcı kaydırmay
 .kp-k-sus>.kp-sus-alan:nth-last-of-type(-n+3) .kb-secim-menu{left:auto;right:0}
 @media(max-width:1024px){.kp-k-sus>.kp-sus-alan:nth-of-type(4n) .kb-secim-menu,.kp-k-sus>.kp-sus-alan:nth-of-type(4n+3) .kb-secim-menu{left:auto;right:0}}
 @media(max-width:640px){.kp-k-sus>.kp-sus-alan .kb-secim-menu{left:0;right:auto}.kp-k-sus>.kp-sus-alan:nth-of-type(2n) .kb-secim-menu{left:auto;right:0}}
+
+/* =====================================================================
+   OKUNURLUK (Beyar 26.11: hiçbir yazı katman altında kalmaz) — renkli ve fotoğraflı zeminde soluk küçük yazı yok.
+   Ölçüm: kalip/_oku.py (her yazının gerçek zeminine karşıtlığı ≥ 3:1)
+   ===================================================================== */
+.kp-tuval:is([data-yz="kat"],[data-yz="koyu"]) .kp-meta{opacity:1}
+.kp-tuval:is([data-yz="kat"],[data-yz="koyu"]) .kp-kim b + span{opacity:1}
+.kp-tuval[data-yz="koyu"] .kp-ust-not{color:var(--paper);opacity:1}
+.kp-tuval[data-yz="acik"] .kp-ust-not,.kd-tuval[data-yz="acik"] .kd-ust{color:var(--renk-acik)} /* açık zeminde açık kategori rengi (ör. Keşfet sarısı) okunmaz */
+.kp-c[data-tip="ic"] .kp-blok{justify-content:flex-start} /* C'de fotoğraf altta: içerik panelin üstünden başlar (logoya binmez) */
+.kp-tuval[data-yz="kat"] .kp-ust-not{opacity:1}
+#kpSahne .kp-j{--zy:var(--paper)} /* Şerit: kutu dışındaki yazılar fotoğrafta (koyu taban) — açık kategoride de beyaz */
+#kpSahne .kp-j .kp-ust-not{color:var(--paper)}
+.kp-g[data-bicim="uzun"]{--scrim:linear-gradient(180deg,rgba(var(--golge-rgb),.2) 0%,rgba(var(--golge-rgb),.5) 28%,rgba(var(--golge-rgb),.72) 50%,rgba(var(--golge-rgb),.78) 70%,rgba(var(--golge-rgb),.5) 100%)} /* 9:16: başlık ortada; vurgu rengi okunur (Beyar 26.11) */

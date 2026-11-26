@@ -186,6 +186,61 @@
       while(tasiyor() && k > .3){ k -= .04; hs.forEach(function(h, i){ var f = taban[i] * k; if(h.classList.contains('kp-baslik')) f = Math.max(f, alt_); h.style.fontSize = f.toFixed(2) + 'px'; });
         if(hs.some(function(h){ return h.classList.contains('kp-baslik'); }) && hs.every(function(h, i){ return !h.classList.contains('kp-baslik') || taban[i] * k <= alt_; })) break; }
     });
+    each((kok || S).querySelectorAll('.kp-tuval'), panelSigdir);
+  }
+  /* PANEL İÇERİĞE GÖRE (Beyar 26.11): iç sayfa ve liste kartlarında satırlar yayılmaz. Sırayla:
+     1) liste yazısı boşluk varsa en çok %30 büyür; 2) fotoğraf ÜSTTE şeritse fotoğraf içeriğin üstüne kadar uzar (içerik uzunsa
+     panel yukarı büyür); 3) fotoğraf ALTTAysa (C) fotoğraf içeriğin altına kadar uzar (içerik uzunsa panel aşağı büyür). */
+  var PANEL = '.kp-liste,.kd-liste,.kd-tablo,.kd-grafik,.kd-secenekler,.kd-akis,.kd-skor,.kd-hava-gunler,.kd-bilgi,.kd-cagri,.kd-ses,.kd-soru-kutu,.kd-zaman';
+  function icerik(b){ var u = Infinity, a = -Infinity;
+    each(b.children, function(c){ if(!gor(c) || getComputedStyle(c).position === 'absolute') return; var r = c.getBoundingClientRect(); u = Math.min(u, r.top); a = Math.max(a, r.bottom); });
+    return u === Infinity ? null : { ust: u, alt: a }; }
+  function panelSigdir(t){
+    var g = t.querySelector('.kp-gorsel'), kr = t.querySelector('.kp-karart'), sk = t.querySelector('.kp-sekil'), b = t.querySelector('.kp-blok');
+    if(!g || !b) return;
+    var lis = Array.prototype.filter.call(b.querySelectorAll(':scope > :is(.kp-liste, .kd-liste) li, :scope > .kd-tablo .kd-tr'), gor); /* kategori sarmalının içindekiler dahil, yalnız görünenler */
+    g.style.bottom = g.style.top = ''; if(kr) kr.style.bottom = kr.style.top = ''; if(sk){ sk.style.top = ''; sk.style.height = ''; } b.style.top = b.style.bottom = b.style.justifyContent = '';
+    each(lis, function(li){ li.style.fontSize = ''; });
+    if(!gor(t) || !gor(b)) return;
+    var tr = t.getBoundingClientRect(), br = b.getBoundingClientRect(), bs = getComputedStyle(b), ic = icerik(b); if(!ic) return;
+    var ici = br.height - parseFloat(bs.paddingTop) - parseFloat(bs.paddingBottom);
+    /* 1 · yazı büyür (yalnız gerçekten boş yer varsa; taşırmadan) */
+    if(lis.length){
+      var taban = Array.prototype.map.call(lis, function(li){ return parseFloat(getComputedStyle(li).fontSize); }), k = 1;
+      while(k < 1.3){ var bos = ici - (ic.alt - ic.ust); if(bos < .06 * tr.height) break;
+        k += .04; each(lis, function(li, n){ li.style.fontSize = (taban[n] * k).toFixed(2) + 'px'; }); ic = icerik(b);
+        if(ic.alt - ic.ust > ici){ k -= .04; each(lis, function(li, n){ li.style.fontSize = (taban[n] * k).toFixed(2) + 'px'; }); ic = icerik(b); break; } }
+    }
+    if(t.dataset.tip !== 'ic' && !t.querySelector(PANEL)) return; /* iç sayfa ya da panel içeriği (liste, tablo, maç, ses…) taşıyan kart */
+    var gr = g.getBoundingClientRect(), pay = .055 * Math.min(tr.width, tr.height), en = .2 * tr.height;
+    function kucult(sinir){ /* içerik sınıra sığmıyorsa liste yazısı en çok %30 küçülür */
+      if(!lis.length) return; var kk = 1, tb = lis.map(function(li){ return parseFloat(li.style.fontSize || getComputedStyle(li).fontSize); });
+      while(ic.alt - ic.ust > sinir && kk > .7){ kk -= .04; lis.forEach(function(li, n){ li.style.fontSize = (tb[n] * kk).toFixed(2) + 'px'; }); ic = icerik(b); } }
+    var serit = gr.top <= tr.top + .25 * tr.height && gr.left <= tr.left + .25 * tr.width && gr.right >= tr.right - .12 * tr.width && gr.bottom < tr.bottom - 2 && gr.bottom < tr.top + .75 * tr.height && !/\bkp-[emn]\b/.test(t.className);
+    var altta = gr.bottom >= tr.bottom - 2 && gr.top > tr.top + .3 * tr.height;
+    if(serit){
+      kucult(br.bottom - parseFloat(bs.paddingBottom) - (tr.top + en + pay));
+      var icY = br.bottom - parseFloat(bs.paddingBottom) - (ic.alt - ic.ust); /* içerik alta yaslı olduğundaki üst kenarı */
+      var yeni = Math.max(icY - pay, tr.top + en);
+      if(Math.abs(yeni - gr.bottom) < 1) return;
+      var alt = (tr.bottom - yeni).toFixed(1) + 'px', skAyni = sk && gor(sk) && Math.abs(sk.getBoundingClientRect().top - gr.bottom) < 2;
+      g.style.bottom = alt; if(kr) kr.style.bottom = alt; if(skAyni){ sk.style.top = 'auto'; sk.style.height = alt; }
+      b.style.top = (yeni + pay - tr.top).toFixed(1) + 'px'; b.style.justifyContent = 'flex-start';
+    } else if(altta){
+      kucult(tr.bottom - en - pay - br.top - parseFloat(bs.paddingTop));
+      var icA = br.top + parseFloat(bs.paddingTop) + (ic.alt - ic.ust); /* içerik üste yaslı olduğundaki alt kenarı */
+      var yeniU = Math.min(icA + pay, tr.bottom - en);
+      if(Math.abs(yeniU - gr.top) < 1) return;
+      var ust = (yeniU - tr.top).toFixed(1) + 'px';
+      g.style.top = ust; if(kr) kr.style.top = ust;
+      b.style.bottom = (tr.bottom - yeniU + pay).toFixed(1) + 'px'; b.style.justifyContent = 'flex-start';
+    } else {
+      /* fotoğraf şerit değil (kart, çerçeve, mercek, kesik…): içerik sığmıyorsa liste yazısı en çok %30 küçülür; boş yer varsa içerik panelin altına oturur */
+      var tamFoto = gr.top <= tr.top + 2 && gr.bottom >= tr.bottom - 2 && gr.left <= tr.left + 2 && gr.right >= tr.right - 2, sekilVar = sk && gor(sk) && getComputedStyle(sk).display !== 'none';
+      if(ic.alt - ic.ust > ici && lis.length){ var kk = 1, tb = Array.prototype.map.call(lis, function(li){ return parseFloat(getComputedStyle(li).fontSize); });
+        while(ic.alt - ic.ust > ici && kk > .7){ kk -= .04; each(lis, function(li, n){ li.style.fontSize = (tb[n] * kk).toFixed(2) + 'px'; }); ic = icerik(b); } }
+      if(ici - (ic.alt - ic.ust) > .06 * tr.height && (!tamFoto || sekilVar)) b.style.justifyContent = 'flex-end';
+    }
   }
 
   /* ---------- ölçüm araçları ---------- */

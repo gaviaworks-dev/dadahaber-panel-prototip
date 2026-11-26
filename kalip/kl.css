@@ -60,7 +60,7 @@
 #kpSahne .kp-k{--kt:calc(var(--st) - 2.5cqmin);--kr:calc(var(--se) - 2.5cqmin)}
 /* kaydırmalı: "Kaydır" sağ üstte kalır; iç sayfada bant üst şeride yükselir */
 #kpSahne .kp-k[data-tip="ic"]{--bu:27cqmin;--gi:0 0 64% 0}
-#kpSahne .kp-k[data-tip="ic"] .kp-blok{top:calc(var(--bu) + var(--bh) + 4cqmin);justify-content:flex-start}
+#kpSahne .kp-k[data-tip="ic"] .kp-blok{top:calc(var(--bu) + var(--bh) + 4cqmin);justify-content:flex-end}
 #kpSahne .kp-k[data-tip="ic"] .kp-etiket-dikey{top:auto}
 /* Son Dakika: bant ve bayrak kırmızı (--vr), işaret başlığın üstünde */
 #kpSahne .kp-k[data-tip="veri"]{--fs-s:21cqmin}
@@ -85,10 +85,13 @@
   --kg:calc(var(--kmax) * .8);                     /* sütun genişliği (en büyük boyda) */
   --fs-b:6.6cqmin;
   --scrim:linear-gradient(180deg,rgba(var(--golge-rgb),.3) 0%,rgba(var(--golge-rgb),0) 20%,rgba(var(--golge-rgb),0) 56%,rgba(var(--golge-rgb),.5) 80%,rgba(var(--golge-rgb),.72) 100%),
-          linear-gradient(270deg,rgba(var(--golge-rgb),.38) 0%,rgba(var(--golge-rgb),0) 30%);   /* logo, dev kelime ve başlık için en az koyuluk */
+          linear-gradient(270deg,rgba(var(--golge-rgb),.62) 0%,rgba(var(--golge-rgb),.45) 24%,rgba(var(--golge-rgb),0) 42%);   /* logo, dev kelime ve başlık için en az koyuluk; dev kelime beyaz ve okunur (Beyar 26.11) */
   --kt:auto;--kb:calc(var(--sb) - 2.5cqmin);--kl:auto;--kr:calc(var(--se) - 2.5cqmin);--ktr:scaleY(-1)
 }
 #kpSahne .kp-l .kl-dev{display:block;position:absolute;z-index:2;top:var(--st);right:var(--se);bottom:var(--sb);width:var(--kg);pointer-events:none}
+/* okunurluk (Beyar 26.11): dev kelime fotoğrafa karışmaz — sağ kenarda koyu taban, kelime beyaz (Son Dakika kırmızı) */
+#kpSahne .kp-l .kl-ic{--kr-y:var(--paper)}
+#kpSahne .kp-l[data-tip="sd"] .kl-ic b{color:var(--paper)}
 #kpSahne .kp-l .kl-ic{position:absolute;top:0;right:0;display:flex;align-items:center;gap:calc(var(--kf) * .14);
   --kf:min(var(--kmax), calc(var(--kh) / var(--n)));
   writing-mode:vertical-rl;font-family:var(--font-vurgu);font-weight:var(--fw-ekstra);white-space:nowrap;line-height:1;color:var(--kr-y,var(--vr-koyu))}
@@ -101,7 +104,7 @@
 #kpSahne .kp-l .kp-kaydir{right:auto;left:var(--ss);top:calc(var(--st) + var(--lh) + 3cqmin)}
 #kpSahne .kp-l[data-tip="sd"] .kp-sdbas{display:none}
 #kpSahne .kp-l[data-tip="sd"] .kl-ic{--kr-y:var(--paper)}
-#kpSahne .kp-l[data-tip="sd"] .kl-ic b{color:var(--danger);-webkit-text-stroke:0}
+#kpSahne .kp-l[data-tip="sd"] .kl-ic b{color:var(--paper);-webkit-text-stroke:0}
 /* etiket süslemesi dev kelimede: düz (kategori renginde, varsayılan) · dolu (kategori renginde sırt şeridi, kelime içinde)
    · çerceveli (yalnız dış çizgi) · nokta (beyaz kelime, başında kategori noktası)  (dikey: pasif, zaten dikey) */
 #kpSahne .kp-orn[data-o-etiket="dolu"] .kp-l .kl-dev{top:0;bottom:0;right:calc(var(--se) - 3cqmin);width:calc(var(--kg) + 6cqmin);background:var(--vr)}
@@ -118,7 +121,8 @@
 #kpSahne .kp-l[data-tip="ic"] .kp-blok{top:calc(30% + 4cqmin);right:calc(var(--se) + var(--kg) + 3.5cqmin)}
 /* 9:16 — dev kelime güvenli alanın içinde (üst 288 · alt 672 · sağ 192 px) */
 #kpSahne .kp-l[data-bicim="uzun"]{--kmax:11.5cqw;--kgap:2.8cqw;--kg:calc(var(--kmax) * .8);
-  --scrim:linear-gradient(180deg,rgba(var(--golge-rgb),.3) 0%,rgba(var(--golge-rgb),0) 18%,rgba(var(--golge-rgb),.25) 32%,rgba(var(--golge-rgb),.7) 52%,rgba(var(--golge-rgb),.8) 66%,rgba(var(--golge-rgb),.45) 100%)}
+  --scrim:linear-gradient(180deg,rgba(var(--golge-rgb),.3) 0%,rgba(var(--golge-rgb),0) 18%,rgba(var(--golge-rgb),.25) 32%,rgba(var(--golge-rgb),.7) 52%,rgba(var(--golge-rgb),.8) 66%,rgba(var(--golge-rgb),.45) 100%),
+          linear-gradient(270deg,rgba(var(--golge-rgb),.7) 0%,rgba(var(--golge-rgb),.6) 34%,rgba(var(--golge-rgb),0) 56%)}
 /* yatay: dev kelime fotoğrafın sağ kenarında, başlık solda */
 #kpSahne .kp-l[data-bicim="yatay"]{--kmax:17cqmin;--kg:calc(var(--kmax) * .8);
   --scrim:linear-gradient(90deg,rgba(var(--golge-rgb),.88) 0%,rgba(var(--golge-rgb),.6) 40%,rgba(var(--golge-rgb),0) 70%),linear-gradient(270deg,rgba(var(--golge-rgb),.45) 0%,rgba(var(--golge-rgb),0) 22%)}
