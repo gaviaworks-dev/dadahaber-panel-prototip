@@ -15,6 +15,8 @@ Kurallar (hepsi 0 olmalı):
                    (hesaplanmış stil ve DOM farkı); pasif olarak işaretlenmiş seçenek sayılmaz
   düşük karşıtlık  başlıktaki vurgu metni ile zemini WCAG ≥ 3:1 (bütün başlık vurgusu × görsel işlemi × kategori)
   boya             iki yönlü: kutu kendi dışındaki hiçbir harfin mürekkebine değmez; kendi harfleri (kuyruk, şapka) kutunun dışına taşmaz (Yasin Bey, Beyar)
+  satır arası      liste/tablo satırları yayılmaz: ardışık iki satır arası ≤ kısa kenarın %4,5'i; iç sayfada fotoğraf içeriğin üstüne iner (Beyar 26.11)
+  okunurluk        kalip/_oku.py: her yazının gerçek zeminine (fotoğraf + katmanlar) karşıtlığı ≥ 3:1, ekran görüntüsünden (Beyar 26.11)
   altta boşluk     panel içeriği (liste, tablo, grafik, hava, maç bilgisi, düğme satırı…) taşıyan kartta içerik ile güvenli alt kenar arası ≤ kart yüksekliğinin %6'sı (Beyar)
 Kullanım: python3 -I kalip/_olc.py [--ozet] [--hepsi]  → "Kalıp ölçümü: …"; sorun varsa çıkış 1.
 """
@@ -24,7 +26,7 @@ from pathlib import Path
 KOK = Path(__file__).resolve().parent.parent
 CHROME = os.environ.get("CHROME", "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
 JS = r"""
-var W, d, out = {cakisma:[], tasma:[], kesik:[], kucuk:[], merkez:[], guvenli:[], gorsel:[], etkisiz:[], karsitlik:[], boya:[], altbos:[], sayi:[]}, n = 0, nb = 0, nl = 0, url = {};
+var W, d, out = {cakisma:[], tasma:[], kesik:[], kucuk:[], merkez:[], guvenli:[], gorsel:[], etkisiz:[], karsitlik:[], boya:[], altbos:[], satirara:[], sayi:[]}, n = 0, nb = 0, nl = 0, url = {};
 var ALT_BOS = .06; /* liste/tablo kartında içerik ile güvenli alt kenar arası en çok kart yüksekliğinin %6'sı (Beyar, kararlar dosyası) */
 var LISTE = '.kp-liste,.kd-liste,.kd-tablo,.kd-grafik,.kd-secenekler,.kd-akis,.kd-skor,.kd-hava-gunler,.kd-bilgi,.kd-cagri,.kd-ses,.kd-soru-kutu,.kd-zaman'; /* koyu alt panelde içerik: tablo, liste, grafik, anket, akış, skor, hava, maç bilgisi, düğme, ses, soru */
 function gor(e){ if(!e || !e.getClientRects().length) return false; var s = W.getComputedStyle(e); return s.visibility != 'hidden' && parseFloat(s.opacity) > 0.05; }
@@ -59,11 +61,19 @@ function olc(t, ek){
     if(kes(p[i].getBoundingClientRect(), p[j].getBoundingClientRect())) out.cakisma.push('çakışma ' + kisa(p[i]) + '/' + kisa(p[j]) + ' · ' + a);
   }
   /* alt boşluk: liste ya da tablo taşıyan kartta içerik güvenli alt kenara kadar iner */
-  if(bl && gor(bl) && [].some.call(t.querySelectorAll(LISTE), gor)){ nl++;
+  var tamFoto = (function(){ var gx = t.querySelector('.kp-gorsel'); if(!gx) return false; var q = gx.getBoundingClientRect(); var sx = t.querySelector('.kp-sekil'); return q.top <= tr.top + 2 && q.bottom >= tr.bottom - 2 && q.left <= tr.left + 2 && q.right >= tr.right - 2 && !(sx && gor(sx)); })();
+  if(bl && gor(bl) && !tamFoto && [].some.call(t.querySelectorAll(LISTE), gor)){ nl++; /* panel taşıyan kart (tam fotoğraflı kartta panel yok, yazı fotoğrafın üstünde) */
     var bb = bl.getBoundingClientRect(), enAlt = 0, bps = W.getComputedStyle(bl);
     [].forEach.call(bl.children, function(c){ if(!gor(c) || W.getComputedStyle(c).position == 'absolute') return; enAlt = Math.max(enAlt, c.getBoundingClientRect().bottom); });
     var bos = (bb.bottom - parseFloat(bps.paddingBottom) - enAlt) / tr.height;
-    if(enAlt && bos > ALT_BOS) out.altbos.push('altta boşluk %' + Math.round(bos * 100) + ' · ' + a); }
+    if(enAlt && bos > ALT_BOS) out.altbos.push('altta boşluk %' + Math.round(bos * 100) + ' · ' + a);
+    /* üstte fotoğraf şeridi olan iç sayfada panelin üstü de boş kalmaz: fotoğraf içeriğin üstüne kadar iner (Beyar 26.11) */
+    var gg = t.querySelector('.kp-gorsel'), ggr = gg && gg.getBoundingClientRect(), enUst = Infinity;
+    [].forEach.call(bl.children, function(c){ if(!gor(c) || W.getComputedStyle(c).position == 'absolute') return; enUst = Math.min(enUst, c.getBoundingClientRect().top); });
+    if(t.dataset.tip == 'ic' && ggr && ggr.bottom < tr.bottom - 2 && ggr.top <= tr.top + tr.height * .25 && ggr.left <= tr.left + tr.width * .25 && ggr.right >= tr.right - tr.width * .12 && ggr.bottom < tr.top + tr.height * .75 && !/\bkp-[emn]\b/.test(t.className) && enUst < Infinity && (enUst - ggr.bottom) / tr.height > .1) out.altbos.push('panel üstünde boşluk %' + Math.round((enUst - ggr.bottom) / tr.height * 100) + ' · ' + a);
+    /* satır arası: liste ve tablo satırları yayılmaz (Beyar 26.11): ardışık iki satır arası ≤ kısa kenarın %4,5'i */
+    [].forEach.call(t.querySelectorAll('.kp-liste,.kd-liste,.kd-tablo,.kd-secenekler,.kd-akis,.kd-grafik'), function(L){ if(!gor(L)) return; var rs = [].filter.call(L.children, gor).map(function(x){ return x.getBoundingClientRect(); });
+      for(var q = 1; q < rs.length; q++){ var ar = rs[q].top - rs[q - 1].bottom; if(ar > .045 * Math.min(tr.width, tr.height) + 1){ out.satirara.push('satır arası ' + Math.round(ar) + 'px · ' + kisa(L) + ' · ' + a); break; } } }); }
   if(t.dataset.bicim == 'uzun'){
     var G = W.kp.V.guvenli, s = {t: tr.top + tr.height * G.ust / G.boy, b: tr.bottom - tr.height * G.alt / G.boy, l: tr.left + tr.width * G.sol / G.en, r: tr.right - tr.width * G.sag / G.en};
     [].forEach.call(t.querySelectorAll(GUV), function(x){ if(!gor(x)) return; var r = x.getBoundingClientRect();
@@ -212,7 +222,7 @@ function calis(){
 f.onload = function(){ var w = f.contentWindow; (w.document.fonts ? w.document.fonts.ready : Promise.resolve()).then(function(){ setTimeout(function bekle(){ if(!f.contentWindow.kp) return setTimeout(bekle, 200); try{ calis(); }catch(ex){ o.textContent = JSON.stringify({hata: String(ex) + ' ' + ex.stack}); } }, 300); }); };
 """
 AD = [("cakisma", "çakışma"), ("tasma", "taşma"), ("kesik", "kesik başlık"), ("kucuk", "küçük başlık"), ("merkez", "merkez dışı"), ("guvenli", "güvenli alan dışı"),
-      ("gorsel", "görsel eksik"), ("etkisiz", "etkisiz seçenek"), ("karsitlik", "düşük karşıtlık"), ("boya", "boya"), ("altbos", "altta boşluk"), ("sayi", "sayı uyuşmazlığı")]
+      ("gorsel", "görsel eksik"), ("etkisiz", "etkisiz seçenek"), ("karsitlik", "düşük karşıtlık"), ("boya", "boya"), ("altbos", "altta boşluk"), ("satirara", "satır arası"), ("sayi", "sayı uyuşmazlığı")]
 
 
 def main():
@@ -248,10 +258,13 @@ def main():
             for x, say in c.most_common(25): print(f"  {say:4d}  {x}")
     hepsi = [x for k, _ in AD for x in s[k]]
     for x in (hepsi if "--hepsi" in sys.argv else hepsi[:40]): print("   " + x)
+    # okunurluk (kalip/_oku.py): her yazının gerçek zeminine karşıtlığı (ekran görüntüsünden) — kalıcı parça (Beyar 26.11)
+    ok_ = subprocess.run([sys.executable, "-I", str(Path(__file__).with_name("_oku.py"))], capture_output=True, text=True, timeout=3600)
+    print(ok_.stdout.rstrip())
     # tıklama denetimi (kalip/_tikla.py): her düğme, menü, seçenek, sekme × mecra, 5 genişlik — kalıcı parça
     tk = subprocess.run([sys.executable, "-I", str(Path(__file__).with_name("_tikla.py"))], capture_output=True, text=True, timeout=1800)
     print(tk.stdout.rstrip())
-    sys.exit(1 if toplam or tk.returncode else 0)
+    sys.exit(1 if toplam or tk.returncode or ok_.returncode else 0)
 
 
 if __name__ == "__main__":
