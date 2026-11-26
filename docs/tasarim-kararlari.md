@@ -289,3 +289,13 @@ Notlar: Meta ve YouTube değerleri reklam kılavuzlarındandır; organik paylaş
 - **Maç kapağı, yeni karar (Beyar):** maç sayfasının bannerında bütün maçlar için tek ortak stadyum görseli kullanılır; ev sahibinin kapağı kullanılmaz, maç çekmecesine ayrı görsel alanı eklenmez. Yükleme yeri: Özel Widgetlar › Spor › Maç Merkezi sekmesinin başında, maç listesinin üstünde tek "Maç Kapağı (ortak)" alanı (Arma emsali: web ve mobil kırpma, önerilen ölçü, yoksa varsayılan görsel notu). Spor editörü görür ve değiştirir. Prototipte örnek: site prototipindeki maç detay sayfasının stadyum fotoğrafı.
 - **Arma ölçüsü:** kayıttaki varsayım (160/48/40) sitedeki gerçek kullanıma göre düzeltildi: web detay 96, web kart 56, telefon 72 px (sablonlar.css .pf-av, ortak.css .tc-a .arma).
 - **Burç element ve nitelik:** kayıtlı "seçenek grubu" kuralı gereği bölmeli seçici (2–4 kısa seçenek); yönetici gezegen aranabilir açılır liste.
+
+### Kalıp görsel revize (Beyar, 26.11.2026)
+- **KURAL · Okunurluk:** hiçbir yazı katman altında kalmaz; her yazı gerçek zeminine (fotoğraf + geçiş + karartma + kutu) karşı rahat okunur. Ölçüm `kalip/_oku.py`: aynı görünümün yazılı ve yazısız iki ekran görüntüsü alınır, harflerin çizildiği piksellerde yazının etkin rengi ile zemin karşılaştırılır; zeminin en kötü %10'unda karşıtlık **≥ 3:1**. Seçilen + 14 iskelet × bütün sekmeler, Seçilen × beş kategori.
+- **Kategori Geçişi %10–15 daha yoğun;** logo köşesi geçişi de artırıldı. Yazı bölgesinin altında koyu taban (9:16'da ortadaki yazı bandında).
+- **Liste ve tablo satırları yayılmaz** (25.11 kuralının yerine): satır arası sabit; ölçüm sınırı kısa kenarın %4,5'i. Üstte fotoğraf şeridi olan kartta panel içeriğe göre boyutlanır: içerik kısaysa fotoğraf uzar, uzunsa panel büyür (`kalip.js` panelSigdir). Alt boşluk ≤ %6 korunur.
+- **Yazı alanları yukarı çıkmaz:** tek parça panelli kartlarda (ses, düğme, soru, maç saati) blok iskeletin olağan yerinde, altta.
+- **Satır aralığı yalnız kutulu başlıkta açılır** (1,26); kutusuz başlık olağan aralıkta.
+- **Kutu köşeleri yumuşak:** başlık vurgusu .14em, rakam kutusu .1em (kalıbın Köşe seçeneğinden bağımsız).
+- **Ölçüt örnekler** (Beyar "çok temiz"): Galeri ve Foto Haber, Teyit, Yayın Yasağı Bildirimi.
+- Uygulamada: fotoğraf üstündeki küçük yazılar (üst satır, skor, kaybeden takım, program, künye) beyaz ve tam opak; L'nin dev kelimesi beyaz, sağ kenarında koyu taban; J'de kutu dışındaki yazılar beyaz; açık zeminde açık kategori rengi (Keşfet sarısı) koyulaştırılmış tonda.
