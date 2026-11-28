@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>X Paylaşım Biçimi · Karar Bekleniyor</title>
+<!-- Panel kitinin kendi CSS'i (public/varliklar/panel kopyası, 28.11.2026); yeni görsel dil yok. -->
+<link rel="stylesheet" href="kit/assets/vendor/fontawesome-6.5.2/css/all.min.css">
+<link rel="stylesheet" href="kit/tema/dadahaber.css">
+<link rel="stylesheet" href="kit/cekirdek/css/kabuk.css">
+<link rel="stylesheet" href="kit/cekirdek/css/bilesen.css">
+<style>
+  /* yalnız sayfa iskeleti (panel kabuğunun main alanı yerine); bileşenler kitin kendisi */
+  .xt-kap{max-width:1180px;margin:0 auto;padding:24px 16px 64px}
+  .xt-izgara{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:20px;align-items:start}
+  @media (max-width:900px){.xt-izgara{grid-template-columns:1fr}}
+  .xt-kap .pnl-card{margin-bottom:20px}
+  .xt-kap .pc-body{padding:16px 20px}
+  .xt-tablo{width:100%;border-collapse:collapse;font-size:13px}
+  .xt-tablo th,.xt-tablo td{padding:8px 10px;border-bottom:1px solid var(--line,#e5e5e5);text-align:left;vertical-align:top}
+  .xt-tablo td.say{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .xt-tablo code{font-size:12px}
+  .xt-etiket{font-size:11px;letter-spacing:.06em;text-transform:uppercase;opacity:.7;margin:0 0 6px}
+  .xt-cekmece{border:1px solid var(--line,#e5e5e5);border-radius:14px;overflow:hidden}
+  .xt-cekmece .kb-kap-bas{padding:16px 20px;border-bottom:1px solid var(--line,#e5e5e5)}
+  .xt-cekmece .xt-govde{padding:4px 20px 8px}
+  .xt-cekmece .kb-kap-alt-cubuk{padding:12px 20px;border-top:1px solid var(--line,#e5e5e5)}
+  .xt-liste{margin:0;padding-left:18px;line-height:1.6;font-size:13.5px}
+  .xt-liste li+li{margin-top:4px}
+</style>
+</head>
+<body>
+<main class="xt-kap">
+  <div class="pnl-page-head">
+    <div>
+      <h1>X Paylaşım Biçimi ve Aylık Harcama Sınırı</h1>
+      <div class="ph-sub">Sosyal Medya › Hesaplar › X · tasarım önerisi (uygulama yok) · t18-sosyal · 28.11.2026</div>
+    </div>
+    <div class="ph-actions"><span class="pstat wait"><i class="fa-solid fa-hourglass-half" aria-hidden="true"></i> Karar bekleniyor</span></div>
+  </div>
+
+  <div class="kb-bant uyari dash-row"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i><span><b>Bu bir maliyet kararıdır (Beyar).</b> X kullandıkça ödemeli: bağlantılı gönderi <b>0,20 $</b>, bağlantısız gönderi <b>0,015 $</b>; hesapta kredi yok. Karar gelene kadar X sürücüsü sahte kalır (config/canli.php "sosyal_x": Client Secret ve paylaşım biçimi kararı bekleniyor) ve X'e hiçbir gönderi gitmez. Fiyatlar lider notundan; X'in güncel fiyat sayfasıyla teyit edilmeli.</span></div>
+
+  <div class="xt-izgara">
+    <div>
+      <!-- 1. Panel ekranı taklidi: X ayar çekmecesi -->
+      <section class="pnl-card" aria-labelledby="xtEkran">
+        <div class="pc-head"><h2 class="pc-title" id="xtEkran"><i class="fa-solid fa-display" aria-hidden="true"></i>Panel ekranı (taklit)</h2><span class="kb-kap-alt">Hesaplar › X grubu › “Paylaşım Biçimi” çekmecesi</span></div>
+        <div class="pc-body">
+          <p class="xt-etiket">X grup başlığı (Hesaplar)</p>
+          <div class="kb-entegre-bas" style="margin-bottom:18px"><span class="kb-entegre-ikon"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></span><div><b>X</b><small>1 hesap · TR · OAuth 2.0 · bağlantısız · bu ay 38,40 $ / 75 $</small></div><span class="pstat ok">Hazır</span><button type="button" class="btn btn-ghost btn-sm"><i class="fa-solid fa-sliders" aria-hidden="true"></i>Paylaşım Biçimi</button><button type="button" class="btn btn-ghost btn-sm"><i class="fa-solid fa-plus" aria-hidden="true"></i>Hesap Ekle</button></div>
+
+          <div class="xt-cekmece">
+            <div class="kb-kap-bas"><h2>X Paylaşım Biçimi</h2><span class="kb-kap-alt">Bütün X hesapları için ortak · değişiklik denetim izine yazılır</span></div>
+            <div class="xt-govde">
+              <div class="kb-fs"><div class="kb-fs-tt">Paylaşım Biçimi</div>
+                <div class="kb-kart-sec" role="radiogroup" aria-label="Paylaşım biçimi">
+                  <label class="kb-secenek kb-secenek-kart"><input type="radio" name="xBicim" value="baglantili"><span><b><i class="fa-solid fa-link" aria-hidden="true"></i> Bağlantılı</b><small>Her gönderide haber bağlantısı · gönderi başına 0,20 $</small></span></label>
+                  <label class="kb-secenek kb-secenek-kart"><input type="radio" name="xBicim" value="baglantisiz"><span><b><i class="fa-solid fa-link-slash" aria-hidden="true"></i> Bağlantısız</b><small>Kalıp görseli + metin, bağlantı yok · gönderi başına 0,015 $</small></span></label>
+                  <label class="kb-secenek kb-secenek-kart"><input type="radio" name="xBicim" value="secili" checked><span><b><i class="fa-solid fa-filter" aria-hidden="true"></i> Yalnız seçili türler bağlantılı</b><small>Seçilen türler 0,20 $, ötekiler bağlantısız 0,015 $ · önerilen</small></span></label>
+                </div>
+                <div class="frow"><span class="flabel">Bağlantılı Gidecek Türler</span>
+                  <div class="kb-kanallar" role="group" aria-label="Bağlantılı türler">
+                    <label class="kb-kanal"><input type="checkbox" checked><span><i class="fa-solid fa-bolt" aria-hidden="true"></i>Son Dakika</span></label>
+                    <label class="kb-kanal"><input type="checkbox" checked><span><i class="fa-solid fa-star" aria-hidden="true"></i>Manşet</span></label>
+                    <label class="kb-kanal"><input type="checkbox"><span><i class="fa-solid fa-feather" aria-hidden="true"></i>Köşe Yazısı</span></label>
+                    <label class="kb-kanal"><input type="checkbox"><span><i class="fa-solid fa-circle-check" aria-hidden="true"></i>Teyit</span></label>
+                  </div>
+                  <span class="fhint">Tür, gönderinin kaynağından gelir (haberin son dakika işareti, manşet konumu, kalıp türü). Editör tek gönderide değiştiremez; gönderi oluşturucuda X metninin altında hangi biçimle ve kaça gideceği yazar.</span></div>
+              </div>
+              <div class="kb-fs"><div class="kb-fs-tt">Aylık Harcama Sınırı</div>
+                <div class="frow two">
+                  <div><label class="flabel" for="xSinir">Sınır (ABD doları)</label><input class="finput" id="xSinir" inputmode="decimal" value="75"><span class="fhint">Boş bırakılamaz; 0 = X'e gönderi yok.</span></div>
+                  <div><label class="flabel" for="xUyari">Uyarı eşiği</label><input class="finput" id="xUyari" inputmode="numeric" value="%80"><span class="fhint">Eşikte editörlere ve yöneticiye bildirim.</span></div>
+                </div>
+                <div class="frow"><span class="flabel">Bu Ay (Kasım 2026)</span>
+                  <div class="kb-cubuk"><span style="width:51%"></span></div>
+                  <div class="char-meter"><span>160 bağlantısız × 0,015 $ + 180 bağlantılı × 0,20 $ · ayrılan (gönderiliyor) 0,20 $</span><b>38,40 $ / 75 $</b></div>
+                </div>
+                <div class="toggle-row"><span>Sınır dolunca son dakika da dursun<small>Kapalıyken son dakika sınırı en çok %10 aşabilir (75 $ → 82,50 $)</small></span><label class="toggle"><input type="checkbox" checked aria-label="Sınır dolunca son dakika da dursun"><span class="toggle-track"></span><span class="toggle-thumb"></span></label></div>
+                <div class="kb-bant bilgi"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span><b>Sınır dolunca X gönderileri durur:</b> gönderim “Bekletiliyor · Aylık X harcama sınırı doldu (75,00 $ / 75 $)” olur, öteki mecralar etkilenmez; editörlere ve yöneticiye panel bildirimi gider. Ayın 1'inde sayaç sıfırlanır; 24 saatten eski bekleyen X gönderisi yeni ayda gitmez, “İptal · süresi geçti” olur (eski haber yığını gitmesin).</span></div>
+              </div>
+            </div>
+            <div class="kb-kap-alt-cubuk"><button type="button" class="btn btn-ghost btn-sm kb-sol"><i class="fa-solid fa-xmark" aria-hidden="true"></i>Vazgeç</button><button type="button" class="btn btn-acc btn-sm"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>Kaydet</button></div>
+          </div>
+
+          <p class="xt-etiket" style="margin-top:22px">Gönderi oluşturucu · X sekmesi (metin kutusunun altında)</p>
+          <div class="kb-hata-not" style="margin-bottom:8px"><i class="fa-solid fa-link-slash" aria-hidden="true"></i>Bu X gönderisi <b>bağlantısız</b> gider (tür: Gündem) · 0,015 $ · metindeki bağlantı gönderiden çıkarılır.</div>
+          <div class="kb-hata-not"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Aylık X harcama sınırı doldu (75,00 $ / 75 $). Gönderi hazırlanabilir; X'e ayın 1'inde, 24 saat içindeyse gider.</div>
+          <p class="xt-etiket" style="margin-top:18px">Gönderim Durumu kartı</p>
+          <article class="kb-entegre" style="max-width:420px"><div class="kb-entegre-bas"><span class="kb-entegre-ikon"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></span><div><b>X</b><small>Dada Haber · @dadahaber</small></div><span class="pstat wait">Bekletiliyor</span></div>
+            <dl><dt>Neden</dt><dd class="hata">Aylık X harcama sınırı doldu (75,00 $ / 75 $)</dd><dt>Biçim</dt><dd>Bağlantılı (Son Dakika) · 0,20 $</dd><dt>Sonra</dt><dd>Sınır yükseltilirse hemen; yoksa 1 Aralık 00.00'da (24 saat kuralıyla)</dd></dl></article>
+        </div>
+      </section>
+    </div>
+
+    <div>
+      <!-- 2. Öneri ve maliyet -->
+      <section class="pnl-card" aria-labelledby="xtOneri">
+        <div class="pc-head"><h2 class="pc-title" id="xtOneri"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i>Öneri</h2></div>
+        <div class="pc-body">
+          <ul class="xt-liste">
+            <li><b>Biçim: yalnız seçili türler bağlantılı</b> (Son Dakika + Manşet). Okura en çok tıklatan iki tür bağlantıyla gider, gündelik akış bağlantısız ve 13 kat ucuz; kalıp görseli (A Vitrin) başlığı zaten taşır.</li>
+            <li><b>Aylık sınır: 75 $</b>, uyarı %80'de. Günde ~40 gönderide karma biçim ayda ~62 $ tutar (aşağıda); sınır bunun biraz üstünde.</li>
+            <li><b>Sınır dolunca son dakika da dursun</b> (açık). Kapatılırsa son dakika sınırı en çok %10 aşar.</li>
+            <li>“Bağlantı ilk yanıta” yolu çözüm değil: yanıt da gönderi sayılır, bağlantılı yanıt yine 0,20 $.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="pnl-card" aria-labelledby="xtMaliyet">
+        <div class="pc-head"><h2 class="pc-title" id="xtMaliyet"><i class="fa-solid fa-calculator" aria-hidden="true"></i>Aylık maliyet tahmini (30 gün)</h2></div>
+        <div class="pc-body">
+          <table class="xt-tablo">
+            <thead><tr><th>Günlük X gönderisi</th><th class="say">Bağlantılı</th><th class="say">Bağlantısız</th><th class="say">Seçili türler*</th></tr></thead>
+            <tbody>
+              <tr><td>20</td><td class="say">120 $</td><td class="say">9 $</td><td class="say">31,20 $</td></tr>
+              <tr><td>40</td><td class="say">240 $</td><td class="say">18 $</td><td class="say">62,40 $</td></tr>
+              <tr><td>80</td><td class="say">480 $</td><td class="say">36 $</td><td class="say">124,80 $</td></tr>
+            </tbody>
+          </table>
+          <p class="fhint">* Gönderilerin %20'si son dakika ya da manşet varsayımıyla: günlük n × (0,2 × 0,20 $ + 0,8 × 0,015 $) × 30.</p>
+        </div>
+      </section>
+
+      <!-- 3. Veri modeli -->
+      <section class="pnl-card" aria-labelledby="xtVeri">
+        <div class="pc-head"><h2 class="pc-title" id="xtVeri"><i class="fa-solid fa-database" aria-hidden="true"></i>Veri modeli</h2></div>
+        <div class="pc-body">
+          <p class="xt-etiket">Ayarlar (modül ayarı sosyal-medya, tek yer; X uygulaması bütün hesaplar için tek fatura)</p>
+          <table class="xt-tablo">
+            <tbody>
+              <tr><td><code>x.bicim</code></td><td>baglantili · baglantisiz · secili (karar gelene kadar boş: X kapalı)</td></tr>
+              <tr><td><code>x.bagli_turler</code></td><td>liste: son_dakika, manset, kose, teyit</td></tr>
+              <tr><td><code>x.aylik_sinir</code></td><td>ondalık, $ (zorunlu; 0 = gönderi yok)</td></tr>
+              <tr><td><code>x.uyari_esigi</code></td><td>yüzde (varsayılan 80)</td></tr>
+              <tr><td><code>x.son_dakika_durur</code></td><td>evet/hayır (varsayılan evet)</td></tr>
+              <tr><td><code>x.fiyat_baglantili</code> · <code>x.fiyat_baglantisiz</code></td><td>0,20 $ · 0,015 $ (X fiyatı değişirse panelden)</td></tr>
+            </tbody>
+          </table>
+          <p class="xt-etiket" style="margin-top:14px">Sayaç: yeni tablo <code>sosyal_harcamalar</code></p>
+          <table class="xt-tablo">
+            <tbody>
+              <tr><td><code>servis, ay</code></td><td>sosyal_x, 2026-11 (tekil)</td></tr>
+              <tr><td><code>harcanan_mikro</code></td><td>gönderilmiş toplam (milyonda bir $, tamsayı; yuvarlama yok)</td></tr>
+              <tr><td><code>ayrilan_mikro</code></td><td>gönderilmekte olanlar (aynı anda iki işin sınırı aşmaması için)</td></tr>
+            </tbody>
+          </table>
+          <p class="fhint">Gönderime iki alan: <code>sosyal_gonderimler.bicim</code> (baglantili/baglantisiz) ve <code>maliyet_mikro</code>. Raporlar › Sosyal Medya sekmesinde ay ay X harcaması bunlardan.</p>
+        </div>
+      </section>
+
+      <!-- 4. Gönderim kuralı -->
+      <section class="pnl-card" aria-labelledby="xtKural">
+        <div class="pc-head"><h2 class="pc-title" id="xtKural"><i class="fa-solid fa-list-ol" aria-hidden="true"></i>Gönderim kuralı (GonderimServisi::gonder)</h2></div>
+        <div class="pc-body">
+          <ol class="xt-liste">
+            <li>Biçim belirlenir: <i>bağlantılı</i> ya da <i>bağlantısız</i> (seçili türde gönderinin türüne bakılır). Bağlantısızda Paylasim'in bağlantısı boş, metindeki adresler çıkarılır (X adresli gönderiyi bağlantılı sayar).</li>
+            <li>Kilitli işlemde ayın sayacı okunur: <code>harcanan + ayrilan + bu gönderi &gt; sınır</code> ise gönderim “Bekletiliyor · Aylık X harcama sınırı doldu”, istek atılmaz; ilk dolmada bildirim (tek sefer).</li>
+            <li>Sığıyorsa <code>ayrilan</code> artar, X'e gider. Başarıda ayrılan harcanana geçer ve gönderime maliyet yazılır; hatada ayrılan geri bırakılır (X başarısız isteği ücretlendirmez varsayımı; teyit edilmeli).</li>
+            <li>Uyarı eşiği geçilince editörlere ve yöneticiye bildirim (ay başına bir kez).</li>
+            <li>Ay dönünce görev sosyal:gonderim bekletilenleri yeniden planlar; 24 saatten eskiler “İptal · süresi geçti”.</li>
+            <li>Sınır yükseltilince bekleyenler hemen sıraya girer (aynı 24 saat kuralıyla).</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="pnl-card" aria-labelledby="xtSoru">
+        <div class="pc-head"><h2 class="pc-title" id="xtSoru"><i class="fa-solid fa-circle-question" aria-hidden="true"></i>Beyar'a sorulacak (tek liste)</h2></div>
+        <div class="pc-body">
+          <ol class="xt-liste">
+            <li>Biçim: (a) bağlantılı · (b) bağlantısız · <b>(c) seçili türler bağlantılı (öneri: Son Dakika + Manşet)</b></li>
+            <li>Aylık sınır: (a) 25 $ · (b) 50 $ · <b>(c) 75 $ (öneri)</b> · (d) başka</li>
+            <li>Sınır dolunca son dakika: <b>(a) o da durur (öneri)</b> · (b) %10'a kadar aşar</li>
+          </ol>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+</body>
+</html>
