@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>E-posta Tasarım Alternatifleri</title>
+<meta name="description" content="Dada Haber e-posta tasarımı için üç alternatif: şifre sıfırlama, günlük bülten ve son dakika; masaüstü, mobil, koyu kip ve görseller kapalı görünüm.">
+<style>
+@font-face{font-family:"Gilroy";src:url("https://gaviaworks-dev.github.io/dadahaber-panel-prototip/assets/font/gilroy/Gilroy-Medium.woff2") format("woff2");font-weight:400 600;font-display:swap}
+@font-face{font-family:"Gilroy";src:url("https://gaviaworks-dev.github.io/dadahaber-panel-prototip/assets/font/gilroy/Gilroy-ExtraBold.woff2") format("woff2");font-weight:700 800;font-display:swap}
+:root{
+  --zemin:#F4F4F4;--yuzey:#FFFFFF;--metin:#121212;--ikincil:#494949;--soluk:#6B6B6B;--cizgi:#DEDEDE;
+  --marka:#FECC17;--marka-metin:#7A620B;--marka-10:#FFFBEC;--anlik:#C8102E;--odak:#121212;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--zemin:#0E0E0E;--yuzey:#1A1A1A;--metin:#F2F2F2;--ikincil:#CFCFCF;--soluk:#A8A8A8;--cizgi:#333333;--marka-metin:#FECC17;--marka-10:#2A2410;--odak:#FECC17;color-scheme:dark}}
+:root[data-theme="dark"]{--zemin:#0E0E0E;--yuzey:#1A1A1A;--metin:#F2F2F2;--ikincil:#CFCFCF;--soluk:#A8A8A8;--cizgi:#333333;--marka-metin:#FECC17;--marka-10:#2A2410;--odak:#FECC17;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--zemin);color:var(--metin);font-family:"Gilroy","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:16px;line-height:1.55}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--odak);outline-offset:2px;border-radius:6px}
+.kap{max-width:1120px;margin:0 auto;padding:0 16px}
+header.bas{padding:40px 0 24px}
+.ust-etiket{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soluk)}
+h1{font-size:clamp(28px,4vw,44px);line-height:1.12;font-weight:800;margin:8px 0 0;letter-spacing:-.01em}
+.yonerge{margin:16px 0 0;max-width:760px;color:var(--ikincil)}
+.bekliyor{display:inline-flex;align-items:center;gap:8px;margin-top:18px;background:var(--marka);color:#121212;font-weight:800;font-size:14px;padding:8px 14px;border-radius:999px}
+.bekliyor::before{content:"";width:8px;height:8px;border-radius:50%;background:#121212}
+nav.icindekiler{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+nav.icindekiler a{font-size:14px;font-weight:800;text-decoration:none;padding:8px 14px;border:1px solid var(--cizgi);border-radius:999px;background:var(--yuzey)}
+.arac{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--zemin) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--cizgi)}
+.arac .kap{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding-top:10px;padding-bottom:10px}
+.arac-ad{font-size:13px;font-weight:800;color:var(--soluk)}
+.dg{font:inherit;font-size:14px;font-weight:800;min-height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--cizgi);background:var(--yuzey);color:var(--metin);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.dg[aria-pressed="true"]{background:var(--metin);color:var(--zemin);border-color:var(--metin)}
+.dg:hover{border-color:var(--metin)}
+.bolmeli{display:inline-flex;border:1px solid var(--cizgi);border-radius:12px;overflow:hidden;background:var(--yuzey)}
+.bolmeli button{font:inherit;font-size:14px;font-weight:800;min-height:40px;padding:0 12px;border:0;background:transparent;color:var(--metin);cursor:pointer}
+.bolmeli button[aria-pressed="true"]{background:var(--marka);color:#121212}
+.alt{padding:48px 0 8px;border-top:1px solid var(--cizgi);margin-top:32px}
+.alt-bas{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px 40px;align-items:start}
+@media (max-width:860px){.alt-bas{grid-template-columns:1fr}}
+.harf{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--marka);color:#121212;font-weight:800;font-size:22px;margin-right:12px;vertical-align:middle}
+.alt h2{display:flex;align-items:center;font-size:30px;line-height:1.15;margin:0;font-weight:800}
+.gerekce{margin:14px 0 0;color:var(--ikincil);max-width:620px}
+.not{margin:10px 0 0;font-size:14px;color:var(--soluk);max-width:620px}
+.ozet{background:var(--yuzey);border:1px solid var(--cizgi);border-radius:16px;padding:18px 20px}
+.ozet h3{margin:0 0 10px;font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--soluk)}
+.renkler{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;padding:0;list-style:none}
+.renkler li{display:flex;align-items:center;gap:8px;font-size:13px;line-height:1.3}
+.renkler i{width:22px;height:22px;border-radius:6px;border:1px solid rgba(0,0,0,.12);flex:none}
+.renkler span b{display:block;font-weight:800}
+.yazilar{font-size:14px;margin:0;color:var(--ikincil)}
+.yazilar b{color:var(--metin)}
+.ornek{margin-top:36px}
+.ornek-bas{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px}
+.ornek h3{margin:0;font-size:20px;font-weight:800}
+.ornek-bas a{font-size:14px;font-weight:800;color:var(--marka-metin)}
+.ornek-bas .soluk{font-size:13px;color:var(--soluk)}
+.ikili{display:flex;flex-wrap:wrap;gap:20px;margin-top:14px;align-items:flex-start}
+figure{margin:0}
+figcaption{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--soluk);margin:0 0 8px}
+.masaustu{flex:1 1 642px;max-width:642px;min-width:0}
+.mobil{flex:0 0 375px;max-width:375px}
+@media (max-width:440px){.mobil{flex:1 1 100%;max-width:100%}}
+.cerceve{position:relative;width:100%;overflow:hidden;border-radius:14px;border:1px solid var(--cizgi);background:#EFEFEF}
+.cerceve iframe{display:block;border:0;transform-origin:0 0;background:#FFFFFF}
+#envanter{margin-top:48px}
+.bilgi{margin-top:48px;padding:24px 0 64px;border-top:1px solid var(--cizgi);color:var(--ikincil);font-size:15px}
+.bilgi h2{font-size:22px;color:var(--metin);margin:0 0 10px}
+.bilgi ul{padding-left:20px;margin:8px 0 0}
+.bilgi li{margin:4px 0}
+table.olcum{border-collapse:collapse;width:100%;font-size:14px;margin-top:12px;background:var(--yuzey)}
+table.olcum th,table.olcum td{border:1px solid var(--cizgi);padding:8px 10px;text-align:left;vertical-align:top}
+table.olcum th{font-weight:800;color:var(--metin)}
+.tablo-kap{overflow-x:auto}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="bas"><div class="kap">
+  <div class="ust-etiket">Dada Haber · E-posta tasarımı · 28 Kasım 2026</div>
+  <h1>E-posta tasarım alternatifleri</h1>
+  <p class="yonerge">Üç farklı yön, her birinde aynı üç örnek: şifre sıfırlama (zorunlu hesap e-postası), günlük bülten (Günün 5’i) ve son dakika (görselli ve görselsiz). Her örneği masaüstü (640 px) ve mobil (375 px) genişlikte yan yana görürsünüz. Üstteki düğmelerle koyu kipi ve görseller kapalı görünümü açın; düz metin eşi her örneğin yanında. İçerik uydurmadır; piyasa değerleri örnektir.</p>
+  <div class="bekliyor">Tasarım seçimi bekleniyor; seçim sizde</div>
+  <nav class="icindekiler" aria-label="Alternatifler">
+    <a href="#alt-a">A · Vitrin</a><a href="#alt-b">B · Defter</a><a href="#alt-c">C · Pano</a><a href="#envanter">Envanter</a><a href="#olcum">Ölçüm ve sınırlar</a>
+  </nav>
+</div></header>
+
+<div class="arac" role="region" aria-label="Görünüm ayarları"><div class="kap">
+  <span class="arac-ad">Görünüm</span>
+  <button class="dg" type="button" id="dgKoyu" aria-pressed="false">Koyu kip</button>
+  <button class="dg" type="button" id="dgGorsel" aria-pressed="false">Görseller kapalı</button>
+  <span class="arac-ad">Son dakika</span>
+  <div class="bolmeli" role="group" aria-label="Son dakika örneği">
+    <button type="button" data-sd="son-dakika" aria-pressed="true">Görselli</button>
+    <button type="button" data-sd="son-dakika-gorselsiz" aria-pressed="false">Görselsiz</button>
+  </div>
+</div></div>
+
+<main class="kap" id="alternatifler"></main>
+
+<div class="kap">
+<section id="envanter"><style>.env-kap{overflow-x:auto;border:1px solid #e5e5e5;border-radius:12px}table.env{border-collapse:collapse;font-size:13px;min-width:1400px}table.env th,table.env td{padding:8px 10px;border-bottom:1px solid #eee;vertical-align:top;text-align:left}table.env thead th{position:sticky;top:0;background:#111;color:#fff;font-weight:700}.dr{display:inline-block;padding:2px 8px;border-radius:999px;font-weight:700;font-size:12px}.dr.var{background:#e3f6e8;color:#0d6b2f}.dr.kismi{background:#fff2cc;color:#7a5600}.dr.yok{background:#fde4e4;color:#a01414}.dr-n{color:#666;font-size:12px;margin-top:4px}.env-suz{display:flex;gap:16px;margin:12px 0}table.alt{border-collapse:collapse;width:100%;font-size:14px}table.alt th{text-align:left;width:180px;padding:8px;vertical-align:top;border-bottom:1px solid #eee}table.alt td{padding:8px;border-bottom:1px solid #eee}ol.dns li{margin-bottom:8px}code{word-break:break-all}</style><h2>Envanter: e-posta gönderen ya da göndermesi gereken durumlar</h2>
+<p>Toplam <b>53</b> şablon/durum · <span class="dr var">VAR 22</span> <span class="dr kismi">KISMİ 8</span> <span class="dr yok">YOK 23</span> · öneri: açılış 30, sonra 10, karar 3, gerek yok 10. Kaynak: kod, karar belgeleri ve üç prototip (site, panel, mobil).</p>
+<div class="env-suz"><label>Grup <select id="envGrup"><option value="">Hepsi</option><option value="panel">Panel (ekip)</option><option value="okur">Okur hesabı</option><option value="bulten">Bülten</option><option value="bildirim">Okur bildirimleri</option><option value="etkilesim">Etkileşim</option><option value="site">Site</option></select></label>
+<label>Durum <select id="envDurum"><option value="">Hepsi</option><option value="var">VAR</option><option value="kismi">KISMİ</option><option value="yok">YOK</option></select></label></div>
+<div class="env-kap"><table class="env"><thead><tr><th>Şablon</th><th>Grup</th><th>Ne zaman</th><th>Kime</th><th>Değişkenler</th><th>Varyasyonlar</th><th>Tür</th><th>Abonelikten çıkma</th><th>Bugün</th><th>Öneri</th></tr></thead>
+<tbody><tr data-grup="panel" data-durum="var"><td><code>panel.davet</code><br><b>Ekip daveti (e-posta onayı + şifre belirleme)</b></td><td>Panel (ekip)</td>
+<td>Kullanıcılar › Ekip Üyesi Davet Et; Davet yeniden gönder; listede toplu &#x27;Onay e-postası gönder&#x27;</td><td>Davet edilen ekip üyesi</td><td>ad, ilk_ad, rol, davet_eden, baglanti, saat (geçerlilik), bitis, not (kişisel not), proje, adres (gönderen)</td><td>Gerçek davet / &#x27;Bana Test Gönder&#x27; ([Test] konu, çalışmayan örnek belirteç, kişinin kendi adresine); panel &#x27;Davet E-postası Önizlemesi&#x27; aynı gövdeyi basar</td><td>işlem (zorunlu)</td>
+<td>gerekmez</td><td><span class="dr var">VAR</span><div class="dr-n">(davet), :42 (davetTesti), :277, :355, :481; test: . Senkron (kuyruksuz). HATA: &#x27;yanit&#x27; seçeneği gönderiliyor ama sürücü &#x27;yanit_adresi&#x27; okuyor → Reply-To (davet eden) hiç eklenmiyor ()</div></td><td>açılış<div class="dr-n">Reply-To anahtar adı düzeltilmeli</div></td></tr><tr data-grup="panel" data-durum="var"><td><code>panel.kod</code><br><b>Doğrulama kodu (giriş 2FA, 2FA kurulumu, hassas işlem)</b></td><td>Panel (ekip)</td>
+<td>Panel girişi (Süper Admin hariç, BK-03), kodu yeniden gönder, 2FA kurulumu, e-posta kodlu hassas işlem (K15 listesi)</td><td>Panel kullanıcısının kendisi</td><td>ad, kod (6 hane), amaç (panele giriş / kurulum / hassas işlem), dakika (politika kod_gecerlilik_dk, varsayılan 10)</td><td>Amaca göre tek cümle değişir; konu satırında kod açık (&#x27;Doğrulama kodunuz: …&#x27;)</td><td>işlem · güvenlik uyarısı</td>
+<td>gerekmez</td><td><span class="dr var">VAR</span><div class="dr-n">129; . Senkron. Gövde PHP içinde gömülü yalın HTML, ortak düzen (logo, alt bilgi) yok</div></td><td>açılış<div class="dr-n">Ortak kb-eposta düzenine alınmalı; konuda kodun açık yazılması bildirim önizlemesinde görünür (bilinçli tercih mi, karar)</div></td></tr><tr data-grup="panel" data-durum="var"><td><code>panel.sifre-sifirlama</code><br><b>Panel şifre sıfırlama bağlantısı</b></td><td>Panel (ekip)</td>
+<td>Panel &#x27;Şifremi unuttum&#x27; ya da yöneticinin ekip üyesi için &#x27;Şifre sıfırlama gönder&#x27;</td><td>Panel kullanıcısı</td><td>ad, baglanti, dakika ( sifre_sifirlama_dk = 60)</td><td>Kendi isteği / yönetici gönderdi (metin aynı)</td><td>işlem · güvenlik uyarısı</td>
+<td>gerekmez</td><td><span class="dr var">VAR</span><div class="dr-n">ve sifremi-unuttum akışı. Senkron. Gömülü yalın HTML</div></td><td>açılış<div class="dr-n">Ortak düzene alınmalı</div></td></tr><tr data-grup="panel" data-durum="var"><td><code>panel.sifre-degisti</code><br><b>Panel şifreniz değişti</b></td><td>Panel (ekip)</td>
+<td>Sıfırlama bağlantısıyla yeni şifre ya da Profilim › Şifreyi Değiştir</td><td>Panel kullanıcısı</td><td>ad</td><td>—</td><td>işlem · güvenlik uyarısı</td>
+<td>gerekmez</td><td><span class="dr var">VAR</span><div class="dr-n">. Zaman ve IP yok</div></td><td>açılış<div class="dr-n">Zaman ve cihaz eklenebilir</div></td></tr><tr data-grup="panel" data-durum="var"><td><code>panel.eposta-onay</code><br><b>Panel yeni e-posta adresini onayla</b></td><td>Panel (ekip)</td>
+<td>Profilim ya da ekip üyesi ekranında e-posta değişikliği</td><td>YENİ adres</td><td>ad, baglanti</td><td>—</td><td>işlem (zorunlu)</td>
+<td>gerekmez</td><td><span class="dr var">VAR</span><div class="dr-n"></div></td><td>açılış<div class="dr-n">Bağlantının geçerlilik süresi metinde yok</div></td></tr><tr data-grup="panel" data-durum="var"><td><code>panel.eposta-degisiyor</code><br><b>Panel e-posta adresiniz değiştiriliyor (eski adrese)</b></td><td>Panel (ekip)</td>
+<td>E-posta değişikliği isteği</td><td>ESKİ adres</td><td>ad, yeni_eposta, zaman</td><td>—</td><td>işlem · güvenlik uyarısı</td>
+<td>gerekmez</td><td><span class="dr var">VAR</span><div class="dr-n">(t9-kimlik)</div></td><td>açılış<div class="dr-n"></div></td></tr><tr data-grup="panel" data-durum="kismi"><td><code>panel.yeni-cihaz</code><br><b>Yeni cihazdan giriş yapıldı</b></td><td>Panel (ekip)</td>
+<td>Tanınmayan cihaz + IP ile başarılı giriş; Güvenlik politikası &#x27;Yeni cihaz e-postası&#x27; açıkken (varsayılan açık)</td><td>Panel kullanıcısı</td><td>ad, cihaz, ip, zaman</td><td>—</td><td>işlem · güvenlik uyarısı</td>
+<td>gerekmez</td><td><span class="dr kismi">KISMİ</span><div class="dr-n">(politika ). Eksik: prototip &#x27;cihaz, konum ve saat&#x27; diyor, konum yok</div></td><td>açılış<div class="dr-n">Konum için IP→şehir bağdaştırıcısı gerekir; yoksa metinden &#x27;konum&#x27; sözü kalkar (karar)</div></td></tr><tr data-grup="panel" data-durum="yok"><td><code>panel.2fa-sifirlandi</code><br><b>İki adımlı doğrulamanız sıfırlandı</b></td><td>Panel (ekip)</td>
+<td>Yönetici ekip üyesinin 2FA&#x27;sını sıfırlar (oturumlar kapanır)</td><td>2FA&#x27;sı sıfırlanan kişi</td><td>ad, sifirlayan, zaman</td><td>—</td><td>işlem · güvenlik uyarısı</td>
+<td>gerekmez</td><td><span class="dr yok">YOK</span><div class="dr-n">ikiAdimSifirla yalnız KimlikOlayi yayar; e-posta yok</div></td><td>açılış<div class="dr-n">Prototip bu uyarıyı kapatılamaz güvenlik e-postası olarak vaat ediyor</div></td></tr><tr data-grup="panel" data-durum="yok"><td><code>panel.hesap-kilitlendi</code><br><b>Hesabınız kilitlendi (çok hatalı deneme)</b></td><td>Panel (ekip)</td>
+<td>Şifre ya da kod hata sınırı aşılınca</td><td>Kilitlenen kişi (bugün yalnız tam yetkililere PANEL bildirimi gidiyor)</td><td>ad, dakika, ip</td><td>giriş / hassas işlem</td><td>işlem · güvenlik uyarısı</td>
+<td>gerekmez</td><td><span class="dr yok">YOK</span><div class="dr-n">ve  yalnız PanelBildirimleri::tamYetkililere; kişiye e-posta yok</div></td><td>sonra<div class="dr-n">Saldırı sırasında sahibinin haberi olur; düşük maliyet</div></td></tr><tr data-grup="panel" data-durum="kismi"><td><code>panel.ai-onay-bekliyor</code><br><b>AI taslağı onay bekliyor (30 dk+)</b></td><td>Panel (ekip)</td>
+<td>AI Haber Havuzu&#x27;nda taslak 30 dakikadan uzun onay beklerse</td><td>Tercihi açık, AI Havuzu onay izni olan ekip üyeleri</td><td>taslak_sayisi, en_eski_bekleme, havuz_baglantisi</td><td>Tek taslak / çok taslak (özet)</td><td>operasyon uyarısı (ekip içi)</td>
+<td>gerekmez (Profilim&#x27;deki tercih anahtarı kapatma yoludur)</td><td><span class="dr kismi">KISMİ</span><div class="dr-n">Tercih anahtarı var ve kaydediliyor (, :184; ), tercihi okuyan gönderici YOK (repo içinde &#x27;eposta_bildirimleri&#x27; başka yerde geçmiyor)</div></td><td>açılış<div class="dr-n">ilke 2: karşılığı olmayan panel alanı hatadır; gönderici yazılmalı ya da satır gizlenmeli</div></td></tr><tr data-grup="panel" data-durum="kismi"><td><code>panel.sosyal-baglanti-koptu</code><br><b>Sosyal hesap bağlantısı koptu</b></td><td>Panel (ekip)</td>
+<td>Sosyal hesabın jetonu geçersizleşir, zamanlı gönderi bekletilir</td><td>Tercihi açık Sosyal Medya izinli ekip üyeleri</td><td>hesap, mecra, bekleyen_gonderi_sayisi, baglanti</td><td>—</td><td>operasyon uyarısı (ekip içi)</td>
+<td>gerekmez (Profilim tercihi)</td><td><span class="dr kismi">KISMİ</span><div class="dr-n">Tercih var (, varsayılan kapalı), gönderici YOK. Ayrı olarak Entegrasyonlar uyarısı (panel.entegrasyon-uyarisi) servis düzeyinde çalışıyor</div></td><td>açılış<div class="dr-n">İlke 2; entegrasyon uyarı altyapısı yeniden kullanılabilir</div></td></tr><tr data-grup="panel" data-durum="kismi"><td><code>panel.haftalik-ozet</code><br><b>Haftalık özet (yayımladıklarınız ve okunma)</b></td><td>Panel (ekip)</td>
+<td>Her pazartesi 09.00 (zamanlayıcı)</td><td>Tercihi açık ekip üyeleri (varsayılan açık)</td><td>hafta, yayimlanan_sayisi, toplam_okunma, en_cok_okunan_haberler[]</td><td>Yazar / editör (yalnız kendi içeriği)</td><td>operasyon uyarısı (ekip içi)</td>
+<td>gerekmez (Profilim tercihi)</td><td><span class="dr kismi">KISMİ</span><div class="dr-n">Tercih var (, varsayılan AÇIK), zamanlanmış iş ve şablon YOK</div></td><td>sonra<div class="dr-n">Varsayılan açık bir tercih hiçbir şey göndermiyor; açılışta satır gizlenmeli ya da iş yazılmalı</div></td></tr><tr data-grup="panel" data-durum="var"><td><code>panel.entegrasyon-uyarisi</code><br><b>Entegrasyon uyarısı (ardışık hata / kota eşiği)</b></td><td>Panel (ekip)</td>
+<td>entegrasyon:denetle görevi: servis ardışık hata eşiğini ya da aylık kota yüzdesini aşınca (tekrar sınırlı)</td><td>Entegrasyon ayarında seçilen uyarı alıcıları (uyari_eposta açıksa)</td><td>servis_adi, mesaj (hata/kota metni)</td><td>hata / kota</td><td>operasyon uyarısı (ekip içi)</td>
+<td>gerekmez (entegrasyon ayarı)</td><td><span class="dr var">VAR</span><div class="dr-n">(senkron, hata Sistem Günlüğü&#x27;ne). Gövde yalnız &#x27;&lt;p&gt;mesaj&lt;/p&gt;&#x27;: logo, düzen, panele bağlantı yok. E-posta servisinin kendisi düşükse uyarı da gidemez (panel bildirimi devrede)</div></td><td>açılış<div class="dr-n">Ortak düzen + entegrasyon ekranına bağlantı</div></td></tr><tr data-grup="panel" data-durum="yok"><td><code>panel.cron-hat-uyarisi</code><br><b>Cron ve Hat Sağlığı uyarısı (zamanlayıcı/kuyruk durdu, iş sürekli başarısız)</b></td><td>Panel (ekip)</td>
+<td>Zamanlayıcı nabzı gecikti (dadahaber.zamanlayici_gecikme_dakika=3), kuyruk birikti, iş deneme hakkını bitirdi</td><td>Tam yetkililer / sistem sorumluları</td><td>gorev, son_calisma, hata, baglanti</td><td>—</td><td>operasyon uyarısı (ekip içi)</td>
+<td>gerekmez</td><td><span class="dr yok">YOK</span><div class="dr-n">Yalnız Sistem Günlüğü ve panel ekranı; e-posta göndericisi yok</div></td><td>sonra<div class="dr-n">Prototipte yok; canlıda gece duran zamanlayıcı bülteni de durdurur. Açılışa alınması önerilir ama kapsam kararı (Beyar)</div></td></tr><tr data-grup="panel" data-durum="yok"><td><code>panel.zamanlanmis-rapor</code><br><b>Zamanlanmış rapor e-postası</b></td><td>Panel (ekip)</td>
+<td>Raporlar&#x27;da periyodik gönderim</td><td>Seçilen ekip üyeleri</td><td>rapor, donem, ek/baglanti</td><td>—</td><td>operasyon uyarısı (ekip içi)</td>
+<td>gerekmez</td><td><span class="dr yok">YOK</span><div class="dr-n">Kodda yok</div></td><td>gerek yok<div class="dr-n">panel.haftalik-ozet bu ihtiyacı karşılar</div></td></tr><tr data-grup="panel" data-durum="yok"><td><code>panel.talep-bildirimi</code><br><b>Davet talebi / yetki talebi (tam yetkililere)</b></td><td>Panel (ekip)</td>
+<td>Ekip üyesi yetki ister; yetkisiz kişi davet talebi açar</td><td>Tam yetkililer</td><td>kisi, ekran/rol</td><td>—</td><td>operasyon uyarısı (ekip içi)</td>
+<td>gerekmez</td><td><span class="dr yok">YOK</span><div class="dr-n">Yalnız panel bildirimi:</div></td><td>gerek yok<div class="dr-n"></div></td></tr><tr data-grup="panel" data-durum="var"><td><code>panel.bulten-abone-listesi</code><br><b>Bülten abone listesi indirme bağlantısı</b></td><td>Panel (ekip)</td>
+<td>Bülten › Aboneler › Dışa Aktar (hassas işlem kodu sonrası)</td><td>Dışa aktaran ekip üyesi</td><td>kisi, adres (24 saat imzalı)</td><td>—</td><td>işlem (zorunlu)</td>
+<td>gerekmez</td><td><span class="dr var">VAR</span><div class="dr-n">(senkron)</div></td><td>açılış<div class="dr-n"></div></td></tr><tr data-grup="panel" data-durum="var"><td><code>panel.bulten-test</code><br><b>Bülten test gönderimi ([TEST])</b></td><td>Panel (ekip)</td>
+<td>Bülten Düzenle › Test Gönder</td><td>Girilen test adresi</td><td>konu, on_metin, giris, maddeler[], tur_adi</td><td>İzleme yok, çıkış bağlantısı yerine /bulten</td><td>işlem (zorunlu)</td>
+<td>gerekmez</td><td><span class="dr var">VAR</span><div class="dr-n">. Haberler yayın süzgeci olmadan alınıyor (taslak/zamanlanmış haber test e-postasına girebilir; gerçek gönderimde düşer)</div></td><td>açılış<div class="dr-n">Test ile gerçek gönderim farkı editörü yanıltabilir: önizlemede &#x27;gönderimde düşecek&#x27; işareti önerilir</div></td></tr><tr data-grup="okur" data-durum="var"><td><code>okur.dogrulama</code><br><b>Okur e-posta doğrulama (üyelik çift onayı)</b></td><td>Okur hesabı</td>
+<td>E-postayla üye olma (site ve API), &#x27;Yeniden gönder&#x27; (60 sn bekleme), panel Okurlar › Doğrulama e-postası (tekil/toplu)</td><td>Okur</td><td>ad, baglanti, saat (24), site</td><td>Kanal: web / uygulama (bağlantı her ikisinde site adresi; mobil derin bağlantı açık konu)</td><td>işlem (zorunlu)</td>
+<td>gerekmez</td><td><span class="dr var">VAR</span><div class="dr-n">:305. SENKRON ve kayıtta hata yakalanmıyor (): SMTP hatasında hesap açılmış olur ama OkurKaydoldu (bülten isteği) çalışmaz</div></td><td>açılış<div class="dr-n">Kuyruğa alınmalı (ya da hata yakalanıp &#x27;yeniden gönder&#x27;e düşmeli)</div></td></tr><tr data-grup="okur" data-durum="yok"><td><code>okur.hos-geldin</code><br><b>Hoş geldin</b></td><td>Okur hesabı</td>
+<td>E-posta doğrulandı ya da sosyal girişle ilk hesap açıldı</td><td>Okur</td><td>ad, hesabim_baglantisi, bulten_onerisi</td><td>E-posta / sosyal giriş</td><td>işlem (zorunlu)</td>
+<td>gerekmez</td><td><span class="dr yok">YOK</span><div class="dr-n">Kodda yok; sosyal girişle açılan hesaba hiç e-posta gitmiyor</div></td><td>sonra<div class="dr-n">İçerik tanıtımı varsa pazarlama sayılır; yalnız hesap bilgisi kalırsa işlem</div></td></tr><tr data-grup="okur" data-durum="var"><td><code>okur.sifre-sifirlama</code><br><b>Okur şifre sıfırlama bağlantısı</b></td><td>Okur hesabı</td>
+<td>Şifremi unuttum (site, API)</td><td>Okur</td><td>ad, baglanti, dakika (30)</td><td>web / uygulama</td><td>işlem · güvenlik uyarısı</td>
+<td>gerekmez</td><td><span class="dr var">VAR</span><div class="dr-n">(senkron)</div></td><td>açılış<div class="dr-n"></div></td></tr><tr data-grup="okur" data-durum="var"><td><code>okur.sifre-degisti</code><br><b>Okur şifren değişti</b></td><td>Okur hesabı</td>
+<td>Sıfırlama bağlantısıyla yeni şifre ya da Hesabım › Güvenlik&#x27;ten değiştirme</td><td>Okur</td><td>ad, metin</td><td>sıfırlama sonrası / hesaptan değiştirme (metin farklı)</td><td>işlem · güvenlik uyarısı</td>
+<td>gerekmez</td><td><span class="dr var">VAR</span><div class="dr-n">(bilgi), :96</div></td><td>açılış<div class="dr-n"></div></td></tr><tr data-grup="okur" data-durum="var"><td><code>okur.eposta-degisikligi</code><br><b>Okur yeni e-posta adresini doğrula</b></td><td>Okur hesabı</td>
+<td>Hesabım › Güvenlik ve Profil&#x27;de e-posta değiştirme (site, API POST /ben/eposta-degistir) ya da panel Okur ekranında e-posta değişikliği</td><td>YENİ adres</td><td>ad, yeni, baglanti, saat</td><td>okur kendisi / panelden</td><td>işlem (zorunlu)</td>
+<td>gerekmez</td><td><span class="dr var">VAR</span><div class="dr-n"></div></td><td>açılış<div class="dr-n"></div></td></tr><tr data-grup="okur" data-durum="var"><td><code>okur.eposta-degisiyor</code><br><b>Okur e-posta değişikliği istendi (eski adrese)</b></td><td>Okur hesabı</td>
+<td>E-posta değişikliği isteği</td><td>ESKİ adres</td><td>ad, yeni</td><td>—</td><td>işlem · güvenlik uyarısı</td>
+<td>gerekmez</td><td><span class="dr var">VAR</span><div class="dr-n"></div></td><td>açılış<div class="dr-n">Yeni adres eski adrese açık yazılıyor (bilinçli; panel tarafı da aynı)</div></td></tr><tr data-grup="okur" data-durum="var"><td><code>okur.sosyal-baglandi</code><br><b>Hesabına Google/Apple/Facebook bağlandı</b></td><td>Okur hesabı</td>
+<td>Hesabım&#x27;dan sosyal hesap bağlama</td><td>Okur</td><td>ad, saglayici</td><td>Bağlantı kaldırıldı e-postası YOK</td><td>işlem · güvenlik uyarısı</td>
+<td>gerekmez</td><td><span class="dr var">VAR</span><div class="dr-n"></div></td><td>açılış<div class="dr-n"></div></td></tr><tr data-grup="okur" data-durum="yok"><td><code>okur.yeni-cihaz</code><br><b>Okur yeni cihazdan giriş</b></td><td>Okur hesabı</td>
+<td>Tanınmayan cihazdan okur girişi</td><td>Okur</td><td>ad, cihaz, zaman</td><td>web / uygulama</td><td>işlem · güvenlik uyarısı</td>
+<td>gerekmez</td><td><span class="dr yok">YOK</span><div class="dr-n">Kodda yok (yalnız panelde var)</div></td><td>sonra<div class="dr-n"></div></td></tr><tr data-grup="okur" data-durum="yok"><td><code>okur.iki-adim-kod</code><br><b>Okur iki adımlı doğrulama kodu</b></td><td>Okur hesabı</td>
+<td>Okur 2FA açıksa girişte</td><td>Okur</td><td>kod, dakika</td><td>—</td><td>işlem · güvenlik uyarısı</td>
+<td>gerekmez</td><td><span class="dr yok">YOK</span><div class="dr-n">Okur 2FA kodda yok</div></td><td>karar<div class="dr-n">Karar e-posta kodu çıkarsa panel.kod şablonu okura uyarlanır</div></td></tr><tr data-grup="okur" data-durum="var"><td><code>okur.silme-talebi</code><br><b>Hesap silme talebin alındı</b></td><td>Okur hesabı</td>
+<td>Hesabım › Gizlilik › Hesabımı sil (site, API)</td><td>Okur</td><td>ad, gun (silme_bekleme_gun)</td><td>—</td><td>işlem (zorunlu)</td>
+<td>gerekmez</td><td><span class="dr var">VAR</span><div class="dr-n"></div></td><td>açılış<div class="dr-n"></div></td></tr><tr data-grup="okur" data-durum="yok"><td><code>okur.silme-geri-alindi</code><br><b>Hesap silme talebin geri alındı / hesabın yeniden açıldı</b></td><td>Okur hesabı</td>
+<td>Panelden silme talebinin bekleme süresinde geri alınması</td><td>Okur</td><td>ad</td><td>—</td><td>işlem (zorunlu)</td>
+<td>gerekmez</td><td><span class="dr yok">YOK</span><div class="dr-n">silmeTalebiniGeriAl OkurSilmeTalebiGeriAlindi olayını yayar; e-posta dinleyicisi yok</div></td><td>sonra<div class="dr-n">Okurun haberi olmadan hesabının yeniden açılması KVKK açısından açıklanmalı</div></td></tr><tr data-grup="okur" data-durum="yok"><td><code>okur.askiya-alindi</code><br><b>Hesabın askıya alındı / yeniden etkin</b></td><td>Okur hesabı</td>
+<td>Panel Okurlar › durum değişikliği (tekil ya da toplu)</td><td>Okur</td><td>ad, gerekce?</td><td>askı / yeniden etkin</td><td>işlem (zorunlu)</td>
+<td>gerekmez</td><td><span class="dr yok">YOK</span><div class="dr-n">:290 e-posta göndermez</div></td><td>sonra<div class="dr-n">Girişte zaten mesaj gösteriliyor ()</div></td></tr><tr data-grup="okur" data-durum="var"><td><code>okur.kvkk-veri-hazir</code><br><b>Verilerin hazır (KVKK veri paketi indirme bağlantısı)</b></td><td>Okur hesabı</td>
+<td>Hesabım › Gizlilik › Verilerimi indir (site, API POST /ben/veri-talepleri) → kuyruk işi paketi hazırlar</td><td>Okur</td><td>ad, adres (indirme), son (geçerlilik, 168 saat)</td><td>—</td><td>işlem (zorunlu)</td>
+<td>gerekmez</td><td><span class="dr var">VAR</span><div class="dr-n">VeriPaketiHazirlaIsi (kuyruk &#x27;eposta&#x27;); e-posta gitmezse paket geri alınır, iş yeniden dener</div></td><td>açılış<div class="dr-n"></div></td></tr><tr data-grup="okur" data-durum="yok"><td><code>okur.hesap-silindi</code><br><b>Hesabın kalıcı olarak silindi</b></td><td>Okur hesabı</td>
+<td>Bekleme süresi dolunca kalıcı silme (okur:silme-talepleri günlük görev)</td><td>Okur (silinmeden hemen önce)</td><td>ad</td><td>—</td><td>işlem (zorunlu)</td>
+<td>gerekmez</td><td><span class="dr yok">YOK</span><div class="dr-n">e-posta göndermez</div></td><td>gerek yok<div class="dr-n">Talep e-postası süreyi bildiriyor; silme sonrası adres tutulmamalı</div></td></tr><tr data-grup="okur" data-durum="yok"><td><code>okur.dogrulama-hatirlatma</code><br><b>E-postanı hâlâ doğrulamadın (hatırlatma)</b></td><td>Okur hesabı</td>
+<td>Doğrulanmamış hesap N gün sonra</td><td>Okur</td><td>ad, baglanti</td><td>—</td><td>işlem (zorunlu)</td>
+<td>gerekmez</td><td><span class="dr yok">YOK</span><div class="dr-n">Kodda yok</div></td><td>sonra<div class="dr-n"></div></td></tr><tr data-grup="bulten" data-durum="var"><td><code>bulten.abone-onay</code><br><b>Bülten aboneliğini onayla (çift onay)</b></td><td>Bülten</td>
+<td>Bülten sayfası/penceresi/ana sayfa son bölüm/API POST /bultenler/{id}/aboneler ile üyeliksiz abonelik; ayrılmış adresin yeniden abone olması; panel &#x27;Onay E-postasını Yeniden Gönder&#x27; (tekil/toplu)</td><td>Abone adresi</td><td>adlar (bekleyen bülten türleri), onay (bağlantı), saat (72), cikis</td><td>Üye aboneliğinde GİTMEZ: hesap e-posta doğrulaması çift onayın yerini tutar ()</td><td>işlem (zorunlu)</td>
+<td>gerekmez (onay e-postası; gövdede çıkış yok, bilinçli)</td><td><span class="dr var">VAR</span><div class="dr-n">AboneEpostasiIsi (kuyruk &#x27;eposta&#x27;, 4 deneme) ←  (sinirliOnayGonder: adres başına saatte 3), :253</div></td><td>açılış<div class="dr-n"></div></td></tr><tr data-grup="bulten" data-durum="var"><td><code>bulten.abone-tercih</code><br><b>Bülten tercihlerin güncellendi (panelden)</b></td><td>Bülten</td>
+<td>Panel abone çekmecesi › Bültenler › Kaydet</td><td>Abone</td><td>adlar, cikis</td><td>—</td><td>işlem (zorunlu)</td>
+<td>gövdede tek tık çıkış var; başlık yok (işlem e-postası)</td><td><span class="dr var">VAR</span><div class="dr-n">→ AboneEpostasiIsi(&#x27;tercih&#x27;)</div></td><td>açılış<div class="dr-n"></div></td></tr><tr data-grup="bulten" data-durum="var"><td><code>bulten.abone-durduruldu</code><br><b>Bülten aboneliğin durduruldu (panelden)</b></td><td>Bülten</td>
+<td>Panel &#x27;Aboneliği Durdur&#x27; (okur Okurlar ekranından da)</td><td>Abone</td><td></td><td>—</td><td>işlem (zorunlu)</td>
+<td>gerekmez</td><td><span class="dr var">VAR</span><div class="dr-n"></div></td><td>açılış<div class="dr-n"></div></td></tr><tr data-grup="bulten" data-durum="var"><td><code>bulten.abone-tasindi</code><br><b>Bültenin değişti (tür silindi, başka türe taşındı)</b></td><td>Bülten</td>
+<td>Panelde bülten türü silinirken abonelerin başka türe taşınması</td><td>Taşınan aboneler (toplu)</td><td>eski, yeni, cikis</td><td>—</td><td>işlem (zorunlu)</td>
+<td>gövdede tek tık çıkış var</td><td><span class="dr var">VAR</span><div class="dr-n">(abone başına iş)</div></td><td>açılış<div class="dr-n">Toplu iş; çok aboneli türde Gonderici gibi parçalı ve hız sınırlı değil</div></td></tr><tr data-grup="bulten" data-durum="yok"><td><code>bulten.abone-hos-geldin</code><br><b>Aboneliğin onaylandı / ilk bülten ne zaman gelecek</b></td><td>Bülten</td>
+<td>Çift onay bağlantısı açıldı</td><td>Abone</td><td>adlar, gunler/saat, cikis</td><td>—</td><td>pazarlama / bülten</td>
+<td>GEREKİR: gövdede tek tık çıkış + List-Unsubscribe + List-Unsubscribe-Post (RFC 8058)</td><td><span class="dr yok">YOK</span><div class="dr-n">onayla() e-posta göndermez; onay sayfası bilgi veriyor</div></td><td>sonra<div class="dr-n"></div></td></tr><tr data-grup="bulten" data-durum="yok"><td><code>bulten.ayrildi</code><br><b>Abonelikten ayrıldın (onay e-postası)</b></td><td>Bülten</td>
+<td>Tek tık çıkış</td><td>—</td><td></td><td>—</td><td>işlem (zorunlu)</td>
+<td>gerekmez</td><td><span class="dr yok">YOK</span><div class="dr-n">Bilinçli olarak yok: çıkış sayfası onay gösterir ()</div></td><td>gerek yok<div class="dr-n">İyi uygulama: ayrılana e-posta gönderilmez</div></td></tr><tr data-grup="bulten" data-durum="kismi"><td><code>bulten.gonderim</code><br><b>Bülten e-postası (Sabah Bülteni, Akşam Özeti, Haftalık Ekonomi, Kampüs Bülteni, Spor Haftası, Dünya Gündemi; panelden eklenen türler)</b></td><td>Bülten</td>
+<td>bulten:gonder (her dakika): zamanlanmış bülten zamanı geldi ya da türün saatinde taslak yoksa otomatik derleme (Derleyici::otomatik)</td><td>Türün etkin aboneleri</td><td>konu, on_metin (gizli önizleme), ust (Tür · gün), giris (HTML, editör/AI), maddeler[] {sıra, başlık, spot, kaynak, izlenen adres}, tur_adi, web (sitede oku), cikis, piksel</td><td>Abone başına kişisel sıralama (kategori tercihi); görselsiz (prototip önizlemesi de görselsiz); tek dil (tr); test hali ayrı satır</td><td>pazarlama / bülten</td>
+<td>GEREKİR: gövdede tek tık çıkış + List-Unsubscribe + List-Unsubscribe-Post (RFC 8058) → VAR (gerçek SMTP sürücüsünde)</td><td><span class="dr kismi">KISMİ</span><div class="dr-n">BultenGonderIsi (kuyruk &#x27;eposta&#x27;, 200&#x27;lük parça, 1-5-15-30-60 dk yeniden deneme, 6 saatte bayat; Ç-49); . Eksikler: (1) gönderen adı bülten türü adı olmalı (panel prototipi Bülten Türü › Ad: &#x27;e-posta gönderen adı&#x27;), bugün hep MAIL_FROM</div></td><td>açılış<div class="dr-n">(1),(3),(4) açılıştan önce; (2) yasal metin modülüyle birlikte</div></td></tr><tr data-grup="bulten" data-durum="kismi"><td><code>bulten.gunun-5</code><br><b>Günün 5&#x27;i e-postası</b></td><td>Bülten</td>
+<td>Sitede Günün 5&#x27;i bileşenindeki &#x27;E-postayla al&#x27;</td><td>—</td><td>gunun 5 haberleri</td><td>sabah / akşam baskısı (Ç-12)</td><td>pazarlama / bülten</td>
+<td>GEREKİR: gövdede tek tık çıkış + List-Unsubscribe + List-Unsubscribe-Post (RFC 8058)</td><td><span class="dr kismi">KISMİ</span><div class="dr-n">&#x27;E-postayla al&#x27; yalnız Bülten penceresini açar (); ayrı &#x27;Günün 5&#x27;i&#x27; bülten türü yok. Sabah Bülteni 5 haber ama içeriği Derleyici adaylarından (son 12 saat, görüntülenme) gelir, Günün 5&#x27;i seçimiyle aynı değil</div></td><td>karar<div class="dr-n">Seçenek A: Sabah Bülteni haberleri Günün 5&#x27;i sabah baskısından alınsın (öneri; tek kaynak). B: ayrı tür. Ekranı/iş kuralını değiştirir → Beyar</div></td></tr><tr data-grup="bulten" data-durum="yok"><td><code>bulten.haftalik-kisisel</code><br><b>Kişisel haftalık özet (takip ettiklerinden)</b></td><td>Bülten</td>
+<td>Haftalık zamanlayıcı</td><td>Tercihi açık üyeler</td><td>takip edilen konu/yazar haberleri</td><td>—</td><td>pazarlama / bülten</td>
+<td>GEREKİR: gövdede tek tık çıkış + List-Unsubscribe + List-Unsubscribe-Post (RFC 8058)</td><td><span class="dr yok">YOK</span><div class="dr-n">Kodda yok; haftalık TÜRLER (Haftalık Ekonomi, Spor Haftası, Dünya Gündemi) genel bülten olarak var</div></td><td>sonra<div class="dr-n"></div></td></tr><tr data-grup="bildirim" data-durum="yok"><td><code>bildirim.son-dakika</code><br><b>Son dakika (e-posta karşılığı)</b></td><td>Okur bildirimleri</td>
+<td>Son dakika yayımlandı</td><td>Tercihi açık üye</td><td>baslik, metin, adres</td><td>Tekil / günlük derleme</td><td>pazarlama / bülten</td>
+<td>GEREKİR: gövdede tek tık çıkış + List-Unsubscribe + List-Unsubscribe-Post (RFC 8058)</td><td><span class="dr yok">YOK</span><div class="dr-n">E-posta kanalı yok; bugün: Push  + bildirim merkezi</div></td><td>gerek yok<div class="dr-n">Prototiplerin bildirim tercihlerinde kanal seçimi yok (push + bildirim merkezi); e-posta kanalı eklemek ekran değişikliğidir</div></td></tr><tr data-grup="bildirim" data-durum="yok"><td><code>bildirim.takip</code><br><b>Takip edilen konu ve yazar (e-posta karşılığı)</b></td><td>Okur bildirimleri</td>
+<td>Takip edilen konuda/yazarda yeni haber</td><td>Tercihi açık üye</td><td>baslik, metin, adres</td><td>Tekil / günlük derleme</td><td>pazarlama / bülten</td>
+<td>GEREKİR: gövdede tek tık çıkış + List-Unsubscribe + List-Unsubscribe-Post (RFC 8058)</td><td><span class="dr yok">YOK</span><div class="dr-n">E-posta kanalı yok; bugün:  (push)</div></td><td>gerek yok<div class="dr-n">Prototiplerin bildirim tercihlerinde kanal seçimi yok (push + bildirim merkezi); e-posta kanalı eklemek ekran değişikliğidir</div></td></tr><tr data-grup="bildirim" data-durum="yok"><td><code>bildirim.fiyat-alarmi</code><br><b>Fiyat alarmı (e-posta karşılığı)</b></td><td>Okur bildirimleri</td>
+<td>Enstrüman eşiği aşıldı</td><td>Tercihi açık üye</td><td>baslik, metin, adres</td><td>Tekil / günlük derleme</td><td>pazarlama / bülten</td>
+<td>GEREKİR: gövdede tek tık çıkış + List-Unsubscribe + List-Unsubscribe-Post (RFC 8058)</td><td><span class="dr yok">YOK</span><div class="dr-n">E-posta kanalı yok; bugün:  (push + merkez)</div></td><td>gerek yok<div class="dr-n">Prototiplerin bildirim tercihlerinde kanal seçimi yok (push + bildirim merkezi); e-posta kanalı eklemek ekran değişikliğidir</div></td></tr><tr data-grup="bildirim" data-durum="yok"><td><code>bildirim.yorum-yaniti</code><br><b>Yorum yanıtı (e-posta karşılığı)</b></td><td>Okur bildirimleri</td>
+<td>Okurun yorumuna editör yanıtı</td><td>Tercihi açık üye</td><td>baslik, metin, adres</td><td>Tekil / günlük derleme</td><td>pazarlama / bülten</td>
+<td>GEREKİR: gövdede tek tık çıkış + List-Unsubscribe + List-Unsubscribe-Post (RFC 8058)</td><td><span class="dr yok">YOK</span><div class="dr-n">E-posta kanalı yok; bugün:  (push)</div></td><td>gerek yok<div class="dr-n">Prototiplerin bildirim tercihlerinde kanal seçimi yok (push + bildirim merkezi); e-posta kanalı eklemek ekran değişikliğidir</div></td></tr><tr data-grup="bildirim" data-durum="yok"><td><code>bildirim.yorum-moderasyon</code><br><b>Yorum moderasyon sonucu (onaylandı/reddedildi) (e-posta karşılığı)</b></td><td>Okur bildirimleri</td>
+<td>Editör yorumu onaylar ya da reddeder</td><td>Tercihi açık üye</td><td>baslik, metin, adres</td><td>Tekil / günlük derleme</td><td>pazarlama / bülten</td>
+<td>GEREKİR: gövdede tek tık çıkış + List-Unsubscribe + List-Unsubscribe-Post (RFC 8058)</td><td><span class="dr yok">YOK</span><div class="dr-n">E-posta kanalı yok; bugün: yok (push da yok)</div></td><td>gerek yok<div class="dr-n">Prototiplerin bildirim tercihlerinde kanal seçimi yok (push + bildirim merkezi); e-posta kanalı eklemek ekran değişikliğidir</div></td></tr><tr data-grup="bildirim" data-durum="yok"><td><code>bildirim.canli-hatirlatma</code><br><b>Canlı yayın hatırlatması (e-posta karşılığı)</b></td><td>Okur bildirimleri</td>
+<td>Planlanan yayın başlıyor</td><td>Tercihi açık üye</td><td>baslik, metin, adres</td><td>Tekil / günlük derleme</td><td>pazarlama / bülten</td>
+<td>GEREKİR: gövdede tek tık çıkış + List-Unsubscribe + List-Unsubscribe-Post (RFC 8058)</td><td><span class="dr yok">YOK</span><div class="dr-n">E-posta kanalı yok; bugün:  (push)</div></td><td>gerek yok<div class="dr-n">Prototiplerin bildirim tercihlerinde kanal seçimi yok (push + bildirim merkezi); e-posta kanalı eklemek ekran değişikliğidir</div></td></tr><tr data-grup="etkilesim" data-durum="var"><td><code>geri.yanit</code><br><b>Başvurunuza yanıt (Okur Geri Bildirimleri)</b></td><td>Etkileşim</td>
+<td>Panel Okur Geri Bildirimleri › Yanıtla (iletişim formu, düzeltme bildirimi, görüş, KVKK başvurusu, İK başvurusu, Dada Doğrula iddiası)</td><td>Başvuranın bıraktığı e-posta</td><td>ad, yanit, imza (yanıtlayan), baslik, basvuru_ozeti (ilk 300 karakter), tarih, tur</td><td>Türe göre alt bilgi cümlesi; yeniden açılıp yeniden yanıtlama (önceki yanıt saklanır)</td><td>işlem (zorunlu)</td>
+<td>gerekmez</td><td><span class="dr var">VAR</span><div class="dr-n">(kuyruk &#x27;eposta&#x27;, tekil iş, 5 deneme). Reply-To yok: okur yanıtlarsa genel gönderen adrese düşer</div></td><td>açılış<div class="dr-n">Tür kanalına göre Reply-To (ör. kvkk@, ik@) önerilir</div></td></tr><tr data-grup="etkilesim" data-durum="yok"><td><code>geri.alindi</code><br><b>Başvurunuz alındı (iletişim, KVKK, İK, düzeltme, hata bildir)</b></td><td>Etkileşim</td>
+<td>Site/uygulama formu gönderildi (e-posta bırakıldıysa)</td><td>Başvuran</td><td>ad, tur, basvuru_no, yanit_suresi (KVKK 30 gün), basvuru_ozeti</td><td>Tür başına bir cümle; KVKK&#x27;da yasal süre; İK&#x27;da &#x27;10 iş günü&#x27;</td><td>işlem (zorunlu)</td>
+<td>gerekmez</td><td><span class="dr yok">YOK</span><div class="dr-n">GeriBildirimYazici::al e-posta göndermez. Sitedeki İK sayfası metni &#x27;alındığını e-postayla bildiririz&#x27; diyor (on:417) → verilen söz tutulmuyor</div></td><td>açılış<div class="dr-n">En azından İK (söz verilmiş) ve KVKK (yasal süre başlangıcı kanıtı); diğer türler sonra</div></td></tr><tr data-grup="etkilesim" data-durum="kismi"><td><code>dogrula.sonuc</code><br><b>Dada Doğrula: iddian incelendi (sonuç)</b></td><td>Etkileşim</td>
+<td>&#x27;Sonuç yayımlandığında e-postayla haber ver&#x27; işaretli iddiaya bağlı inceleme yayımlandı</td><td>İddiayı gönderen (e-posta bıraktıysa)</td><td>iddia_ozeti, karar (Doğru/Yanıltıcı/…), inceleme_baglantisi</td><td>—</td><td>işlem (zorunlu)</td>
+<td>gerekmez</td><td><span class="dr kismi">KISMİ</span><div class="dr-n">İstek saklanıyor (sonuc_bildir: , ) ama inceleme yayımlanınca otomatik gönderen yok; yalnız elle Geri yanıtı (geri.yanit) mümkün</div></td><td>açılış<div class="dr-n">Sitede işaret kutusu var, söz veriliyor</div></td></tr><tr data-grup="site" data-durum="yok"><td><code>site.yakinda-haber-ver</code><br><b>Bölüm açıldı (Yakında sayfası &#x27;Haber ver&#x27;)</b></td><td>Site</td>
+<td>Yakında sayfasında e-posta bırakma; bölüm açılınca</td><td>Bırakılan adres</td><td>bolum, adres</td><td>—</td><td>pazarlama / bülten</td>
+<td>GEREKİR: gövdede tek tık çıkış + List-Unsubscribe + List-Unsubscribe-Post (RFC 8058)</td><td><span class="dr yok">YOK</span><div class="dr-n">: e-posta alanı gerçek input değil, &#x27;Haber ver&#x27; yalnız ?gonderildi=1 + toast (sahte form; adres alınmıyor)</div></td><td>karar<div class="dr-n">Ya kayıt + bölüm açılınca tek e-posta kurulur ya da alan bülten aboneliğine yönlendirilir (öneri: bülten). Çalışmayan form canlıya çıkmamalı</div></td></tr><tr data-grup="okur" data-durum="kismi"><td><code>yasal.metin-duyurusu</code><br><b>Yasal metin değişikliği duyurusu (yürürlükten 7 gün önce)</b></td><td>Okur hesabı</td>
+<td>Yasal metin ana sürümü &#x27;Okurlara E-postayla Duyur&#x27; açık yayımlandı</td><td>Bütün kayıtlı okurlar (bülten tercihinden bağımsız)</td><td>metin_adi, surum, ozet (&#x27;Bu sürümde ne değişti&#x27;), yururluk, baglanti, yeniden_onay? + onay_baglantisi</td><td>Yeniden onay istenen / istenmeyen; onay yeri &#x27;Bülten E-postasında Bağlantıyla&#x27;</td><td>yasal bilgilendirme (toplu, işlem niteliğinde)</td>
+<td>gerekmez (yasal bilgilendirme) ama toplu gönderim: parçalı + hız sınırlı kuyruk şart</td><td><span class="dr kismi">KISMİ</span><div class="dr-n">Panel anahtarı kaydediliyor (,148; ), gönderen YOK; &#x27;bulten_eposta&#x27; onay yeri de karşılıksız</div></td><td>açılış<div class="dr-n">ilke 2: panel alanının karşılığı yok</div></td></tr></tbody></table></div>
+<h3>Öne çıkan bulgular</h3>
+<ol>
+<li>Panelde kaydedilen ama hiçbir kodun okumadığı e-posta tercihleri var (Profilim › E-posta Bildirimleri: AI taslağı onay bekliyor, sosyal hesap koptu, haftalık özet; Yasal Metinler › okurlara e-postayla duyur; Dada Doğrula › sonucu e-postayla bildir).</li>
+<li>Üç ayrı görsel biçim var (panel kiti, okur yalın kabuğu, kod içine gömülü HTML); hiçbir e-postanın düz metin eşi yok; panel kitindeki logo SVG (Gmail ve Outlook göstermez).</li>
+<li>Kimlik ve okur e-postaları istek içinde gidiyor; posta sunucusu hata verirse okur kaydı yarım kalabiliyor (kuyruğa alınmalı).</li>
+<li>Sitede verilip tutulmayan sözler: İK başvurusunda "alındığını e-postayla bildiririz", Yakında sayfasında "Haber ver".</li>
+<li>Bülten gerçek gönderimde yayın kuralına uyuyor (yayımlanmamış haber gitmiyor); test gönderimi ve önizlemede bu süzgeç yok.</li>
+</ol>
+
+<h3>Gönderim altyapısı (28.11.2026; DNS'e dokunulmadı)</h3>
+<table class="alt"><tbody>
+<tr><th>Sağlayıcı ve sürücü</th><td>Canlıda <b>SMTP</b> (barındırma firmasının posta sunucusu <code>servers.gaviahost.com.tr</code>, 465/SMTPS); uygulama sürücüsü <code>gercek</code> (Laravel SMTP). Ayrı bir e-posta servis sağlayıcısı (ESP) yok; seçimi maliyet kararı (açık soru S20).</td></tr>
+<tr><th>Gönderen</th><td><code>Dada Haber &lt;iletisim@dadahaber.com&gt;</code> (tek gönderen; türe göre ad/adres yok).</td></tr>
+<tr><th>SPF</th><td><b>Var:</b> <code>v=spf1 +a +mx +ip4:188.125.160.157 ~all</code> — posta sunucusunu (MX, .157) ve web sunucusunu (A) kapsıyor; bugünkü SMTP yolu için yeterli. ESP seçilirse onun <code>include:</code> değeri eklenmeli.</td></tr>
+<tr><th>DKIM</th><td><b>Var:</b> <code>default._domainkey</code>, RSA <b>1024 bit</b> (barındırma panelinin anahtarı). Gönderilen iletinin gerçekten bu anahtarla imzalandığı, deneme gönderimi yapılmadığı için <b>doğrulanmadı</b>. Öneri: barındırma panelinden 2048 bitlik anahtarla yenile (kayıt adı aynı kalır, değer panel verir).</td></tr>
+<tr><th>DMARC</th><td><b>Var ama korumasız:</b> <code>v=DMARC1; p=none</code> — rapor adresi yok, sahte gönderime karşı etkisi yok.</td></tr>
+<tr><th>MX</th><td><code>0 servers.gaviahost.com.tr.</code></td></tr>
+<tr><th>Ad sunucusu</th><td>Yalnız bir NS (<code>ns1.gaviahost.com.tr</code>); ikinci NS önerilir (e-postadan bağımsız, kesinti dayanıklılığı).</td></tr>
+</tbody></table>
+<h4>Girilmesi önerilen DNS kayıtları (Yasin Bey / barındırma paneli)</h4>
+<ol class="dns">
+<li><b>DMARC (hemen):</b> ad <code>_dmarc.dadahaber.com</code>, tür TXT, değer <code>v=DMARC1; p=none; rua=mailto:dmarc@dadahaber.com; adkim=r; aspf=r; fo=1</code> — önce rapor toplanır (<code>dmarc@</code> posta kutusu açılmalı); 2–4 hafta raporlar temizse <code>p=quarantine</code>, sonra <code>p=reject</code>.</li>
+<li><b>DKIM 2048 bit:</b> barındırma panelinde (cPanel › E-posta Teslim Edilebilirliği) anahtarı yenile; panel <code>default._domainkey.dadahaber.com</code> TXT değerini verir.</li>
+<li><b>SPF:</b> bugünkü haliyle kalabilir. ESP seçilirse tek kayıtta birleşir, örnek: <code>v=spf1 +a +mx +ip4:188.125.160.157 include:&lt;esp-alan-adı&gt; ~all</code> (iki ayrı SPF kaydı olmamalı).</li>
+<li><b>Toplu bülten için:</b> Gmail ve Yahoo'nun toplu gönderen kuralları (günde 5.000+ ileti): SPF ve DKIM'in gönderen alan adıyla hizalı olması, DMARC kaydı, tek tıkla abonelikten çıkma (RFC 8058; sistemde var) ve şikâyet oranının ‰3'ün altında kalması. Paylaşımlı barındırma SMTP'sinin saatlik gönderim sınırı bülten hacmine yetmeyebilir → ESP önerisi (maliyet kararı); ESP seçilince onun DKIM CNAME/TXT ve dönüş yolu (Return-Path) kayıtları eklenir — değerleri sağlayıcı verir.</li>
+</ol>
+<p class="dr-n">Kontrol yöntemi: DNS-over-HTTPS (Cloudflare) ile TXT/MX/NS sorgusu, 28.11.2026. Hiçbir e-posta gönderilmedi.</p>
+
+<script>(()=>{const g=document.getElementById('envGrup'),s=document.getElementById('envDurum');const f=()=>document.querySelectorAll('table.env tbody tr').forEach(r=>r.hidden=(g.value&&r.dataset.grup!==g.value)||(s.value&&r.dataset.durum!==s.value));g.onchange=s.onchange=f;})();</script></section>
+
+<section class="bilgi" id="olcum">
+  <h2>Ölçüm ve sınırlar</h2>
+  <p>Chromium’da (Playwright) ölçüldü: 3 alternatif × 4 e-posta × 640 ve 375 px × açık ve koyu kip (gerçek <code>prefers-color-scheme</code> öykünmesi) × görseller açık ve kapalı, toplam 96 görünüm; ayrıca 12 görünüm <code>&lt;style&gt;</code> tamamen silinmiş halde (stil bloğunu okumayan istemcilere yakın). Karşıtlık, görünen her metin düğümünün rengi ile arkasındaki ilk opak zemin arasında WCAG formülüyle hesaplandı; eşik 4,5:1, büyük yazıda 3:1.</p>
+  <div class="tablo-kap"><table class="olcum">
+    <thead><tr><th>Alternatif</th><th>Yatay taşma</th><th>En düşük karşıtlık · açık</th><th>· koyu</th><th>· görseller kapalı</th><th>· stil yok</th><th>Eşik altı metin</th><th>Alt metni olmayan görsel</th></tr></thead>
+    <tbody>
+      <tr><td>A · Vitrin</td><td>0 px (36/36)</td><td>4,63</td><td>5,14</td><td>4,63 / 5,14</td><td>4,63</td><td>0</td><td>0</td></tr>
+      <tr><td>B · Defter</td><td>0 px (36/36)</td><td>5,14</td><td>6,01</td><td>5,14 / 6,01</td><td>5,14</td><td>0</td><td>0</td></tr>
+      <tr><td>C · Pano</td><td>0 px (36/36)</td><td>4,76</td><td>5,45</td><td>4,76 / 5,45</td><td>4,76</td><td>0</td><td>0</td></tr>
+    </tbody>
+  </table></div>
+  <p><strong>Denenmedi:</strong> Gmail (web ve uygulama), Apple Mail, iOS Mail, Outlook (Windows masaüstü, Mac, Outlook.com), Yahoo, Samsung Mail ve Yandex’teki gerçek gösterim. Bu ekranlar tarayıcıda görülen haldir; tasarım bu istemcilerin bilinen kısıtlarına göre kuruldu:</p>
+  <ul>
+    <li><strong>Outlook (Word motoru):</strong> 600 px hayalet tablo, VML düğme (<code>v:roundrect</code>), Arial’a zorlama; köşe yuvarlama ve <code>max-width</code> görünmez, kartlar köşeli çıkar.</li>
+    <li><strong>Gmail:</strong> <code>&lt;head&gt;</code> içindeki stil ve medya sorgusu okunur (Google hesabıyla), <code>@font-face</code> okunmaz, yazı Helvetica/Arial’a düşer; <code>prefers-color-scheme</code> okunmaz, uygulama kendi renk çevirisini yapar. HTML boyu 102 KB kırpma sınırının çok altında (en büyük 27 KB).</li>
+    <li><strong>Stil okumayan istemci:</strong> hibrit sütunlar medya sorgusu olmadan da dar ekranda alt alta iner; ölçümde taşma yok. A’nın karoları ve C’nin satır görselleri bu halde tam genişliğe yayılmaz (en çok 264 ve 176 px).</li>
+    <li><strong>Outlook.com koyu kip:</strong> <code>[data-ogsc]</code> ve <code>[data-ogsb]</code> kuralları eklendi; sonuç denenmedi.</li>
+    <li><strong>Gilroy:</strong> önizlemede göreli yoldan yüklenir. Canlıda mutlak adres gerekir; yazı tipinin e-postada kullanım lisansı ayrıca kontrol edilmeli.</li>
+    <li><strong>Gönderim tarafı:</strong> <code>List-Unsubscribe</code> ve <code>List-Unsubscribe-Post</code> üst bilgileri (bülten ve son dakikada tek tıkla çıkış) HTML’in değil gönderimin işi; şablonla birlikte kurulmalı.</li>
+  </ul>
+  <p>Ekran görüntüleri ve ölçüm dökümü: <code>olcum/</code> klasörü (<code>sonuc.json</code>).</p>
+</section>
+</div>
+
+<script>
+const ALT = [
+  { id: 'a', ad: 'Vitrin',
+    gerekce: 'Sosyal medyada seçilen A Vitrin çizgisinin e-postadaki karşılığı. Fotoğraf kategori rengine erir ve başlık o rengin paneline yazılır; kalın çizgi vurgu öğesi, zeminli başlık vurgusu ve yuvarlak köşe aynen korunur. Okur, Instagram’da gördüğü kartı gelen kutusunda da tanır.',
+    not: 'Etiket Dikey e-postaya taşınmadı: e-posta istemcilerinin çoğu dikey yazıyı (writing-mode) göstermiyor. Yerine yatay üst etiket kullanıldı. Kategori geçişi görsele işlenmiştir; başlık, etiket ve düğme canlı metindir.',
+    renk: [['#121212', 'Üst bant'], ['#1B2A4A', 'Gündem paneli'], ['#19750A', 'Spor'], ['#FECC17', 'Vurgu, Keşfet'], ['#A30D25', 'Son dakika paneli'], ['#EFEFEF', 'Dış zemin']],
+    yazi: '<b>Gilroy ExtraBold</b> 30/1,26 başlık, zeminli vurgu · <b>Gilroy Medium</b> 16/25 gövde · 11 px aralıklı büyük harf üst etiket. Yedek yığın: Helvetica, Arial.' },
+  { id: 'b', ad: 'Defter',
+    gerekce: 'Yazı öncelikli, bantsız ve kartsız bir okuma sayfası. Günün 5’i gerçekten sayılı bir liste olduğu için numaralar sarı karolarda durur; kategori yalnız renkli üst etikette görünür, tek görsel manşettedir. En hafif ve en hızlı açılan seçenek; görseller kapalıyken neredeyse hiçbir şey kaybolmaz.',
+    not: 'Düğme ve bağlantı vurgusu marka sarısıyla yapılır (alt çizgi). Koyu kipte ana düğme sarıya döner.',
+    renk: [['#FFFFFF', 'Sayfa'], ['#121212', 'Metin, düğme'], ['#FECC17', 'Numara karosu'], ['#FFFBEC', 'Piyasa kutusu'], ['#C8102E', 'Son dakika'], ['#7A620B', 'Keşfet etiketi']],
+    yazi: '<b>Gilroy ExtraBold</b> 46 px bülten adı, 28 ve 20 px başlıklar · <b>Gilroy Medium</b> 17/27 giriş, 15/23 özet. Yedek yığın: Helvetica, Arial.' },
+  { id: 'c', ad: 'Pano',
+    gerekce: 'Sitenin ve uygulamanın arayüz diliyle kurulur: sarı üst bant, gri zemin üstünde beyaz kartlar, kategori yongaları, okuma süresi ve koyu piyasa kartı. Okur siteden tanıdığı parçaları görür; yeni bölüm eklemek (hava, maç, podcast kartı) en kolay bu yapıda. Son dakikada bant kırmızıya döner ve e-postanın türü ilk bakışta anlaşılır.',
+    not: 'Yonga renkleri kategori kaydından gelir; Keşfet sarısında yazı koyu, öbürlerinde beyazdır.',
+    renk: [['#FECC17', 'Üst bant'], ['#F2F2F2', 'Dış zemin'], ['#FFFFFF', 'Kart'], ['#121212', 'Piyasa kartı'], ['#C8102E', 'Son dakika bandı'], ['#0D6B8A', 'Dünya yongası']],
+    yazi: '<b>Gilroy ExtraBold</b> 26 px manşet, 18 px kart başlığı, 12 px yonga · <b>Gilroy Medium</b> 16/25 ve 14/21 gövde. Yedek yığın: Helvetica, Arial.' },
+];
+const ORNEK = [['sifre-sifirlama', 'Şifre sıfırlama', 'Zorunlu hesap e-postası; abonelikten çıkma yok, “neden aldın” satırı var.'],
+  ['gunluk-bulten', 'Günlük bülten · Günün 5’i', 'Manşet görselli, 4 haber iki bölümde, piyasa özeti; altta tercih ve abonelikten çıkma.'],
+  ['son-dakika', 'Son dakika', 'Üstteki düğmeyle görselli ve görselsiz hali arasında geçin.']];
+
+const ana = document.getElementById('alternatifler');
+ana.innerHTML = ALT.map((a) => `
+<section class="alt" id="alt-${a.id}" aria-labelledby="alt-${a.id}-ad">
+  <div class="alt-bas">
+    <div>
+      <h2 id="alt-${a.id}-ad"><span class="harf" aria-hidden="true">${a.id.toUpperCase()}</span>${a.id.toUpperCase()} · ${a.ad}</h2>
+      <p class="gerekce">${a.gerekce}</p>
+      <p class="not">${a.not}</p>
+    </div>
+    <div class="ozet">
+      <h3>Renk</h3>
+      <ul class="renkler">${a.renk.map(([h, ad]) => `<li><i style="background:${h}"></i><span><b>${ad}</b>${h}</span></li>`).join('')}</ul>
+      <h3>Yazı</h3>
+      <p class="yazilar">${a.yazi}</p>
+    </div>
+  </div>
+  ${ORNEK.map(([dosya, ad, aciklama]) => `
+  <div class="ornek" data-ornek="${dosya}">
+    <div class="ornek-bas"><h3>${ad}</h3>
+      <a class="txt" href="alternatifler/${a.id}/${dosya}.txt">Düz metin eşi</a>
+      <a class="ac" href="alternatifler/${a.id}/${dosya}.html" target="_blank" rel="noopener">Tek başına aç</a>
+      <span class="soluk">${aciklama}</span></div>
+    <div class="ikili">
+      <figure class="masaustu"><figcaption>Masaüstü · 640 px</figcaption><div class="cerceve"><iframe data-gen="640" title="${a.id.toUpperCase()} ${ad}, masaüstü" src="alternatifler/${a.id}/${dosya}.html" loading="lazy"></iframe></div></figure>
+      <figure class="mobil"><figcaption>Mobil · 375 px</figcaption><div class="cerceve"><iframe data-gen="375" title="${a.id.toUpperCase()} ${ad}, mobil" src="alternatifler/${a.id}/${dosya}.html" loading="lazy"></iframe></div></figure>
+    </div>
+  </div>`).join('')}
+</section>`).join('');
+
+const durum = { koyu: false, gorselsiz: false };
+
+// Koyu kip taklidi: e-postanın kendi @media (prefers-color-scheme: dark) kuralları medya sorgusu dışına çıkarılıp eklenir (kural ayrı yazılmaz).
+function koyuUygula(doc, acik) {
+  const eski = doc.getElementById('koyu-taklit'); if (eski) eski.remove();
+  doc.documentElement.toggleAttribute('data-tema-koyu', acik);
+  if (!acik) return;
+  let css = '';
+  for (const sayfa of doc.styleSheets) {
+    let kurallar; try { kurallar = sayfa.cssRules; } catch (e) { continue; }
+    for (const k of kurallar) if (k.media && /prefers-color-scheme:\s*dark/.test(k.media.mediaText)) for (const ic of k.cssRules) css += ic.cssText + '\n';
+  }
+  const st = doc.createElement('style'); st.id = 'koyu-taklit'; st.textContent = css; doc.head.appendChild(st);
+}
+// Görseller kapalı: her görsel, istemcilerin yaptığı gibi alt metniyle (görselin kendi yazı stiliyle) yer değiştirir.
+function gorselUygula(doc, kapali) {
+  doc.querySelectorAll('.alt-yerine').forEach((s) => s.remove());
+  doc.querySelectorAll('img[data-gizli]').forEach((i) => { i.style.display = i.dataset.gizli; i.removeAttribute('data-gizli'); });
+  if (!kapali) return;
+  doc.querySelectorAll('img').forEach((i) => {
+    if (i.width <= 1 && i.height <= 1) return;
+    const s = doc.createElement('span'); s.className = 'alt-yerine';
+    s.setAttribute('style', i.getAttribute('style') || '');
+    s.style.display = 'block'; s.style.width = i.getBoundingClientRect().width + 'px'; s.style.maxWidth = '100%';
+    s.style.height = 'auto'; s.style.minHeight = (i.getAttribute('height') || 20) + 'px'; s.style.padding = '6px 0'; s.style.boxSizing = 'border-box';
+    s.textContent = i.alt;
+    i.dataset.gizli = i.style.display || ''; i.style.display = 'none';
+    i.after(s);
+  });
+}
+
+function olcekle(fr) {
+  const gen = +fr.dataset.gen, kap = fr.parentElement;
+  const olcek = Math.min(1, kap.clientWidth / gen);
+  fr.style.width = gen + 'px';
+  let boy = 1400;
+  try { boy = Math.ceil(fr.contentDocument.body.getBoundingClientRect().height); } catch (e) {}
+  fr.style.height = boy + 'px';
+  fr.style.transform = olcek < 1 ? `scale(${olcek})` : '';
+  kap.style.height = Math.ceil(boy * olcek) + 'px';
+}
+function hazirla(fr) {
+  let doc; try { doc = fr.contentDocument; } catch (e) { doc = null; }
+  if (doc && doc.body) { koyuUygula(doc, durum.koyu); gorselUygula(doc, durum.gorselsiz); }
+  olcekle(fr);
+  setTimeout(() => olcekle(fr), 400);
+}
+const cerceveler = () => document.querySelectorAll('.cerceve iframe');
+cerceveler().forEach((fr) => fr.addEventListener('load', () => hazirla(fr)));
+addEventListener('resize', () => cerceveler().forEach(olcekle));
+
+function anahtar(id, alan) {
+  const d = document.getElementById(id);
+  d.addEventListener('click', () => { durum[alan] = !durum[alan]; d.setAttribute('aria-pressed', String(durum[alan])); cerceveler().forEach(hazirla); });
+}
+anahtar('dgKoyu', 'koyu'); anahtar('dgGorsel', 'gorselsiz');
+
+document.querySelectorAll('[data-sd]').forEach((d) => d.addEventListener('click', () => {
+  document.querySelectorAll('[data-sd]').forEach((x) => x.setAttribute('aria-pressed', String(x === d)));
+  const dosya = d.dataset.sd;
+  document.querySelectorAll('[data-ornek="son-dakika"]').forEach((o) => {
+    o.querySelectorAll('iframe').forEach((fr) => { fr.src = fr.src.replace(/son-dakika(-gorselsiz)?\.html/, dosya + '.html'); });
+    o.querySelector('a.txt').href = o.querySelector('a.txt').href.replace(/son-dakika(-gorselsiz)?\.txt/, dosya + '.txt');
+    o.querySelector('a.ac').href = o.querySelector('a.ac').href.replace(/son-dakika(-gorselsiz)?\.html/, dosya + '.html');
+  });
+}));
+</script>
+</body>
+</html>
