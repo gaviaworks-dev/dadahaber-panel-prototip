@@ -1,0 +1,38 @@
+/* Öneri taklidi: yalnız işaretler ve taklit düzeni. Kit sınıfları (sa-*, pnl-*, kb-*) panel prototipinden aynen. */
+
+/* yalnız menü görünümü: sabit konum yerine akışta, tam boy (karşılaştırma için kaydırma yok) */
+body.oy-yalniz-menu{background:var(--menu-bg);min-height:0}
+.oy-yalniz-menu .sa-menu{position:static;width:var(--sa-menu-w);min-height:100vh;height:auto;transform:none!important;overflow:visible}
+.oy-yalniz-menu .sa-mnav{overflow:visible}
+@media(max-width:1024px){.oy-yalniz-menu .sa-menu{width:100%}}
+
+/* tam kabuk: dar ekranda da menü öneriyi gösterir mi? hayır; kabuk kendi davranışında (çekmece) kalır */
+
+/* işaretler */
+.sa-mlink .oy-etk{margin-left:auto;flex:none;font-size:var(--fs-10-5);font-weight:var(--fw-kalin);letter-spacing:.02em;padding:2px 7px;border-radius:6px;line-height:1.4}
+.sa-mlink.oy-tasi{outline:1px dashed rgba(var(--acc-rgb),.55);outline-offset:-1px;color:var(--on-menu-mut)}
+.sa-mlink.oy-tasi .ml-ad{text-decoration:line-through;text-decoration-color:rgba(var(--acc-rgb),.7)}
+.sa-mlink.oy-tasi .oy-etk{background:rgba(var(--acc-rgb),.16);color:var(--acc)}
+.sa-mlink.oy-bol{outline:1px dashed rgba(255,255,255,.45);outline-offset:-1px}
+.sa-mlink.oy-bol .oy-etk{background:rgba(255,255,255,.14);color:#fff}
+.sa-mlink.oy-yeni{outline:1px solid var(--acc);outline-offset:-1px}
+.sa-mlink.oy-yeni .oy-etk{background:var(--acc);color:var(--on-acc)}
+
+/* Tanımlar ekranı */
+.oy-bolum{font-size:var(--fs-12);font-weight:var(--fw-kalin);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:22px 0 10px}
+.oy-bolum:first-child{margin-top:4px}
+.oy-tanim .kb-entegre-bas .pstat{flex:none}
+.oy-tanim dl{flex:1;align-content:start}
+.kb-entegre-alt{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}
+
+/* Burç Yorumları ekranı */
+.oy-burc-liste{display:flex;flex-direction:column;gap:12px}
+.oy-burc{border:1px solid var(--line);border-radius:var(--radius-lg);padding:16px;margin:0}
+.oy-burc-bas,.oy-burc-satir{display:flex;align-items:center;gap:12px}
+.oy-burc-bas .rcp-id,.oy-burc-satir .rcp-id{min-width:0}
+.oy-burc-eylem{margin-left:auto;display:flex;align-items:center;gap:8px}
+.oy-burc-satir{border:1px solid var(--line);border-radius:var(--radius-lg);padding:10px 16px}
+@media(max-width:640px){
+  .oy-burc-bas{flex-wrap:wrap}
+  .oy-burc-bas .oy-burc-eylem{width:100%;justify-content:space-between}
+}

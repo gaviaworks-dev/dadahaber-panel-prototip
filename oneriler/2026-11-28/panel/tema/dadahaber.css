@@ -1,0 +1,73 @@
+/* =====================================================================
+   TEMA · Dada Haber — YALNIZCA RENK VE LOGO (CLAUDE.md "Referans kabuk")
+   Bu dosya değişince panel başka bir projenin paneli olur. Yazı tipi, köşe,
+   boşluk ve bileşen dili burada DEĞİL, cekirdek/css/kabuk.css'tedir.
+   S1 = A (Yasin Bey, 24.11.2026): koyu menü, marka sarısı dolu ana düğme (koyu yazı),
+   etkin menü kalemi sarı zemin. Marka sarısı 24.11.2026'dan beri #FECC17.
+   ===================================================================== */
+:root{
+  /* marka — 24.11.2026 (Beyar): #FCB623 → #FECC17 (logo rengi). Skala #FECC17'den türetildi (site ile aynı).
+     Sarı üstündeki metin #121212 (12,4:1); sarı üstüne beyaz metin yok (1,51:1). */
+  --marka-10:#FFFBEC; --marka-25:#FFF2C5; --marka-50:#FFEBA2; --marka-100:#FEE074; --marka-200:#FED645;
+  --marka-300:#FECC17; --marka-400:#E5B815; --marka-500:#CBA312; --marka-600:#A3830F; --marka-700:#7A620B;
+  --marka-800:#514107; --marka-900:#292104;
+  --acc:var(--marka-300);       /* marka sarısı */
+  --acc-deep:var(--marka-400);  /* basılı / üstüne gelme */
+  --acc-rgb:254,204,23;
+  --acc-ink:var(--marka-700);   /* açık zeminde sarı yerine metin ve vurgu (beyazda 5,87:1) */
+  --on-acc:#121212;             /* sarı zemin üstündeki metin */
+
+  /* ana düğme (A: sarı zemin, koyu yazı). Kural (Beyar): üstüne gelince açılmaz, koyulaşır (400) */
+  --btn-bg:var(--marka-300);
+  --btn-fg:#121212;
+  --btn-bg-hover:var(--marka-400);
+
+  /* nötrler */
+  --ink:#121212;
+  --slate:#121212;
+  --slate-2:#494949;
+  --muted:#6B6B6B;
+  --line:#ECECEC;
+  --line-2:#DEDEDE;
+  --paper:#FFFFFF;
+  --bg:#F7F7F7;
+  --golge-rgb:18,18,18;
+  --perde:rgba(18,18,18,.5);
+
+  /* anlamsal (rozet, uyarı, delta) */
+  --ok:#19750A;       --ok-tint:#E6F3E2;
+  --warn:#9A5B00;     --warn-tint:#FFF1D6;
+  --danger:#C8102E;   --danger-tint:#FBE7EA; --danger-deep:#A30D25;
+  --info:#0D6B8A;     --info-tint:#E2F1F6;
+
+  /* yan menü (koyu) */
+  --menu-bg:#141414;
+  --menu-glow:rgba(var(--acc-rgb),.10);
+  --on-menu:rgba(255,255,255,.80);
+  --on-menu-mut:rgba(255,255,255,.52);
+  --on-menu-faint:rgba(255,255,255,.40);
+  --menu-hair:rgba(255,255,255,.09);
+  --menu-hover:rgba(255,255,255,.06);
+  --menu-hover-fg:#FFFFFF;
+  --menu-active-bg:var(--acc);
+  --menu-active-fg:#121212;
+  --menu-active-icon:#121212;
+  --menu-active-cnt-bg:#121212;
+  --menu-active-cnt-fg:var(--acc);
+  --menu-accent:var(--acc);
+  --menu-cnt-bg:var(--acc);
+  --menu-cnt-fg:#121212;
+  --sig-filter:brightness(0) invert(1);
+
+  /* kategori renkleri (yalnızca değer olarak; site tasarım kararlarından) */
+  --kat-gundem:#1B2A4A; --kat-spor:#19750A; --kat-finans:#2AA1A9; --kat-kadin:#7A1FB8;
+  --kat-savunma:#B81414; --kat-dunya:#0D6B8A; --kat-kampus:#5A5F6B; --kat-kesfet:#FECC17; --kat-kose:#B3204D;
+}
+
+/* logo — yollar bu dosyaya göredir */
+/* 24.11.2026 (Beyar): logo yalnız "dada" (vektör, viewBox 2942×991, oran ≈ 2,97). Panelde ve üst bölümde marka sarısı
+   dada.svg (#FECC17); koyu dada-koyu.svg yalnız footer benzeri açık zeminde. Marka sarısının renk skalasına geçişi onaylanmadı. */
+:root{--logo-oran:2.97}
+.kb-logo{background-image:url("dada.svg")}
+.kb-logo-isaret{background-image:url("dada.svg")}
+.kb-logo-acik{background-image:url("dada-koyu.svg")}

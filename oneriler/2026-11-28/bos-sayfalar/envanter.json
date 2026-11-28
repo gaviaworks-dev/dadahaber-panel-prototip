@@ -1,0 +1,3106 @@
+[
+ {
+  "sayfa": "/gundem",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/gundem",
+  "blok": "Haber listesi",
+  "durum": "a",
+  "neden": "10 haber",
+  "kanit": "ls-sayi 10",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/siyaset",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/siyaset",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "2 haber (az içerik)",
+  "kanit": "ls-sayi 2",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/futbol",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/futbol",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/futbol",
+  "blok": "Canlı Maçlar ve Son Skorlar kutusu",
+  "durum": "b!",
+  "neden": "Spor kaynağı canlıda kapalı (veri_servisleri.spor.acik=false); kutu yine de boş basılıyor (Ç-63 ihlali), \"Tümünü Gör\" bağlantısız",
+  "kanit": "SiteSporSayfalari::skor() maç yokken kutu döner (puan/fikstür/transfer null döner)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/futbol",
+  "blok": "Puan durumu, fikstür, transfer",
+  "durum": "b",
+  "neden": "Spor kaynağı kapalı; kutular doğru biçimde gizli",
+  "kanit": "CanliKapi::uygula → satır yok → puan()/fikstur() null",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/futbol",
+  "blok": "Alt menü: Canlı Skor, Puan Durumu, Fikstür, Takımlar, Transfer",
+  "durum": "b!",
+  "neden": "Kapalı servis sayfaları çip olarak duruyor ama bağlantısız (Ç-63: menü maddesi olmamalı)",
+  "kanit": "SorguKategori::serit \"ek\" (Spor serit_ek) KaynakKapisi ile süzülmüyor; KaynakKapisiAraKatmani yalnız href siliyor",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kadin-gundemi",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kadin-gundemi",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/milli-projeler",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/milli-projeler",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/avrupa",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/avrupa",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "2 haber (az içerik)",
+  "kanit": "ls-sayi 2",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/egitim-ve-sinavlar",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/egitim-ve-sinavlar",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/spor",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/spor",
+  "blok": "Haber listesi",
+  "durum": "a",
+  "neden": "12 haber",
+  "kanit": "ls-sayi 12",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/spor",
+  "blok": "Canlı Maçlar ve Son Skorlar kutusu",
+  "durum": "b!",
+  "neden": "Spor kaynağı canlıda kapalı (veri_servisleri.spor.acik=false); kutu yine de boş basılıyor (Ç-63 ihlali), \"Tümünü Gör\" bağlantısız",
+  "kanit": "SiteSporSayfalari::skor() maç yokken kutu döner (puan/fikstür/transfer null döner)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/spor",
+  "blok": "Puan durumu, fikstür, transfer",
+  "durum": "b",
+  "neden": "Spor kaynağı kapalı; kutular doğru biçimde gizli",
+  "kanit": "CanliKapi::uygula → satır yok → puan()/fikstur() null",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/spor",
+  "blok": "Alt menü: Canlı Skor, Puan Durumu, Fikstür, Takımlar, Transfer",
+  "durum": "b!",
+  "neden": "Kapalı servis sayfaları çip olarak duruyor ama bağlantısız (Ç-63: menü maddesi olmamalı)",
+  "kanit": "SorguKategori::serit \"ek\" (Spor serit_ek) KaynakKapisi ile süzülmüyor; KaynakKapisiAraKatmani yalnız href siliyor",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/toplum",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/toplum",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "2 haber (az içerik)",
+  "kanit": "ls-sayi 2",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/basketbol",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/basketbol",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "2 haber (az içerik)",
+  "kanit": "ls-sayi 2",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/basketbol",
+  "blok": "Canlı Maçlar ve Son Skorlar kutusu",
+  "durum": "b!",
+  "neden": "Spor kaynağı canlıda kapalı (veri_servisleri.spor.acik=false); kutu yine de boş basılıyor (Ç-63 ihlali), \"Tümünü Gör\" bağlantısız",
+  "kanit": "SiteSporSayfalari::skor() maç yokken kutu döner (puan/fikstür/transfer null döner)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/basketbol",
+  "blok": "Puan durumu, fikstür, transfer",
+  "durum": "b",
+  "neden": "Spor kaynağı kapalı; kutular doğru biçimde gizli",
+  "kanit": "CanliKapi::uygula → satır yok → puan()/fikstur() null",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/basketbol",
+  "blok": "Alt menü: Canlı Skor, Puan Durumu, Fikstür, Takımlar, Transfer",
+  "durum": "b!",
+  "neden": "Kapalı servis sayfaları çip olarak duruyor ama bağlantısız (Ç-63: menü maddesi olmamalı)",
+  "kanit": "SorguKategori::serit \"ek\" (Spor serit_ek) KaynakKapisi ile süzülmüyor; KaynakKapisiAraKatmani yalnız href siliyor",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/doviz",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/doviz",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/doviz",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kadin-haklari",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kadin-haklari",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/iha-ve-siha",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/iha-ve-siha",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/orta-dogu",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/orta-dogu",
+  "blok": "Haber listesi",
+  "durum": "a",
+  "neden": "8 haber",
+  "kanit": "ls-sayi 8",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/yks",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/yks",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/finans",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/finans",
+  "blok": "Haber listesi",
+  "durum": "a",
+  "neden": "17 haber",
+  "kanit": "ls-sayi 17",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/finans",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/hukuk",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/hukuk",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/voleybol",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/voleybol",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/voleybol",
+  "blok": "Canlı Maçlar ve Son Skorlar kutusu",
+  "durum": "b!",
+  "neden": "Spor kaynağı canlıda kapalı (veri_servisleri.spor.acik=false); kutu yine de boş basılıyor (Ç-63 ihlali), \"Tümünü Gör\" bağlantısız",
+  "kanit": "SiteSporSayfalari::skor() maç yokken kutu döner (puan/fikstür/transfer null döner)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/voleybol",
+  "blok": "Puan durumu, fikstür, transfer",
+  "durum": "b",
+  "neden": "Spor kaynağı kapalı; kutular doğru biçimde gizli",
+  "kanit": "CanliKapi::uygula → satır yok → puan()/fikstur() null",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/voleybol",
+  "blok": "Alt menü: Canlı Skor, Puan Durumu, Fikstür, Takımlar, Transfer",
+  "durum": "b!",
+  "neden": "Kapalı servis sayfaları çip olarak duruyor ama bağlantısız (Ç-63: menü maddesi olmamalı)",
+  "kanit": "SorguKategori::serit \"ek\" (Spor serit_ek) KaynakKapisi ile süzülmüyor; KaynakKapisiAraKatmani yalnız href siliyor",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/altin",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/altin",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/altin",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/toplumsal-cinsiyet",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/toplumsal-cinsiyet",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/hava-platformlari",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/hava-platformlari",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/amerika",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/amerika",
+  "blok": "Haber listesi",
+  "durum": "a",
+  "neden": "3 haber",
+  "kanit": "ls-sayi 3",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kpss",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kpss",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kadin",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kadin",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/guvenlik",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/guvenlik",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/motor-sporlari",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/motor-sporlari",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/motor-sporlari",
+  "blok": "Canlı Maçlar ve Son Skorlar kutusu",
+  "durum": "b!",
+  "neden": "Spor kaynağı canlıda kapalı (veri_servisleri.spor.acik=false); kutu yine de boş basılıyor (Ç-63 ihlali), \"Tümünü Gör\" bağlantısız",
+  "kanit": "SiteSporSayfalari::skor() maç yokken kutu döner (puan/fikstür/transfer null döner)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/motor-sporlari",
+  "blok": "Puan durumu, fikstür, transfer",
+  "durum": "b",
+  "neden": "Spor kaynağı kapalı; kutular doğru biçimde gizli",
+  "kanit": "CanliKapi::uygula → satır yok → puan()/fikstur() null",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/motor-sporlari",
+  "blok": "Alt menü: Canlı Skor, Puan Durumu, Fikstür, Takımlar, Transfer",
+  "durum": "b!",
+  "neden": "Kapalı servis sayfaları çip olarak duruyor ama bağlantısız (Ç-63: menü maddesi olmamalı)",
+  "kanit": "SorguKategori::serit \"ek\" (Spor serit_ek) KaynakKapisi ile süzülmüyor; KaynakKapisiAraKatmani yalnız href siliyor",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/borsa",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/borsa",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "2 haber (az içerik)",
+  "kanit": "ls-sayi 2",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/borsa",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kadin-ve-hukuk",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kadin-ve-hukuk",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/deniz-platformlari",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/deniz-platformlari",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/asya-pasifik",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/asya-pasifik",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/ales-ve-yds",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/ales-ve-yds",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/savunma",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/savunma",
+  "blok": "Haber listesi",
+  "durum": "a",
+  "neden": "4 haber",
+  "kanit": "ls-sayi 4",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/cevre-ve-afet",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/cevre-ve-afet",
+  "blok": "Haber listesi",
+  "durum": "a",
+  "neden": "3 haber",
+  "kanit": "ls-sayi 3",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/bisiklet",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/bisiklet",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/bisiklet",
+  "blok": "Canlı Maçlar ve Son Skorlar kutusu",
+  "durum": "b!",
+  "neden": "Spor kaynağı canlıda kapalı (veri_servisleri.spor.acik=false); kutu yine de boş basılıyor (Ç-63 ihlali), \"Tümünü Gör\" bağlantısız",
+  "kanit": "SiteSporSayfalari::skor() maç yokken kutu döner (puan/fikstür/transfer null döner)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/bisiklet",
+  "blok": "Puan durumu, fikstür, transfer",
+  "durum": "b",
+  "neden": "Spor kaynağı kapalı; kutular doğru biçimde gizli",
+  "kanit": "CanliKapi::uygula → satır yok → puan()/fikstur() null",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/bisiklet",
+  "blok": "Alt menü: Canlı Skor, Puan Durumu, Fikstür, Takımlar, Transfer",
+  "durum": "b!",
+  "neden": "Kapalı servis sayfaları çip olarak duruyor ama bağlantısız (Ç-63: menü maddesi olmamalı)",
+  "kanit": "SorguKategori::serit \"ek\" (Spor serit_ek) KaynakKapisi ile süzülmüyor; KaynakKapisiAraKatmani yalnız href siliyor",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kadin-ve-calisma-hayati",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kadin-ve-calisma-hayati",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kara-sistemleri",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kara-sistemleri",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/afrika",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/afrika",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/dunya",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/dunya",
+  "blok": "Haber listesi",
+  "durum": "a",
+  "neden": "19 haber",
+  "kanit": "ls-sayi 19",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/yerel-haberler",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/yerel-haberler",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/tenis",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/tenis",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/tenis",
+  "blok": "Canlı Maçlar ve Son Skorlar kutusu",
+  "durum": "b!",
+  "neden": "Spor kaynağı canlıda kapalı (veri_servisleri.spor.acik=false); kutu yine de boş basılıyor (Ç-63 ihlali), \"Tümünü Gör\" bağlantısız",
+  "kanit": "SiteSporSayfalari::skor() maç yokken kutu döner (puan/fikstür/transfer null döner)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/tenis",
+  "blok": "Puan durumu, fikstür, transfer",
+  "durum": "b",
+  "neden": "Spor kaynağı kapalı; kutular doğru biçimde gizli",
+  "kanit": "CanliKapi::uygula → satır yok → puan()/fikstur() null",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/tenis",
+  "blok": "Alt menü: Canlı Skor, Puan Durumu, Fikstür, Takımlar, Transfer",
+  "durum": "b!",
+  "neden": "Kapalı servis sayfaları çip olarak duruyor ama bağlantısız (Ç-63: menü maddesi olmamalı)",
+  "kanit": "SorguKategori::serit \"ek\" (Spor serit_ek) KaynakKapisi ile süzülmüyor; KaynakKapisiAraKatmani yalnız href siliyor",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/basari-hikayeleri",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/basari-hikayeleri",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/fuze-ve-roket-sistemleri",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/fuze-ve-roket-sistemleri",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/balkanlar",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/balkanlar",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/universiteler",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/universiteler",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kampus",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kampus",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/istanbul",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/istanbul",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/atletizm",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/atletizm",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/atletizm",
+  "blok": "Canlı Maçlar ve Son Skorlar kutusu",
+  "durum": "b!",
+  "neden": "Spor kaynağı canlıda kapalı (veri_servisleri.spor.acik=false); kutu yine de boş basılıyor (Ç-63 ihlali), \"Tümünü Gör\" bağlantısız",
+  "kanit": "SiteSporSayfalari::skor() maç yokken kutu döner (puan/fikstür/transfer null döner)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/atletizm",
+  "blok": "Puan durumu, fikstür, transfer",
+  "durum": "b",
+  "neden": "Spor kaynağı kapalı; kutular doğru biçimde gizli",
+  "kanit": "CanliKapi::uygula → satır yok → puan()/fikstur() null",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/atletizm",
+  "blok": "Alt menü: Canlı Skor, Puan Durumu, Fikstür, Takımlar, Transfer",
+  "durum": "b!",
+  "neden": "Kapalı servis sayfaları çip olarak duruyor ama bağlantısız (Ç-63: menü maddesi olmamalı)",
+  "kanit": "SorguKategori::serit \"ek\" (Spor serit_ek) KaynakKapisi ile süzülmüyor; KaynakKapisiAraKatmani yalnız href siliyor",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/faiz-oranlari",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/faiz-oranlari",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/faiz-oranlari",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kadin-sagligi",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kadin-sagligi",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/milli-guvenlik",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/milli-guvenlik",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kafkasya",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kafkasya",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/burslar",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/burslar",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kesfet",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kesfet",
+  "blok": "Haber listesi",
+  "durum": "a",
+  "neden": "8 haber",
+  "kanit": "ls-sayi 8",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/ankara",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/ankara",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/olimpiyatlar",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/olimpiyatlar",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/olimpiyatlar",
+  "blok": "Canlı Maçlar ve Son Skorlar kutusu",
+  "durum": "b!",
+  "neden": "Spor kaynağı canlıda kapalı (veri_servisleri.spor.acik=false); kutu yine de boş basılıyor (Ç-63 ihlali), \"Tümünü Gör\" bağlantısız",
+  "kanit": "SiteSporSayfalari::skor() maç yokken kutu döner (puan/fikstür/transfer null döner)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/olimpiyatlar",
+  "blok": "Puan durumu, fikstür, transfer",
+  "durum": "b",
+  "neden": "Spor kaynağı kapalı; kutular doğru biçimde gizli",
+  "kanit": "CanliKapi::uygula → satır yok → puan()/fikstur() null",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/olimpiyatlar",
+  "blok": "Alt menü: Canlı Skor, Puan Durumu, Fikstür, Takımlar, Transfer",
+  "durum": "b!",
+  "neden": "Kapalı servis sayfaları çip olarak duruyor ama bağlantısız (Ç-63: menü maddesi olmamalı)",
+  "kanit": "SorguKategori::serit \"ek\" (Spor serit_ek) KaynakKapisi ile süzülmüyor; KaynakKapisiAraKatmani yalnız href siliyor",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/hamilelik",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/hamilelik",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/askeri-operasyonlar",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/askeri-operasyonlar",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/turk-dunyasi",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/turk-dunyasi",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/yurtlar",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/yurtlar",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/teknoloji",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/teknoloji",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/izmir",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/izmir",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/e-spor",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/e-spor",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/e-spor",
+  "blok": "Canlı Maçlar ve Son Skorlar kutusu",
+  "durum": "b!",
+  "neden": "Spor kaynağı canlıda kapalı (veri_servisleri.spor.acik=false); kutu yine de boş basılıyor (Ç-63 ihlali), \"Tümünü Gör\" bağlantısız",
+  "kanit": "SiteSporSayfalari::skor() maç yokken kutu döner (puan/fikstür/transfer null döner)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/e-spor",
+  "blok": "Puan durumu, fikstür, transfer",
+  "durum": "b",
+  "neden": "Spor kaynağı kapalı; kutular doğru biçimde gizli",
+  "kanit": "CanliKapi::uygula → satır yok → puan()/fikstur() null",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/e-spor",
+  "blok": "Alt menü: Canlı Skor, Puan Durumu, Fikstür, Takımlar, Transfer",
+  "durum": "b!",
+  "neden": "Kapalı servis sayfaları çip olarak duruyor ama bağlantısız (Ç-63: menü maddesi olmamalı)",
+  "kanit": "SorguKategori::serit \"ek\" (Spor serit_ek) KaynakKapisi ile süzülmüyor; KaynakKapisiAraKatmani yalnız href siliyor",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/turkiye-ekonomisi",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/turkiye-ekonomisi",
+  "blok": "Haber listesi",
+  "durum": "a",
+  "neden": "3 haber",
+  "kanit": "ls-sayi 3",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/turkiye-ekonomisi",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/anne-ve-cocuk",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/anne-ve-cocuk",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/sinir-guvenligi",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/sinir-guvenligi",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/diplomasi",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/diplomasi",
+  "blok": "Haber listesi",
+  "durum": "a",
+  "neden": "3 haber",
+  "kanit": "ls-sayi 3",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/ogrenci-topluluklari",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/ogrenci-topluluklari",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/yapay-zeka",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/yapay-zeka",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/sehirler",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/sehirler",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/dunya-ekonomisi",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/dunya-ekonomisi",
+  "blok": "Haber listesi",
+  "durum": "a",
+  "neden": "5 haber",
+  "kanit": "ls-sayi 5",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/dunya-ekonomisi",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/moda",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/moda",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/terorle-mucadele",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/terorle-mucadele",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kuresel-siyaset",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kuresel-siyaset",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/staj",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/staj",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/bilim",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/bilim",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/ozel-haber",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/ozel-haber",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/bankacilik",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/bankacilik",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/bankacilik",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/guzellik",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/guzellik",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/uluslararasi-guvenlik",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/uluslararasi-guvenlik",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/savas-ve-catismalar",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/savas-ve-catismalar",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kariyer",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kariyer",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/uzay",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/uzay",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/arastirma",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/arastirma",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kisisel-finans",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kisisel-finans",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kisisel-finans",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/ev-ve-yasam",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/ev-ve-yasam",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/nato",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/nato",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/goc",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/goc",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/genclerin-gundemi",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/genclerin-gundemi",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/siber-guvenlik",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/siber-guvenlik",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "2 haber (az içerik)",
+  "kanit": "ls-sayi 2",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/enflasyon",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/enflasyon",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/enflasyon",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/astroloji",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/astroloji",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/savunma-teknolojileri",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/savunma-teknolojileri",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/uluslararasi-kuruluslar",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/uluslararasi-kuruluslar",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/oyun",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/oyun",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/is-dunyasi",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/is-dunyasi",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/is-dunyasi",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/ihracat-ve-anlasmalar",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/ihracat-ve-anlasmalar",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/iklim",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/iklim",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/milli-takim",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/milli-takim",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/milli-takim",
+  "blok": "Takım/millî maç bileşeni ve profil banner'ı",
+  "durum": "b",
+  "neden": "Spor kaynağı kapalı; fikstür, kadro, son maçlar ve takım profil banner'ı gizli (doğru)",
+  "kanit": "SporSayfasi::takimBannerHtml null (Kulup kaydı yok)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/milli-takim",
+  "blok": "Alt menü: Canlı Skor, Puan Durumu, Fikstür, Takımlar, Transfer",
+  "durum": "b!",
+  "neden": "Kapalı servis sayfaları çip olarak duruyor ama bağlantısız (Ç-63: menü maddesi olmamalı)",
+  "kanit": "SorguKategori::serit \"ek\" (Spor serit_ek) KaynakKapisi ile süzülmüyor; KaynakKapisiAraKatmani yalnız href siliyor",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/sirketler",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/sirketler",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/sirketler",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/saglik",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/saglik",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/galatasaray",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/galatasaray",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/galatasaray",
+  "blok": "Takım/millî maç bileşeni ve profil banner'ı",
+  "durum": "b",
+  "neden": "Spor kaynağı kapalı; fikstür, kadro, son maçlar ve takım profil banner'ı gizli (doğru)",
+  "kanit": "SporSayfasi::takimBannerHtml null (Kulup kaydı yok)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/galatasaray",
+  "blok": "Alt menü: Canlı Skor, Puan Durumu, Fikstür, Takımlar, Transfer",
+  "durum": "b!",
+  "neden": "Kapalı servis sayfaları çip olarak duruyor ama bağlantısız (Ç-63: menü maddesi olmamalı)",
+  "kanit": "SorguKategori::serit \"ek\" (Spor serit_ek) KaynakKapisi ile süzülmüyor; KaynakKapisiAraKatmani yalnız href siliyor",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/girisimcilik",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/girisimcilik",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/girisimcilik",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/halk-sagligi",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/halk-sagligi",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/fenerbahce",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/fenerbahce",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/fenerbahce",
+  "blok": "Takım/millî maç bileşeni ve profil banner'ı",
+  "durum": "b",
+  "neden": "Spor kaynağı kapalı; fikstür, kadro, son maçlar ve takım profil banner'ı gizli (doğru)",
+  "kanit": "SporSayfasi::takimBannerHtml null (Kulup kaydı yok)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/fenerbahce",
+  "blok": "Alt menü: Canlı Skor, Puan Durumu, Fikstür, Takımlar, Transfer",
+  "durum": "b!",
+  "neden": "Kapalı servis sayfaları çip olarak duruyor ama bağlantısız (Ç-63: menü maddesi olmamalı)",
+  "kanit": "SorguKategori::serit \"ek\" (Spor serit_ek) KaynakKapisi ile süzülmüyor; KaynakKapisiAraKatmani yalnız href siliyor",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/calisma-hayati",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/calisma-hayati",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/calisma-hayati",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/beslenme",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/beslenme",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/besiktas",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/besiktas",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/besiktas",
+  "blok": "Takım/millî maç bileşeni ve profil banner'ı",
+  "durum": "b",
+  "neden": "Spor kaynağı kapalı; fikstür, kadro, son maçlar ve takım profil banner'ı gizli (doğru)",
+  "kanit": "SporSayfasi::takimBannerHtml null (Kulup kaydı yok)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/besiktas",
+  "blok": "Alt menü: Canlı Skor, Puan Durumu, Fikstür, Takımlar, Transfer",
+  "durum": "b!",
+  "neden": "Kapalı servis sayfaları çip olarak duruyor ama bağlantısız (Ç-63: menü maddesi olmamalı)",
+  "kanit": "SorguKategori::serit \"ek\" (Spor serit_ek) KaynakKapisi ile süzülmüyor; KaynakKapisiAraKatmani yalnız href siliyor",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/enerji",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/enerji",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/enerji",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/ruh-sagligi",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/ruh-sagligi",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/trabzonspor",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/trabzonspor",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/trabzonspor",
+  "blok": "Takım/millî maç bileşeni ve profil banner'ı",
+  "durum": "b",
+  "neden": "Spor kaynağı kapalı; fikstür, kadro, son maçlar ve takım profil banner'ı gizli (doğru)",
+  "kanit": "SporSayfasi::takimBannerHtml null (Kulup kaydı yok)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/trabzonspor",
+  "blok": "Alt menü: Canlı Skor, Puan Durumu, Fikstür, Takımlar, Transfer",
+  "durum": "b!",
+  "neden": "Kapalı servis sayfaları çip olarak duruyor ama bağlantısız (Ç-63: menü maddesi olmamalı)",
+  "kanit": "SorguKategori::serit \"ek\" (Spor serit_ek) KaynakKapisi ile süzülmüyor; KaynakKapisiAraKatmani yalnız href siliyor",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/tarim",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/tarim",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/tarim",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/seyahat",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/seyahat",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/super-lig",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/super-lig",
+  "blok": "Haber listesi",
+  "durum": "a",
+  "neden": "4 haber",
+  "kanit": "ls-sayi 4",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/super-lig",
+  "blok": "Canlı Maçlar ve Son Skorlar kutusu",
+  "durum": "b!",
+  "neden": "Spor kaynağı canlıda kapalı (veri_servisleri.spor.acik=false); kutu yine de boş basılıyor (Ç-63 ihlali), \"Tümünü Gör\" bağlantısız",
+  "kanit": "SiteSporSayfalari::skor() maç yokken kutu döner (puan/fikstür/transfer null döner)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/super-lig",
+  "blok": "Puan durumu, fikstür, transfer",
+  "durum": "b",
+  "neden": "Spor kaynağı kapalı; kutular doğru biçimde gizli",
+  "kanit": "CanliKapi::uygula → satır yok → puan()/fikstur() null",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/super-lig",
+  "blok": "Alt menü: Canlı Skor, Puan Durumu, Fikstür, Takımlar, Transfer",
+  "durum": "b!",
+  "neden": "Kapalı servis sayfaları çip olarak duruyor ama bağlantısız (Ç-63: menü maddesi olmamalı)",
+  "kanit": "SorguKategori::serit \"ek\" (Spor serit_ek) KaynakKapisi ile süzülmüyor; KaynakKapisiAraKatmani yalnız href siliyor",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/sanayi",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/sanayi",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/sanayi",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/gastronomi",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/gastronomi",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/avrupa-ligleri",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/avrupa-ligleri",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/avrupa-ligleri",
+  "blok": "Canlı Maçlar ve Son Skorlar kutusu",
+  "durum": "b!",
+  "neden": "Spor kaynağı canlıda kapalı (veri_servisleri.spor.acik=false); kutu yine de boş basılıyor (Ç-63 ihlali), \"Tümünü Gör\" bağlantısız",
+  "kanit": "SiteSporSayfalari::skor() maç yokken kutu döner (puan/fikstür/transfer null döner)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/avrupa-ligleri",
+  "blok": "Puan durumu, fikstür, transfer",
+  "durum": "b",
+  "neden": "Spor kaynağı kapalı; kutular doğru biçimde gizli",
+  "kanit": "CanliKapi::uygula → satır yok → puan()/fikstur() null",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/avrupa-ligleri",
+  "blok": "Alt menü: Canlı Skor, Puan Durumu, Fikstür, Takımlar, Transfer",
+  "durum": "b!",
+  "neden": "Kapalı servis sayfaları çip olarak duruyor ama bağlantısız (Ç-63: menü maddesi olmamalı)",
+  "kanit": "SorguKategori::serit \"ek\" (Spor serit_ek) KaynakKapisi ile süzülmüyor; KaynakKapisiAraKatmani yalnız href siliyor",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/gayrimenkul",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/gayrimenkul",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/gayrimenkul",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kultur-ve-yasam",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kultur-ve-yasam",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "2 haber (az içerik)",
+  "kanit": "ls-sayi 2",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/otomotiv",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/otomotiv",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/otomotiv",
+  "blok": "Alt menü: Kripto Para, Akaryakıt Fiyatları",
+  "durum": "b!",
+  "neden": "Kapalı kalem sayfaları bağlantısız çip (Ç-63: menü maddesi olmamalı)",
+  "kanit": "Aynı neden (serit_ek süzülmüyor)",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/sinema",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/sinema",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/dizi",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/dizi",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/muzik",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/muzik",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kitap",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/kitap",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/tiyatro",
+  "blok": "Banner (siyah boş alan)",
+  "durum": "d",
+  "neden": "Kategori banner görseli yok, öne çıkan haber yok, site paylaşım görseli yok → düz #121212; masaüstünde 496 px",
+  "kanit": "SiteKategoriSayfasi::banner → BannerKaynagi (zincir → haber → kimlik.paylasim_gorseli) üçü de boş; liste.css .bn .kap min-block-size:380px",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/tiyatro",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "0 haber: \"Bu bölümde henüz haber yok.\"",
+  "kanit": "ls-sayi 0; AI hattı ve editör bu konuya haber atamamış",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/sergi",
+  "blok": "Banner görseli",
+  "durum": "a",
+  "neden": "Öne çıkan haberin kapağıyla dolu; kategorinin kendi banner görseli panelde yok",
+  "kanit": "BannerKaynagi::zincir boş → haber kapağı",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/sergi",
+  "blok": "Haber listesi",
+  "durum": "e",
+  "neden": "1 haber (az içerik)",
+  "kanit": "ls-sayi 1",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/",
+  "blok": "Manşet + diğer manşetler",
+  "durum": "a",
+  "neden": "5 haber",
+  "kanit": "SiteAnaSayfa::manset",
+  "grup": "Ana sayfa"
+ },
+ {
+  "sayfa": "/",
+  "blok": "Hava ayırıcısı",
+  "durum": "a",
+  "neden": "MET Norway, İstanbul",
+  "kanit": "AnaSayfaBloklari hava",
+  "grup": "Ana sayfa"
+ },
+ {
+  "sayfa": "/",
+  "blok": "Türkiye'de Bugün, Sahada Bu Hafta, Piyasa ve Cüzdan, Savunma, Dünyadan",
+  "durum": "a",
+  "neden": "Bölüm başına 5 haber",
+  "kanit": "DUZEN bolum",
+  "grup": "Ana sayfa"
+ },
+ {
+  "sayfa": "/",
+  "blok": "Namaz ayırıcısı, Döviz ayırıcısı",
+  "durum": "a",
+  "neden": "Aladhan; TCMB EVDS",
+  "kanit": "AnaSayfaBloklari namaz/doviz",
+  "grup": "Ana sayfa"
+ },
+ {
+  "sayfa": "/",
+  "blok": "Kadınların Gündemi",
+  "durum": "e",
+  "neden": "Kadın ana başlığında 0 haber: bölüm basılmıyor",
+  "kanit": "bolum kadin, haber yok",
+  "grup": "Ana sayfa"
+ },
+ {
+  "sayfa": "/",
+  "blok": "Sınav, Burs, Staj",
+  "durum": "e",
+  "neden": "Kampüs ana başlığında 0 haber: bölüm basılmıyor",
+  "kanit": "bolum kampus, haber yok",
+  "grup": "Ana sayfa"
+ },
+ {
+  "sayfa": "/",
+  "blok": "Köşe Yazıları",
+  "durum": "d",
+  "neden": "Köşe yazarı ve köşe yazısı yok (/yazarlar 0 yazar)",
+  "kanit": "DUZEN yazarlar",
+  "grup": "Ana sayfa"
+ },
+ {
+  "sayfa": "/",
+  "blok": "Günün Kareleri (Foto Fokus)",
+  "durum": "d",
+  "neden": "Yayında galeri yok (/foto-fokus 0 galeri)",
+  "kanit": "AnaSayfaBloklari foto-fokus → null",
+  "grup": "Ana sayfa"
+ },
+ {
+  "sayfa": "/",
+  "blok": "Takımının Haberleri (Süper Lig)",
+  "durum": "b",
+  "neden": "Spor kaynağı kapalı; blok gizli (doğru)",
+  "kanit": "AnaSayfaBloklari super-lig + KaynakKapisi",
+  "grup": "Ana sayfa"
+ },
+ {
+  "sayfa": "/",
+  "blok": "Dinleyerek Takip Et (Podcast)",
+  "durum": "d",
+  "neden": "Yayında podcast bölümü yok",
+  "kanit": "AnaSayfaBloklari podcast → null",
+  "grup": "Ana sayfa"
+ },
+ {
+  "sayfa": "/",
+  "blok": "Günün 5'i bandı",
+  "durum": "d",
+  "neden": "Günün 5'i baskısı yok",
+  "kanit": "AnaSayfaBloklari bant → null",
+  "grup": "Ana sayfa"
+ },
+ {
+  "sayfa": "/",
+  "blok": "Dosyalar: Gündemi Anlamak İçin",
+  "durum": "d",
+  "neden": "Yayında Dada Bağlam dosyası yok",
+  "kanit": "AnaSayfaBloklari dosyalar → null",
+  "grup": "Ana sayfa"
+ },
+ {
+  "sayfa": "/",
+  "blok": "30 Saniyede Bir Haber (Akış)",
+  "durum": "d",
+  "neden": "Bugünün akışı yayımlanmadı",
+  "kanit": "AnaSayfaBloklari akis → null",
+  "grup": "Ana sayfa"
+ },
+ {
+  "sayfa": "/",
+  "blok": "Rakamlarla Gündem (İnfografik)",
+  "durum": "d",
+  "neden": "Yayında infografik yok",
+  "kanit": "AnaSayfaBloklari infografik → null",
+  "grup": "Ana sayfa"
+ },
+ {
+  "sayfa": "/",
+  "blok": "Dada Diet / Dada Gourmet / Dada Gastro blokları",
+  "durum": "c",
+  "neden": "Kod yalnız parite yer tutucusu; kardeş sitelerden içerik çeken bağlantı yok, kayıtlı modül yok",
+  "kanit": "SiteAnaSayfa::DUZEN yer diet/gourmet/gastro; AnaSayfaBloklari::kaydet yok; yer-tutucu/*.blade.php",
+  "grup": "Ana sayfa"
+ },
+ {
+  "sayfa": "/ (alt bilgi)",
+  "blok": "Uygulama mağaza bağlantıları",
+  "durum": "d",
+  "neden": "App Store ve Google Play bağlantıları genel adres (apps.apple.com/, play.google.com/store/apps)",
+  "kanit": "Site Ayarları › mağaza bağlantıları girilmemiş",
+  "grup": "Ana sayfa"
+ },
+ {
+  "sayfa": "/ (menü)",
+  "blok": "Mega menü görselleri (8 ana başlık)",
+  "durum": "d",
+  "neden": "Ana başlıkların banner görseli yok: mega menü görseli boş",
+  "kanit": "mg-bas style=\"\" (8/8)",
+  "grup": "Ana sayfa"
+ },
+ {
+  "sayfa": "/canli-skor, /puan-durumu, /fikstur, /takimlar, /transfer",
+  "blok": "Spor servis sayfaları",
+  "durum": "b",
+  "neden": "Sayfa 404 (Ç-63 doğru)",
+  "kanit": "KaynakKapisiAraKatmani",
+  "grup": "Spor"
+ },
+ {
+  "sayfa": "/finans",
+  "blok": "Piyasa merkezi: Piyasa Özeti",
+  "durum": "a",
+  "neden": "BIST 100, Dolar, Euro, Ons Altın (EVDS)",
+  "kanit": "PiyasaSayfasi::finans",
+  "grup": "Finans ve piyasa"
+ },
+ {
+  "sayfa": "/finans",
+  "blok": "Faiz sekmesi: 92 gün mevduat satırı ve not saati",
+  "durum": "c",
+  "neden": "Veri vardı (EVDS TP.TRY.MT02), sahte sürücü anahtarıyla aranıyordu; not tarihi boştu (\"· itibarıyla\") → BAĞLANDI",
+  "kanit": "PiyasaSayfasi::finans; yansıma testi FinansFaizYansimaTest",
+  "grup": "Finans ve piyasa"
+ },
+ {
+  "sayfa": "/finans",
+  "blok": "Faiz sekmesi: TCMB politika faizleri",
+  "durum": "b",
+  "neden": "EVDS sürücüsünde politika faizi serisi yok; satırlar gizli (doğru)",
+  "kanit": "EvdsPiyasaVerisi::faizler politika=[]",
+  "grup": "Finans ve piyasa"
+ },
+ {
+  "sayfa": "/finans",
+  "blok": "Akaryakıt tablosu",
+  "durum": "b",
+  "neden": "Akaryakıt kalemi kapalı; gizli (doğru)",
+  "kanit": "veri_servisleri.piyasa.kalemler.akaryakit=false",
+  "grup": "Finans ve piyasa"
+ },
+ {
+  "sayfa": "/doviz",
+  "blok": "Döviz kurları + çevirici",
+  "durum": "a",
+  "neden": "8 kur, TCMB EVDS",
+  "kanit": "",
+  "grup": "Finans ve piyasa"
+ },
+ {
+  "sayfa": "/doviz, /piyasa-ekrani",
+  "blok": "Gün içi en düşük · en yüksek",
+  "durum": "b",
+  "neden": "EVDS günlük; gün içi değer yok, \"–\" basılıyor",
+  "kanit": "EvdsPiyasaVerisi gunIci=[]",
+  "grup": "Finans ve piyasa"
+ },
+ {
+  "sayfa": "/altin",
+  "blok": "Altın fiyatları tablosu",
+  "durum": "b",
+  "neden": "Yalnız Ons Altın; gram, çeyrek ve diğerleri kaynakta yok ya da güncel değil (gizli)",
+  "kanit": "EVDS TP.ALTINPIYASA.KAP05 bayat (166f5da7)",
+  "grup": "Finans ve piyasa"
+ },
+ {
+  "sayfa": "/borsa",
+  "blok": "Endeksler (BIST 100)",
+  "durum": "a",
+  "neden": "EVDS gün sonu",
+  "kanit": "",
+  "grup": "Finans ve piyasa"
+ },
+ {
+  "sayfa": "/borsa",
+  "blok": "Hisse tablosu (En Aktif/Artan/Azalan/Hacim)",
+  "durum": "b!",
+  "neden": "EVDS'de hisse yok; tablo başlıkla boş basılıyor: \"0 / 0 hisse gösteriliyor\" (Ç-63 ihlali)",
+  "kanit": "borsa.blade.php $hisseler boş, koşulsuz",
+  "grup": "Finans ve piyasa"
+ },
+ {
+  "sayfa": "/faiz-oranlari",
+  "blok": "Mevduat tablosu",
+  "durum": "a",
+  "neden": "6 satır EVDS",
+  "kanit": "",
+  "grup": "Finans ve piyasa"
+ },
+ {
+  "sayfa": "/faiz-oranlari",
+  "blok": "Politika faizleri ve Kredi tabloları",
+  "durum": "b!",
+  "neden": "Kaynakta yok; başlıkla boş tablo basılıyor (Ç-63 ihlali)",
+  "kanit": "faiz.blade.php $politika/$kredi boş, koşulsuz",
+  "grup": "Finans ve piyasa"
+ },
+ {
+  "sayfa": "/enflasyon",
+  "blok": "Piyasa şeridi",
+  "durum": "a",
+  "neden": "BIST, Dolar, Euro, Ons (prototipte Gram altın, Brent, Bitcoin, Gümüş da var: kaynak kapalı)",
+  "kanit": "",
+  "grup": "Finans ve piyasa"
+ },
+ {
+  "sayfa": "/piyasa-ekrani",
+  "blok": "Bütün Piyasalar tablosu",
+  "durum": "a",
+  "neden": "Döviz, altın (ons), borsa (XU100)",
+  "kanit": "",
+  "grup": "Finans ve piyasa"
+ },
+ {
+  "sayfa": "/piyasa-ekrani",
+  "blok": "Piyasa Saatleri: Kripto 7/24 satırı",
+  "durum": "b!",
+  "neden": "Kripto kalemi kapalı ama saat satırı duruyor",
+  "kanit": "ekran.blade sabit satır",
+  "grup": "Finans ve piyasa"
+ },
+ {
+  "sayfa": "/piyasa/{10 enstrüman}",
+  "blok": "Enstrüman sayfaları",
+  "durum": "a",
+  "neden": "Geçmiş fiyatlar, grafik, künye (EVDS)",
+  "kanit": "sitemap-veri",
+  "grup": "Finans ve piyasa"
+ },
+ {
+  "sayfa": "/ekonomi-araclari",
+  "blok": "Döviz, Enflasyon, Maaş hesaplayıcı",
+  "durum": "a",
+  "neden": "TÜİK TÜFE, EVDS",
+  "kanit": "",
+  "grup": "Finans ve piyasa"
+ },
+ {
+  "sayfa": "/ekonomi-araclari",
+  "blok": "Kredi ve Yakıt Maliyeti hesaplayıcı",
+  "durum": "b",
+  "neden": "Kaynak yok; gizli (doğru)",
+  "kanit": "",
+  "grup": "Finans ve piyasa"
+ },
+ {
+  "sayfa": "/kripto-para, /akaryakit-fiyatlari",
+  "blok": "Kalem sayfaları",
+  "durum": "b",
+  "neden": "404 (Ç-63 doğru)",
+  "kanit": "",
+  "grup": "Finans ve piyasa"
+ },
+ {
+  "sayfa": "/hava-durumu (+81 il)",
+  "blok": "Hava durumu",
+  "durum": "a",
+  "neden": "MET Norway",
+  "kanit": "",
+  "grup": "Servis sayfaları"
+ },
+ {
+  "sayfa": "/namaz-vakitleri (+81 il)",
+  "blok": "Namaz vakitleri",
+  "durum": "a",
+  "neden": "Aladhan (Diyanet yöntemi)",
+  "kanit": "",
+  "grup": "Servis sayfaları"
+ },
+ {
+  "sayfa": "/afet-acil-durum",
+  "blok": "Son depremler, telefonlar, hazırlık rehberi",
+  "durum": "a",
+  "neden": "AFAD; panel içeriği girilmiş",
+  "kanit": "",
+  "grup": "Servis sayfaları"
+ },
+ {
+  "sayfa": "/trafik-ulasim (+81 il)",
+  "blok": "Trafik verisi",
+  "durum": "b",
+  "neden": "Trafik kaynağı kapalı; veri bölümü gizli, panel içeriği (Önemli Telefonlar) var (Ç-63 a)",
+  "kanit": "",
+  "grup": "Servis sayfaları"
+ },
+ {
+  "sayfa": "/trafik-ulasim (+81 il)",
+  "blok": "Ulaşım duyuruları",
+  "durum": "d",
+  "neden": "Panelde trafik duyurusu yok",
+  "kanit": "ServisOgesi trafik",
+  "grup": "Servis sayfaları"
+ },
+ {
+  "sayfa": "/resmi-ilanlar",
+  "blok": "Resmî ilanlar",
+  "durum": "b",
+  "neden": "BİK kaynağı kapalı (veri_servisleri.bik.acik=false); sayfa yok",
+  "kanit": "",
+  "grup": "Servis sayfaları"
+ },
+ {
+  "sayfa": "/gundem-takvimi",
+  "blok": "Önümüzdeki Günler",
+  "durum": "d",
+  "neden": "\"Bu dönemde takvim kaydı yok.\" ×3; panelde takvim kaydı yok",
+  "kanit": "Takvim › Gündem",
+  "grup": "Takvim"
+ },
+ {
+  "sayfa": "/ekonomik-takvim",
+  "blok": "Bu Hafta / Gelecek Hafta",
+  "durum": "d",
+  "neden": "\"Bu dönemde takvim kaydı yok.\" ×2; veri kaynağı yok, panelden girilir",
+  "kanit": "Takvim › Ekonomik",
+  "grup": "Takvim"
+ },
+ {
+  "sayfa": "/sinav-takvimi",
+  "blok": "Sınav takvimi",
+  "durum": "d",
+  "neden": "\"Önümüzdeki dönemde takvim kaydı yok.\"",
+  "kanit": "Takvim › Sınav",
+  "grup": "Takvim"
+ },
+ {
+  "sayfa": "/arsiv, /arsiv/{gün}",
+  "blok": "Arşiv",
+  "durum": "a",
+  "neden": "70 haber (yalnız 28 Kasım; önceki günler boş)",
+  "kanit": "",
+  "grup": "Takvim"
+ },
+ {
+  "sayfa": "/astroloji",
+  "blok": "Burçlar ızgarası",
+  "durum": "a",
+  "neden": "12 burç",
+  "kanit": "SiteOzel::astrolojiBileseni",
+  "grup": "Kadın özel"
+ },
+ {
+  "sayfa": "/astroloji",
+  "blok": "\"Yay Burcu Bugün\" günlük yorum",
+  "durum": "d",
+  "neden": "\"Bugünün yorumu henüz girilmedi.\"",
+  "kanit": "BurcYorumu kaydı yok",
+  "grup": "Kadın özel"
+ },
+ {
+  "sayfa": "/astroloji/{12 burç}",
+  "blok": "Burç rehberi metni, aşk, iş, ilgili haberler",
+  "durum": "d",
+  "neden": "Yalnız künye (element, nitelik, gezegen) ve uyarı; rehber metni ve yorum girilmemiş",
+  "kanit": "Burc çevirisi boş",
+  "grup": "Kadın özel"
+ },
+ {
+  "sayfa": "/hamilelik",
+  "blok": "Hafta Hafta Gebelik + Gebelik Haftası Hesaplayıcı",
+  "durum": "d",
+  "neden": "Yayında hamilelik haftası yok → bileşenin tamamı gizli (hesaplayıcı da)",
+  "kanit": "SiteOzel::hamilelikBileseni haftalar=[] → null",
+  "grup": "Kadın özel"
+ },
+ {
+  "sayfa": "/son-dakika",
+  "blok": "Son dakika listesi",
+  "durum": "d",
+  "neden": "0 haber; hiçbir haber son dakika işaretli değil",
+  "kanit": "",
+  "grup": "Formatlar ve anlık"
+ },
+ {
+  "sayfa": "/guncellenen-haberler",
+  "blok": "Güncellenen haberler",
+  "durum": "e",
+  "neden": "0 haber (güncelleme notlu haber yok)",
+  "kanit": "",
+  "grup": "Formatlar ve anlık"
+ },
+ {
+  "sayfa": "/canli, /canli-gundem, /canli-yayin, /dakika-dakika",
+  "blok": "Canlı yayın ve takip",
+  "durum": "d",
+  "neden": "Süren yayın ya da canlı takip yok (tasarımdaki boş hal basılıyor); /dakika-dakika → /canli-gundem 302",
+  "kanit": "",
+  "grup": "Formatlar ve anlık"
+ },
+ {
+  "sayfa": "/dada-ozet, /bugun-ne-oldu",
+  "blok": "Günün özeti",
+  "durum": "a",
+  "neden": "70 haber / 30 gelişme",
+  "kanit": "",
+  "grup": "Formatlar ve anlık"
+ },
+ {
+  "sayfa": "/gunun-5-i",
+  "blok": "Günün 5'i",
+  "durum": "d",
+  "neden": "\"Henüz Günün 5'i baskısı yok.\"",
+  "kanit": "",
+  "grup": "Formatlar ve anlık"
+ },
+ {
+  "sayfa": "/dada-baglam",
+  "blok": "Olay dosyaları",
+  "durum": "d",
+  "neden": "0 dosya",
+  "kanit": "",
+  "grup": "Formatlar ve anlık"
+ },
+ {
+  "sayfa": "/dada-dogrula",
+  "blok": "Son incelemeler",
+  "durum": "d",
+  "neden": "0 inceleme (yöntem ve iddia gönder bölümleri dolu)",
+  "kanit": "",
+  "grup": "Formatlar ve anlık"
+ },
+ {
+  "sayfa": "/farkli-bakislar",
+  "blok": "Farklı Bakışlar + arşiv",
+  "durum": "d",
+  "neden": "\"Henüz Farklı Bakışlar konusu yayımlanmadı.\" ×2",
+  "kanit": "",
+  "grup": "Formatlar ve anlık"
+ },
+ {
+  "sayfa": "/sakin-akis",
+  "blok": "Sabah ve Akşam Özeti",
+  "durum": "e",
+  "neden": "Özet penceresinde (07.30 / 19.00) yayımlanmış haber yok: bütün haberler bugün 13.5x'te",
+  "kanit": "SakinAkisSorgu::ozetler",
+  "grup": "Formatlar ve anlık"
+ },
+ {
+  "sayfa": "/sakin-akis",
+  "blok": "İyi Gelen Haberler",
+  "durum": "d",
+  "neden": "Editör işaretlememiş",
+  "kanit": "",
+  "grup": "Formatlar ve anlık"
+ },
+ {
+  "sayfa": "/bana-etkisi",
+  "blok": "Profil seçimi",
+  "durum": "a",
+  "neden": "Misafire üyelik hali (tasarım)",
+  "kanit": "",
+  "grup": "Formatlar ve anlık"
+ },
+ {
+  "sayfa": "/veri-ve-harita",
+  "blok": "Veri ve Harita haberleri",
+  "durum": "e",
+  "neden": "0 haber",
+  "kanit": "",
+  "grup": "Formatlar ve anlık"
+ },
+ {
+  "sayfa": "/haber-dinle",
+  "blok": "Sesli haberler",
+  "durum": "a",
+  "neden": "Bugünün sesli haberleri",
+  "kanit": "",
+  "grup": "Multimedya"
+ },
+ {
+  "sayfa": "/podcast",
+  "blok": "Podcast bölümleri",
+  "durum": "d",
+  "neden": "0 bölüm",
+  "kanit": "",
+  "grup": "Multimedya"
+ },
+ {
+  "sayfa": "/video",
+  "blok": "Video haberler",
+  "durum": "d",
+  "neden": "0 video",
+  "kanit": "",
+  "grup": "Multimedya"
+ },
+ {
+  "sayfa": "/foto-fokus",
+  "blok": "Galeriler",
+  "durum": "d",
+  "neden": "0 galeri",
+  "kanit": "",
+  "grup": "Multimedya"
+ },
+ {
+  "sayfa": "/infografik",
+  "blok": "İnfografikler",
+  "durum": "d",
+  "neden": "0 infografik",
+  "kanit": "",
+  "grup": "Multimedya"
+ },
+ {
+  "sayfa": "/akis",
+  "blok": "Bugünün akışı",
+  "durum": "d",
+  "neden": "\"Bugünün akışı henüz yayımlanmadı.\"",
+  "kanit": "",
+  "grup": "Multimedya"
+ },
+ {
+  "sayfa": "/yazarlar",
+  "blok": "Yazar dizini",
+  "durum": "d",
+  "neden": "0 yazar",
+  "kanit": "",
+  "grup": "Yazarlar"
+ },
+ {
+  "sayfa": "/kadin-yazarlar",
+  "blok": "Kadın yazarlar",
+  "durum": "d",
+  "neden": "0 haber (kadın köşe yazarı yok)",
+  "kanit": "",
+  "grup": "Yazarlar"
+ },
+ {
+  "sayfa": "/sehirler",
+  "blok": "Haber ürettiğimiz iller",
+  "durum": "a",
+  "neden": "3 il",
+  "kanit": "",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/yerel-haberler, /sehirler",
+  "blok": "Yerel haberler listesi",
+  "durum": "e",
+  "neden": "0 haber; /ankara'daki 1 haber üst sayfada görünmüyor (iller Gündem'in altında, Yerel Haberler'in değil)",
+  "kanit": "Kategori ağacı düz; kapsam t14'te",
+  "grup": "Kategori ve alt konu"
+ },
+ {
+  "sayfa": "/tum-kategoriler, /sayfa-dizini",
+  "blok": "Kapalı servis maddeleri",
+  "durum": "b!",
+  "neden": "Canlı Skor, Puan Durumu, Fikstür, Takımlar, Transfer, Kripto Para, Akaryakıt bağlantısız metin olarak listede",
+  "kanit": "tum-kategoriler.blade / sayfa dizini süzmüyor",
+  "grup": "Kategori ve alt konu"
+ }
+]

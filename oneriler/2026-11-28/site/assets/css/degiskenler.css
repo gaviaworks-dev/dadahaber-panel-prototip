@@ -1,0 +1,30 @@
+/* Dada Haber · tasarım değişkenleri (TEK KAYNAK). Renk, yazı ölçeği, boşluk, köşe, gölge burada; bileşenler sabit değer yazmaz.
+   Kararlar: docs/tasarim-kararlari.md. Karanlık mod, yazı boyutu ve Sakin mod bu değişkenler üzerinden kurulacak. */
+@font-face{font-family:"Gilroy";src:url("../font/gilroy/Gilroy-Light.woff2") format("woff2");font-weight:300;font-display:swap}
+@font-face{font-family:"Gilroy";src:url("../font/gilroy/Gilroy-Medium.woff2") format("woff2");font-weight:400 600;font-display:swap}
+@font-face{font-family:"Gilroy";src:url("../font/gilroy/Gilroy-ExtraBold.woff2") format("woff2");font-weight:700 800;font-display:swap}
+:root{
+  /* Marka rengi #FECC17 (Beyar 2026-11-24; logo rengi). Skala #FECC17'den türetildi: secenekler/logo-renk.html */
+  --marka:#FECC17;--marka-rgb:254,204,23;--marka-metin:#7A620B;--marka-25:#FFF2C5;--marka-10:#FFFBEC;--marka-200:#FED645;--marka-100:#FEE074;--marka-400:#E5B815;--marka-koyu:#514107;
+  --marka-ust:var(--marka-400); /* KURAL (Beyar 2026-11-24): marka zeminli düğmelerin üstüne gelme hali koyulaşır, açılmaz */--beyaz:#FFFFFF;
+  /* Namaz vakti gökyüzü çizelgesi ve koyu zemin üstü artış/azalış */--gok-gece:#1B2A4A;--gok-safak:#5B7BB5;--gok-aksam:#E39A4A;--artis-koyu:#5BD16B;--azalis-koyu:#FF6B6B;
+  --siyah:#121212;--gri-10:#FAFAFA;--gri-50:#EFEFEF;--gri-100:#DEDEDE;--gri-200:#BDBDBD;--gri-300:#9D9D9D;--gri-400:#6B6B6B;--gri-600:#494949;--gri-800:#242424;
+  --zemin-a:#FFFFFF;--zemin-b:#F9F9F9;--cizgi:#DEDEDE;--anlik:#C8102E;--artis:#19750A;--azalis:#C8102E;
+  --gastro:#DC3D17;--diet:#009A44;--gourmet:#742982;
+  --k-kontrol:12px;
+  --ikon-bosluk:8px; /* KURAL: ikon ile metin arası her yerde en az bu kadar; bitişik ikon-metin yasak */--k-kart:16px;--k-buyuk:24px;--k-ic:8px;
+  --y-xs:9.6px;--y-sm:12.8px;--y-md:17px;--y-lg:22.7px;--y-xl:30.2px;--y-2xl:40.3px;
+  --bolum:48px;--kart-arasi:16px;--kap:1280px;
+  --logo-boy:38px; /* Beyar 2026-11-24, logo A: yalnız "dada"; masaüstü 38, tablet 34, telefon 30 */
+  --y-pn:14px; /* KURAL (Beyar 2026-11-24): açılır pencere listeleri (Paylaş, Dil, Hesap) yazısı */
+  --y-form:14px; /* KURAL (Beyar 2026-11-24): form alanı yazısı ve placeholder; arayüz grubu. Telefonda 16px (iOS odakta yakınlaştırmasın) */
+  --golge-sm:0 1px 2px rgba(33,30,22,.04),0 2px 6px rgba(33,30,22,.05);--golge-md:0 6px 22px rgba(33,30,22,.09);
+}
+:root{--ust-zemin:rgba(18,18,18,.55);--ust-cizgi:rgba(255,255,255,.22)}
+
+/* ===== Dar ekran değişkenleri (mobil bölümü, CC seçti, Beyar gözden geçirecek) =====
+   Tablet 640–1024: ölçek 1.25, gövde 17px; telefon <640: ölçek 1.2, gövde 16px. Kenar boşluğu tablet 24, telefon 16.
+   --ust-boy: yapışkan üst bölümün yüksekliği (alt menü ve yapışkan kutular bunun altına oturur). */
+:root{--ust-boy:113px;--kenar:16px;--dokun:44px}
+@media (max-width:1024px){:root{--y-xs:10.9px;--y-sm:13.6px;--y-md:17px;--y-lg:21.3px;--y-xl:26.6px;--y-2xl:33.2px;--bolum:40px;--kenar:24px;--ust-boy:112px;--logo-boy:34px}}
+@media (max-width:639.98px){:root{--y-form:16px;--y-xs:10.4px;--y-sm:13.3px;--y-md:16px;--y-lg:19.2px;--y-xl:23px;--y-2xl:27.6px;--bolum:32px;--kenar:16px;--ust-boy:100px;--logo-boy:30px}}
